@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>DINGYUE_API_KEY</key>
+	<string>eyJraWQiOiIzOTE5MDg0MDYwNjc0NDQ5NzE4IiwidHlwIjoiSldUIiwiYWxnIjoiSFM1MTIifQ.eyJvd25lciI6InRlc3RzZGsiLCJhcHBfbmFtZSI6IkRpbmdZdWVEZW1vIiwiaXNzIjoiRmFyVGVjaCBBcHAgQ2VudGVyIFNlcnZpY2UiLCJleHAiOjQ4MTA1MjYxMzUsImlhdCI6MTY1NjkyNjEzNSwidXNlciI6IjM5MDU1MjA3MDM1MzYzNzc5MDgifQ.cR2JRr9UTCbw_YUewzeO-3cWVCNlyAO6AKde2zgv7ONzsOVia58vpW6DPPfUV-BwkfwkvUDKeuZvekDOXMnJAw</string>
+	<key>DINGYUE_APP_ID</key>
+	<string>3905520703536377908</string>
+</dict>
+</plist>

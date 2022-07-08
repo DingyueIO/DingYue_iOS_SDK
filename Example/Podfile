@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '10.0'
+
+target 'DingYue_iOS_SDK_Example' do
+  pod 'DingYue_iOS_SDK', :path => '../'
+
+  target 'DingYue_iOS_SDK_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end

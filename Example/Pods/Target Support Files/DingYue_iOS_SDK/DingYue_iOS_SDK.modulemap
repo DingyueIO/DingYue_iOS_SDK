@@ -1,0 +1,6 @@
+framework module DingYue_iOS_SDK {
+  umbrella header "DingYue_iOS_SDK-umbrella.h"
+
+  export *
+  module * { export * }
+}
