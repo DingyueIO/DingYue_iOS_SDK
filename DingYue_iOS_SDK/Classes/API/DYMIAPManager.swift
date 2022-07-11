@@ -11,8 +11,6 @@ import StoreKit
 class DYMIAPManager: NSObject {
     
     public typealias PaywallCompletion = (_ products: [DYMProductModel]?,_ error: DYMError?) -> Void
-//    public typealias PurchaseCompletion = (_ purchase: DYMPurchaseResult,_ receiptVerifyMobileResponse:FirstReceiptVerifyMobileResponse?) -> Void
-//    public typealias RestoreCompletion  = (_ receipt: String?,_ receiptVerifyMobileResponse:ReceiptVerifyMobileResponse?,_ error: DYMError?) -> Void
     public typealias PurchaseCompletion = (_ purchase: DYMPurchaseResult,_ receiptVerifyMobileResponse:[String:Any]?) -> Void
     public typealias RestoreCompletion  = (_ receipt: String?,_ receiptVerifyMobileResponse:[String:Any]?,_ error: DYMError?) -> Void
     private typealias PurchaseTemplate  = (product: DYMProductModel, payment: SKPayment,completion:PurchaseCompletion?)
@@ -360,12 +358,7 @@ extension DYMIAPManager: SKProductsRequestDelegate {
                 products.append(cproduct)
             }
         })
-        for skp in response.products {
-            print("----apple purchase response.products productIdentifier-----\(skp.productIdentifier)")
-            print("----apple purchase response.products price-----\(skp.price)")
-            print("----apple purchase response.products priceLocale-----\(skp.priceLocale)")
-            print("----apple purchase response.products regionCode-----\(skp.priceLocale.regionCode))")
-        }
+        
         if response.products.count > 0, !products.isEmpty {
             callBackPaywallCompletion(result: .success(products))
         } else {

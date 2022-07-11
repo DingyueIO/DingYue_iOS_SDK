@@ -104,7 +104,6 @@ import StoreKit
         DYMLogManager.logMessage("Calling now: \(#function)")
         let attributes = Attribution(adjustId: adjustId, appsFlyerId: appsFlyerId, amplitudeId: amplitudeId)
         shared.apiManager.reportAttribution(attribution: attributes) { result, error in
-            print("----attribution report response-----\(result)")
         }
     }
 #if os(iOS)
@@ -187,7 +186,7 @@ import StoreKit
     
     #if os(iOS)
     ///展示支付页面
-    @objc public class func showVisualPaywall(for products:[Subscription]? = nil,in rootController: UIViewController, completion:@escaping DYMRestoreCompletion){
+    @objc public class func showVisualPaywall(products:[Subscription]? = nil,rootController: UIViewController, completion:@escaping DYMRestoreCompletion){
         let controller = getVisualPaywall(for: products, completion: completion)
         rootController.present(controller, animated: true)
         controller.delegate = (rootController as? DYMPayWallActionDelegate)
