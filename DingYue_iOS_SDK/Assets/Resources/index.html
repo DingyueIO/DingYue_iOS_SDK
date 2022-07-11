@@ -3,14 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi" />
-    <title>T1</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>default</title>
     <script src="./vue.js" type="text/javascript"></script>
-    <script src='./config.js' type="text/javascript"></script>
 </head>
-
-
 <style>
     body::-webkit-scrollbar {
         display: none;
@@ -32,431 +29,409 @@
 
     #app {
         min-height: 100vh;
+        padding: 0 0 5vh 0;
     }
 
-    .buyBig {
-        padding: 0 24px;
-        padding-bottom: 44px;
-    }
-
-    .buyBig>.back {
-        width: 100%;
-        height: 47px;
-        position: fixed;
-        left: 0;
-        top: 0;
-        padding-top: 44px;
-        background-color: #FFFFFF;
-        z-index: 10;
+    .buy_top {
+        padding: 5vh 6vw 0 6vw;
         display: flex;
-        justify-content: center;
+        align-items: center;
+        justify-content: space-between;
     }
 
-    .buyBig>.back>.image {
-        position: fixed;
-        top: 44px;
-        left: 3.5%;
-        /* padding-top: 47px; */
-        width: 45px;
-        height: 45px;
-        z-index: 2;
+    .buy_top .back {
+        font-size: 16px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.7000);
+        line-height: 22px;
     }
 
-    .back>.title {
-        /* width: calc(100%-45px); */
-        font-size: 17px;
-        font-family: SFPro-Semibold, SFPro;
-        font-weight: 600;
-        color: #000000;
-        line-height: 47px;
+    .buy_top .resove {
+        font-size: 16px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.7000);
+        line-height: 22px;
     }
 
-    .content {
-        width: 100%;
-        margin-top: 91px;
+    .buy_title {
+        margin-top: 6vh;
         display: flex;
         flex-direction: column;
         align-items: center;
-        overflow: hidden;
+        justify-content: center;
     }
 
-    .content>.img {
-        width: 88px;
-        height: 88px;
-        border-radius: 16px;
-        margin-top: 32px;
-    }
-
-    .content>.headline {
-        margin-top: 26px;
-        font-size: 22px;
+    .buy_title .title {
+        font-size: 37px;
         font-family: PingFangSC-Semibold, PingFang SC;
         font-weight: 600;
         color: #000000;
-        line-height: 28px;
+        line-height: 53px;
     }
 
-    .content>.subheading {
-        max-width: 90%;
-        text-align: center;
-        font-size: 15px;
+    .buy_title .value {
+        margin-top: 1vh;
+        font-size: 16px;
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
-        color: rgba(60, 60, 67, 0.6);
-        line-height: 20px;
-        margin: 12px 18px 21px 18px;
+        color: #000000;
+        line-height: 22px;
     }
 
-    .content>.function {
-        width: 100%;
-        height: 126px;
-        overflow: auto;
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-
-    }
-
-    .content>.function>.introduce {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 53px;
-        background: #F7F7F7;
-        border-radius: 16px;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        font-size: 15px;
-        font-family: PingFangSC-Regular, PingFang SC;
-        font-weight: 400;
-        color: rgba(60, 60, 67, 0.6);
-        margin-bottom: 16px;
-    }
-
-    .content>.function>.introduce:nth-last-of-type(1) {
-        margin-bottom: 0;
-    }
-
-    .content>.function>.introduce>.imgs {
-        width: 24px;
-        height: 24px;
-        margin-right: 8px;
-    }
-
-    .buyBig>.product {
-        overflow-x: auto;
-        margin-top: 24px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .buyBig>.product>.product_pay {
-        /* width: calc((100% - 30px) / 3); */
-        min-width: 31%;
-        border-radius: 16px;
-        padding: 23px 8px;
-        box-sizing: border-box;
-        text-align: center;
-        background: #FFFFFF;
+    .buy_product {
+        margin-top: 11vh;
         display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .buy_product .product {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .buy_product .product .product_buy {
+        padding: 0 5vw 0 6vw;
+        box-sizing: border-box;
+        width: 82vw;
+        min-height: 6vh;
+        background: #EEEEEE;
+        border-radius: 25px;
+        border: 1px solid #393E43;
+        display: flex;
+        align-items: center;
         justify-content: space-between;
-        margin-left: 3%;
+        margin-top: 1vh;
     }
-
-    .buyBig>.product>.product_pay:nth-of-type(1) {
-        margin-left: 0;
-    }
-
-
-    .buyBig>.product>div .price {
+    .buy_product .product .feature {
         font-size: 17px;
-        font-family: SFPro-Regular, SFPro;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #000000;
+        line-height: 24px;
+    }
+
+    .buy_product .product .duration {
+        font-size: 17px;
+        font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
         color: #000000;
         line-height: 24px;
-        height: 24px;
     }
 
-    .buyBig>.product>div>.duration {
-        font-size: 22px;
-        font-family: PingFangSC-Semibold, PingFang SC;
-        font-weight: 600;
-        color: #000000;
-        line-height: 28px;
-        height: 28px;
-    }
-
-    .buyBig>.product>div>.feature {
-        font-size: 15px;
-        font-family: PingFangSC-Regular, PingFang SC;
-        font-weight: 400;
-        color: rgba(60, 60, 67, 0.6);
-        line-height: 22px;
-        height: 22px;
-    }
-
-    .product>div>.duration,
-    .product>div>.feature,
-    .product>div>.price {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-    }
-
-    .buyBig>.last {
-        margin-top: 33px;
-        width: 100%;
-    }
-
-    .last>.btn {
-        width: 100%;
-        height: 50px;
-        border-radius: 8px;
+    .buy_btn {
+        margin-top: 3vh;
         text-align: center;
-        line-height: 50px;
+    }
+
+    .buy_btn .btn {
+        width: 82vw;
+        height: 6vh;
+        background: linear-gradient(152deg, #4D5158 0%, #393D43 100%);
+        border: none;
+        border-radius: 25px;
+        text-align: center;
         font-size: 17px;
-        font-family: SFPro-Semibold, SFPro;
-        font-weight: 600;
-        color: #ffffff;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #FFFFFF;
+        line-height: 24px;
     }
 
-    .last>.wenzi {
-        margin-top: 27px;
-        width: 100%;
-        font-size: 13px;
+    .content {
+        margin-left: 4vw;
+        margin-right: 4vw;
+        margin-top: 7vh;
+    }
+
+    .content .content_text {
+        font-size: 12px;
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
-        color: rgba(60, 60, 67, 0.3);
-        line-height: 20px;
+        color: rgba(0, 0, 0, 0.3000);
+        line-height: 17px;
     }
 
-    .last>.list {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        font-size: 13px;
-        font-family: PingFangSC-Regular, PingFang SC;
-        font-weight: 400;
-        line-height: 18px;
-        margin-top: 32px;
-
-    }
-
-    .last>.list>.link {
-        min-width: 20%;
-        margin-left: 2%;
+    .link {
         text-align: center;
+        margin-top: 6vh;
     }
 
-    .last>.list>.link:nth-of-type(1) {
-        margin-left: 0;
+    .link .privacy {
+        margin-left: 4vw;
+        font-size: 12px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.3000);
+        line-height: 17px;
+        border-bottom: 1px solid #979797;
     }
 
-    #app>.placeholder {
-        width: 100%;
-        height: 24px;
+    .link .use {
+
+        font-size: 12px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.3000);
+        line-height: 17px;
+        border-bottom: 1px solid #979797;
     }
 </style>
 
 <body>
-    <div id="app" v-if="JSON.stringify(page_data)!=='{}'" :style="{background:page_data.backgroundColor.value}">
-        <div class="buyBig">
-            <div class="back">
-                <img @click="close" class="image" src="./close.png" alt="">
-                <div :style="page_data.title.textColor?`color:${page_data.title.textColor}`:''" v-if="page_data.title"
-                    class="title">{{page_data.title.value}}</div>
-            </div>
-            <div class="content">
-                <img class="img" src="./logo.png" alt="">
-                <div :style="page_data.headline.textColor?`color:${page_data.headline.textColor}`:''"
-                    v-if="page_data.headline" class="headline">
-                    {{page_data.headline.value}}</div>
-                <div v-if="page_data.subheading"
-                    :style="page_data.subheading.textColor?`color:${page_data.subheading.textColor}`:''"
-                    class="subheading">
-                    {{page_data.subheading.value}}</div>
-                <div class="function" v-if="page_data.introduceText.value.length">
-                    <div class="introduce"
-                        :style="{width:page_data.introduceText.value.length%2==0?'48%':(index+1)==page_data.introduceText.value.length?'100%':'48%'}"
-                        v-for="(item,index) in page_data.introduceText.value" :key="index">
-                        <img class="imgs" :src="`./subtoolImg${index}.png`" alt="">
-                        <span :style="item.textColor?`color:${item.textColor}`:''"
-                            v-if="item.value">{{item.value}}</span>
+    <div id="app">
+        <div class="buy_top">
+            <span @click="close" class="back">跳过</span>
+            <span @click="restore" class="resove">恢复购买</span>
+        </div>
+        <div class="buy_title">
+            <span class="title">访问全部功能</span>
+            <span class="value">订阅会员，解锁App全部功能。</span>
+        </div>
+        <div class="buy_product">
+            <div class="product">
+                <div v-for="(item,index) in products" :key="index">
+                    <div @click="choose(index)" v-if="item.price" class="product_buy"  :style="{border:`1px solid ${selected==index?'#393E43':'#E4E4E4'}`,background:`${selected==index?'#EEEEEE':'#FFFFFF'}`}  ">
+                        <span class="feature">{{item.feature}}</span>
+                        <span class="duration">{{item.price}}</span>
                     </div>
-                </div>
-            </div>
-            <div v-if="products.length" class="product"
-                :style="{justifyContent:`${products.length<=2?'center':'space-between'}`}">
-                <div class="product_pay"
-                    :style="{border:`2px solid ${selected==index?page_data.themeColor.value:'#E0E3E9'}`,background:'#FFFFFF'}  "
-                    @click="choose(index)" v-for="(item,index) of products" :key="index">
-                    <div :style="{color:item.durationColor}" class="duration">
-                        {{item.name}}
-                    </div>
-                    <div  :style="{color:item.durationColor}" class="price"
-                        style=" margin: 16px 0 17px;">
-                        {{item.price}}
-                    </div>
-                    <div :style="{color:item.featureColor}"  class="feature">
-                        {{item.description}}
-                    </div>
-                </div>
-            </div>
-            <div v-else style="text-align: center;font-size:16px;margin:64px 32px;color:rgba(60, 60, 67, 0.5)">
-                内购产品展示区域，添加订阅项后将显示产品详情
-            </div>
-            <div class="last">
-                <div @click="purchase" class="btn" v-if="page_data.enterButton.value"
-                    :style="`background:${page_data.themeColor.value};color:${page_data.enterButton.textColor||'#FFFFFF'}`">
-                    {{page_data.enterButton.value}}
-                </div>
-                <div v-if="page_data.content" :style="`color:${page_data.content.textColor||'rgba(60, 60, 67, 0.3)'}`"
-                    class="wenzi">{{page_data.content.value}}</div>
-                <div class="list" :style="`color:${page_data.themeColor.value}`">
-                    <div @click="privacy" :style="`color:${page_data.privacy.textColor||''}`" v-if="page_data.privacy"
-                        class="link">
-                        {{page_data.privacy.value}}</div>
-                    <div @click="terms" :style="`color:${page_data.agreement.textColor||''}`" v-if="page_data.agreement"
-                        class="link">
-                        {{page_data.agreement.value}}</div>
-                    <div @click="restore" :style="`color:${page_data.restore.textColor||''}`" v-if="page_data.restore"
-                        class="link">
-                        {{page_data.restore.value}}</div>
                 </div>
             </div>
         </div>
-        <div class="placeholder" :style="{backlground:page_data.backgroundColor.value}"></div>
-    </div>
+        <div class="buy_btn">
+            <button @click="purchase" class="btn">
+                订阅
+            </button>
+        </div>
+        <div class="content">
+            <span class="content_text">
+                确认购买后，将向iTunes 账户收取该笔款项。除非在当前订阅期
+                到期前至少24小时关闭自动续订，否则将自动续订。您可以随时
+                通过 iTunes 账户设置关闭自动续订。取消请求将在当前订阅期最
+                后一天过后生效，届时您将不能再使用部分功能。
+            </span>
 
-    <!-- type="module" -->
-    <script>
-        // import config from './config.js'
-        new Vue({
-            el: '#app',
-            data() {
-                return {
-                    language: '',
-                    selected: 1,
-                    page_data: {},
-                    showReal: false,
-                    language: 'en',
-                    products: "",
-                    subscriptions: [],
+        </div>
+
+        <div class="link">
+            <span @click="terms" class="use">服务条款</span>
+            <span @click="privacy" class="privacy">隐私政策</span>
+        </div>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                language: '',
+                selected: 0,
+                page_data: {},
+                showReal: false,
+                language: 'en',
+                products: [{
+                        "type": "WEEK",
+                        "duration": "周",
+                        "feature": "高级周会员",
+                        "price": "$1.99"
+                    },
+                    {
+                        "type": "MONTH",
+                        "duration": "月",
+                        "feature": "高级月会员",
+                        "price": "$4.99"
+                    },
+                    {
+                        "type": "YEAR",
+                        "duration": "年",
+                        "feature": "高级年会员",
+                        "price": "$19.99"
+                    },
+                    {
+                        "type": "QUARTER",
+                        "duration": "",
+                        "feature": "",
+                        "price": ""
+                    },
+                    {
+                        "type": "HALFYEAR",
+                        "duration": "",
+                        "feature": "",
+                        "price": ""
+                    },
+                    {
+                        "type": "ONETIME",
+                        "duration": "",
+                        "feature": "",
+                        "price": ""
+                    },
+                    {
+                        "type": "CONSUME",
+                        "duration": "",
+                        "feature": "",
+                        "price": ""
+                    }
+
+                ],
+                subscriptions: "",
+                priceCode: {
+                    "USD": "$",
+                    "AED": "AED",
+                    "EGP": "E£,",
+                    "EUR": "€",
+                    "AUD": "$",
+                    "PKR": "Rs,",
+                    "BRL": "R$",
+                    "BGN": "BGN",
+                    "PEN": "PEN",
+                    "PLN": "zł",
+                    "DKK": "kr",
+                    "RUB": "₽,",
+                    "PHP": "₱,",
+                    "COP": "$,",
+                    "KZT": "₸,",
+                    "KRW": "₩,",
+                    "CAD": "$",
+                    "CZK": "Kč,",
+                    "QAR": "QAR",
+                    "HRK": "kn",
+                    "RON": "lei",
+                    "MYR": "RM",
+                    "MXN": "$,",
+                    "ZAR": "R,",
+                    "NGN": "₦,",
+                    "NOK": "kr",
+                    "JPY": "¥,",
+                    "SEK": "kr",
+                    "CHF": "CHF",
+                    "SAR": "SAR",
+                    "TWD": "NT$,",
+                    "THB": "฿,",
+                    "TZS": "TZS,",
+                    "TRY": "₺,",
+                    "HKD": "$",
+                    "SGD": "$",
+                    "NZD": "$",
+                    "HUF": "Ft,",
+                    "ILS": "₪",
+                    "INR": "₹,",
+                    "IDR": "Rp,,",
+                    "GBP": "£",
+                    "VND": "₫,,",
+                    "CLP": "$,",
+                    "CNY": "¥"
+                },
+            }
+        },
+        mounted() {
+            this.banTouch()
+            window.iostojs = this.iostojs;
+        },
+        methods: {
+            // 购买按钮点击时间，将产品id汇报给原生端
+            purchase() {
+                if (this.subscriptions) {
+                    var productId = this.products[this.selected].platformProductId;
+                    // jstoios
+                    window.webkit.messageHandlers.vip_purchase.postMessage({
+                        type: "purchase_web",
+                        productId: productId
+                    });
                 }
             },
-            beforeMount() {
-                this.getData();
+            // 选择购买项事件
+            choose(index) {
+                this.selected = index;
+                let msg = this.products[index]
+                window.webkit.messageHandlers.vip_choose.postMessage({
+                    type: msg.type,
+                    productId: msg.platformProductId,
+                    period: msg.period || ""
+                });
             },
-            mounted() {
-                this.banTouch()
-                window.iostojs = this.iostojs;
-                // this.iostojs()
+            // 页面关闭事件
+            close() {
+                window.webkit.messageHandlers.vip_close.postMessage({
+                    type: "close_web"
+                });
             },
-            methods: {
-                purchase() {
-                    if (this.subscriptions) {
-                        var productId = this.products[this.selected].platformProductId;
-                        // jstoios
-                        window.webkit.messageHandlers.vip_purchase.postMessage({ type: "purchase_web", productId: productId });
+            // 点击服务协议文字
+            terms() {
+                window.webkit.messageHandlers.vip_terms.postMessage({
+                    type: "terms_web"
+                });
+            },
+            // 点击隐私政策文字
+            privacy() {
+                window.webkit.messageHandlers.vip_privacy.postMessage({
+                    type: "privacy_web"
+                });
+            },
+            // 点击恢复购买按钮
+            restore() {
+                window.webkit.messageHandlers.vip_restore.postMessage({
+                    type: "restore_web"
+                });
+            },
+            decode(str) {
+                // Going backwards: from bytestream, to percent-encoding, to original string.
+                return decodeURIComponent(atob(str).split('').map(function (c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+            },
+            banTouch() {
+                // document.documentElement.addEventListener('touchstart', function (event) {
+                //     if (event.touches&&event.touches.length > 1) {
+                //         event.preventDefault();
+                //     }
+                // }, false);
+                var lastTouchEnd = 0;
+                document.documentElement.addEventListener('touchend', function (event) {
+                    var now = Date.now();
+                    if (now - lastTouchEnd <= 300) {
+                        event.preventDefault();
                     }
-                },
-                choose(index) {
-                    this.selected = index;
-                    let msg = this.products[index]
-                    window.webkit.messageHandlers.vip_choose.postMessage({ type: msg.type, productId: msg.platformProductId, period: msg.period || "" });
-                },
-                close() {
-                    window.webkit.messageHandlers.vip_close.postMessage({ type: "close_web" });
-                },
-                terms() {
-                    window.webkit.messageHandlers.vip_terms.postMessage({ type: "terms_web" });
-                },
-                privacy() {
-                    window.webkit.messageHandlers.vip_privacy.postMessage({ type: "privacy_web" });
-                },
-                restore() {
-                    window.webkit.messageHandlers.vip_restore.postMessage({ type: "restore_web" });
-                },
-                decode(str) {
-                    // Going backwards: from bytestream, to percent-encoding, to original string.
-                    return decodeURIComponent(atob(str).split('').map(function (c) {
-                        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-                    }).join(''));
-                },
-                banTouch() {
-                    document.documentElement.addEventListener('touchstart', function (event) {
-                        if (event.touches.length > 1) {
-                            event.preventDefault();
-                        }
-                    }, false);
-                    var lastTouchEnd = 0;
-                    document.documentElement.addEventListener('touchend', function (event) {
-                        var now = Date.now();
-                        if (now - lastTouchEnd <= 300) {
-                            event.preventDefault();
-                        }
-                        lastTouchEnd = now;
-                    }, false);
-                },
-                getData(language) {
-                    if (!language) {
-                        this.language = config[0].value.default;
-                    } else {
-                        config[0].value.contains.forEach(ele => {
-                            if (language.indexOf(ele) !== -1) {
-                                this.language = ele
-                            }
-                        })
-                    }
-                    config.forEach(ele => {
-                        Vue.set(this.page_data, ele.codeName, ele.value[this.language] || ele.value.default);
-                    })
-                    this.getShow()
-                },
-                // ios调用js入口
-                iostojs(action) {
-                    let json = JSON.parse(this.decode(action));
-                    // let json = {
-                    //     "system_language": "zh-Hans-CN",
-                    //     "products": [{
-                    //         "name": "消耗品2",
-                    //         "description": "",
-                    //         "platformProductId": "com.dingyue.consumable2",
-                    //         "currency": "USD",
-                    //         "price": 12.99,
-                    //         "type": "CONSUMABLE",
-                    //         "period": ""
-                    //     },
-                    //     {
-                    //         "period": "MONTH",
-                    //         "currency": "USD",
-                    //         "price": 34.39,
-                    //         "name": "hello test",
-                    //         "type": "CONSUMABLE",
-                    //         "platformProductId": "com.dingyue.consumable3",
-                    //         "description": "消耗"
-                    //     }
-                    //     ]
-                    // }
-                    this.subscriptions = json.products;
-                    this.getData(json.system_language)
-                    return (
-                        'ok'
-                    )
-                },
-                getShow() {
-                    if (this.subscriptions) {
-                        this.products = this.subscriptions;
-                    }
-                    if (this.products.length <= 2) {
-                        this.selected = 0
-                    }
-                },
+                    lastTouchEnd = now;
+                }, false);
+            },
+            // ios调用js入口
+            iostojs(action) {
+                let json = JSON.parse(this.decode(action));
+                // let json = { "system_language": "zh-Hans-CN", "products": [{ "period": "YEAR", "platformProductId": "com.dingyue1.year", "type": "SUBSCRIPTION", "currency": "USD", "description": "", "name": "组1年", "price": "9.99" }, { "price": "1.99", "type": "SUBSCRIPTION", "platformProductId": "com.dingyue1.week", "name": "组1周", "currency": "USD", "description": "", "period": "WEEK" }] }
+                this.subscriptions = json.products;
+                this.getShow()
+                return (
+                    'ok'
+                )
+            },
+            getShow() {
+                if (this.subscriptions) {
 
-            }
-        })
-    </script>
-</body>
+               let productsAll = [];
+                    this.subscriptions.forEach((ele, index) => {
+                        productsAll.push({
+                            ...ele,
+                            ...this.products[index],
+                            price: this.priceCode[ele.currency] + ele.price
+                        })
+                    })
+                    this.products=productsAll
+
+                } else {
+                   
+                }
+                if (this.products.length <= 2) {
+                    this.selected = 0
+                }
+            },
+
+        }
+    })
+</script>
 
 </html>

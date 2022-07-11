@@ -36,10 +36,8 @@ open class AttributionAPI {
         return attributionDataWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, attribution: attribution).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
-                    print("(DingYueMobileSDK)-----/attribute/update-----success-----\(response.body)")
                 completion(response.body, nil)
             case let .failure(error):
-                    print("(DingYueMobileSDK)-----/attribute/update-----fail-----\(error)")
                 completion(nil, error)
             }
         }
@@ -105,10 +103,8 @@ open class AttributionAPI {
         return reportSearchAdsAttrWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, appleSearchAdsAttributionReportObject: appleSearchAdsAttributionReportObject).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
-                    print("(DingYueMobileSDK)-----/searchads/report---success----\(response.body)")
                 completion(response.body, nil)
             case let .failure(error):
-                    print("(DingYueMobileSDK)-----/searchads/report---fail----\(error)")
                 completion(nil, error)
             }
         }

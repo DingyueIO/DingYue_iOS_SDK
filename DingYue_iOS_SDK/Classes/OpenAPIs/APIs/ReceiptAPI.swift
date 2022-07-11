@@ -36,10 +36,8 @@ open class ReceiptAPI {
         return verifyFirstReceiptWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, firstReceiptVerifyPostObject: firstReceiptVerifyPostObject).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
-                    print("(DingYueMobileSDK)----/receipt/verify/first---success----\(response.body)")
                 completion(DYMDefaultsManager.shared.firstReceiptResponse(firstReceiptResponse: response.body), nil)
             case let .failure(error):
-                    print("(DingYueMobileSDK)----/receipt/verify/first---fail----\(error)")
                 completion(nil, error)
             }
         }
@@ -73,16 +71,6 @@ open class ReceiptAPI {
             "X-PLATFORM": X_PLATFORM.encodeToJSON(),
             "X-API-KEY": X_API_KEY.encodeToJSON()
         ]
-        print("----url---\(localVariableURLString)")
-
-
-        print("----X-USER-ID---\(X_USER_ID)")
-        print("----User-Agent---\(userAgent)")
-        print("----X-APP-ID---\(X_APP_ID)")
-        print("----X-PLATFORM---\(X_PLATFORM)")
-        print("----X-API-KEY---\(X_API_KEY)")
-
-
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
@@ -115,10 +103,8 @@ open class ReceiptAPI {
         return verifyReceiptWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, receiptVerifyPostObject: receiptVerifyPostObject).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
-                    print("(DingYueMobileSDK)----/receipt/verify/recover---success----\(response.body)")
                     completion(DYMDefaultsManager.shared.recoverReceiptResponse(recoverReceiptResponse: response.body), nil)
             case let .failure(error):
-                    print("(DingYueMobileSDK)----/receipt/verify/recover---fail----\(error)")
                 completion(nil, error)
             }
         }

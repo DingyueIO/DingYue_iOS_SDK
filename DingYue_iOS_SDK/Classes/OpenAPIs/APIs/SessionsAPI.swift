@@ -36,10 +36,8 @@ open class SessionsAPI {
         return reportEventsWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, eventReportObject: eventReportObject).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
-                    print("(DingYueMobileSDK)---/users/report/events----success---\(response.body)")
                 completion(response.body, nil)
             case let .failure(error):
-                    print("(DingYueMobileSDK)---/users/report/events----fail---\(error)")
                 completion(nil, error)
             }
         }
@@ -105,10 +103,8 @@ open class SessionsAPI {
         return reportSessionWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, uniqueUserObject: uniqueUserObject).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
-                    print("(DingYueMobileSDK)----/sessions/report---success----\(response.body)")
                 completion(response.body, nil)
             case let .failure(error):
-                    print("(DingYueMobileSDK)----/sessions/report---fail----\(error)")
                 completion(nil, error)
             }
         }
@@ -144,14 +140,6 @@ open class SessionsAPI {
             "X-API-KEY":X_API_KEY.encodeToJSON()
         ]
 
-        print("----url---\(localVariableURLString)")
-
-        print("----X-USER-ID---\(X_USER_ID)")
-        print("----User-Agent---\(userAgent)")
-        print("----X-APP-ID---\(X_APP_ID)")
-        print("----X-PLATFORM---\(X_PLATFORM)")
-        print("----X-API-KEY---\(X_API_KEY)")
-
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
         let localVariableRequestBuilder: RequestBuilder<ReportSessionResult>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
@@ -183,10 +171,8 @@ open class SessionsAPI {
         return updateUserAttributeWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, editOneOf: editOneOf).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
-                    print("(DingYueMobileSDK)------/users/attribute/update----success----\(response.body)")
                 completion(response.body, nil)
             case let .failure(error):
-                    print("(DingYueMobileSDK)------/users/attribute/update----fail----\(error)")
                 completion(nil, error)
             }
         }

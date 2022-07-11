@@ -34,24 +34,11 @@ class ViewController: UIViewController {
         //显示内购页-可以传复合要求的内购项信息对象
         let product = Subscription(type: "CONSUMABLE", name: "消耗品2", platformProductId: "com.dingyue.consumable2", price: "12.99", currencyCode: "USD",countryCode: "USD")
         let product2 = Subscription(type: "CONSUMABLE", name: "hello test", platformProductId: "com.dingyue.consumable1", appleSubscriptionGroupId: "", description: "消耗", period: "MONTH", price: "34.0", currencyCode: "USD", countryCode: "USD", priceTier: [], gracePeriod: true, icon: "", renewPriceChange: true)
-
-        DYMobileSDK.showVisualPaywall(for: [product,product2], in: self) { receipt, purchaseResult, error in
-            if purchaseResult != nil {
-                print("-----------showVisualPaywall回调----dic---\(purchaseResult!)")
+        DYMobileSDK.showVisualPaywall(products: [product,product2], rootController: self) { receipt, purchaseResult, error in
+            if error == nil {
+               //购买成功
             }
         }
-//
-//        DYMobileSDK.validateReceiptFirst("", for: nil) { firstReceiptVerifyMobileResponse, error in
-//            print("----rec单独掉用收据验证")
-//
-//        }
-
-//        DYMobileSDK.validateReceiptRecover("11") { result, error in
-//            print("-------收据验证接口返回值-----\(result)")
-//        }
-//        DYMobileSDK.validateReceiptFirst("0", for: nil) { firstResult, error in
-//
-//        }
 
     }
 

@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DingYue_iOS_SDK'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'DingYue_iOS_SDK podspec file .'
 
 # This description is used to generate tags and improve search results.
@@ -35,6 +35,8 @@ TODO: DingYue_iOS_SDK: manage your purchase process and collect data to analyze 
    s.resource_bundle = {
      'DingYue_iOS_SDK' => 'DingYue_iOS_SDK/Assets/Resources/*'
    }
+
+  s.swift_version = '4.0'
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'

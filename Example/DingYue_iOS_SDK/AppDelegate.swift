@@ -19,19 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         //session report
         DYMobileSDK.activate { switchItems, subscribedOjects, error in
-            if let subs = subscribedOjects {
-                print("-------\(subs)")
-            }
-            if let switchs = switchItems {
-                print("-------\(switchs)")
-            }
-            if error != nil {
-                print("-----session error--\(error!)")
+            if error == nil {
+                //激活成功
             }
         }
         //attribution
-        DYMobileSDK.reportAttribution()
-        DYMobileSDK.reportAttribution(adjustId: "1111", appsFlyerId: "2222", amplitudeId: "3333")
+//        DYMobileSDK.reportAttribution()
+//        DYMobileSDK.reportAttribution(adjustId: "1111", appsFlyerId: "2222", amplitudeId: "3333")
 
         return true
     }

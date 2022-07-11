@@ -60,7 +60,7 @@ class DYMConstants: NSObject {
     }
     ///App信息plist文件
     enum AppInfoName {
-        static let plistName = "DingYueService-Info"
+        static let plistName = "DingYue"
         static let plistType = "plist"
         static let appId  = "DINGYUE_APP_ID"
         static let apiKey = "DINGYUE_API_KEY"

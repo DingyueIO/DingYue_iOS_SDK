@@ -12,8 +12,6 @@ import StoreKit
 
 public typealias ErrorCompletion = (ErrorResponse?) -> Void
 public typealias AdsCompletion = (SimpleStatusResult?,Error) -> Void
-//public typealias FirstReceiptCompletion = (FirstReceiptVerifyMobileResponse?,Error?) -> Void
-//public typealias RecoverReceiptCompletion = (ReceiptVerifyMobileResponse?,Error?) -> Void
 public typealias FirstReceiptCompletion = ([String:Any]?,Error?) -> Void
 public typealias RecoverReceiptCompletion = ([String:Any]?,Error?) -> Void
 
@@ -99,7 +97,7 @@ class ApiManager {
                       } catch {
                        return
                       }
-                    print("purchase zip download successfully!")
+                    print("purchase zip download successfully!---\(items)")
                     DYMDefaultsManager.shared.isExistPayWall = true
                 }
                 try? FileManager.default.removeItem(at: url!)
