@@ -140,13 +140,6 @@ open class SessionsAPI {
             "X-API-KEY":X_API_KEY.encodeToJSON()
         ]
 
-        print("----session ---- uuid ----\(X_USER_ID)")
-        print("----session ---- device token ----\(uniqueUserObject.deviceToken)")
-        print("----session ---- idfv ----\(uniqueUserObject.idfv)")
-        print("----session ---- idfa ----\(uniqueUserObject.idfa)")
-        print("----session ---- osverion ----\(uniqueUserObject.osVersion)")
-        print("----session ---- device ----\(uniqueUserObject.device)")
-
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
         let localVariableRequestBuilder: RequestBuilder<ReportSessionResult>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
@@ -253,7 +246,6 @@ open class SessionsAPI {
         return reportTypeWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, type: type, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
-                    print("-------hua----手动汇报数据成功-----\(response.body)")
                 completion(response.body, nil)
             case let .failure(error):
                 completion(nil, error)
@@ -292,8 +284,6 @@ open class SessionsAPI {
             "X-PLATFORM": X_PLATFORM.encodeToJSON(),
             "X-API-KEY": X_API_KEY.encodeToJSON()
         ]
-        print("-------hua----手动汇报的---url--\(localVariableURLString)")
-        print("-------hua----手动汇报的token-----\(body)")
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
