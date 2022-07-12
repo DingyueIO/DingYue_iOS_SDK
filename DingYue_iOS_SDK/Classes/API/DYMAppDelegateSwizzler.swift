@@ -35,8 +35,19 @@ class DYMAppDelegateSwizzler {
     private init() {
         DispatchQueue.main.async {
             if #available(iOS 9.0, macOS 10.14, *) {
-                if Application.shared.isRegisteredForRemoteNotifications {
-                    Application.shared.registerForRemoteNotifications()
+                let center = UNUserNotificationCenter.current()
+                center.getNotificationSettings { settings in
+                    if settings.authorizationStatus == .notDetermined {
+                        center.requestAuthorization(options: [.alert,.sound,.badge]) { grand, error in
+                        }
+                        DispatchQueue.main.async {
+                            Application.shared.registerForRemoteNotifications()
+                        }
+                    }else if settings.authorizationStatus == .authorized {
+                        DispatchQueue.main.async {
+                            Application.shared.registerForRemoteNotifications()
+                        }
+                    }
                 }
             } else {
                 #if os(macOS)

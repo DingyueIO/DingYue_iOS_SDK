@@ -57,6 +57,18 @@ class ApiManager {
             self.completion?(DYMDefaultsManager.shared.cachedSwitchItems,subscribedOjects,error)
         }
     }
+
+    func reportIdfa(idfa:String,completion:@escaping ((SimpleStatusResult?,Error?)->())) {
+        SessionsAPI.reportType(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: SessionsAPI.XPLATFORM_reportType.ios, type: SessionsAPI.ModelType_reportType.idfa, body: idfa) { data, error in
+            completion(data,error)
+        }
+    }
+
+    func reportDeviceToken(token:String,completion:@escaping ((SimpleStatusResult?,Error?)->())) {
+        SessionsAPI.reportType(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: SessionsAPI.XPLATFORM_reportType.ios, type: SessionsAPI.ModelType_reportType.deviceToken, body: token) { data, error in
+            completion(data,error)
+        }
+    }
     
     func updateSearchAdsAttribution(attribution: AnyCodable? = nil, completion:@escaping (SimpleStatusResult?,Error?) -> Void) {
         guard let attribution = attribution?.value as? DYMParams else{
@@ -87,31 +99,37 @@ class ApiManager {
     func downloadWebTemplate(url: URL, completion:@escaping (SimpleStatusResult?,Error?) -> Void) {
         let turl = url
         URLSession.shared.downloadTask(with: turl) { url, response, error in
-            if (response as! HTTPURLResponse).statusCode == 200 {
-                let dstPath = UserProperties.pallwallPath
-                let success = SSZipArchive.unzipFile(atPath: url!.path, toDestination: dstPath!)
-                if success {
-                    var items: [String]
-                      do {
-                          items = try FileManager.default.contentsOfDirectory(atPath: dstPath!)
-                      } catch {
-                       return
-                      }
-                    print("purchase zip download successfully!---\(items)")
-                    DYMDefaultsManager.shared.isExistPayWall = true
+            if response != nil {
+                if (response as! HTTPURLResponse).statusCode == 200 {
+                    let dstPath = UserProperties.pallwallPath
+                    let success = SSZipArchive.unzipFile(atPath: url!.path, toDestination: dstPath!)
+                    if success {
+                        var items: [String]
+                          do {
+                              items = try FileManager.default.contentsOfDirectory(atPath: dstPath!)
+                          } catch {
+                           return
+                          }
+                        print("purchase zip download successfully!---\(items)")
+                        DYMDefaultsManager.shared.isExistPayWall = true
+                    }
+                    try? FileManager.default.removeItem(at: url!)
+                }else {
+                    DYMLogManager.logError(error as Any)
                 }
-                try? FileManager.default.removeItem(at: url!)
-            }else {
-                DYMLogManager.logError(error as Any)
             }
+
         }.resume()
     }
 
     func verifySubscriptionFirst(receipt: String,for product: SKProduct?,completion:@escaping FirstReceiptCompletion) {
-        let platformProductId = (product?.productIdentifier)!
-        let price = (product?.price.stringValue)!
-        let currency = (product?.priceLocale.currencyCode)!
-        let countryCode = (product?.priceLocale.regionCode)!
+        guard let product = product else {
+            return
+        }
+        let platformProductId = product.productIdentifier
+        let price = product.price.stringValue
+        let currency = (product.priceLocale.currencyCode)!
+        let countryCode = (product.priceLocale.regionCode)!
         let receiptObj = FirstReceiptVerifyPostObject(appleReceipt: receipt, platformProductId: platformProductId, price: price, currencyCode: currency,countryCode: countryCode)
         ReceiptAPI.verifyFirstReceipt(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: ReceiptAPI.XPLATFORM_verifyFirstReceipt.ios, firstReceiptVerifyPostObject: receiptObj, completion: completion)
     }

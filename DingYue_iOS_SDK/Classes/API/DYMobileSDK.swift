@@ -40,17 +40,18 @@ import StoreKit
     ///推送地址
     @objc public static var apnsToken: Data? {
         didSet {
-            shared.apnsTokenString = apnsToken?.map { String(format: "%02.2hhx", $0) }.joined()
+            shared.apnsTokenStr = apnsToken?.map { String(format: "%02.2hhx", $0) }.joined()
         }
     }
 
     @objc public static var apnsTokenString: String? {
-        didSet {
-            shared.apnsTokenString = apnsTokenString
+        guard let token = DYMDefaultsManager.shared.apnsTokenString else {
+            return nil
         }
+        return token
     }
 
-    private var apnsTokenString: String? {
+    private var apnsTokenStr: String? {
         set {
             DYMLogManager.logMessage("Setting APNS token.")
             DYMDefaultsManager.shared.apnsTokenString = newValue
@@ -62,7 +63,7 @@ import StoreKit
     // MARK: - Activate SDK
     ///Activate SDK
     @objc public class func activate(completion:@escaping sessionActivateCompletion) {
-        //读取DingYueService-Info.plist信息
+        //读取DingYue.plist信息
         let path = Bundle.main.path(forResource: DYMConstants.AppInfoName.plistName, ofType: DYMConstants.AppInfoName.plistType)
         guard let plistPath = path else {
             return
@@ -97,6 +98,20 @@ import StoreKit
             reportAppleSearchAdsAttribution()
         }
         #endif
+    }
+
+    // MARK: - idfa
+    @objc public class func reportIdfa(idfa:String) {
+        DYMLogManager.logMessage("Calling now: \(#function)")
+        shared.apiManager.reportIdfa(idfa: idfa) { result, error in
+        }
+    }
+
+    // MARK: - device token
+    @objc public class func reportDeviceToken(token:String) {
+        DYMLogManager.logMessage("Calling now: \(#function)")
+        shared.apiManager.reportDeviceToken(token: token) { result, error in
+        }
     }
 
     // MARK: - Attribution
@@ -157,7 +172,7 @@ import StoreKit
         }
     }
     ///通过产品信息购买
-    @objc public class func purchase(product: SKProduct,completion:@escaping DYMPurchaseCompletion) {
+    public class func purchase(product: SKProduct,completion:@escaping DYMPurchaseCompletion) {
         DYMLogManager.logMessage("Calling now: \(#function)")
         shared.iapManager.buy(product: product) { purchase, receiptVerifyMobileResponse in
             switch purchase {
@@ -200,12 +215,12 @@ import StoreKit
         return paywallViewController
     }
     #endif
-    ///验证订单-first-swift
+    ///验证订单-first
     @objc public class func validateReceiptFirst(_ receipt: String,for product:SKProduct?,completion:@escaping FirstReceiptCompletion) {
         DYMLogManager.logMessage("Calling now: \(#function)")
         shared.apiManager.verifySubscriptionFirst(receipt: receipt, for: product, completion: completion)
     }
-    ///验证订单-recover-swift
+    ///验证订单-recover
     @objc public class func validateReceiptRecover(_ receipt: String,completion:@escaping RecoverReceiptCompletion) {
         DYMLogManager.logMessage("Calling now: \(#function)")
         shared.apiManager.verifySubscriptionRecover(receipt: receipt, completion: completion)
@@ -215,11 +230,12 @@ import StoreKit
         DYMLogManager.logMessage("Calling now: \(#function)")
         shared.eventManager.track(event: DYMEventType(rawValue: event)!, extra: extra, user: user)
     }
+
     /// MARK: - User Attributes
-    @objc public class func customUser(attributes:[String],completion:((Bool,DYMError?)-> Void)? = nil) {
-        DYMLogManager.logMessage("Calling now: \(#function)")
-        shared.apiManager.updateUser(attributes: attributes, completion: completion)
-    }
+//    @objc public class func customUser(attributes:[String],completion:((Bool,DYMError?)-> Void)? = nil) {
+//        DYMLogManager.logMessage("Calling now: \(#function)")
+//        shared.apiManager.updateUser(attributes: attributes, completion: completion)
+//    }
 
     @objc public class func handlePushNotification(_ userInfo: [AnyHashable : Any], completion: Error?) {
         DYMLogManager.logMessage("Calling now: \(#function)")
@@ -254,6 +270,8 @@ extension DYMobileSDK: DYMAppDelegateSwizzlerDelegate {
 
     func didReceiveAPNSToken(_ deviceToken: Data) {
         Self.apnsToken = deviceToken
+        if let token = self.apnsTokenStr {
+            Self.reportDeviceToken(token: token)
+        }
     }
-
 }

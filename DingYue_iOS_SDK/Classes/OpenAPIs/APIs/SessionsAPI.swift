@@ -140,6 +140,13 @@ open class SessionsAPI {
             "X-API-KEY":X_API_KEY.encodeToJSON()
         ]
 
+        print("----session ---- uuid ----\(X_USER_ID)")
+        print("----session ---- device token ----\(uniqueUserObject.deviceToken)")
+        print("----session ---- idfv ----\(uniqueUserObject.idfv)")
+        print("----session ---- idfa ----\(uniqueUserObject.idfa)")
+        print("----session ---- osverion ----\(uniqueUserObject.osVersion)")
+        print("----session ---- device ----\(uniqueUserObject.device)")
+
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
         let localVariableRequestBuilder: RequestBuilder<ReportSessionResult>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
@@ -212,4 +219,87 @@ open class SessionsAPI {
 
         return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
+
+    /**
+     * enum for parameter X_PLATFORM
+     */
+    public enum XPLATFORM_reportType: String, CaseIterable {
+        case ios = "ios"
+        case android = "android"
+    }
+
+    /**
+     * enum for parameter type
+     */
+    public enum ModelType_reportType: String, CaseIterable {
+        case idfa = "idfa"
+        case deviceToken = "device_token"
+    }
+
+    /**
+     report idfa or deviceToken
+
+     - parameter X_USER_ID: (header) an unique string represents the current user
+     - parameter userAgent: (header) user agent
+     - parameter X_APP_ID: (header) an unique string represents the current user
+     - parameter X_PLATFORM: (header) an unique string represents the current user
+     - parameter type: (path)
+     - parameter body: (body) test text/plain
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    @discardableResult
+    open class func reportType(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportType, type: ModelType_reportType, body: String, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: SimpleStatusResult?, _ error: Error?) -> Void)) -> RequestTask {
+        return reportTypeWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, type: type, body: body).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                    print("-------hua----手动汇报数据成功-----\(response.body)")
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     report idfa or deviceToken
+     - POST /report/{type}
+     - API Key:
+       - type: apiKey X-API-KEY
+       - name: ApiKeyAuth
+     - parameter X_USER_ID: (header) an unique string represents the current user
+     - parameter userAgent: (header) user agent
+     - parameter X_APP_ID: (header) an unique string represents the current user
+     - parameter X_PLATFORM: (header) an unique string represents the current user
+     - parameter type: (path)
+     - parameter body: (body) test text/plain
+     - returns: RequestBuilder<SimpleStatusResult>
+     */
+    open class func reportTypeWithRequestBuilder(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportType, type: ModelType_reportType, body: String) -> RequestBuilder<SimpleStatusResult> {
+        var localVariablePath = "/report/{type}"
+        let typePreEscape = "\(type.rawValue)"
+        let typePostEscape = typePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{type}", with: typePostEscape, options: .literal, range: nil)
+        let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        let X_API_KEY = DYMConstants.APIKeys.secretKey
+        let localVariableNillableHeaders: [String: Any?] = [
+            "X-USER-ID": X_USER_ID.encodeToJSON(),
+            "User-Agent": userAgent.encodeToJSON(),
+            "X-APP-ID": X_APP_ID.encodeToJSON(),
+            "X-PLATFORM": X_PLATFORM.encodeToJSON(),
+            "X-API-KEY": X_API_KEY.encodeToJSON()
+        ]
+        print("-------hua----手动汇报的---url--\(localVariableURLString)")
+        print("-------hua----手动汇报的token-----\(body)")
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<SimpleStatusResult>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+    }
+
 }

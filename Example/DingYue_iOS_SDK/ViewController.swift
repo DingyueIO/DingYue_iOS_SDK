@@ -12,7 +12,7 @@ import DingYue_iOS_SDK
 class ViewController: UIViewController {
     lazy var purchaseBtn: UIButton = {
         let btn = UIButton(type: .custom)
-        btn.frame = CGRect(x: 0, y: 0, width: 100, height: 50)
+        btn.frame = CGRect(x: 0, y: 0, width: 200, height: 50)
         btn.center = self.view.center
         btn.setTitle("go Purchase", for: [])
         btn.setTitleColor(UIColor.black, for: [])
@@ -43,6 +43,7 @@ class ViewController: UIViewController {
     }
 
 }
+
 //implement methods to purchase page user terms and privacy click events
 extension UIViewController:DYMPayWallActionDelegate {
     public func clickTermsAction(baseViewController: UIViewController) {
@@ -54,12 +55,12 @@ extension UIViewController:DYMPayWallActionDelegate {
         baseViewController.present(nav, animated: true)
     }
 
-//    public func clickPrivacyAction(baseViewController: UIViewController) {
-//        let vc = LBWebViewController.init()
-//        vc.url = "https://www.caretiveapp.com/pp/1549634329/"
-//        vc.title = NSLocalizedString("Privacy_Policy", comment: "")
-//        let nav = UINavigationController.init(rootViewController: vc)
-//        baseViewController.present(nav, animated: true)
-//    }
+    public func clickPrivacyAction(baseViewController: UIViewController) {
+        let vc = LBWebViewController.init()
+        vc.url = "https://www.caretiveapp.com/pp/1549634329/"
+        vc.title = NSLocalizedString("Privacy_Policy", comment: "")
+        let nav = UINavigationController.init(rootViewController: vc)
+        baseViewController.present(nav, animated: true)
+    }
 }
 

@@ -17,7 +17,7 @@ extension UniqueUserObject{
         self.osVersion = UserProperties.OS
         self.idfa = UserProperties.idfa
         self.idfv = UserProperties.idfv
-        self.deviceToken = UserProperties.deviceIdentifier
+        self.deviceToken = UserProperties.deviceToken
         self.androidId = ""
         self.gpsAdid = ""
         self.fireAdid = ""

@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DingYue_iOS_SDK'
-  s.version          = '0.1.1'
+  s.version          = '0.1.2'
   s.summary          = 'DingYue_iOS_SDK podspec file .'
 
 # This description is used to generate tags and improve search results.
@@ -45,7 +45,7 @@ TODO: DingYue_iOS_SDK: manage your purchase process and collect data to analyze 
   s.dependency 'AnyCodable-FlightSchool', '~> 0.6.1'
   s.dependency 'SSZipArchive', '~> 2.2.3'
   s.frameworks = 'Foundation', 'StoreKit'
-  s.ios.framework = 'UIKit', 'iAd', 'AdSupport'
+  s.ios.framework = 'UIKit', 'iAd', 'AdSupport','AppTrackingTransparency'
   s.ios.weak_frameworks = 'AdServices'
   s.osx.frameworks = 'AppKit'
   s.osx.weak_frameworks = 'AdSupport', 'AdServices'
