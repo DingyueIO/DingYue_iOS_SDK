@@ -28,9 +28,8 @@ class DYMConstants: NSObject {
         static let agent  = "User-Agent"
     }
 
-
     enum Versions {
-        static let SDKVersion = "1.0.0"
+        static let SDKVersion = "0.1.2"
         static let SDKBuild = 1
     }
     enum BundleKeys {
@@ -67,28 +66,16 @@ class DYMConstants: NSObject {
     }
 }
 
-@objc public enum DYMAttributionSource: UInt {
+public enum DYMAttributionSource: UInt {
     case appsFlyer
     case adjust
-    case branch
-    case searchAds
     case amplitude
-    case facebook
-    case mixpanel
-    case amazonS3
-    case aliCloud
 
     var rawString: String {
         switch self {
             case .appsFlyer: return "APPSFLYER"
             case .adjust: return "ADJUST"
-            case .branch: return "BRANCH"
-            case .searchAds: return "SEARCHADS"
             case .amplitude: return "AMPLITUDE"
-            case .facebook: return "FACEBOOK"
-            case .mixpanel: return "MIXPANEL"
-            case .amazonS3: return "AMAZONS3"
-            case .aliCloud: return "ALICLOUD"
         }
     }
 }

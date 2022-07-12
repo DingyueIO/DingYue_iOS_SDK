@@ -31,6 +31,9 @@ class LBWebViewController: UIViewController {
         
         let request = URLRequest.init(url: URL.init(string: self.url)!)
         self.webView.load(request)
+
+        self.webView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        self.webView.center = self.view.center
         
         // 进度条
         self.view.addSubview(self.myProgressView)
@@ -42,7 +45,8 @@ class LBWebViewController: UIViewController {
 
         } else {
             let btn = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-            btn.setImage(UIImage(named: "close"), for: .normal)
+            btn.setTitle("close", for: .normal)
+            btn.setTitleColor(.black, for: .normal)
             btn.addTarget(self, action: #selector(backUp), for: .touchUpInside)
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: btn)
         }

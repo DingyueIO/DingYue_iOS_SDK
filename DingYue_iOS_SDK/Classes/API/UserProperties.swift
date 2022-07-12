@@ -8,6 +8,10 @@
 import AdSupport
 #endif
 
+#if canImport(AppTrackingTransparency)
+import AppTrackingTransparency
+#endif
+
 #if canImport(AdServices)
 import AdServices
 #endif
@@ -48,12 +52,29 @@ class UserProperties {
     static var idfa: String? {
         // Get and return IDFA
         if DYMobileSDK.idfaCollectionDisabled == false, #available(iOS 9.0, macOS 10.14, *) {
-            return ASIdentifierManager.shared().advertisingIdentifier.uuidString
+            if #available(iOS 14, *) {
+                if ATTrackingManager.trackingAuthorizationStatus == .authorized {
+                    return ASIdentifierManager.shared().advertisingIdentifier.uuidString
+                } else {
+                    return nil
+                }
+            } else {
+                if ASIdentifierManager.shared().isAdvertisingTrackingEnabled {
+                    return ASIdentifierManager.shared().advertisingIdentifier.uuidString
+                }else{
+                    return nil
+                }
+            }
         } else {
             return nil
         }
     }
-    static var idfv: String = ""
+    static var idfv: String?  {
+        guard let identifierForVendor = UIDevice.current.identifierForVendor?.uuidString else {
+            return nil
+        }
+        return identifierForVendor
+    }
 
     static var connection: UniqueUserObject.Connection = .unknown
 
@@ -139,21 +160,27 @@ class UserProperties {
         return TimeZone.current.identifier
     }
 
-    static var deviceIdentifier: String? {
-        #if os(macOS) || targetEnvironment(macCatalyst)
-        let matchingDict = IOServiceMatching("IOPlatformExpertDevice")
-        let platformExpert = IOServiceGetMatchingService(kIOMasterPortDefault, matchingDict)
-        defer { IOObjectRelease(platformExpert) }
+//    static var deviceIdentifier: String? {
+//        #if os(macOS) || targetEnvironment(macCatalyst)
+//        let matchingDict = IOServiceMatching("IOPlatformExpertDevice")
+//        let platformExpert = IOServiceGetMatchingService(kIOMasterPortDefault, matchingDict)
+//        defer { IOObjectRelease(platformExpert) }
+//
+//        guard platformExpert != 0 else { return nil }
+//        return IORegistryEntryCreateCFProperty(platformExpert,
+//                                               kIOPlatformUUIDKey as CFString,
+//                                               kCFAllocatorDefault, 0).takeRetainedValue() as? String
+//        #else
+//        return UIDevice.current.identifierForVendor?.uuidString
+//        #endif
+//    }
 
-        guard platformExpert != 0 else { return nil }
-        return IORegistryEntryCreateCFProperty(platformExpert,
-                                               kIOPlatformUUIDKey as CFString,
-                                               kCFAllocatorDefault, 0).takeRetainedValue() as? String
-        #else
-        return UIDevice.current.identifierForVendor?.uuidString
-        #endif
+    static var deviceToken: String? {
+        guard let token = DYMobileSDK.apnsTokenString else {
+            return nil
+        }
+        return token
     }
-
 
 
     #if os(iOS)

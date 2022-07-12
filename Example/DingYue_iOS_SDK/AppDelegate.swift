@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AdSupport
+import AppTrackingTransparency
 import DingYue_iOS_SDK
 
 @UIApplicationMain
@@ -14,19 +16,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         //session report
         DYMobileSDK.activate { switchItems, subscribedOjects, error in
             if error == nil {
                 //激活成功
+                print("DingYue_iOS_SDK 激活成功")
             }
         }
-        //attribution
-//        DYMobileSDK.reportAttribution()
-//        DYMobileSDK.reportAttribution(adjustId: "1111", appsFlyerId: "2222", amplitudeId: "3333")
-
         return true
     }
 
@@ -46,12 +44,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        requestIDFA()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
 }
 
+extension AppDelegate {
+    func requestIDFA() {
+        //IDFA权限
+        if #available(iOS 14, *) {
+            let state = ATTrackingManager.trackingAuthorizationStatus
+            if state == .notDetermined {
+                ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
+                    var idfa = ""
+                    if status == .authorized {
+                        idfa = ASIdentifierManager.shared().advertisingIdentifier.uuidString
+                    }
+                    DYMobileSDK.reportIdfa(idfa: idfa)
+                })
+            }else if state == .authorized {
+                let idfa = ASIdentifierManager.shared().advertisingIdentifier.uuidString
+                DYMobileSDK.reportIdfa(idfa: idfa)
+            }else{
+                let idfa = ASIdentifierManager.shared().advertisingIdentifier.uuidString
+                DYMobileSDK.reportIdfa(idfa: idfa)
+            }
+        } else {
+            DYMobileSDK.reportIdfa(idfa: ASIdentifierManager.shared().advertisingIdentifier.uuidString)
+        }
+    }
+}

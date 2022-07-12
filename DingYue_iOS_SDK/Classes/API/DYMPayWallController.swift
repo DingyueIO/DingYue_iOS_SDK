@@ -9,14 +9,9 @@ import UIKit
 import WebKit
 import StoreKit
 
-public protocol DYMPayWallActionDelegate: NSObjectProtocol {
-    //如果内购页上有“隐私政策“和”使用协议“，则需要对应的代理方法
-    func clickTermsAction(baseViewController:UIViewController)//使用协议
-    func clickPrivacyAction(baseViewController:UIViewController)//隐私政策
-}
-extension DYMPayWallActionDelegate {
-    public func clickTermsAction(baseViewController:UIViewController) {}
-    public func clickPrivacyAction(baseViewController:UIViewController) {}
+@objc public protocol DYMPayWallActionDelegate: NSObjectProtocol {
+    @objc optional func clickTermsAction(baseViewController:UIViewController)//使用协议
+    @objc optional func clickPrivacyAction(baseViewController:UIViewController)//隐私政策
 }
 
 public class DYMPayWallController: UIViewController {
@@ -150,12 +145,14 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
             }
         } else if message.name == "vip_terms" {
             eventManager.track(event: .ABOUT_TERMSOFSERVICE, user: user)
-
-            self.delegate?.clickTermsAction(baseViewController: self)
+            if ((self.delegate?.clickTermsAction?(baseViewController: self)) != nil) {
+                self.delegate?.clickTermsAction!(baseViewController: self)
+            }
         }else if message.name == "vip_privacy" {
             eventManager.track(event: .ABOUT_PRIVACYPOLICY, user: user)
-
-            self.delegate?.clickPrivacyAction(baseViewController: self)
+            if ((self.delegate?.clickPrivacyAction?(baseViewController: self)) != nil) {
+                self.delegate?.clickPrivacyAction!(baseViewController: self)
+            }
         }else if message.name == "vip_purchase" {
             eventManager.track(event: .PURCHASE_START, user: user)
 

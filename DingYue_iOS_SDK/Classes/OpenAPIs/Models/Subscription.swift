@@ -11,7 +11,7 @@ import AnyCodable
 #endif
 
 /** subscription metadata object */
-@objc public class Subscription:NSObject, Codable, JSONEncodable {
+@objcMembers public class Subscription:NSObject, Codable, JSONEncodable {
 
     public enum ModelType: String, Codable, CaseIterable {
         case subscription = "SUBSCRIPTION"
@@ -27,7 +27,6 @@ import AnyCodable
         case halfYear = "HALF_YEAR"
         case year = "YEAR"
     }
-//    public var type: ModelType//huacomment
     public var type: String
     /** the name of the subscription */
     public var name: String
@@ -36,10 +35,8 @@ import AnyCodable
     /** Subscription Group ID that this subscription belongs to. iOS only */
     public var appleSubscriptionGroupId: String?
     /** subscription description on the market */
-//    public var description: String?
     public var subscriptionDescription: String?
     /** the length of renew period of subscription */
-//    public var period: Period?//huacomment
     public var period: String?
     /** the price of the subscription for one period */
     public var price: String
@@ -67,6 +64,24 @@ import AnyCodable
         self.gracePeriod = gracePeriod
         self.icon = icon
         self.renewPriceChange = renewPriceChange
+    }
+
+    public func initWith(type: String, name: String, platformProductId: String, subscriptionDescription: String? = nil, period: String? = nil, price: String, currencyCode: String, countryCode: String) -> Subscription {
+        let sub = self
+        sub.type = type
+        sub.name = name
+        sub.platformProductId = platformProductId
+        sub.appleSubscriptionGroupId = nil
+        sub.subscriptionDescription = subscriptionDescription
+        sub.period = period
+        sub.price = price
+        sub.currencyCode = currencyCode
+        sub.countryCode = countryCode
+        sub.priceTier = nil
+        sub.gracePeriod = nil
+        sub.icon = nil
+        sub.renewPriceChange = nil
+        return sub
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
