@@ -93,8 +93,7 @@ import StoreKit
 
         iapManager.startObserverPurchase()
         #if os(iOS)
-        // check if user enabled apple search ads attribution collection
-        if let appleSearchAdsAttributionCollectionEnabled = Bundle.main.infoDictionary?[DYMConstants.BundleKeys.appleSearchAdsAttributionCollectionEnabled] as? Bool, appleSearchAdsAttributionCollectionEnabled {
+        if UserProperties.idfa != nil {
             reportAppleSearchAdsAttribution()
         }
         #endif
@@ -150,7 +149,6 @@ import StoreKit
     private class func reportSearchAds(attribution: DYMParams) {
         let data = AnyCodable(attribution)
         shared.apiManager.updateSearchAdsAttribution(attribution: data) { result, error in
-            
         }
     }
 
