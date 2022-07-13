@@ -77,7 +77,7 @@ class ApiManager {
             return
         }
         let searchAtt = AppleSearchAdsAttribution(attribution: attribution)
-         let appleReportObjAtt = AppleSearchAdsAttributionReportObjectAttribution(version31:searchAtt)
+        let appleReportObjAtt = AppleSearchAdsAttributionReportObjectAttribution(version31:searchAtt)
         let appleReportObj = AppleSearchAdsAttributionReportObject(attribution: appleReportObjAtt)
         AttributionAPI.reportSearchAdsAttr(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: AttributionAPI.XPLATFORM_reportSearchAdsAttr.ios, appleSearchAdsAttributionReportObject: appleReportObj, apiResponseQueue: OpenAPIClientAPI.apiResponseQueue) { data, error in
             completion(data,error)
@@ -140,23 +140,6 @@ class ApiManager {
     }
     
     func updateUser(attributes:[String],completion:((Bool,DYMError?) -> Void)? = nil) {
-//        UserAttributeAPI.updateUserAttributes(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_APP_Key: DYMConstants.APIKeys.secretKey, attributes: attributes) { data, error in
-//            if error != nil {
-//                completion?(false,DYMError(error!))
-//                return
-//            }
-//            if let result = data {
-//                if result.status == .ok {
-//                    completion?(true,nil)
-//                }else {
-//                    completion?(false,DYMError(code: .failed, message: result.errmsg ?? ""))
-//                }
-//                return
-//            }
-//            completion?(false,.failed)
-//        }
-
-//
 //        SessionsAPI.updateUserAttribute(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: SessionsAPI.XPLATFORM_updateUserAttribute.ios, editOneOf: <#T##[EditOneOf]#>) { data, error in
 //            if error != nil {
 //                completion?(false,DYMError(error!))
@@ -172,6 +155,5 @@ class ApiManager {
 //            }
 //            completion?(false,.failed)
 //        }
-
     }
 }

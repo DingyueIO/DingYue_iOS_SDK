@@ -130,7 +130,7 @@ open class AttributionAPI {
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: appleSearchAdsAttributionReportObject)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
-        let X_API_KEY = DYMConstants.APIKeys.secretKey//new add
+        let X_API_KEY = DYMConstants.APIKeys.secretKey
         let localVariableNillableHeaders: [String: Any?] = [
             "X-USER-ID": X_USER_ID.encodeToJSON(),
             "User-Agent": userAgent.encodeToJSON(),
