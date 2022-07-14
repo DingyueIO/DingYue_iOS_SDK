@@ -71,7 +71,7 @@ open class SessionsAPI {
             "User-Agent": userAgent.encodeToJSON(),
             "X-APP-ID": X_APP_ID.encodeToJSON(),
             "X-PLATFORM": X_PLATFORM.encodeToJSON(),
-	    "X-VERSION": X_VERSION.encodeToJSON(),
+	        "X-VERSION": X_VERSION.encodeToJSON(),
             "X-API-KEY":X_API_KEY.encodeToJSON()
         ]
 
@@ -127,7 +127,7 @@ open class SessionsAPI {
      - parameter X_PLATFORM: (header) an unique string represents the current user 
      - parameter X_VERSION: (header) sdk version 
      - parameter uniqueUserObject: (body)  
-     - returns: RequestBuilder<ReportSessionResult> 
+     - returns: RequestBuilder<ReportSessionResult>
      */
     open class func reportSessionWithRequestBuilder(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportSession, X_VERSION: String, uniqueUserObject: UniqueUserObject) -> RequestBuilder<ReportSessionResult> {
         let localVariablePath = "/sessions/report"
@@ -142,9 +142,10 @@ open class SessionsAPI {
             "User-Agent": userAgent.encodeToJSON(),
             "X-APP-ID": X_APP_ID.encodeToJSON(),
             "X-PLATFORM": X_PLATFORM.encodeToJSON(),
-	    "X-VERSION": X_VERSION.encodeToJSON(),
+	        "X-VERSION": X_VERSION.encodeToJSON(),
             "X-API-KEY":X_API_KEY.encodeToJSON()
         ]
+        print(localVariableNillableHeaders)
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
@@ -290,7 +291,7 @@ open class SessionsAPI {
             "User-Agent": userAgent.encodeToJSON(),
             "X-APP-ID": X_APP_ID.encodeToJSON(),
             "X-PLATFORM": X_PLATFORM.encodeToJSON(),
-	    "X-VERSION": X_VERSION.encodeToJSON(),
+	        "X-VERSION": X_VERSION.encodeToJSON(),
             "X-API-KEY": X_API_KEY.encodeToJSON()
         ]
 
