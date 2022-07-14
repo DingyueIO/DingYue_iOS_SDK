@@ -27,13 +27,14 @@ open class SessionsAPI {
      - parameter userAgent: (header) user agent 
      - parameter X_APP_ID: (header) an unique string represents the current user 
      - parameter X_PLATFORM: (header) an unique string represents the current user 
+     - parameter X_VERSION: (header) sdk version 
      - parameter eventReportObject: (body)  
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func reportEvents(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportEvents, eventReportObject: EventReportObject, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: SimpleStatusResult?, _ error: Error?) -> Void)) -> RequestTask {
-        return reportEventsWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, eventReportObject: eventReportObject).execute(apiResponseQueue) { result in
+    open class func reportEvents(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportEvents, X_VERSION: String, eventReportObject: EventReportObject, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: SimpleStatusResult?, _ error: Error?) -> Void)) -> RequestTask {
+        return reportEventsWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, X_VERSION: X_VERSION, eventReportObject: eventReportObject).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -53,10 +54,11 @@ open class SessionsAPI {
      - parameter userAgent: (header) user agent 
      - parameter X_APP_ID: (header) an unique string represents the current user 
      - parameter X_PLATFORM: (header) an unique string represents the current user 
+     - parameter X_VERSION: (header) sdk version 
      - parameter eventReportObject: (body)  
      - returns: RequestBuilder<SimpleStatusResult> 
      */
-    open class func reportEventsWithRequestBuilder(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportEvents, eventReportObject: EventReportObject) -> RequestBuilder<SimpleStatusResult> {
+    open class func reportEventsWithRequestBuilder(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportEvents, X_VERSION: String, eventReportObject: EventReportObject) -> RequestBuilder<SimpleStatusResult> {
         let localVariablePath = "/users/report/events"
         let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: eventReportObject)
@@ -69,6 +71,7 @@ open class SessionsAPI {
             "User-Agent": userAgent.encodeToJSON(),
             "X-APP-ID": X_APP_ID.encodeToJSON(),
             "X-PLATFORM": X_PLATFORM.encodeToJSON(),
+	    "X-VERSION": X_VERSION.encodeToJSON(),
             "X-API-KEY":X_API_KEY.encodeToJSON()
         ]
 
@@ -94,13 +97,14 @@ open class SessionsAPI {
      - parameter userAgent: (header) user agent 
      - parameter X_APP_ID: (header) an unique string represents the current user 
      - parameter X_PLATFORM: (header) an unique string represents the current user 
+     - parameter X_VERSION: (header) sdk version 
      - parameter uniqueUserObject: (body)  
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func reportSession(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportSession, uniqueUserObject: UniqueUserObject, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: ReportSessionResult?, _ error: Error?) -> Void)) -> RequestTask {
-        return reportSessionWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, uniqueUserObject: uniqueUserObject).execute(apiResponseQueue) { result in
+    open class func reportSession(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportSession, X_VERSION: String, uniqueUserObject: UniqueUserObject, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: ReportSessionResult?, _ error: Error?) -> Void)) -> RequestTask {
+        return reportSessionWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, X_VERSION: X_VERSION, uniqueUserObject: uniqueUserObject).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -121,10 +125,11 @@ open class SessionsAPI {
      - parameter userAgent: (header) user agent 
      - parameter X_APP_ID: (header) an unique string represents the current user 
      - parameter X_PLATFORM: (header) an unique string represents the current user 
+     - parameter X_VERSION: (header) sdk version 
      - parameter uniqueUserObject: (body)  
      - returns: RequestBuilder<ReportSessionResult> 
      */
-    open class func reportSessionWithRequestBuilder(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportSession, uniqueUserObject: UniqueUserObject) -> RequestBuilder<ReportSessionResult> {
+    open class func reportSessionWithRequestBuilder(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportSession, X_VERSION: String, uniqueUserObject: UniqueUserObject) -> RequestBuilder<ReportSessionResult> {
         let localVariablePath = "/sessions/report"
         let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: uniqueUserObject)
@@ -137,6 +142,7 @@ open class SessionsAPI {
             "User-Agent": userAgent.encodeToJSON(),
             "X-APP-ID": X_APP_ID.encodeToJSON(),
             "X-PLATFORM": X_PLATFORM.encodeToJSON(),
+	    "X-VERSION": X_VERSION.encodeToJSON(),
             "X-API-KEY":X_API_KEY.encodeToJSON()
         ]
 
@@ -236,14 +242,15 @@ open class SessionsAPI {
      - parameter userAgent: (header) user agent
      - parameter X_APP_ID: (header) an unique string represents the current user
      - parameter X_PLATFORM: (header) an unique string represents the current user
+     - parameter X_VERSION: (header) sdk version 
      - parameter type: (path)
      - parameter body: (body) test text/plain
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func reportType(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportType, type: ModelType_reportType, body: String, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: SimpleStatusResult?, _ error: Error?) -> Void)) -> RequestTask {
-        return reportTypeWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, type: type, body: body).execute(apiResponseQueue) { result in
+    open class func reportType(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportType, X_VERSION: String, type: ModelType_reportType, body: String, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: SimpleStatusResult?, _ error: Error?) -> Void)) -> RequestTask {
+        return reportTypeWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, X_VERSION: X_VERSION, type: type, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -263,11 +270,12 @@ open class SessionsAPI {
      - parameter userAgent: (header) user agent
      - parameter X_APP_ID: (header) an unique string represents the current user
      - parameter X_PLATFORM: (header) an unique string represents the current user
+     - parameter X_VERSION: (header) sdk version 
      - parameter type: (path)
      - parameter body: (body) test text/plain
      - returns: RequestBuilder<SimpleStatusResult>
      */
-    open class func reportTypeWithRequestBuilder(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportType, type: ModelType_reportType, body: String) -> RequestBuilder<SimpleStatusResult> {
+    open class func reportTypeWithRequestBuilder(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportType, X_VERSION: String, type: ModelType_reportType, body: String) -> RequestBuilder<SimpleStatusResult> {
         var localVariablePath = "/report/{type}"
         let typePreEscape = "\(type.rawValue)"
         let typePostEscape = typePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -282,6 +290,7 @@ open class SessionsAPI {
             "User-Agent": userAgent.encodeToJSON(),
             "X-APP-ID": X_APP_ID.encodeToJSON(),
             "X-PLATFORM": X_PLATFORM.encodeToJSON(),
+	    "X-VERSION": X_VERSION.encodeToJSON(),
             "X-API-KEY": X_API_KEY.encodeToJSON()
         ]
 

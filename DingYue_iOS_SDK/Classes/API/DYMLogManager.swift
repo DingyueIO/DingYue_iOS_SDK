@@ -46,7 +46,7 @@ class DYMLogManager: NSObject {
     }
 
     private class var prefix: String {
-        return "\(dateTime) [DingYue v\(UserProperties.sdkVersion ?? "")(\(UserProperties.sdkVersionBuild))]"
+        return "\(dateTime) [DingYue v\(UserProperties.sdkVersion )(\(UserProperties.sdkVersionBuild))]"
     }
 
     private static var formatter: DateFormatter = {

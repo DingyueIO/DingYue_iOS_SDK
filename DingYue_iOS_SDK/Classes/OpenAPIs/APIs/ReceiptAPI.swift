@@ -27,13 +27,14 @@ open class ReceiptAPI {
      - parameter userAgent: (header) user agent 
      - parameter X_APP_ID: (header) an unique string represents the current user 
      - parameter X_PLATFORM: (header) an unique string represents the current user 
+     - parameter X_VERSION: (header) sdk version 
      - parameter firstReceiptVerifyPostObject: (body)  
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func verifyFirstReceipt(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_verifyFirstReceipt, firstReceiptVerifyPostObject: FirstReceiptVerifyPostObject, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: [String:Any]?, _ error: Error?) -> Void)) -> RequestTask {
-        return verifyFirstReceiptWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, firstReceiptVerifyPostObject: firstReceiptVerifyPostObject).execute(apiResponseQueue) { result in
+    open class func verifyFirstReceipt(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_verifyFirstReceipt, X_VERSION: String, firstReceiptVerifyPostObject: FirstReceiptVerifyPostObject, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: [String:Any]?, _ error: Error?) -> Void)) -> RequestTask {
+        return verifyFirstReceiptWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM,X_VERSION: X_VERSION, firstReceiptVerifyPostObject: firstReceiptVerifyPostObject).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(DYMDefaultsManager.shared.firstReceiptResponse(firstReceiptResponse: response.body), nil)
@@ -54,21 +55,23 @@ open class ReceiptAPI {
      - parameter userAgent: (header) user agent 
      - parameter X_APP_ID: (header) an unique string represents the current user 
      - parameter X_PLATFORM: (header) an unique string represents the current user 
+     - parameter X_VERSION: (header) sdk version 
      - parameter firstReceiptVerifyPostObject: (body)  
      - returns: RequestBuilder<FirstReceiptVerifyMobileResponse> 
      */
-    open class func verifyFirstReceiptWithRequestBuilder(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_verifyFirstReceipt, firstReceiptVerifyPostObject: FirstReceiptVerifyPostObject) -> RequestBuilder<FirstReceiptVerifyMobileResponse> {
+    open class func verifyFirstReceiptWithRequestBuilder(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_verifyFirstReceipt, X_VERSION: String, firstReceiptVerifyPostObject: FirstReceiptVerifyPostObject) -> RequestBuilder<FirstReceiptVerifyMobileResponse> {
         let localVariablePath = "/receipt/verify/first"
         let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: firstReceiptVerifyPostObject)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
-        let X_API_KEY = DYMConstants.APIKeys.secretKey//new add
+        let X_API_KEY = DYMConstants.APIKeys.secretKey
         let localVariableNillableHeaders: [String: Any?] = [
             "X-USER-ID": X_USER_ID.encodeToJSON(),
             "User-Agent": userAgent.encodeToJSON(),
             "X-APP-ID": X_APP_ID.encodeToJSON(),
             "X-PLATFORM": X_PLATFORM.encodeToJSON(),
+            "X-VERSION": X_VERSION.encodeToJSON(),
             "X-API-KEY": X_API_KEY.encodeToJSON()
         ]
 
@@ -94,13 +97,14 @@ open class ReceiptAPI {
      - parameter userAgent: (header) user agent 
      - parameter X_APP_ID: (header) an unique string represents the current user 
      - parameter X_PLATFORM: (header) an unique string represents the current user 
+     - parameter X_VERSION: (header) sdk version 
      - parameter receiptVerifyPostObject: (body)  
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func verifyReceipt(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_verifyReceipt, receiptVerifyPostObject: ReceiptVerifyPostObject, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: [String:Any]?, _ error: Error?) -> Void)) -> RequestTask {
-        return verifyReceiptWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, receiptVerifyPostObject: receiptVerifyPostObject).execute(apiResponseQueue) { result in
+    open class func verifyReceipt(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_verifyReceipt, X_VERSION: String, receiptVerifyPostObject: ReceiptVerifyPostObject, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: [String:Any]?, _ error: Error?) -> Void)) -> RequestTask {
+        return verifyReceiptWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, X_VERSION: X_VERSION, receiptVerifyPostObject: receiptVerifyPostObject).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                     completion(DYMDefaultsManager.shared.recoverReceiptResponse(recoverReceiptResponse: response.body), nil)
@@ -121,10 +125,11 @@ open class ReceiptAPI {
      - parameter userAgent: (header) user agent 
      - parameter X_APP_ID: (header) an unique string represents the current user 
      - parameter X_PLATFORM: (header) an unique string represents the current user 
+     - parameter X_VERSION: (header) sdk version 
      - parameter receiptVerifyPostObject: (body)  
      - returns: RequestBuilder<ReceiptVerifyMobileResponse> 
      */
-    open class func verifyReceiptWithRequestBuilder(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_verifyReceipt, receiptVerifyPostObject: ReceiptVerifyPostObject) -> RequestBuilder<ReceiptVerifyMobileResponse> {
+    open class func verifyReceiptWithRequestBuilder(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_verifyReceipt, X_VERSION: String, receiptVerifyPostObject: ReceiptVerifyPostObject) -> RequestBuilder<ReceiptVerifyMobileResponse> {
         let localVariablePath = "/receipt/verify/recover"
         let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: receiptVerifyPostObject)
@@ -136,6 +141,7 @@ open class ReceiptAPI {
             "User-Agent": userAgent.encodeToJSON(),
             "X-APP-ID": X_APP_ID.encodeToJSON(),
             "X-PLATFORM": X_PLATFORM.encodeToJSON(),
+            "X-VERSION": X_VERSION.encodeToJSON(),
             "X-API-KEY": X_API_KEY.encodeToJSON()
         ]
 

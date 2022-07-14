@@ -229,7 +229,7 @@ import StoreKit
         shared.eventManager.track(event: DYMEventType(rawValue: event)!, extra: extra, user: user)
     }
 
-    /// MARK: - User Attributes
+//    /// MARK: - User Attributes
 //    @objc public class func customUser(attributes:[String],completion:((Bool,DYMError?)-> Void)? = nil) {
 //        DYMLogManager.logMessage("Calling now: \(#function)")
 //        shared.apiManager.updateUser(attributes: attributes, completion: completion)

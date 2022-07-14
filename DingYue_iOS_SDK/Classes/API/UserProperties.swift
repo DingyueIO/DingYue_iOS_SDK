@@ -78,7 +78,7 @@ class UserProperties {
 
     static var connection: UniqueUserObject.Connection = .unknown
 
-    static var sdkVersion: String? {
+    static var sdkVersion: String {
         return DYMConstants.Versions.SDKVersion
     }
 
