@@ -138,7 +138,7 @@ class DYMEventManager {
     private func syncEvents() {
         let currentEvents = cachedEvents
         let events = currentEvents.map { Event(name: $0["name"]!, extra: $0["extra"], user: $0["user"]!)}
-        SessionsAPI.reportEvents(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: SessionsAPI.XPLATFORM_reportEvents.ios, eventReportObject: EventReportObject(events: events)) { data, error in
+        SessionsAPI.reportEvents(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: SessionsAPI.XPLATFORM_reportEvents.ios, X_VERSION: UserProperties.sdkVersion, eventReportObject: EventReportObject(events: events)) { data, error in
             if error == nil {
                 let leftEvents = Set(self.cachedEvents).subtracting(Set(currentEvents))
                 self.cachedEvents = Array(leftEvents)

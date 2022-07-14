@@ -27,13 +27,14 @@ open class AttributionAPI {
      - parameter userAgent: (header) user agent 
      - parameter X_APP_ID: (header) an unique string represents the current user 
      - parameter X_PLATFORM: (header) an unique string represents the current user 
+     - parameter X_VERSION: (header) sdk version 
      - parameter attribution: (body)  (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func attributionData(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_attributionData, attribution: Attribution? = nil, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: SimpleStatusResult?, _ error: Error?) -> Void)) -> RequestTask {
-        return attributionDataWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, attribution: attribution).execute(apiResponseQueue) { result in
+    open class func attributionData(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_attributionData, X_VERSION: String, attribution: Attribution? = nil, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: SimpleStatusResult?, _ error: Error?) -> Void)) -> RequestTask {
+        return attributionDataWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, X_VERSION: X_VERSION, attribution: attribution).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -54,10 +55,11 @@ open class AttributionAPI {
      - parameter userAgent: (header) user agent 
      - parameter X_APP_ID: (header) an unique string represents the current user 
      - parameter X_PLATFORM: (header) an unique string represents the current user 
+     - parameter X_VERSION: (header) sdk version 
      - parameter attribution: (body)  (optional)
      - returns: RequestBuilder<SimpleStatusResult> 
      */
-    open class func attributionDataWithRequestBuilder(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_attributionData, attribution: Attribution? = nil) -> RequestBuilder<SimpleStatusResult> {
+    open class func attributionDataWithRequestBuilder(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_attributionData, X_VERSION: String, attribution: Attribution? = nil) -> RequestBuilder<SimpleStatusResult> {
         let localVariablePath = "/attribution/report"
         let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: attribution)
@@ -69,6 +71,7 @@ open class AttributionAPI {
             "User-Agent": userAgent.encodeToJSON(),
             "X-APP-ID": X_APP_ID.encodeToJSON(),
             "X-PLATFORM": X_PLATFORM.encodeToJSON(),
+	    "X-VERSION": X_VERSION.encodeToJSON(),
             "X-API-KEY": X_API_KEY.encodeToJSON()
         ]
 
@@ -94,13 +97,14 @@ open class AttributionAPI {
      - parameter userAgent: (header) user agent 
      - parameter X_APP_ID: (header) an unique string represents the current user 
      - parameter X_PLATFORM: (header) an unique string represents the current user 
+     - parameter X_VERSION: (header) sdk version 
      - parameter appleSearchAdsAttributionReportObject: (body)  
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func reportSearchAdsAttr(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportSearchAdsAttr, appleSearchAdsAttributionReportObject: AppleSearchAdsAttributionReportObject, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: SimpleStatusResult?, _ error: Error?) -> Void)) -> RequestTask {
-        return reportSearchAdsAttrWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, appleSearchAdsAttributionReportObject: appleSearchAdsAttributionReportObject).execute(apiResponseQueue) { result in
+    open class func reportSearchAdsAttr(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportSearchAdsAttr, X_VERSION: String, appleSearchAdsAttributionReportObject: AppleSearchAdsAttributionReportObject, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: SimpleStatusResult?, _ error: Error?) -> Void)) -> RequestTask {
+        return reportSearchAdsAttrWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, X_VERSION: X_VERSION, appleSearchAdsAttributionReportObject: appleSearchAdsAttributionReportObject).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -121,10 +125,11 @@ open class AttributionAPI {
      - parameter userAgent: (header) user agent 
      - parameter X_APP_ID: (header) an unique string represents the current user 
      - parameter X_PLATFORM: (header) an unique string represents the current user 
+     - parameter X_VERSION: (header) sdk version 
      - parameter appleSearchAdsAttributionReportObject: (body)  
      - returns: RequestBuilder<SimpleStatusResult> 
      */
-    open class func reportSearchAdsAttrWithRequestBuilder(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportSearchAdsAttr, appleSearchAdsAttributionReportObject: AppleSearchAdsAttributionReportObject) -> RequestBuilder<SimpleStatusResult> {
+    open class func reportSearchAdsAttrWithRequestBuilder(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportSearchAdsAttr, X_VERSION: String, appleSearchAdsAttributionReportObject: AppleSearchAdsAttributionReportObject) -> RequestBuilder<SimpleStatusResult> {
         let localVariablePath = "/searchads/report"
         let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: appleSearchAdsAttributionReportObject)
@@ -136,6 +141,7 @@ open class AttributionAPI {
             "User-Agent": userAgent.encodeToJSON(),
             "X-APP-ID": X_APP_ID.encodeToJSON(),
             "X-PLATFORM": X_PLATFORM.encodeToJSON(),
+	    "X-VERSION": X_VERSION.encodeToJSON(),
             "X-API-KEY": X_API_KEY.encodeToJSON()
         ]
 
