@@ -71,7 +71,7 @@ open class AttributionAPI {
             "User-Agent": userAgent.encodeToJSON(),
             "X-APP-ID": X_APP_ID.encodeToJSON(),
             "X-PLATFORM": X_PLATFORM.encodeToJSON(),
-	    "X-VERSION": X_VERSION.encodeToJSON(),
+	        "X-VERSION": X_VERSION.encodeToJSON(),
             "X-API-KEY": X_API_KEY.encodeToJSON()
         ]
 
@@ -141,7 +141,7 @@ open class AttributionAPI {
             "User-Agent": userAgent.encodeToJSON(),
             "X-APP-ID": X_APP_ID.encodeToJSON(),
             "X-PLATFORM": X_PLATFORM.encodeToJSON(),
-	    "X-VERSION": X_VERSION.encodeToJSON(),
+	        "X-VERSION": X_VERSION.encodeToJSON(),
             "X-API-KEY": X_API_KEY.encodeToJSON()
         ]
 

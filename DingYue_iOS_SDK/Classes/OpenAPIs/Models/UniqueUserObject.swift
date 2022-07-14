@@ -29,45 +29,19 @@ public struct UniqueUserObject: Codable, JSONEncodable, Hashable {
     public var idfv: String?
     /** Push device token. iOS only */
     public var deviceToken: String?
-    /** android only */
-    public var androidId: String?
-    /** Google Play Services Advertising ID, Android only */
-    public var gpsAdid: String?
-    /** Amazon fire adv ID, Amazon device only */
-    public var fireAdid: String?
-    /** Open Advertising ID. Huawei only */
-    public var oaid: String?
-    public var imei: String?
     /** device model */
     public var device: String
     /** device network connection method */
     public var connection: Connection?
-    public var googleProfileId: String?
-    public var googleProfileName: String?
-    public var googleExternalAccountId: String?
-    public var emailAddress: String?
-    public var familyName: String?
-    public var givenName: String?
     public var attribution: UniqueUserObjectAttribution?
 
-    public init(osVersion: String, idfa: String? = nil, idfv: String? = nil, deviceToken: String? = nil, androidId: String? = nil, gpsAdid: String? = nil, fireAdid: String? = nil, oaid: String? = nil, imei: String? = nil, device: String, connection: Connection? = nil, googleProfileId: String? = nil, googleProfileName: String? = nil, googleExternalAccountId: String? = nil, emailAddress: String? = nil, familyName: String? = nil, givenName: String? = nil, attribution: UniqueUserObjectAttribution? = nil) {
+    public init(osVersion: String, idfa: String? = nil, idfv: String? = nil, deviceToken: String? = nil, device: String, connection: Connection? = nil,attribution: UniqueUserObjectAttribution? = nil) {
         self.osVersion = osVersion
         self.idfa = idfa
         self.idfv = idfv
         self.deviceToken = deviceToken
-        self.androidId = androidId
-        self.gpsAdid = gpsAdid
-        self.fireAdid = fireAdid
-        self.oaid = oaid
-        self.imei = imei
         self.device = device
         self.connection = connection
-        self.googleProfileId = googleProfileId
-        self.googleProfileName = googleProfileName
-        self.googleExternalAccountId = googleExternalAccountId
-        self.emailAddress = emailAddress
-        self.familyName = familyName
-        self.givenName = givenName
         self.attribution = attribution
     }
 
@@ -76,19 +50,8 @@ public struct UniqueUserObject: Codable, JSONEncodable, Hashable {
         case idfa
         case idfv
         case deviceToken
-        case androidId
-        case gpsAdid
-        case fireAdid
-        case oaid
-        case imei
         case device
         case connection
-        case googleProfileId
-        case googleProfileName
-        case googleExternalAccountId
-        case emailAddress
-        case familyName
-        case givenName
         case attribution
     }
 
@@ -100,19 +63,8 @@ public struct UniqueUserObject: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(idfa, forKey: .idfa)
         try container.encodeIfPresent(idfv, forKey: .idfv)
         try container.encodeIfPresent(deviceToken, forKey: .deviceToken)
-        try container.encodeIfPresent(androidId, forKey: .androidId)
-        try container.encodeIfPresent(gpsAdid, forKey: .gpsAdid)
-        try container.encodeIfPresent(fireAdid, forKey: .fireAdid)
-        try container.encodeIfPresent(oaid, forKey: .oaid)
-        try container.encodeIfPresent(imei, forKey: .imei)
         try container.encode(device, forKey: .device)
         try container.encodeIfPresent(connection, forKey: .connection)
-        try container.encodeIfPresent(googleProfileId, forKey: .googleProfileId)
-        try container.encodeIfPresent(googleProfileName, forKey: .googleProfileName)
-        try container.encodeIfPresent(googleExternalAccountId, forKey: .googleExternalAccountId)
-        try container.encodeIfPresent(emailAddress, forKey: .emailAddress)
-        try container.encodeIfPresent(familyName, forKey: .familyName)
-        try container.encodeIfPresent(givenName, forKey: .givenName)
         try container.encodeIfPresent(attribution, forKey: .attribution)
     }
 }

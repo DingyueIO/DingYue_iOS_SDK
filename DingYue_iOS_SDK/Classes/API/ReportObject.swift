@@ -18,19 +18,8 @@ extension UniqueUserObject{
         self.idfa = UserProperties.idfa
         self.idfv = UserProperties.idfv
         self.deviceToken = UserProperties.deviceToken
-        self.androidId = ""
-        self.gpsAdid = ""
-        self.fireAdid = ""
-        self.oaid = ""
-        self.imei = ""
         self.device = UserProperties.device
         self.connection = UserProperties.connection
-        self.googleProfileId = ""
-        self.googleProfileName = ""
-        self.googleExternalAccountId = ""
-        self.emailAddress = ""
-        self.familyName = ""
-        self.givenName = ""
         self.attribution = attribution
     }
 }
