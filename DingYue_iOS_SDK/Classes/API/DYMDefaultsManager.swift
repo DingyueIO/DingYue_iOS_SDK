@@ -17,9 +17,6 @@ class DYMDefaultsManager {
     static let shared = DYMDefaultsManager()
     private var defaults = UserDefaults.standard
 
-    ///是否有存在内购页
-    public var isExistPayWall = false
-
     private init() {}
     init(with defaults: UserDefaults) {
         self.defaults = defaults
@@ -100,6 +97,20 @@ class DYMDefaultsManager {
         set {
             let data = try? JSONEncoder().encode(newValue)
             defaults.set(data, forKey: DYMConstants.UserDefaults.cachedPaywalls)
+        }
+    }
+
+    var cachedPaywallPageUrl: URL? {
+        get {
+            if let data = defaults.object(forKey: DYMConstants.UserDefaults.cachedPayWallPageUrl) as? Data, let paywallUrl = try? JSONDecoder().decode(URL.self, from: data) {
+                return paywallUrl
+            }
+
+            return nil
+        }
+        set {
+            let data = try? JSONEncoder().encode(newValue)
+            defaults.set(data, forKey: DYMConstants.UserDefaults.cachedPayWallPageUrl)
         }
     }
 
@@ -250,6 +261,7 @@ class DYMDefaultsManager {
         defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedEvents)
         defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedVariationsIds)
         defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedPaywalls)
+        defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedPayWallPageUrl)
         defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedProducts)
         defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedSwitchItems)
         defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedSubscribedObjects)

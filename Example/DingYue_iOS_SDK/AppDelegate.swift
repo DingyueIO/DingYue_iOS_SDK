@@ -23,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if error == nil {
                 //激活成功
                 print("DingYue_iOS_SDK 激活成功")
+            } else {
+                print("DingYue_iOS_SDK 激活失败 ---- \(error!)")
             }
         }
         return true
