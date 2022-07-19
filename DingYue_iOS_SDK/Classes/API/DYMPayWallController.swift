@@ -58,7 +58,7 @@ public class DYMPayWallController: UIViewController {
     }
     
     private func loadWebView() {
-        if DYMDefaultsManager.shared.isExistPayWall == true || DYMDefaultsManager.shared.cachedProducts != nil {
+        if DYMDefaultsManager.shared.cachedPaywallPageUrl != nil {
             let basePath = UserProperties.pallwallPath ?? ""
             let fullPath = basePath + "/index.html"
             let url = URL(fileURLWithPath: fullPath)
@@ -122,7 +122,6 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
         print("ios to js data-----\(jsonString)")
         let base64Str:String? = data?.base64EncodedString() as? String
         webView.evaluateJavaScript("iostojs('\(base64Str!)')") { (response, error) in
-            print("evaluateJavaScript---\(response ?? "")")
         }
     }
     
@@ -162,11 +161,6 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
             }else {
                 self.completion?(nil,nil,.noProductIds)
             }
-        } else if message.name == "vip_choose" {
-
-            let dic = message.body as? Dictionary<String,Any>
-            _ = dic?["type"] as? String
-            _ = dic?["period"] as? String
         }
     }
 

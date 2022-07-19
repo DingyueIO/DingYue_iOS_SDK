@@ -23,6 +23,7 @@ class ApiManager {
         SessionsAPI.reportSession(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: SessionsAPI.XPLATFORM_reportSession.ios, X_VERSION: UserProperties.sdkVersion, uniqueUserObject: UniqueUserObject(), apiResponseQueue: OpenAPIClientAPI.apiResponseQueue) { data, error in
             if (error != nil) {
                 DYMLogManager.logError(error!)
+                self.completion?(nil,nil,error)
             }else{
                 if data?.status == .ok {
                     if let paywall = data?.paywall {
@@ -48,13 +49,14 @@ class ApiManager {
                         DYMDefaultsManager.shared.cachedSubscribedObjects = subscribedProducts
                     }
                     print(data ?? "")
+                    //session report 返回开关状态数据和购买的产品信息
+                    let subscribedOjects = DYMDefaultsManager.shared.subscribedObjects(subscribedObjectArray: DYMDefaultsManager.shared.cachedSubscribedObjects)
+                    self.completion?(DYMDefaultsManager.shared.cachedSwitchItems,subscribedOjects,nil)
                 }else{
                     DYMLogManager.logError(data?.errmsg as Any)
+                    self.completion?(nil,nil,DYMError.failed)
                 }
             }
-            //session report 返回开关状态数据和购买的产品信息
-            let subscribedOjects = DYMDefaultsManager.shared.subscribedObjects(subscribedObjectArray: DYMDefaultsManager.shared.cachedSubscribedObjects)
-            self.completion?(DYMDefaultsManager.shared.cachedSwitchItems,subscribedOjects,error)
         }
     }
 
@@ -111,7 +113,7 @@ class ApiManager {
                            return
                           }
                         print("purchase zip download successfully!---\(items)")
-                        DYMDefaultsManager.shared.isExistPayWall = true
+                        DYMDefaultsManager.shared.cachedPaywallPageUrl = turl
                     }
                     try? FileManager.default.removeItem(at: url!)
                 }else {
@@ -134,26 +136,21 @@ class ApiManager {
         ReceiptAPI.verifyFirstReceipt(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: ReceiptAPI.XPLATFORM_verifyFirstReceipt.ios, X_VERSION: UserProperties.sdkVersion, firstReceiptVerifyPostObject: receiptObj, completion: completion)
     }
 
+    func verifySubscriptionFirstWith(receipt: String,for product: Dictionary<String, String>?,completion:@escaping FirstReceiptCompletion) {
+        guard let product = product else {
+            return
+        }
+        let platformProductId = product["productId"]!
+        let price = product["price"]!
+        let currency = product["currencyCode"]!
+        let countryCode = product["regionCode"]!
+
+        let receiptObj = FirstReceiptVerifyPostObject(appleReceipt: receipt, platformProductId: platformProductId, price: price, currencyCode: currency,countryCode: countryCode)
+        ReceiptAPI.verifyFirstReceipt(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: ReceiptAPI.XPLATFORM_verifyFirstReceipt.ios, X_VERSION: UserProperties.sdkVersion, firstReceiptVerifyPostObject: receiptObj, completion: completion)
+    }
+
     func verifySubscriptionRecover(receipt: String,completion:@escaping RecoverReceiptCompletion) {
         let receiptObj = ReceiptVerifyPostObject(appleReceipt: receipt)
         ReceiptAPI.verifyReceipt(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: ReceiptAPI.XPLATFORM_verifyReceipt.ios, X_VERSION: UserProperties.sdkVersion, receiptVerifyPostObject: receiptObj, completion: completion)
     }
-    
-//    func updateUser(attributes:[String],completion:((Bool,DYMError?) -> Void)? = nil) {
-//        SessionsAPI.updateUserAttribute(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: SessionsAPI.XPLATFORM_updateUserAttribute.ios, editOneOf: <#T##[EditOneOf]#>) { data, error in
-//            if error != nil {
-//                completion?(false,DYMError(error!))
-//                return
-//            }
-//            if let result = data {
-//                if result.status == .ok {
-//                    completion?(true,nil)
-//                }else {
-//                    completion?(false,DYMError(code: .failed, message: result.errmsg ?? ""))
-//                }
-//                return
-//            }
-//            completion?(false,.failed)
-//        }
-//    }
 }

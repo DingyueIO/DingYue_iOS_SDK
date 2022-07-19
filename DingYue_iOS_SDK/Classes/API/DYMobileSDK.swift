@@ -123,7 +123,7 @@ import StoreKit
 #if os(iOS)
     private func reportAppleSearchAdsAttribution() {
         UserProperties.appleSearchAdsAttribution { (attribution, error) in
-            print("apple search ads attribution : ",attribution as Any)
+            //print("apple search ads attribution : ",attribution as Any)
             // check if this is an actual first sync
             guard let attribution = attribution, DYMDefaultsManager.shared.appleSearchAdsSyncDate == nil else { return }
 
@@ -218,6 +218,11 @@ import StoreKit
         DYMLogManager.logMessage("Calling now: \(#function)")
         shared.apiManager.verifySubscriptionFirst(receipt: receipt, for: product, completion: completion)
     }
+    ///验证订单-first
+    @objc public class func validateReceiptFirstWith(_ receipt: String,for product:Dictionary<String, String>?,completion:@escaping FirstReceiptCompletion) {
+        DYMLogManager.logMessage("Calling now: \(#function)")
+        shared.apiManager.verifySubscriptionFirstWith(receipt: receipt, for: product, completion: completion)
+    }
     ///验证订单-recover
     @objc public class func validateReceiptRecover(_ receipt: String,completion:@escaping RecoverReceiptCompletion) {
         DYMLogManager.logMessage("Calling now: \(#function)")
@@ -228,12 +233,6 @@ import StoreKit
         DYMLogManager.logMessage("Calling now: \(#function)")
         shared.eventManager.track(event: DYMEventType(rawValue: event)!, extra: extra, user: user)
     }
-
-//    /// MARK: - User Attributes
-//    @objc public class func customUser(attributes:[String],completion:((Bool,DYMError?)-> Void)? = nil) {
-//        DYMLogManager.logMessage("Calling now: \(#function)")
-//        shared.apiManager.updateUser(attributes: attributes, completion: completion)
-//    }
 
     @objc public class func handlePushNotification(_ userInfo: [AnyHashable : Any], completion: Error?) {
         DYMLogManager.logMessage("Calling now: \(#function)")
