@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DingYue_iOS_SDK'
-  s.version          = '0.1.6'
+  s.version          = '0.1.7'
   s.summary          = 'DingYue_iOS_SDK podspec file .'
 
 # This description is used to generate tags and improve search results.
