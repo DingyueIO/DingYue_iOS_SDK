@@ -40,8 +40,9 @@ open class ReceiptAPI {
                     if response.body.status == .ok {
                         completion(DYMDefaultsManager.shared.firstReceiptResponse(firstReceiptResponse: response.body), nil)
                     } else {
-                        completion(nil, DYMError.failed)
+                        completion(nil, DYMError(code: .failed, message: response.body.errmsg ?? ""))
                     }
+
             case let .failure(error):
                 completion(nil, error)
             }

@@ -32,6 +32,8 @@ public class DYMPayWallController: UIViewController {
         config.userContentController.add(self, name: "vip_purchase")
         config.userContentController.add(self, name: "vip_choose")
         let webView = WKWebView(frame: UIScreen.main.bounds, configuration: config)
+        webView.scrollView.showsHorizontalScrollIndicator = false
+        webView.scrollView.showsVerticalScrollIndicator = false
         webView.navigationDelegate = self
         webView.scrollView.bounces = false
         if #available(iOS 11.0, *) { webView.scrollView.contentInsetAdjustmentBehavior = .never }
@@ -58,7 +60,7 @@ public class DYMPayWallController: UIViewController {
     }
     
     private func loadWebView() {
-        if DYMDefaultsManager.shared.cachedPaywallPageUrl != nil {
+        if DYMDefaultsManager.shared.cachedPaywallPageIdentifier != nil {
             let basePath = UserProperties.pallwallPath ?? ""
             let fullPath = basePath + "/index.html"
             let url = URL(fileURLWithPath: fullPath)
@@ -119,7 +121,6 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
 
         let jsonString = getJSONStringFromDictionary(dictionary: dic as NSDictionary)
         let data = jsonString.data(using: .utf8)
-        print("ios to js data-----\(jsonString)")
         let base64Str:String? = data?.base64EncodedString() as? String
         webView.evaluateJavaScript("iostojs('\(base64Str!)')") { (response, error) in
         }

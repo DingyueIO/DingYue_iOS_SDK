@@ -123,7 +123,6 @@ import StoreKit
 #if os(iOS)
     private func reportAppleSearchAdsAttribution() {
         UserProperties.appleSearchAdsAttribution { (attribution, error) in
-            //print("apple search ads attribution : ",attribution as Any)
             // check if this is an actual first sync
             guard let attribution = attribution, DYMDefaultsManager.shared.appleSearchAdsSyncDate == nil else { return }
 

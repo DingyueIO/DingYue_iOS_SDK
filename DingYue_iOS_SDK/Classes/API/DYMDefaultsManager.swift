@@ -100,17 +100,17 @@ class DYMDefaultsManager {
         }
     }
 
-    var cachedPaywallPageUrl: URL? {
+    var cachedPaywallPageIdentifier: String? {
         get {
-            if let data = defaults.object(forKey: DYMConstants.UserDefaults.cachedPayWallPageUrl) as? Data, let paywallUrl = try? JSONDecoder().decode(URL.self, from: data) {
-                return paywallUrl
+            if let data = defaults.object(forKey: DYMConstants.UserDefaults.cachedPayWallPageIdentifier) as? Data, let paywallId = try? JSONDecoder().decode(String.self, from: data) {
+                return paywallId
             }
 
             return nil
         }
         set {
             let data = try? JSONEncoder().encode(newValue)
-            defaults.set(data, forKey: DYMConstants.UserDefaults.cachedPayWallPageUrl)
+            defaults.set(data, forKey: DYMConstants.UserDefaults.cachedPayWallPageIdentifier)
         }
     }
 
@@ -261,7 +261,7 @@ class DYMDefaultsManager {
         defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedEvents)
         defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedVariationsIds)
         defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedPaywalls)
-        defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedPayWallPageUrl)
+        defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedPayWallPageIdentifier)
         defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedProducts)
         defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedSwitchItems)
         defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedSubscribedObjects)

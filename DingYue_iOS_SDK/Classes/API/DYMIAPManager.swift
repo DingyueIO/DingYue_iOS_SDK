@@ -277,9 +277,12 @@ extension DYMIAPManager: SKPaymentTransactionObserver {
                                            product: product.skproduct!,
                                            receipt: receipt,
                                            transaction: transaction)
-            self.callBackPurchaseCompletion(for: template, .success(detail), firstReceiptVerifyMobileResponse)
+//            self.callBackPurchaseCompletion(for: template, .success(detail), firstReceiptVerifyMobileResponse)
             if error == nil {
+                self.callBackPurchaseCompletion(for: template, .success(detail), firstReceiptVerifyMobileResponse)
                 SKPaymentQueue.default().finishTransaction(transaction)
+            } else {
+                self.callBackPurchaseCompletion(for: template, .failure(error as! DYMError))
             }
         }
     }

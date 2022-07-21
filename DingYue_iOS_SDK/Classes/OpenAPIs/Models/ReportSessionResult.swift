@@ -21,13 +21,15 @@ public struct ReportSessionResult: Codable, JSONEncodable, Hashable {
     /** indicates why this operation fails */
     public var errmsg: String?
     public var paywall: Paywall?
+    public var paywallId: String?
     public var switchItems: [SwitchItem]?
     public var subscribedProducts: [SubscribedObject]?
 
-    public init(status: Status, errmsg: String? = nil, paywall: Paywall? = nil, switchItems: [SwitchItem]? = nil, subscribedProducts: [SubscribedObject]? = nil) {
+    public init(status: Status, errmsg: String? = nil, paywall: Paywall? = nil, paywallId: String? = nil, switchItems: [SwitchItem]? = nil, subscribedProducts: [SubscribedObject]? = nil) {
         self.status = status
         self.errmsg = errmsg
         self.paywall = paywall
+        self.paywallId = paywallId
         self.switchItems = switchItems
         self.subscribedProducts = subscribedProducts
     }
@@ -36,6 +38,7 @@ public struct ReportSessionResult: Codable, JSONEncodable, Hashable {
         case status
         case errmsg
         case paywall
+        case paywallId
         case switchItems
         case subscribedProducts
     }
@@ -47,6 +50,7 @@ public struct ReportSessionResult: Codable, JSONEncodable, Hashable {
         try container.encode(status, forKey: .status)
         try container.encodeIfPresent(errmsg, forKey: .errmsg)
         try container.encodeIfPresent(paywall, forKey: .paywall)
+        try container.encodeIfPresent(paywallId, forKey: .paywallId)
         try container.encodeIfPresent(switchItems, forKey: .switchItems)
         try container.encodeIfPresent(subscribedProducts, forKey: .subscribedProducts)
     }

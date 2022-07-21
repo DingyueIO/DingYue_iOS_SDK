@@ -7,12 +7,10 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi" />
     <title>default</title>
     <script src="./vue.js" type="text/javascript"></script>
+    <script src='./locale.js' type="text/javascript"></script>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
 </head>
 <style>
-    body::-webkit-scrollbar {
-        display: none;
-    }
-
     * {
         -webkit-touch-callout: none;
         /*系统默认菜单被禁用*/
@@ -28,8 +26,7 @@
     }
 
     #app {
-        min-height: 100vh;
-        padding: 0 0 5vh 0;
+        padding: 0 0 48px 0;
     }
 
     .buy_top {
@@ -64,11 +61,12 @@
     }
 
     .buy_title .title {
-        font-size: 37px;
+        font-size: 34px;
         font-family: PingFangSC-Semibold, PingFang SC;
         font-weight: 600;
         color: #000000;
-        line-height: 53px;
+        line-height: 52px;
+        text-align: center;
     }
 
     .buy_title .value {
@@ -78,6 +76,8 @@
         font-weight: 400;
         color: #000000;
         line-height: 22px;
+        text-align: center;
+        padding: 0 12px;
     }
 
     .buy_product {
@@ -108,6 +108,7 @@
         justify-content: space-between;
         margin-top: 1vh;
     }
+
     .buy_product .product .feature {
         font-size: 17px;
         font-family: PingFangSC-Medium, PingFang SC;
@@ -186,18 +187,19 @@
 <body>
     <div id="app">
         <div class="buy_top">
-            <span @click="close" class="back">跳过</span>
-            <span @click="restore" class="resove">恢复购买</span>
+            <span @click="close" class="back">{{page_data.skip}}</span>
+            <span @click="restore" class="resove">{{page_data.restore}}</span>
         </div>
         <div class="buy_title">
-            <span class="title">访问全部功能</span>
-            <span class="value">订阅会员，解锁App全部功能。</span>
+            <span class="title">{{page_data.title}}</span>
+            <span class="value">{{page_data.detail}}</span>
         </div>
         <div class="buy_product">
             <div class="product">
                 <div v-for="(item,index) in products" :key="index">
-                    <div @click="choose(index)" v-if="item.price" class="product_buy"  :style="{border:`1px solid ${selected==index?'#393E43':'#E4E4E4'}`,background:`${selected==index?'#EEEEEE':'#FFFFFF'}`}  ">
-                        <span class="feature">{{item.feature}}</span>
+                    <div @click="choose(index)" v-if="item.price" class="product_buy"
+                        :style="{border:`1px solid ${selected==index?'#393E43':'#E4E4E4'}`,background:`${selected==index?'#EEEEEE':'#FFFFFF'}`}  ">
+                        <span class="feature">{{item.name}}</span>
                         <span class="duration">{{item.price}}</span>
                     </div>
                 </div>
@@ -205,22 +207,18 @@
         </div>
         <div class="buy_btn">
             <button @click="purchase" class="btn">
-                订阅
+                {{page_data.subscribe}}
             </button>
         </div>
         <div class="content">
             <span class="content_text">
-                确认购买后，将向iTunes 账户收取该笔款项。除非在当前订阅期
-                到期前至少24小时关闭自动续订，否则将自动续订。您可以随时
-                通过 iTunes 账户设置关闭自动续订。取消请求将在当前订阅期最
-                后一天过后生效，届时您将不能再使用部分功能。
+                {{page_data.bottom}}
             </span>
-
         </div>
 
         <div class="link">
-            <span @click="terms" class="use">服务条款</span>
-            <span @click="privacy" class="privacy">隐私政策</span>
+            <span @click="terms" class="use">{{page_data.protocol1}}</span>
+            <span @click="privacy" class="privacy">{{page_data.protocol1}}</span>
         </div>
     </div>
 </body>
@@ -229,54 +227,52 @@
         el: '#app',
         data() {
             return {
-                language: '',
                 selected: 0,
                 page_data: {},
                 showReal: false,
                 language: 'en',
                 products: [{
-                        "type": "WEEK",
-                        "duration": "周",
-                        "feature": "高级周会员",
-                        "price": "$1.99"
-                    },
-                    {
-                        "type": "MONTH",
-                        "duration": "月",
-                        "feature": "高级月会员",
-                        "price": "$4.99"
-                    },
-                    {
-                        "type": "YEAR",
-                        "duration": "年",
-                        "feature": "高级年会员",
-                        "price": "$19.99"
-                    },
-                    {
-                        "type": "QUARTER",
-                        "duration": "",
-                        "feature": "",
-                        "price": ""
-                    },
-                    {
-                        "type": "HALFYEAR",
-                        "duration": "",
-                        "feature": "",
-                        "price": ""
-                    },
-                    {
-                        "type": "ONETIME",
-                        "duration": "",
-                        "feature": "",
-                        "price": ""
-                    },
-                    {
-                        "type": "CONSUME",
-                        "duration": "",
-                        "feature": "",
-                        "price": ""
-                    }
-
+                    "type": "WEEK",
+                    "duration": "周",
+                    "name": "高级周会员",
+                    "price": "$1.99"
+                },
+                {
+                    "type": "MONTH",
+                    "duration": "月",
+                    "name": "高级月会员",
+                    "price": "$4.99"
+                },
+                {
+                    "type": "YEAR",
+                    "duration": "年",
+                    "name": "高级年会员",
+                    "price": "$19.99"
+                },
+                {
+                    "type": "QUARTER",
+                    "duration": "",
+                    "name": "季会员",
+                    "price": ""
+                },
+                {
+                    "type": "HALFYEAR",
+                    "duration": "",
+                    "name": "半年会员",
+                    "price": ""
+                },
+                {
+                    "type": "ONETIME",
+                    "duration": "",
+                    "name": "一次性消费",
+                    "price": ""
+                },
+                {
+                    "type": "CONSUME",
+                    "duration": "",
+                    "name": "消费品",
+                    "price": ""
+                }
                 ],
                 subscriptions: "",
                 priceCode: {
@@ -328,11 +324,34 @@
                 },
             }
         },
+        beforeMount() {
+            this.page_data = locales[this.getCode(this.language)] ? locales[this.getCode(this.language)] : locales.en;
+        },
         mounted() {
             this.banTouch()
             window.iostojs = this.iostojs;
+            console.log(this.page_data);
+        },
+        watch: {
+            language() {
+                this.page_data = locales[this.getCode(this.language)] ? locales[this.getCode(this.language)] : locales.en;
+            }
         },
         methods: {
+            getCode(language) {
+                let result;
+                languageCodes.forEach((ele) => {
+                    if (language.indexOf(ele) !== -1) {
+                        result = ele;
+                    }
+                })
+                console.log(result);
+                if (result) {
+                    return result
+                } else {
+                    return 'en'
+                }
+            },
             // 购买按钮点击时间，将产品id汇报给原生端
             purchase() {
                 if (this.subscriptions) {
@@ -403,6 +422,7 @@
             iostojs(action) {
                 let json = JSON.parse(this.decode(action));
                 // let json = { "system_language": "zh-Hans-CN", "products": [{ "period": "YEAR", "platformProductId": "com.dingyue1.year", "type": "SUBSCRIPTION", "currency": "USD", "description": "", "name": "组1年", "price": "9.99" }, { "price": "1.99", "type": "SUBSCRIPTION", "platformProductId": "com.dingyue1.week", "name": "组1周", "currency": "USD", "description": "", "period": "WEEK" }] }
+                this.language=json.system_language;
                 this.subscriptions = json.products;
                 this.getShow()
                 return (
@@ -411,19 +431,18 @@
             },
             getShow() {
                 if (this.subscriptions) {
-
-               let productsAll = [];
+                    let productsAll = [];
                     this.subscriptions.forEach((ele, index) => {
                         productsAll.push({
-                            ...ele,
                             ...this.products[index],
-                            price: this.priceCode[ele.currency] + ele.price
+                            ...ele,
+                            price: (this.priceCode[ele.currency] || '$') + ele.price
                         })
                     })
-                    this.products=productsAll
+                    this.products = productsAll
 
                 } else {
-                   
+
                 }
                 if (this.products.length <= 2) {
                     this.selected = 0
