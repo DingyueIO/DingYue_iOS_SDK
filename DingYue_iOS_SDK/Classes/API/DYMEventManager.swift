@@ -142,7 +142,6 @@ class DYMEventManager {
             if error == nil {
                 let leftEvents = Set(self.cachedEvents).subtracting(Set(currentEvents))
                 self.cachedEvents = Array(leftEvents)
-                print(data!)
             }
         }
     }
