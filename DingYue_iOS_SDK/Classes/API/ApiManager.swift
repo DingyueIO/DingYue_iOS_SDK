@@ -20,6 +20,7 @@ public typealias sessionActivateCompletion = ([SwitchItem]?,[[String:Any]]?,Erro
 class ApiManager {
     var completion:sessionActivateCompletion?
     var paywallIdentifier = ""
+    var paywallCustomize = false
     func startSession(){
         SessionsAPI.reportSession(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: SessionsAPI.XPLATFORM_reportSession.ios, X_VERSION: UserProperties.sdkVersion, uniqueUserObject: UniqueUserObject(), apiResponseQueue: OpenAPIClientAPI.apiResponseQueue) { data, error in
             if (error != nil) {
@@ -33,6 +34,7 @@ class ApiManager {
                             if let paywallId = data?.paywallId{
                                 let version = paywall.version
                                 self.paywallIdentifier = paywallId + "/" + String(version)
+                                self.paywallCustomize = paywall.customize
                                 if self.paywallIdentifier != DYMDefaultsManager.shared.cachedPaywallPageIdentifier {
                                     self.downloadWebTemplate(url: URL(string: paywall.downloadUrl)!) { res, err in
                                     }
@@ -119,7 +121,15 @@ class ApiManager {
                           } catch {
                            return
                           }
-                        DYMDefaultsManager.shared.cachedPaywallPageIdentifier = self.paywallIdentifier
+
+                        if self.paywallCustomize == false {
+                            if items.contains("config.js") {//订阅提供的内购页一定有config.js
+                                DYMDefaultsManager.shared.cachedPaywallPageIdentifier = self.paywallIdentifier
+                            }
+                        } else {
+                            DYMDefaultsManager.shared.cachedPaywallPageIdentifier = self.paywallIdentifier
+                        }
+
                     }
                     try? FileManager.default.removeItem(at: url!)
                 }else {

@@ -104,7 +104,7 @@ class DYMIAPManager: NSObject {
             }
             return
         }
-
+        removeAllUncompleteTransactionsBeforeNewPurchase()
         let cproduct = DYMProductModel(productId: productId)
         currentProducts.append(cproduct)
 
@@ -124,6 +124,7 @@ class DYMIAPManager: NSObject {
             }
             return
         }
+        removeAllUncompleteTransactionsBeforeNewPurchase()
         guard let skproduct = product else {
             DispatchQueue.main.async {
                 completion?(.failure(.noProducts),nil)
@@ -146,6 +147,17 @@ class DYMIAPManager: NSObject {
                                   payment:payment,
                                   completion:completion))
         SKPaymentQueue.default().add(payment)
+    }
+
+    private func removeAllUncompleteTransactionsBeforeNewPurchase() {
+        let transactions = SKPaymentQueue.default().transactions
+        if transactions.count >= 1 {
+            for transaction in transactions {
+                if transaction.transactionState == SKPaymentTransactionState.purchased || transaction.transactionState == SKPaymentTransactionState.restored {
+                    SKPaymentQueue.default().finishTransaction(transaction)
+                }
+            }
+        }
     }
 
     private func callBackPurchaseCompletion(for template: PurchaseTemplate?,_ result:Result< DYMPurchaseDetail,DYMError>,_ firstReceiptVerifyMobileResponse:[String:Any]? = nil) {
@@ -277,7 +289,6 @@ extension DYMIAPManager: SKPaymentTransactionObserver {
                                            product: product.skproduct!,
                                            receipt: receipt,
                                            transaction: transaction)
-//            self.callBackPurchaseCompletion(for: template, .success(detail), firstReceiptVerifyMobileResponse)
             if error == nil {
                 self.callBackPurchaseCompletion(for: template, .success(detail), firstReceiptVerifyMobileResponse)
                 SKPaymentQueue.default().finishTransaction(transaction)

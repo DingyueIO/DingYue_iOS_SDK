@@ -107,6 +107,7 @@ open class SessionsAPI {
         return reportSessionWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, X_VERSION: X_VERSION, uniqueUserObject: uniqueUserObject).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
+                    print(response.body)
                     completion(response.body, nil)
             case let .failure(error):
                 completion(nil, error)
@@ -145,6 +146,7 @@ open class SessionsAPI {
 	        "X-VERSION": X_VERSION.encodeToJSON(),
             "X-API-KEY":X_API_KEY.encodeToJSON()
         ]
+        print(localVariableNillableHeaders)
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
