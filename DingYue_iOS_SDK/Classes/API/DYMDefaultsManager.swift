@@ -102,15 +102,13 @@ class DYMDefaultsManager {
 
     var cachedPaywallPageIdentifier: String? {
         get {
-            if let data = defaults.object(forKey: DYMConstants.UserDefaults.cachedPayWallPageIdentifier) as? Data, let paywallId = try? JSONDecoder().decode(String.self, from: data) {
-                return paywallId
+            if let data = defaults.object(forKey: DYMConstants.UserDefaults.cachedPayWallPageIdentifier) as? String {
+                return data
             }
-
             return nil
         }
         set {
-            let data = try? JSONEncoder().encode(newValue)
-            defaults.set(data, forKey: DYMConstants.UserDefaults.cachedPayWallPageIdentifier)
+            defaults.set(newValue, forKey: DYMConstants.UserDefaults.cachedPayWallPageIdentifier)
         }
     }
 
