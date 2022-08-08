@@ -77,23 +77,25 @@ extension DateFormatter {
 }
 extension AppleSearchAdsAttribution {
     init(attribution:DYMParams) {
-        self.iadAttribution = attribution["iad-attribution"] as? String ?? ""
-        self.iadOrgName = attribution["iad-org-name"] as? String ?? ""
-        self.iadOrgId = attribution["iad-org-id"] as? String ?? ""
-        self.iadCampaignId = attribution["iad-campaign-id"] as? String ?? ""
-        self.iadCampaignName = attribution["iad-campaign-name"] as? String ?? ""
-        self.iadClickDate = attribution["iad-click-date"] as? String ?? ""
-        self.iadPurchaseDate = attribution["iad-purchase-date"] as? String ?? ""
-        self.iadConversationDate = attribution["iad-conversation-date"] as? String ?? ""
-        self.iadConversationType = IadConversationType(rawValue: attribution["iad-conversation-type"] as? String ?? "newdownload") 
-        self.iadAdgroupName = attribution["iad-adgroup-name"] as? String ?? ""
-        self.iadAdgroupId = attribution["iad-adgroup-id"] as? String ?? ""
-        self.iadCountryOrRegion = attribution["iad-country-or-region"] as? String ?? ""
-        self.iadKeyword = attribution["iad-keyword"] as? String ?? ""
-        self.iadKeywordId = attribution["iad-keyword-id"] as? String ?? ""
-        self.iadKeywordMatchtype = IadKeywordMatchtype(rawValue: attribution["iad-keyword-matchtype"] as? String ?? "BOARD")
-        self.iadCreativesetId = attribution["iad-creativeset-id"] as? String ?? ""
-        self.iadCreativesetName = attribution["iad-creativeset-name"] as? String ?? ""
+        if let version31 = attribution["Version3.1"] as? Dictionary<String,Any> {
+            self.iadAttribution = version31["iad-attribution"] as? String
+            self.iadOrgName = version31["iad-org-name"] as? String
+            self.iadOrgId = version31["iad-org-id"] as? String
+            self.iadCampaignId = version31["iad-campaign-id"] as? String
+            self.iadCampaignName = version31["iad-campaign-name"] as? String
+            self.iadClickDate = version31["iad-click-date"] as? String
+            self.iadPurchaseDate = version31["iad-purchase-date"] as? String
+            self.iadConversationDate = version31["iad-conversation-date"] as? String
+            self.iadConversationType = IadConversationType(rawValue: version31["iad-conversation-type"] as? String ?? "newdownload")
+            self.iadAdgroupName = version31["iad-adgroup-name"] as? String
+            self.iadAdgroupId = version31["iad-adgroup-id"] as? String
+            self.iadCountryOrRegion = version31["iad-country-or-region"] as? String
+            self.iadKeyword = version31["iad-keyword"] as? String
+            self.iadKeywordId = version31["iad-keyword-id"] as? String
+            self.iadKeywordMatchtype = IadKeywordMatchtype(rawValue: version31["iad-keyword-matchtype"] as? String ?? "BOARD")
+            self.iadCreativesetId = version31["iad-creativeset-id"] as? String
+            self.iadCreativesetName = version31["iad-creativeset-name"] as? String
+        }
     }
 }
 

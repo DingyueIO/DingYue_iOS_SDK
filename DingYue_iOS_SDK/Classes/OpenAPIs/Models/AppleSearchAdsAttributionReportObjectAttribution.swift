@@ -13,9 +13,9 @@ import AnyCodable
 /** attribution data which client get through Apple AdServices API */
 public struct AppleSearchAdsAttributionReportObjectAttribution: Codable, JSONEncodable, Hashable {
 
-    public var version31: AppleSearchAdsAttribution?
+    public var version31: AppleSearchAdsAttribution
 
-    public init(version31: AppleSearchAdsAttribution? = nil) {
+    public init(version31: AppleSearchAdsAttribution) {
         self.version31 = version31
     }
 
@@ -27,7 +27,7 @@ public struct AppleSearchAdsAttributionReportObjectAttribution: Codable, JSONEnc
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(version31, forKey: .version31)
+        try container.encode(version31, forKey: .version31)
     }
 }
 

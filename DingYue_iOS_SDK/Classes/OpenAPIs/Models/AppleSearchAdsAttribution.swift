@@ -98,7 +98,6 @@ public struct AppleSearchAdsAttribution: Codable, JSONEncodable, Hashable {
     }
 
     // Encodable protocol methods
-
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(iadAttribution, forKey: .iadAttribution)

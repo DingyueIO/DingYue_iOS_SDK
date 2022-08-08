@@ -23,6 +23,8 @@ public struct UniqueUserObject: Codable, JSONEncodable, Hashable {
     }
     /** OS version */
     public var osVersion: String
+    /** APP version */
+    public var appVersion: String?
     /** iOS only */
     public var idfa: String?
     /** iOS only */
@@ -35,8 +37,9 @@ public struct UniqueUserObject: Codable, JSONEncodable, Hashable {
     public var connection: Connection?
     public var attribution: UniqueUserObjectAttribution?
 
-    public init(osVersion: String, idfa: String? = nil, idfv: String? = nil, deviceToken: String? = nil, device: String, connection: Connection? = nil,attribution: UniqueUserObjectAttribution? = nil) {
+    public init(osVersion: String, appVersion: String? = nil, idfa: String? = nil, idfv: String? = nil, deviceToken: String? = nil, device: String, connection: Connection? = nil,attribution: UniqueUserObjectAttribution? = nil) {
         self.osVersion = osVersion
+        self.appVersion = appVersion
         self.idfa = idfa
         self.idfv = idfv
         self.deviceToken = deviceToken
@@ -47,6 +50,7 @@ public struct UniqueUserObject: Codable, JSONEncodable, Hashable {
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case osVersion
+        case appVersion
         case idfa
         case idfv
         case deviceToken
@@ -60,6 +64,7 @@ public struct UniqueUserObject: Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(osVersion, forKey: .osVersion)
+        try container.encodeIfPresent(appVersion, forKey: .appVersion)
         try container.encodeIfPresent(idfa, forKey: .idfa)
         try container.encodeIfPresent(idfv, forKey: .idfv)
         try container.encodeIfPresent(deviceToken, forKey: .deviceToken)

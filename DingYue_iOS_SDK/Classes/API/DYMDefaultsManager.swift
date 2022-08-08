@@ -172,7 +172,6 @@ class DYMDefaultsManager {
         }
     }
 
-    // [%requestType: %hash]
     var previousResponseHashes: [String: String] {
         get {
             return (defaults.dictionary(forKey: DYMConstants.UserDefaults.previousResponseHashes) as? [String: String]) ?? [:]
@@ -182,7 +181,6 @@ class DYMDefaultsManager {
         }
     }
 
-    // [%requestType: [%hash: data]]
     var responseJSONCaches: [String: [String: Data]] {
         get {
             return (defaults.dictionary(forKey: DYMConstants.UserDefaults.responseJSONCaches) as? [String: [String: Data]]) ?? [:]
@@ -206,9 +204,7 @@ class DYMDefaultsManager {
             for sub in cacheSubscribledObjects {
                 var subDic:[String:Any] = [:]
                 subDic["platformProductId"] = sub.platformProductId
-                if let originalTransactionId = sub.originalTransactionId {
-                    subDic["originalTransactionId"] = originalTransactionId
-                }
+                subDic["originalTransactionId"] = sub.originalTransactionId
                 if let expiresAt = sub.expiresAt {
                     subDic["expiresAt"] = expiresAt
                 }
@@ -217,6 +213,8 @@ class DYMDefaultsManager {
         }
         return subsArray
     }
+
+    var isLoadingStatus: Bool = false
 
     func subscribedObjects(subscribedObjectArray: [SubscribedObject?]?) -> [[String:Any]] {
         var subsArray:[[String:Any]] = []

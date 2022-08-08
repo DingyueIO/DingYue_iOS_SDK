@@ -15,6 +15,7 @@ class ReportObject: NSObject {
 extension UniqueUserObject{
     public init(attribution: UniqueUserObjectAttribution? = nil) {
         self.osVersion = UserProperties.OS
+        self.appVersion = UserProperties.appVersion
         self.idfa = UserProperties.idfa
         self.idfv = UserProperties.idfv
         self.deviceToken = UserProperties.deviceToken
