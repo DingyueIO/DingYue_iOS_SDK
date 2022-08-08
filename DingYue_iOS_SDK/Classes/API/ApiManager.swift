@@ -25,7 +25,8 @@ class ApiManager {
         SessionsAPI.reportSession(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: SessionsAPI.XPLATFORM_reportSession.ios, X_VERSION: UserProperties.sdkVersion, uniqueUserObject: UniqueUserObject(), apiResponseQueue: OpenAPIClientAPI.apiResponseQueue) { data, error in
             if (error != nil) {
                 DYMLogManager.logError(error!)
-                self.completion?(nil,nil,error)
+                self.startSession()
+//                self.completion?(nil,nil,error)
             }else{
                 if data?.status == .ok {
                     if let paywall = data?.paywall {
@@ -38,6 +39,8 @@ class ApiManager {
                                 if self.paywallIdentifier != DYMDefaultsManager.shared.cachedPaywallPageIdentifier {
                                     self.downloadWebTemplate(url: URL(string: paywall.downloadUrl)!) { res, err in
                                     }
+                                } else {
+                                    DYMDefaultsManager.shared.isLoadingStatus = true
                                 }
                             }
                         }
@@ -48,6 +51,8 @@ class ApiManager {
                             subsArray.append(sub)
                         }
                         DYMDefaultsManager.shared.cachedProducts = subsArray
+                    } else {
+                        DYMDefaultsManager.shared.isLoadingStatus = true
                     }
 
                     if let switchItems = data?.switchItems {
@@ -118,6 +123,7 @@ class ApiManager {
                         var items: [String]
                           do {
                               items = try FileManager.default.contentsOfDirectory(atPath: dstPath!)
+                              DYMDefaultsManager.shared.isLoadingStatus = true
                           } catch {
                            return
                           }

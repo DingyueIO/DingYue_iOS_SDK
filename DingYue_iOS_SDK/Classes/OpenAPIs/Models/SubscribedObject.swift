@@ -14,10 +14,10 @@ public struct SubscribedObject: Codable, JSONEncodable, Hashable {
 
     /** the status of the operation */
     public var platformProductId: String
-    public var originalTransactionId: String?
+    public var originalTransactionId: String
     public var expiresAt: Int64?
 
-    public init(platformProductId: String, originalTransactionId: String? = nil, expiresAt: Int64? = nil) {
+    public init(platformProductId: String, originalTransactionId: String, expiresAt: Int64? = nil) {
         self.platformProductId = platformProductId
         self.originalTransactionId = originalTransactionId
         self.expiresAt = expiresAt
@@ -34,7 +34,7 @@ public struct SubscribedObject: Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(platformProductId, forKey: .platformProductId)
-        try container.encodeIfPresent(originalTransactionId, forKey: .originalTransactionId)
+        try container.encode(originalTransactionId, forKey: .originalTransactionId)
         try container.encodeIfPresent(expiresAt, forKey: .expiresAt)
     }
 }

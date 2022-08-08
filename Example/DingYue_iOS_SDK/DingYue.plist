@@ -2,9 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>DINGYUE_API_KEY</key>
-    <string>eyJraWQiOiIzOTE5MDg0MDYwNjc0NDQ5NzE4IiwidHlwIjoiSldUIiwiYWxnIjoiSFM1MTIifQ.eyJvd25lciI6InRlc3RzZGsiLCJhcHBfbmFtZSI6IkRpbmdZdWVEZW1vIiwiaXNzIjoiRmFyVGVjaCBBcHAgQ2VudGVyIFNlcnZpY2UiLCJleHAiOjQ4MTA1MjYxMzUsImlhdCI6MTY1NjkyNjEzNSwidXNlciI6IjM5MDU1MjA3MDM1MzYzNzc5MDgifQ.cR2JRr9UTCbw_YUewzeO-3cWVCNlyAO6AKde2zgv7ONzsOVia58vpW6DPPfUV-BwkfwkvUDKeuZvekDOXMnJAw</string>
-    <key>DINGYUE_APP_ID</key>
-    <string>3905520703536377908</string>
+	<key>DINGYUE_API_KEY</key>
+	<string>eyJraWQiOiI0MTIyMDMxOTU0ODU5MjA5MDE2IiwidHlwIjoiSldUIiwiYWxnIjoiSFM1MTIifQ.eyJvd25lciI6InRlc3RzZGsiLCJhcHBfbmFtZSI6Iuiuoeeul-WZqCIsImlzcyI6IkZhclRlY2ggQXBwIENlbnRlciBTZXJ2aWNlIiwiZXhwIjo0ODExOTAyODQzLCJpYXQiOjE2NTgzMDI4NDMsInVzZXIiOiI3MjM0MjQ1OTg2NDY3NzIxNzc3In0.9h-aKt_tfqSssAx8lE2i5rjz2r_dvmT64SfN4_xK0wRmjWAkS_fvGa8gnsJyyntvW_oK9xo1mp7pi5Y3Xjpp0Q</string>
+	<key>DINGYUE_APP_ID</key>
+	<string>7234245986467721777</string>
 </dict>
 </plist>

@@ -160,21 +160,6 @@ class UserProperties {
         return TimeZone.current.identifier
     }
 
-//    static var deviceIdentifier: String? {
-//        #if os(macOS) || targetEnvironment(macCatalyst)
-//        let matchingDict = IOServiceMatching("IOPlatformExpertDevice")
-//        let platformExpert = IOServiceGetMatchingService(kIOMasterPortDefault, matchingDict)
-//        defer { IOObjectRelease(platformExpert) }
-//
-//        guard platformExpert != 0 else { return nil }
-//        return IORegistryEntryCreateCFProperty(platformExpert,
-//                                               kIOPlatformUUIDKey as CFString,
-//                                               kCFAllocatorDefault, 0).takeRetainedValue() as? String
-//        #else
-//        return UIDevice.current.identifierForVendor?.uuidString
-//        #endif
-//    }
-
     static var deviceToken: String? {
         guard let token = DYMobileSDK.apnsTokenString else {
             return nil
@@ -187,6 +172,7 @@ class UserProperties {
     class func appleSearchAdsAttribution(completion: @escaping (Parameters?, Error?) -> Void) {
         ADClient.shared().requestAttributionDetails { (attribution, error) in
             if let attribution = attribution {
+                print(attribution)
                 completion(attribution, error)
             } else {
                 modernAppleSearchAdsAttribution(completion: completion)

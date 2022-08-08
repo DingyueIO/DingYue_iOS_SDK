@@ -41,15 +41,11 @@ class LBWebViewController: UIViewController {
 
 
         //close btn
-        if #available(iOS 13.0, *) {
-
-        } else {
-            let btn = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-            btn.setTitle("close", for: .normal)
-            btn.setTitleColor(.black, for: .normal)
-            btn.addTarget(self, action: #selector(backUp), for: .touchUpInside)
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: btn)
-        }
+        let btn = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        btn.setTitle("close", for: .normal)
+        btn.setTitleColor(.black, for: .normal)
+        btn.addTarget(self, action: #selector(backUp), for: .touchUpInside)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: btn)
     }
     @objc func backUp(){
         self.dismiss(animated: true)
