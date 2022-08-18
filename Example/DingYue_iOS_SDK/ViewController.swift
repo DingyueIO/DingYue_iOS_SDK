@@ -14,9 +14,19 @@ class ViewController: UIViewController {
         let btn = UIButton(type: .custom)
         btn.frame = CGRect(x: 0, y: 0, width: 200, height: 50)
         btn.center = self.view.center
-        btn.setTitle("go Purchase", for: [])
+
+        let perferLang = NSLocale.preferredLanguages[0]
+        var langParamStr = NSLocale.current.languageCode ?? ""
+        if (perferLang.range(of: "Hans") != nil) {
+            langParamStr = "zh-Hans"
+        } else if (perferLang.range(of: "Hant") != nil) {
+            langParamStr = "zh-Hant"
+        }
+
+        btn.setTitle(NSLocale.preferredLanguages[0], for: [])
         btn.setTitleColor(UIColor.black, for: [])
         btn.addTarget(self, action: #selector(goPurchase), for: .touchUpInside)
+
         return btn
     }()
 
@@ -24,6 +34,12 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.view.addSubview(purchaseBtn)
+
+        let btn2 = UIButton(type: .custom)
+        btn2.frame = CGRect(x: 10, y: 20, width: 200, height: 50)
+        btn2.setTitle(NSLocale.current.regionCode, for: [])
+        btn2.setTitleColor(UIColor.black, for: [])
+        self.view.addSubview(btn2)
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,16 +47,11 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     @objc func goPurchase(){
-        DYMobileSDK.track(event: "click_purchase_btn", extra: "extra", user: "user")
+
         //显示内购页-可以传复合要求的内购项信息对象
-        let product = Subscription(type: "CONSUMABLE", name: "消耗品2", platformProductId: "com.dingyue.consumable2", price: "12.99", currencyCode: "USD",countryCode: "USD")
-        let product2 = Subscription(type: "CONSUMABLE", name: "hello test", platformProductId: "com.dingyue.consumable1", appleSubscriptionGroupId: "", description: "消耗", period: "MONTH", price: "34.0", currencyCode: "USD", countryCode: "USD", priceTier: [], gracePeriod: true, icon: "", renewPriceChange: true)
-        let product3 = Subscription(type: "SUBSCRIPTION", name: "Year", platformProductId: "com.product.purchase.year", price: "7.99", currencyCode: "USD", countryCode: "en")
-        let product4 = Subscription(type: "SUBSCRIPTION", name: "Year", platformProductId: "com.product.purchase.year", price: "7.99", currencyCode: "USD", countryCode: "en")
-        let product5 = Subscription(type: "SUBSCRIPTION", name: "Year", platformProductId: "com.product.purchase.year", price: "7.99", currencyCode: "USD", countryCode: "en")
-        let product6 = Subscription(type: "SUBSCRIPTION", name: "Year", platformProductId: "com.product.purchase.year", price: "7.99", currencyCode: "USD", countryCode: "en")
-        let product7 = Subscription(type: "SUBSCRIPTION", name: "test", platformProductId: "testweek", appleSubscriptionGroupId: "9999", description: "测试", period: "WEEK", price: "4.99", currencyCode: "CNY", countryCode: "CN", priceTier: nil)
-        DYMobileSDK.showVisualPaywall(products: [product,product2,product3,product4,product5,product6,product7], rootController: self) { receipt, purchaseResult, error in
+        let defaultProuct1 = Subscription(type: "SUBSCRIPTION", name: "Week", platformProductId: "testWeek", price: "7.99", currencyCode: "USD", countryCode: "US")
+        let defaultProuct2 = Subscription(type: "SUBSCRIPTION", name: "Year", platformProductId: "testYear", appleSubscriptionGroupId: nil, description: "default product item", period: "Year", price: "49.99", currencyCode: "USD", countryCode: "US", priceTier: nil, gracePeriod: nil, icon: nil, renewPriceChange: nil)
+        DYMobileSDK.showVisualPaywall(products: [defaultProuct1,defaultProuct2], rootController: self) { receipt, purchasedResult, error in
             if error == nil {
                //购买成功
             }
@@ -69,6 +80,17 @@ extension UIViewController:DYMPayWallActionDelegate {
         let nav = UINavigationController.init(rootViewController: vc)
         nav.modalPresentationStyle = .fullScreen
         baseViewController.present(nav, animated: true)
+    }
+
+    public func clickCloseButton(baseViewController: UIViewController) {
+        print("点击了关闭按钮")
+    }
+
+    public func payWallDidAppear(baseViewController: UIViewController) {
+        print("内购页显示")
+    }
+    public func payWallDidDisappear(baseViewController: UIViewController) {
+        print("内购页消失")
     }
 }
 

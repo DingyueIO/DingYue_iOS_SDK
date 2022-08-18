@@ -22,5 +22,7 @@ extension UniqueUserObject{
         self.device = UserProperties.device
         self.connection = UserProperties.connection
         self.attribution = attribution
+        self.area = UserProperties.area
+        self.language = UserProperties.language
     }
 }
