@@ -26,7 +26,6 @@ class ApiManager {
             if (error != nil) {
                 DYMLogManager.logError(error!)
                 self.startSession()
-//                self.completion?(nil,nil,error)
             }else{
                 if data?.status == .ok {
                     if let paywall = data?.paywall {
@@ -55,19 +54,15 @@ class ApiManager {
                         DYMDefaultsManager.shared.isLoadingStatus = true
                     }
 
-                    if let switchItems = data?.switchItems {
-                        DYMDefaultsManager.shared.cachedSwitchItems = switchItems
-                    }
-
-                    if let subscribedProducts = data?.subscribedProducts {
-                        DYMDefaultsManager.shared.cachedSubscribedObjects = subscribedProducts
-                    }
+                    DYMDefaultsManager.shared.cachedSwitchItems = data?.switchItems
+                    DYMDefaultsManager.shared.cachedSubscribedObjects = data?.subscribedProducts
                     print(data ?? "")
                     //session report 返回开关状态数据和购买的产品信息
                     let subscribedOjects = DYMDefaultsManager.shared.subscribedObjects(subscribedObjectArray: DYMDefaultsManager.shared.cachedSubscribedObjects)
                     self.completion?(DYMDefaultsManager.shared.cachedSwitchItems,subscribedOjects,nil)
                 }else{
                     DYMLogManager.logError(data?.errmsg as Any)
+                    DYMDefaultsManager.shared.isLoadingStatus = true
                     self.completion?(nil,nil,DYMError.failed)
                 }
             }

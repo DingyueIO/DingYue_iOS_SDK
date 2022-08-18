@@ -268,8 +268,23 @@ extension DYMIAPManager: SKPaymentTransactionObserver {
         } else {
             callBackPurchaseCompletion(for: temple, .failure(.purchaseFailed))
         }
+
+        if let paywallIdentifier = DYMDefaultsManager.shared.cachedPaywallPageIdentifier {
+            let str = paywallIdentifier as NSString
+            let subStrs =  str.components(separatedBy: "/")
+            if subStrs.count == 2 {
+                let paywallId = subStrs[0]
+                let paywallVersion = subStrs[1]
+                DYMobileSDK.track(event: "PURCHASE_CANCLED", extra: paywallId, user: paywallVersion)
+            } else {
+                DYMobileSDK.track(event: "PURCHASE_CANCLED")
+            }
+        } else {
+            DYMobileSDK.track(event: "PURCHASE_CANCLED")
+        }
+
     }
-    ///支付完成后调用
+    ///支付完成后
     func purchased(_ transaction: SKPaymentTransaction) {
         
         let template = purchaseTemplate(for: transaction)

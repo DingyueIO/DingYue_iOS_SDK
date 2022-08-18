@@ -10,8 +10,12 @@ import WebKit
 import StoreKit
 
 @objc public protocol DYMPayWallActionDelegate: NSObjectProtocol {
+    @objc optional func payWallDidAppear(baseViewController:UIViewController)//内购页显示
+    @objc optional func payWallDidDisappear(baseViewController:UIViewController)//内购页消失
+
     @objc optional func clickTermsAction(baseViewController:UIViewController)//使用协议
     @objc optional func clickPrivacyAction(baseViewController:UIViewController)//隐私政策
+    @objc optional func clickCloseButton(baseViewController:UIViewController)//关闭按钮事件
 }
 
 public class DYMPayWallController: UIViewController {
@@ -89,12 +93,14 @@ public class DYMPayWallController: UIViewController {
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         eventManager.track(event: "ENTER_PAYWALL")
+        self.delegate?.payWallDidAppear?(baseViewController: self)
     }
 
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         eventManager.track(event: "EXIT_PAYWALL")
         stopLoadingTimer()
+        self.delegate?.payWallDidDisappear?(baseViewController: self)
     }
     
     public func loadWebView() {
@@ -166,9 +172,23 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == "vip_close" {
-            eventManager.track(event: "CLOSE_BUTTON")
+            if let paywallIdentifier = DYMDefaultsManager.shared.cachedPaywallPageIdentifier {
+                let str = paywallIdentifier as NSString
+                let subStrs =  str.components(separatedBy: "/")
+                if subStrs.count == 2 {
+                    let paywallId = subStrs[0]
+                    let paywallVersion = subStrs[1]
+                    eventManager.track(event: "EXIT_PURCHASE", extra: paywallId, user: paywallVersion)
+                } else {
+                    eventManager.track(event: "EXIT_PURCHASE")
+                }
+            } else {
+                eventManager.track(event: "EXIT_PURCHASE")
+            }
 
             self.dismiss(animated: true, completion: nil)
+
+            self.delegate?.clickCloseButton?(baseViewController: self)
         }else if message.name == "vip_restore" {
             eventManager.track(event: "PURCHASE_RESTORE")
 

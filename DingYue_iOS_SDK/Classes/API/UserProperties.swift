@@ -96,6 +96,14 @@ class UserProperties {
     static var pallwallPath:String?{
         return createPaywallDir()
     }
+
+    static var area: String? {
+        return NSLocale.current.regionCode
+    }
+
+    static var language: String? {
+        return NSLocale.preferredLanguages[0]
+    }
     class func createPaywallDir() -> String? {
         let DocumentPaths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         let filePath = DocumentPaths[0].appending("/PayWalWeb")

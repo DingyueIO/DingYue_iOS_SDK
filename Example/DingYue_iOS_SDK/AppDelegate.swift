@@ -22,8 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DYMobileSDK.activate { switchItems, subscribedOjects, error in
             if error == nil {
                 //激活成功
-                print("DingYue_iOS_SDK 激活成功")
-
+                print("DingYue_iOS_SDK 激活成功-----switch---\(switchItems)")
+                print("DingYue_iOS_SDK 激活成功-----subscribedOjects---\(subscribedOjects)")
             } else {
                 print("DingYue_iOS_SDK 激活失败 ---- \(error!)")
             }
@@ -32,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return true
     }
+
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
