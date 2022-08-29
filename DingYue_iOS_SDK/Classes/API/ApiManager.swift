@@ -52,6 +52,8 @@ class ApiManager {
                         DYMDefaultsManager.shared.cachedProducts = subsArray
                     } else {
                         DYMDefaultsManager.shared.isLoadingStatus = true
+                        DYMDefaultsManager.shared.cachedPaywalls = nil
+                        DYMDefaultsManager.shared.cachedProducts = nil
                     }
 
                     DYMDefaultsManager.shared.cachedSwitchItems = data?.switchItems

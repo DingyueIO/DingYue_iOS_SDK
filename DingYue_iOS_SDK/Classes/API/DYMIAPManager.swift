@@ -104,7 +104,7 @@ class DYMIAPManager: NSObject {
             }
             return
         }
-        removeAllUncompleteTransactionsBeforeNewPurchase()
+        finishTransactionInSKPaymentQueue()
         let cproduct = DYMProductModel(productId: productId)
         currentProducts.append(cproduct)
 
@@ -124,7 +124,7 @@ class DYMIAPManager: NSObject {
             }
             return
         }
-        removeAllUncompleteTransactionsBeforeNewPurchase()
+        finishTransactionInSKPaymentQueue()
         guard let skproduct = product else {
             DispatchQueue.main.async {
                 completion?(.failure(.noProducts),nil)
@@ -149,11 +149,11 @@ class DYMIAPManager: NSObject {
         SKPaymentQueue.default().add(payment)
     }
 
-    private func removeAllUncompleteTransactionsBeforeNewPurchase() {
+    public func finishTransactionInSKPaymentQueue() {
         let transactions = SKPaymentQueue.default().transactions
         if transactions.count >= 1 {
             for transaction in transactions {
-                if transaction.transactionState == SKPaymentTransactionState.purchased || transaction.transactionState == SKPaymentTransactionState.restored {
+                if transaction.transactionState == SKPaymentTransactionState.purchased || transaction.transactionState == SKPaymentTransactionState.restored || transaction.transactionState == SKPaymentTransactionState.failed{
                     SKPaymentQueue.default().finishTransaction(transaction)
                 }
             }
@@ -219,17 +219,16 @@ class DYMIAPManager: NSObject {
     var lastReceipt: String? {
         guard let appStoreReceiptURL = Bundle.main.appStoreReceiptURL else { return nil }
         guard FileManager.default.fileExists(atPath: appStoreReceiptURL.path) else { return nil }
-        
+
         var receiptData: Data?
         do { receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped) } catch {
             DYMLogManager.logError("Couldn't read receipt data.\n\(error)")
         }
-        
+
         guard let receipt = receiptData?.base64EncodedString() else {
             DYMLogManager.logError(DYMError.noReceipt)
             return nil
         }
-        
         return receipt
     }
     ///展示支付代码
@@ -288,7 +287,8 @@ extension DYMIAPManager: SKPaymentTransactionObserver {
     func purchased(_ transaction: SKPaymentTransaction) {
         
         let template = purchaseTemplate(for: transaction)
-        
+
+
         guard let receipt = lastReceipt else {
             callBackPurchaseCompletion(for: template, .failure(.noReceipt))
             return
@@ -298,6 +298,7 @@ extension DYMIAPManager: SKPaymentTransactionObserver {
             callBackPurchaseCompletion(for: template, .failure(.noProducts))
             return
         }
+
         DYMobileSDK.validateReceiptFirst(receipt, for: product.skproduct) { firstReceiptVerifyMobileResponse, error in
             let detail = DYMPurchaseDetail(productId: transaction.payment.productIdentifier,
                                            quantity: transaction.payment.quantity,
@@ -306,10 +307,10 @@ extension DYMIAPManager: SKPaymentTransactionObserver {
                                            transaction: transaction)
             if error == nil {
                 self.callBackPurchaseCompletion(for: template, .success(detail), firstReceiptVerifyMobileResponse)
-                SKPaymentQueue.default().finishTransaction(transaction)
             } else {
                 self.callBackPurchaseCompletion(for: template, .failure(error as! DYMError))
             }
+            SKPaymentQueue.default().finishTransaction(transaction)
         }
     }
     
@@ -387,7 +388,6 @@ extension DYMIAPManager: SKProductsRequestDelegate {
                 products.append(cproduct)
             }
         })
-        
         if response.products.count > 0, !products.isEmpty {
             callBackPaywallCompletion(result: .success(products))
         } else {
