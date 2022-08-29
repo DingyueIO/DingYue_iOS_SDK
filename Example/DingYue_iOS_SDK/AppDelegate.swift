@@ -30,6 +30,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         DYMobileSDK.reportAttribution(appsFlyerId: "9999999999")
 
+
+
+//        if let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,FileManager.default.fileExists(atPath: appStoreReceiptURL.path) {
+//            var receiptData: Data?
+//            do { receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped) } catch {
+//
+//            }
+//            if let receipt = receiptData?.base64EncodedString() {
+//                print(receipt)
+//
+//            }
+//
+//        }
+
         return true
     }
 

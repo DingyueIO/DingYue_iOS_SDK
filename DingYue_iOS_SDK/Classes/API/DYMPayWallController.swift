@@ -104,7 +104,7 @@ public class DYMPayWallController: UIViewController {
     }
     
     public func loadWebView() {
-        if DYMDefaultsManager.shared.cachedPaywallPageIdentifier != nil {
+        if DYMDefaultsManager.shared.cachedPaywalls != nil && DYMDefaultsManager.shared.cachedPaywallPageIdentifier != nil {
             let basePath = UserProperties.pallwallPath ?? ""
             let fullPath = basePath + "/index.html"
             let url = URL(fileURLWithPath: fullPath)

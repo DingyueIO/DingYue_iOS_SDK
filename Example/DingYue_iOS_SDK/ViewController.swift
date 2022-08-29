@@ -54,6 +54,7 @@ class ViewController: UIViewController {
         DYMobileSDK.showVisualPaywall(products: [defaultProuct1,defaultProuct2], rootController: self) { receipt, purchasedResult, error in
             if error == nil {
                //购买成功
+
             }
         }
 
