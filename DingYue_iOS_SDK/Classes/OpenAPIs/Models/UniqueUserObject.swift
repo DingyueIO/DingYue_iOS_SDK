@@ -38,8 +38,9 @@ public struct UniqueUserObject: Codable, JSONEncodable, Hashable {
     public var attribution: UniqueUserObjectAttribution?
     public var area: String?
     public var language: String?
+    public var extraData: [String:String]?
 
-    public init(osVersion: String, appVersion: String? = nil, idfa: String? = nil, idfv: String? = nil, deviceToken: String? = nil, device: String, connection: Connection? = nil,attribution: UniqueUserObjectAttribution? = nil,area: String? = nil,language: String? = nil) {
+    public init(osVersion: String, appVersion: String? = nil, idfa: String? = nil, idfv: String? = nil, deviceToken: String? = nil, device: String, connection: Connection? = nil,attribution: UniqueUserObjectAttribution? = nil,area: String? = nil,language: String? = nil,extraData: [String:String]? = nil) {
         self.osVersion = osVersion
         self.appVersion = appVersion
         self.idfa = idfa
@@ -50,6 +51,7 @@ public struct UniqueUserObject: Codable, JSONEncodable, Hashable {
         self.attribution = attribution
         self.area = area
         self.language = language
+        self.extraData = extraData
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -63,6 +65,7 @@ public struct UniqueUserObject: Codable, JSONEncodable, Hashable {
         case attribution
         case area
         case language
+        case extraData
     }
 
     // Encodable protocol methods
@@ -79,6 +82,7 @@ public struct UniqueUserObject: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(attribution, forKey: .attribution)
         try container.encodeIfPresent(area, forKey: .area)
         try container.encodeIfPresent(language, forKey: .language)
+        try container.encodeIfPresent(extraData, forKey: .extraData)
     }
 }
 

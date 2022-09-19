@@ -38,7 +38,7 @@
 		39D986300D87AA1C050BB5FA2D519FCE /* JSONEncodingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F33FFCFBF4ED6C52B1EFB201C9078D /* JSONEncodingHelper.swift */; };
 		3DE9613D63F09C821BB5F35DD2A042CF /* AppleSearchAdsAttributionReportObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1CD903D3228A570C504947F916F86F /* AppleSearchAdsAttributionReportObject.swift */; };
 		3DFF64FE7189CC8AA932FE8038205DC7 /* AnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76FC7D0E36CF0FEBC43EB1F99ECA846 /* AnyCodable.swift */; };
-		3E1060741E7F70659705E9CAFDF8101B /* DingYue_iOS_SDK-DingYue_iOS_SDK in Resources */ = {isa = PBXBuildFile; fileRef = 74BAC4DCA3736CC75382CD625F237BD1 /* DingYue_iOS_SDK-DingYue_iOS_SDK */; };
+		3E1060741E7F70659705E9CAFDF8101B /* DingYue_iOS_SDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 74BAC4DCA3736CC75382CD625F237BD1 /* DingYue_iOS_SDK.bundle */; };
 		3F24B301143F78DEDD37595E016A85F0 /* UserProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4900B38EF864ED3B333D5B53C40DD3CC /* UserProperties.swift */; };
 		3F6232418577478C884C12C8B1C677C4 /* DingYue_iOS_SDK-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D8B3B0977E166E132DF7B5CF3042E7 /* DingYue_iOS_SDK-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		403476E92C8CE2A55F658A0E62E8731E /* AnyCodable-FlightSchool-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 398FABD1B3343A39EE4EAC8EFDA93DDA /* AnyCodable-FlightSchool-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -235,7 +235,7 @@
 		06CD5E39E2256EAF07E18376D8FCD544 /* UniqueUserObjectAttribution.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UniqueUserObjectAttribution.swift; sourceTree = "<group>"; };
 		09FFEC1A38C4F8E2E2F2A28AA28C1AD6 /* AnyCodable-FlightSchool.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "AnyCodable-FlightSchool.release.xcconfig"; sourceTree = "<group>"; };
 		0B042F6FA78C67EF6ED3C213BC3F0708 /* mz_os.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_os.h; path = SSZipArchive/minizip/mz_os.h; sourceTree = "<group>"; };
-		0B5F405411F5DAE583DCBA212930C4BE /* mz_strm_buf.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_strm_buf.c; path = SSZipArchive/minizip/mz_strm_buf.c; sourceTree = "<group>"; };
+		0B5F405411F5DAE583DCBA212930C4BE /* mz_strm_buf.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = mz_strm_buf.c; path = SSZipArchive/minizip/mz_strm_buf.c; sourceTree = "<group>"; };
 		0BF508E662827025E187B295A3DBB6BE /* mz_strm_wzaes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_strm_wzaes.h; path = SSZipArchive/minizip/mz_strm_wzaes.h; sourceTree = "<group>"; };
 		0DA91C15496C42964680B349402A3C27 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		0F1150CFCD05EA053AAAFE19F4E81C45 /* ReceiptVerifyMobileResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReceiptVerifyMobileResponse.swift; sourceTree = "<group>"; };
@@ -247,10 +247,10 @@
 		1548DAB1A21498475B57A268F2A8FEFF /* Pods-DingYue_iOS_SDK_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DingYue_iOS_SDK_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		15D091464608E78F083EF3BFCCD1131D /* UIDevice+FCUUID.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIDevice+FCUUID.h"; path = "FCUUID/UIDevice+FCUUID.h"; sourceTree = "<group>"; };
 		16AD960BA4A642AE90E9B3308E9C9236 /* FCUUID-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "FCUUID-Info.plist"; sourceTree = "<group>"; };
-		17A14AE25C8C1CAAEB658001E757BDB0 /* mz_strm_zlib.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_strm_zlib.c; path = SSZipArchive/minizip/mz_strm_zlib.c; sourceTree = "<group>"; };
-		185313911CE52D5D84FBA538E2AF86A0 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
-		19B048B3B4FF89276E587ED77A2FFD45 /* favicon.ico */ = {isa = PBXFileReference; includeInIndex = 1; name = favicon.ico; path = DingYue_iOS_SDK/Assets/Resources/favicon.ico; sourceTree = "<group>"; };
-		1AF6C1AECCBA5CC4386FEF2C091CCD5C /* mz_compat.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_compat.c; path = SSZipArchive/minizip/mz_compat.c; sourceTree = "<group>"; };
+		17A14AE25C8C1CAAEB658001E757BDB0 /* mz_strm_zlib.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = mz_strm_zlib.c; path = SSZipArchive/minizip/mz_strm_zlib.c; sourceTree = "<group>"; };
+		185313911CE52D5D84FBA538E2AF86A0 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		19B048B3B4FF89276E587ED77A2FFD45 /* favicon.ico */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.ico; name = favicon.ico; path = DingYue_iOS_SDK/Assets/Resources/favicon.ico; sourceTree = "<group>"; };
+		1AF6C1AECCBA5CC4386FEF2C091CCD5C /* mz_compat.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = mz_compat.c; path = SSZipArchive/minizip/mz_compat.c; sourceTree = "<group>"; };
 		1BA5450AAE99197AE6F1562115FC80A9 /* mz_strm_pkcrypt.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_strm_pkcrypt.h; path = SSZipArchive/minizip/mz_strm_pkcrypt.h; sourceTree = "<group>"; };
 		1E5A6CA98821E3D2137F573D73B49A1C /* JSONDataEncoding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JSONDataEncoding.swift; sourceTree = "<group>"; };
 		1F8EEE3C551EEDF2C0957FA255479DD6 /* DingYue_iOS_SDK-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DingYue_iOS_SDK-prefix.pch"; sourceTree = "<group>"; };
@@ -268,7 +268,7 @@
 		2E3BB453B11962EA7B2F263415CCA5E2 /* SimpleStatusResult.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SimpleStatusResult.swift; sourceTree = "<group>"; };
 		2EB842C5E36C2652EF4306E451CCA7E3 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/iAd.framework; sourceTree = DEVELOPER_DIR; };
 		3164EAD1FC9750F32FB41C2703C8EF64 /* SwitchItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SwitchItem.swift; sourceTree = "<group>"; };
-		31AC616D29B80AECE09FC9E6A25E6A9B /* index.html */ = {isa = PBXFileReference; includeInIndex = 1; name = index.html; path = DingYue_iOS_SDK/Assets/Resources/index.html; sourceTree = "<group>"; };
+		31AC616D29B80AECE09FC9E6A25E6A9B /* index.html */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.html; name = index.html; path = DingYue_iOS_SDK/Assets/Resources/index.html; sourceTree = "<group>"; };
 		347D1544D31D165FDF0FBB73A05A1DF1 /* EditOneOf.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditOneOf.swift; sourceTree = "<group>"; };
 		34E66F2B0E58E199B3C4F0D9E53A0223 /* mz_strm_split.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_strm_split.h; path = SSZipArchive/minizip/mz_strm_split.h; sourceTree = "<group>"; };
 		366D967168B0D23B069373B6A43BB3A5 /* SSZipArchive.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SSZipArchive.modulemap; sourceTree = "<group>"; };
@@ -299,25 +299,25 @@
 		6245D8180470E40A06F3A25ABA330C83 /* Pods-DingYue_iOS_SDK_Tests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-DingYue_iOS_SDK_Tests"; path = Pods_DingYue_iOS_SDK_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63C99D72198CE615217C00A10728FAA5 /* ReportObject.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReportObject.swift; sourceTree = "<group>"; };
 		6424E7CC9B49DDD20AED99A5D7785EA6 /* AppleSearchAdsAttribution.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppleSearchAdsAttribution.swift; sourceTree = "<group>"; };
-		642B9750D8C06C77A85FDBAA09A0369E /* locale.js */ = {isa = PBXFileReference; includeInIndex = 1; name = locale.js; path = DingYue_iOS_SDK/Assets/Resources/locale.js; sourceTree = "<group>"; };
+		642B9750D8C06C77A85FDBAA09A0369E /* locale.js */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.javascript; name = locale.js; path = DingYue_iOS_SDK/Assets/Resources/locale.js; sourceTree = "<group>"; };
 		661E012F79FDF7EA095D2E87B791B2D8 /* FCUUID-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FCUUID-dummy.m"; sourceTree = "<group>"; };
 		664B382C2926944AE4BB4318104538DB /* FirstReceiptVerifyPostObject.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirstReceiptVerifyPostObject.swift; sourceTree = "<group>"; };
 		6A78B164EED8AE8DA2B5A85F3F242041 /* AnyCodable-FlightSchool.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "AnyCodable-FlightSchool.debug.xcconfig"; sourceTree = "<group>"; };
 		6B6D8364F65A8559184A8E2B2C45F1B1 /* DYMIAPManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DYMIAPManager.swift; sourceTree = "<group>"; };
 		6B91BB24831279BCF4BD460A9753D8D7 /* Paywall.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Paywall.swift; sourceTree = "<group>"; };
 		6BE06D1E365DA1C1F7F345B386E068A1 /* AnyCodable-FlightSchool */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "AnyCodable-FlightSchool"; path = AnyCodable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		711AC0F3EBD22A95DD52E40A56698846 /* mz_os_posix.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_os_posix.c; path = SSZipArchive/minizip/mz_os_posix.c; sourceTree = "<group>"; };
+		711AC0F3EBD22A95DD52E40A56698846 /* mz_os_posix.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = mz_os_posix.c; path = SSZipArchive/minizip/mz_os_posix.c; sourceTree = "<group>"; };
 		724F93D02E7FD0F51624A68D8A5E3FF1 /* ReceiptAPI.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReceiptAPI.swift; sourceTree = "<group>"; };
 		749D01102500DA18FF35307E79B6D8EC /* Pods-DingYue_iOS_SDK_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DingYue_iOS_SDK_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		74BAC4DCA3736CC75382CD625F237BD1 /* DingYue_iOS_SDK-DingYue_iOS_SDK */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "DingYue_iOS_SDK-DingYue_iOS_SDK"; path = DingYue_iOS_SDK.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		74BAC4DCA3736CC75382CD625F237BD1 /* DingYue_iOS_SDK.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DingYue_iOS_SDK.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		761F22F6E863CB298EC807EEB76368AA /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		79097886610E05C36DF3038E51909197 /* SSZipArchive-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SSZipArchive-dummy.m"; sourceTree = "<group>"; };
 		7C053126DDFB43F345921BDEF5AF0AAC /* ResourceBundle-DingYue_iOS_SDK-DingYue_iOS_SDK-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-DingYue_iOS_SDK-DingYue_iOS_SDK-Info.plist"; sourceTree = "<group>"; };
 		7E215007D4D28C2A4E499FB391890BDE /* Configuration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		7EC9EBA722DC4C4C11CC384D803E8039 /* DYMRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DYMRouter.swift; sourceTree = "<group>"; };
-		7FAE301ADC6CE1495ED0970E89FA9D07 /* mz_crypt.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_crypt.c; path = SSZipArchive/minizip/mz_crypt.c; sourceTree = "<group>"; };
+		7FAE301ADC6CE1495ED0970E89FA9D07 /* mz_crypt.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = mz_crypt.c; path = SSZipArchive/minizip/mz_crypt.c; sourceTree = "<group>"; };
 		803E3C640F248B6A41E1DCC9311AAB0C /* SubscriptionPriceTier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SubscriptionPriceTier.swift; sourceTree = "<group>"; };
-		803EBD62D8C4B376D63D7768DC2F1C10 /* mz_strm_mem.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_strm_mem.c; path = SSZipArchive/minizip/mz_strm_mem.c; sourceTree = "<group>"; };
+		803EBD62D8C4B376D63D7768DC2F1C10 /* mz_strm_mem.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = mz_strm_mem.c; path = SSZipArchive/minizip/mz_strm_mem.c; sourceTree = "<group>"; };
 		8181818D87F020CBA6BC7B118E12DB37 /* APIs.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = APIs.swift; sourceTree = "<group>"; };
 		81CAEA088597AC236E80E3278F845B20 /* Pods-DingYue_iOS_SDK_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DingYue_iOS_SDK_Example-frameworks.sh"; sourceTree = "<group>"; };
 		830C0DEF59547A26EFA5540FD3CC46CD /* FCUUID */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FCUUID; path = FCUUID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -327,21 +327,21 @@
 		8878BBA1BAD05C296B43ADE402C03E38 /* mz_strm.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_strm.h; path = SSZipArchive/minizip/mz_strm.h; sourceTree = "<group>"; };
 		8921615D10F55C0BEC2ACCF0CF857410 /* SessionsAPI.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SessionsAPI.swift; sourceTree = "<group>"; };
 		8DAF0C4EEC153052456BAC9686950871 /* CodableHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CodableHelper.swift; sourceTree = "<group>"; };
-		8DF1304E1E8BBACAB23D24AE47625AF8 /* mz_strm.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_strm.c; path = SSZipArchive/minizip/mz_strm.c; sourceTree = "<group>"; };
+		8DF1304E1E8BBACAB23D24AE47625AF8 /* mz_strm.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = mz_strm.c; path = SSZipArchive/minizip/mz_strm.c; sourceTree = "<group>"; };
 		90D528A2965D1FD1C825DB3F9748DD00 /* URLSessionImplementations.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = URLSessionImplementations.swift; sourceTree = "<group>"; };
-		9164C88AF9119F0AD6AF5C0B471055A3 /* vue.js */ = {isa = PBXFileReference; includeInIndex = 1; name = vue.js; path = DingYue_iOS_SDK/Assets/Resources/vue.js; sourceTree = "<group>"; };
+		9164C88AF9119F0AD6AF5C0B471055A3 /* vue.js */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.javascript; name = vue.js; path = DingYue_iOS_SDK/Assets/Resources/vue.js; sourceTree = "<group>"; };
 		91B23470DEB9A986332BEB5034234BC7 /* SSZipArchive */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SSZipArchive; path = SSZipArchive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		92A0D7823DAF956077F39E2C5B73BBAA /* AnyCodable-FlightSchool-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "AnyCodable-FlightSchool-Info.plist"; sourceTree = "<group>"; };
 		92A782AD4ABF6D6B7B1A787C0A6975A6 /* UICKeyChainStore.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = UICKeyChainStore.debug.xcconfig; sourceTree = "<group>"; };
 		9332508D2E9831FDE4AA5D9EA991C311 /* mz_zip_rw.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_zip_rw.h; path = SSZipArchive/minizip/mz_zip_rw.h; sourceTree = "<group>"; };
 		95C691F9252973629D8ECDC68FEB49A4 /* DYMExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DYMExtension.swift; sourceTree = "<group>"; };
 		968489B4A14A5B3751FAD9632E76C9E1 /* FCUUID.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FCUUID.release.xcconfig; sourceTree = "<group>"; };
-		9773D25F104E9724B416F43B0E54060D /* mz_strm_wzaes.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_strm_wzaes.c; path = SSZipArchive/minizip/mz_strm_wzaes.c; sourceTree = "<group>"; };
+		9773D25F104E9724B416F43B0E54060D /* mz_strm_wzaes.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = mz_strm_wzaes.c; path = SSZipArchive/minizip/mz_strm_wzaes.c; sourceTree = "<group>"; };
 		994F82CD2ED158A43D12A0F05D183396 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		9A423D77F05B49B7BB77A9EB0E44D40A /* AppleSearchAdsAttributionReportObjectAttribution.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppleSearchAdsAttributionReportObjectAttribution.swift; sourceTree = "<group>"; };
 		9BBE55A052255D5D3603C16A25AA3A31 /* DYMParameter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DYMParameter.swift; sourceTree = "<group>"; };
-		9CA321A0962471EF26FB60A878450446 /* mz_strm_os_posix.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_strm_os_posix.c; path = SSZipArchive/minizip/mz_strm_os_posix.c; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9CA321A0962471EF26FB60A878450446 /* mz_strm_os_posix.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = mz_strm_os_posix.c; path = SSZipArchive/minizip/mz_strm_os_posix.c; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9E2F23A474C5EA5ADBDEC6BB2BCBB2D4 /* SessionsManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SessionsManager.swift; sourceTree = "<group>"; };
 		9ECA935E5B9A4282205E002873A18860 /* DingYue_iOS_SDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DingYue_iOS_SDK.release.xcconfig; sourceTree = "<group>"; };
 		9F67FED5DA4C44147D16C316CC72FC17 /* SSZipArchive-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SSZipArchive-prefix.pch"; sourceTree = "<group>"; };
@@ -349,14 +349,14 @@
 		A0A4D131DB063279AE8AF52001C682FE /* UICKeyChainStore */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = UICKeyChainStore; path = UICKeyChainStore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2DDD73793F9D64618C903C58FDDCC50 /* ApiManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		A932A85B41B8B1513256ADAE10A35BE5 /* AnyCodable-FlightSchool-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "AnyCodable-FlightSchool-dummy.m"; sourceTree = "<group>"; };
-		AAADBC03DD98E96B4B0FB29C0DBBA33B /* mz_os.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_os.c; path = SSZipArchive/minizip/mz_os.c; sourceTree = "<group>"; };
+		AAADBC03DD98E96B4B0FB29C0DBBA33B /* mz_os.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = mz_os.c; path = SSZipArchive/minizip/mz_os.c; sourceTree = "<group>"; };
 		AB6B4A24920986D1C6F70A136CB0D832 /* Pods-DingYue_iOS_SDK_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DingYue_iOS_SDK_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
-		AC305FFD116BE8CF66B63D31BEF79B32 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		AC305FFD116BE8CF66B63D31BEF79B32 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		ADAAF11200D88B3F683D11802E78F312 /* DYMobileSDK.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DYMobileSDK.swift; sourceTree = "<group>"; };
 		AE54FADA5DD8966E78B11454E033CD66 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = DEVELOPER_DIR; };
 		B58710A84434E4C778F18E502DC8D499 /* SSZipArchive.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSZipArchive.h; path = SSZipArchive/SSZipArchive.h; sourceTree = "<group>"; };
 		B5EC862F6441B6EFEB7E79BB68BAEEA3 /* APIHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = APIHelper.swift; sourceTree = "<group>"; };
-		B8390D35CBB43BEF9FF54905ED8A3AD3 /* mz_strm_pkcrypt.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_strm_pkcrypt.c; path = SSZipArchive/minizip/mz_strm_pkcrypt.c; sourceTree = "<group>"; };
+		B8390D35CBB43BEF9FF54905ED8A3AD3 /* mz_strm_pkcrypt.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = mz_strm_pkcrypt.c; path = SSZipArchive/minizip/mz_strm_pkcrypt.c; sourceTree = "<group>"; };
 		B986D6EC2D1F6DAE9614CBABB2C2EF2E /* DYMJson.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DYMJson.swift; sourceTree = "<group>"; };
 		BA9F87698AD36D2EA8A199380ADAED50 /* AnyDecodable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AnyDecodable.swift; path = Sources/AnyCodable/AnyDecodable.swift; sourceTree = "<group>"; };
 		BBCD912900B22CBE354CB3A4930D4A02 /* Attribution.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Attribution.swift; sourceTree = "<group>"; };
@@ -367,9 +367,9 @@
 		C3BE9B9CF661ACC56ADE1FBD748F9073 /* Pods-DingYue_iOS_SDK_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DingYue_iOS_SDK_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		C65DAE0B8C61F7417534E5E1DD6D6A23 /* SSZipArchive.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SSZipArchive.release.xcconfig; sourceTree = "<group>"; };
 		C8CE4A9495010ED3C531ECCAB3FC9DBA /* ZipArchive.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZipArchive.h; path = SSZipArchive/ZipArchive.h; sourceTree = "<group>"; };
-		CA312D3889D086CD816D690187B9D18E /* mz_zip_rw.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_zip_rw.c; path = SSZipArchive/minizip/mz_zip_rw.c; sourceTree = "<group>"; };
+		CA312D3889D086CD816D690187B9D18E /* mz_zip_rw.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = mz_zip_rw.c; path = SSZipArchive/minizip/mz_zip_rw.c; sourceTree = "<group>"; };
 		CC1CD903D3228A570C504947F916F86F /* AppleSearchAdsAttributionReportObject.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppleSearchAdsAttributionReportObject.swift; sourceTree = "<group>"; };
-		D3910527640CA67D93E37457381D3BF8 /* mz_strm_split.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_strm_split.c; path = SSZipArchive/minizip/mz_strm_split.c; sourceTree = "<group>"; };
+		D3910527640CA67D93E37457381D3BF8 /* mz_strm_split.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = mz_strm_split.c; path = SSZipArchive/minizip/mz_strm_split.c; sourceTree = "<group>"; };
 		D3B13D6B9E7CFCA6851240173DADC7DC /* FCUUID.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = FCUUID.modulemap; sourceTree = "<group>"; };
 		D6F3C313A322CF6884058CFC2506A353 /* EditArrayStringUnit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditArrayStringUnit.swift; sourceTree = "<group>"; };
 		D76FC7D0E36CF0FEBC43EB1F99ECA846 /* AnyCodable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AnyCodable.swift; path = Sources/AnyCodable/AnyCodable.swift; sourceTree = "<group>"; };
@@ -392,9 +392,9 @@
 		F0ADAFCD6D6AA5D866A4C3733D0F86FE /* mz_strm_mem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_strm_mem.h; path = SSZipArchive/minizip/mz_strm_mem.h; sourceTree = "<group>"; };
 		F0BB44F8B711F813F51D83E4D47D0BD6 /* FCUUID.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FCUUID.debug.xcconfig; sourceTree = "<group>"; };
 		F1670C79D111A424A87669BBA59F69C2 /* Pods-DingYue_iOS_SDK_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DingYue_iOS_SDK_Example.release.xcconfig"; sourceTree = "<group>"; };
-		F39565E30908401B86D53CCD038B8A09 /* DingYue_iOS_SDK.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = DingYue_iOS_SDK.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		F39565E30908401B86D53CCD038B8A09 /* DingYue_iOS_SDK.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = DingYue_iOS_SDK.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		F46D0A097D84F716A1ECF488394A98CC /* SSZipArchive.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SSZipArchive.m; path = SSZipArchive/SSZipArchive.m; sourceTree = "<group>"; };
-		F4DDE952B1550D2ED8864B0DF576634C /* mz_crypt_apple.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_crypt_apple.c; path = SSZipArchive/minizip/mz_crypt_apple.c; sourceTree = "<group>"; };
+		F4DDE952B1550D2ED8864B0DF576634C /* mz_crypt_apple.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = mz_crypt_apple.c; path = SSZipArchive/minizip/mz_crypt_apple.c; sourceTree = "<group>"; };
 		F6B45B03AE3CD537709A996E3F468A3E /* UICKeyChainStore.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = UICKeyChainStore.h; path = Lib/UICKeyChainStore/UICKeyChainStore.h; sourceTree = "<group>"; };
 		F78C185220112CA5700DEDE238E851A5 /* mz_strm_zlib.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_strm_zlib.h; path = SSZipArchive/minizip/mz_strm_zlib.h; sourceTree = "<group>"; };
 		F8D8B3B0977E166E132DF7B5CF3042E7 /* DingYue_iOS_SDK-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DingYue_iOS_SDK-umbrella.h"; sourceTree = "<group>"; };
@@ -403,7 +403,7 @@
 		FC3C18EC874E3A6070D2BAD0C2EF138D /* FCUUID.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FCUUID.h; path = FCUUID/FCUUID.h; sourceTree = "<group>"; };
 		FD0B9610CB45E4AB08E25259302F6D98 /* mz.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz.h; path = SSZipArchive/minizip/mz.h; sourceTree = "<group>"; };
 		FEE70793A793FB1F3D72148A5EE1C007 /* mz_strm_os.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_strm_os.h; path = SSZipArchive/minizip/mz_strm_os.h; sourceTree = "<group>"; };
-		FF6F905B226680192E51AC14629FC76D /* mz_zip.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_zip.c; path = SSZipArchive/minizip/mz_zip.c; sourceTree = "<group>"; };
+		FF6F905B226680192E51AC14629FC76D /* mz_zip.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = mz_zip.c; path = SSZipArchive/minizip/mz_zip.c; sourceTree = "<group>"; };
 		FFEC7C6E3FDC3575585BF2A54A7B7F94 /* DYMConstants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DYMConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -490,7 +490,6 @@
 				724F93D02E7FD0F51624A68D8A5E3FF1 /* ReceiptAPI.swift */,
 				8921615D10F55C0BEC2ACCF0CF857410 /* SessionsAPI.swift */,
 			);
-			name = APIs;
 			path = APIs;
 			sourceTree = "<group>";
 		};
@@ -502,7 +501,6 @@
 				DF559863F3231D4C6B635FF8201E1E0C /* AnyEncodable.swift */,
 				4C85F17C0C25690A15DBD8FC6A4CE6E9 /* Support Files */,
 			);
-			name = "AnyCodable-FlightSchool";
 			path = "AnyCodable-FlightSchool";
 			sourceTree = "<group>";
 		};
@@ -662,7 +660,6 @@
 				C8CE4A9495010ED3C531ECCAB3FC9DBA /* ZipArchive.h */,
 				3D268446A1592444CFF7F7F9FED66B5D /* Support Files */,
 			);
-			name = SSZipArchive;
 			path = SSZipArchive;
 			sourceTree = "<group>";
 		};
@@ -673,7 +670,6 @@
 				E1A140C9876EA28F4510ED54746026D2 /* UICKeyChainStore.m */,
 				953675A71B626F4190FAD175402E0849 /* Support Files */,
 			);
-			name = UICKeyChainStore;
 			path = UICKeyChainStore;
 			sourceTree = "<group>";
 		};
@@ -738,7 +734,6 @@
 				2A965057793101AB931DA9F83D4CA452 /* UniqueUserObject.swift */,
 				06CD5E39E2256EAF07E18376D8FCD544 /* UniqueUserObjectAttribution.swift */,
 			);
-			name = Models;
 			path = Models;
 			sourceTree = "<group>";
 		};
@@ -776,7 +771,7 @@
 			children = (
 				6BE06D1E365DA1C1F7F345B386E068A1 /* AnyCodable-FlightSchool */,
 				249B00EA20CE37878390C4AB3996C8D6 /* DingYue_iOS_SDK */,
-				74BAC4DCA3736CC75382CD625F237BD1 /* DingYue_iOS_SDK-DingYue_iOS_SDK */,
+				74BAC4DCA3736CC75382CD625F237BD1 /* DingYue_iOS_SDK.bundle */,
 				830C0DEF59547A26EFA5540FD3CC46CD /* FCUUID */,
 				E005E4DC384049B1E48A98A1DAF29678 /* Pods-DingYue_iOS_SDK_Example */,
 				6245D8180470E40A06F3A25ABA330C83 /* Pods-DingYue_iOS_SDK_Tests */,
@@ -818,7 +813,6 @@
 				5920D4D1D1CC915D88BC795E01231813 /* UIDevice+FCUUID.m */,
 				4279B18EF22D7644E8DA35CF9D01442E /* Support Files */,
 			);
-			name = FCUUID;
 			path = FCUUID;
 			sourceTree = "<group>";
 		};
@@ -1082,7 +1076,7 @@
 			);
 			name = "DingYue_iOS_SDK-DingYue_iOS_SDK";
 			productName = DingYue_iOS_SDK;
-			productReference = 74BAC4DCA3736CC75382CD625F237BD1 /* DingYue_iOS_SDK-DingYue_iOS_SDK */;
+			productReference = 74BAC4DCA3736CC75382CD625F237BD1 /* DingYue_iOS_SDK.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 		F60E38364AFF5E1349FF07415B944396 /* SSZipArchive */ = {
@@ -1111,6 +1105,11 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1240;
+				TargetAttributes = {
+					880EAF5A4ACEB47A80BE9810E3EAC114 = {
+						ProvisioningStyle = Manual;
+					};
+				};
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1142,7 +1141,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E1060741E7F70659705E9CAFDF8101B /* DingYue_iOS_SDK-DingYue_iOS_SDK in Resources */,
+				3E1060741E7F70659705E9CAFDF8101B /* DingYue_iOS_SDK.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1599,8 +1598,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
@@ -1702,11 +1700,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 59AA5EDF6AC88602FAE8128C0AEB3E1D /* DingYue_iOS_SDK.debug.xcconfig */;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/DingYue_iOS_SDK";
+				DEVELOPMENT_TEAM = "";
 				IBSC_MODULE = DingYue_iOS_SDK;
 				INFOPLIST_FILE = "Target Support Files/DingYue_iOS_SDK/ResourceBundle-DingYue_iOS_SDK-DingYue_iOS_SDK-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				PRODUCT_NAME = DingYue_iOS_SDK;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1748,11 +1751,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9ECA935E5B9A4282205E002873A18860 /* DingYue_iOS_SDK.release.xcconfig */;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/DingYue_iOS_SDK";
+				DEVELOPMENT_TEAM = "";
 				IBSC_MODULE = DingYue_iOS_SDK;
 				INFOPLIST_FILE = "Target Support Files/DingYue_iOS_SDK/ResourceBundle-DingYue_iOS_SDK-DingYue_iOS_SDK-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				PRODUCT_NAME = DingYue_iOS_SDK;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";

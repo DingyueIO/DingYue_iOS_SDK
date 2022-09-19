@@ -21,11 +21,17 @@ class ApiManager {
     var completion:sessionActivateCompletion?
     var paywallIdentifier = ""
     var paywallCustomize = false
-    func startSession(){
+
+    @objc func startSession(){
         SessionsAPI.reportSession(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: SessionsAPI.XPLATFORM_reportSession.ios, X_VERSION: UserProperties.sdkVersion, uniqueUserObject: UniqueUserObject(), apiResponseQueue: OpenAPIClientAPI.apiResponseQueue) { data, error in
             if (error != nil) {
                 DYMLogManager.logError(error!)
-                self.startSession()
+
+                let time: TimeInterval = 1.0
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + time) {
+                    self.startSession()
+                }
+
             }else{
                 if data?.status == .ok {
                     if let paywall = data?.paywall {
