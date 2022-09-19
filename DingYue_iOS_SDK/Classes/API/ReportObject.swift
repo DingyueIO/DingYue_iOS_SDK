@@ -24,5 +24,6 @@ extension UniqueUserObject{
         self.attribution = attribution
         self.area = UserProperties.area
         self.language = UserProperties.language
+        self.extraData = UserProperties.extraData
     }
 }
