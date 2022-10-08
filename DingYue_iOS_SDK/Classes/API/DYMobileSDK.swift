@@ -313,7 +313,6 @@ extension DYMobileSDK: DYMAppDelegateSwizzlerDelegate {
     func didReceiveAPNSToken(_ deviceToken: Data) {
         Self.apnsToken = deviceToken
         if let token = self.apnsTokenStr {
-            print("token----\(token)")
             Self.reportDeviceToken(token: token)
         }
     }

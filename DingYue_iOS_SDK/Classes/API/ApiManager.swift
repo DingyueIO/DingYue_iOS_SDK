@@ -138,7 +138,6 @@ class ApiManager {
                         } else {
                             DYMDefaultsManager.shared.cachedPaywallPageIdentifier = self.paywallIdentifier
                         }
-
                     }
                     try? FileManager.default.removeItem(at: url!)
                 }else {
