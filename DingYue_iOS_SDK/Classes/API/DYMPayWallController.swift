@@ -24,6 +24,7 @@ public class DYMPayWallController: UIViewController {
     var completion:DYMPurchaseCompletion?
     weak var delegate: DYMPayWallActionDelegate?
     var loadingTimer:Timer?
+    var currentPaywallId:String?
 
     lazy var activity:UIActivityIndicatorView = {
         let activity = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
@@ -92,13 +93,15 @@ public class DYMPayWallController: UIViewController {
 
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        eventManager.track(event: "ENTER_PAYWALL")
+        self.currentPaywallId = DYMDefaultsManager.shared.cachedPaywallPageIdentifier
+        self.trackWithPayWallInfo(eventName: "ENTER_PAYWALL")
+
         self.delegate?.payWallDidAppear?(baseViewController: self)
     }
 
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        eventManager.track(event: "EXIT_PAYWALL")
+        self.trackWithPayWallInfo(eventName: "EXIT_PAYWALL")
         stopLoadingTimer()
         self.delegate?.payWallDidDisappear?(baseViewController: self)
     }
@@ -172,32 +175,22 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == "vip_close" {
-            if let paywallIdentifier = DYMDefaultsManager.shared.cachedPaywallPageIdentifier {
-                let str = paywallIdentifier as NSString
-                let subStrs =  str.components(separatedBy: "/")
-                if subStrs.count == 2 {
-                    let paywallId = subStrs[0]
-                    let paywallVersion = subStrs[1]
-                    eventManager.track(event: "EXIT_PURCHASE", extra: paywallId, user: paywallVersion)
-                } else {
-                    eventManager.track(event: "EXIT_PURCHASE")
-                }
-            } else {
-                eventManager.track(event: "EXIT_PURCHASE")
-            }
+            self.trackWithPayWallInfo(eventName: "EXIT_PURCHASE")
 
             self.dismiss(animated: true, completion: nil)
 
             self.delegate?.clickCloseButton?(baseViewController: self)
         }else if message.name == "vip_restore" {
-            eventManager.track(event: "PURCHASE_RESTORE")
 
             ProgressView.show(rootViewConroller: self)
             DYMobileSDK.restorePurchase { receipt, purchaseResult, error in
                 ProgressView.stop()
                 self.completion?(receipt,purchaseResult,error)
                 if error == nil {
+                    self.trackWithPayWallInfo(eventName: "RESTORE_PURCHASE_SUCCESS")
                     self.dismiss(animated: true, completion: nil)
+                } else {
+                    self.trackWithPayWallInfo(eventName: "RESTORE_PURCHASE_FAIL")
                 }
             }
         } else if message.name == "vip_terms" {
@@ -211,7 +204,6 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
                 self.delegate?.clickPrivacyAction!(baseViewController: self)
             }
         }else if message.name == "vip_purchase" {
-            eventManager.track(event: "PURCHASE_START")
 
             let dic = message.body as? Dictionary<String,Any>
             if let productId = dic?["productId"] as? String {
@@ -219,6 +211,7 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
             }else {
                 self.completion?(nil,nil,.noProductIds)
             }
+
         }
     }
 
@@ -228,8 +221,24 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
             ProgressView.stop()
             self.completion?(receipt,purchaseResult,error)
             if error == nil {
+                self.trackWithPayWallInfo(eventName: "PURCHASE_SUCCESS")
+
                 self.dismiss(animated: true, completion: nil)
+            } else {
+                self.trackWithPayWallInfo(eventName: "PURCHASE_FAIL")
             }
+        }
+    }
+
+    func trackWithPayWallInfo(eventName:String) {
+        if let paywallId = self.currentPaywallId {
+            let middleIndex = paywallId.firstIndex(of: "/")
+            let id = String(paywallId[..<middleIndex!])
+            let version = String(paywallId[paywallId.index(after: middleIndex!)...])
+
+            self.eventManager.track(event: eventName, extra: version, user: id)
+        } else {
+            self.eventManager.track(event: eventName)
         }
     }
 
