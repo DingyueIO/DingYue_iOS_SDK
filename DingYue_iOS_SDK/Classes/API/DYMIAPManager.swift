@@ -305,10 +305,10 @@ extension DYMIAPManager: SKPaymentTransactionObserver {
                                            product: product.skproduct!,
                                            receipt: receipt,
                                            transaction: transaction)
-            if error == nil {
-                self.callBackPurchaseCompletion(for: template, .success(detail), firstReceiptVerifyMobileResponse)
+            if let err = error {
+                self.callBackPurchaseCompletion(for: template, .failure((err as? DYMError) ?? DYMError(err)))
             } else {
-                self.callBackPurchaseCompletion(for: template, .failure(error as! DYMError))
+                self.callBackPurchaseCompletion(for: template, .success(detail), firstReceiptVerifyMobileResponse)
             }
             SKPaymentQueue.default().finishTransaction(transaction)
         }

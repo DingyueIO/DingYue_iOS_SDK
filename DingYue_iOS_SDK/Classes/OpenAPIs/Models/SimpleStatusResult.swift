@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-public struct SimpleStatusResult: Codable, JSONEncodable, Hashable {
+@objcMembers public class SimpleStatusResult: NSObject, Codable, JSONEncodable {
 
     public enum Status: String, Codable, CaseIterable {
         case ok = "ok"

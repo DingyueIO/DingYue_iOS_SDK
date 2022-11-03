@@ -278,6 +278,12 @@ import StoreKit
             shared.eventManager.track(event: event, extra: extra, user: user)
         }
     }
+    /// MARK: - load native paywall
+    @objc public class func loadNativePaywall(paywallFullPath: String,basePath:String) {
+        DYMLogManager.logMessage("Calling now: \(#function)")
+        DYMDefaultsManager.shared.nativePaywallBasePath = basePath
+        DYMDefaultsManager.shared.nativePaywallPath = paywallFullPath
+    }
 
     @objc public class func handlePushNotification(_ userInfo: [AnyHashable : Any], completion: Error?) {
         DYMLogManager.logMessage("Calling now: \(#function)")
@@ -305,6 +311,16 @@ import StoreKit
             }
         }
         return false
+    }
+    
+    /// MARK: - Switchs info
+    @objc public class func createGlobalSwitch(globalSwitch: GlobalSwitch,completion:@escaping ((SimpleStatusResult?,Error?)->())) {
+        DYMLogManager.logMessage("Calling now: \(#function)")
+        #if DEBUG
+        shared.apiManager.addGlobalSwitch(globalSwitch: globalSwitch, complete: completion)
+        #else
+        completion(nil,nil)
+        #endif
     }
 }
 
