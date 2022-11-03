@@ -19,18 +19,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         //session report
-//        UserProperties.extraData = ["oldUUID":"12345657890"]//
-        DYMobileSDK.activate { switchItems, subscribedOjects, error in
+        DYMobileSDK.activate { results, error in
             if error == nil {
-                //激活成功
-                print("DingYue_iOS_SDK 激活成功-----switch---\(switchItems)")
-                print("DingYue_iOS_SDK 激活成功-----subscribedOjects---\(subscribedOjects)")
-            } else {
-                print("DingYue_iOS_SDK 激活失败 ---- \(error!)")
+                if let result = results {
+                    if let isUseNativePaywall = result["isUseNativePaywall"] as? Bool, let nativePaywallId = result["nativePaywallId"] as? String {
+                        if isUseNativePaywall == true {
+                            let filePath1 = Bundle.main.path(forResource: "index", ofType: ".html", inDirectory: nativePaywallId)
+                            DYMobileSDK.loadNativePaywall(paywallFullPath: filePath1!, basePath: Bundle.main.bundlePath + nativePaywallId)
+                        }
+                    }
+                }
             }
         }
-        DYMobileSDK.reportAttribution(appsFlyerId: "9999999999")
-
         return true
     }
 

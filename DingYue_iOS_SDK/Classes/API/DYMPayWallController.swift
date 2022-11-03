@@ -107,18 +107,33 @@ public class DYMPayWallController: UIViewController {
     }
     
     public func loadWebView() {
-        if DYMDefaultsManager.shared.cachedPaywalls != nil && DYMDefaultsManager.shared.cachedPaywallPageIdentifier != nil {
-            let basePath = UserProperties.pallwallPath ?? ""
-            let fullPath = basePath + "/index.html"
-            let url = URL(fileURLWithPath: fullPath)
-            webView.loadFileURL(url, allowingReadAccessTo: URL(fileURLWithPath: basePath))
+
+        if DYMDefaultsManager.shared.isUseNativePaywall {
+            if let nativePaywallFullPath = DYMDefaultsManager.shared.nativePaywallPath, let basePath = DYMDefaultsManager.shared.nativePaywallBasePath {
+                let url = URL(fileURLWithPath: nativePaywallFullPath)
+                webView.loadFileURL(url, allowingReadAccessTo: URL(fileURLWithPath: basePath))
+            } else {
+                let sdkBundle = Bundle(for: DYMobileSDK.self)
+                guard let resourceBundleURL = sdkBundle.url(forResource: "DingYue_iOS_SDK", withExtension: "bundle")else { fatalError("DingYue_iOS_SDK.bundle not found, do not display SDK default paywall!") }
+                guard let resourceBundle = Bundle(url: resourceBundleURL)else { fatalError("Cannot access DingYue_iOS_SDK.bundle,do not display SDK default paywall!") }
+                let path = resourceBundle.path(forResource: "index", ofType: "html")
+                let htmlUrl = URL(fileURLWithPath: path!)
+                webView.loadFileURL(htmlUrl, allowingReadAccessTo: htmlUrl)
+            }
         } else {
-            let sdkBundle = Bundle(for: DYMobileSDK.self)
-            guard let resourceBundleURL = sdkBundle.url(forResource: "DingYue_iOS_SDK", withExtension: "bundle")else { fatalError("DingYue_iOS_SDK.bundle not found, do not display SDK default paywall!") }
-            guard let resourceBundle = Bundle(url: resourceBundleURL)else { fatalError("Cannot access DingYue_iOS_SDK.bundle,do not display SDK default paywall!") }
-            let path = resourceBundle.path(forResource: "index", ofType: "html")
-            let htmlUrl = URL(fileURLWithPath: path!)
-            webView.loadFileURL(htmlUrl, allowingReadAccessTo: htmlUrl)
+            if DYMDefaultsManager.shared.cachedPaywalls != nil && DYMDefaultsManager.shared.cachedPaywallPageIdentifier != nil {
+                let basePath = UserProperties.pallwallPath ?? ""
+                let fullPath = basePath + "/index.html"
+                let url = URL(fileURLWithPath: fullPath)
+                webView.loadFileURL(url, allowingReadAccessTo: URL(fileURLWithPath: basePath))
+            } else {
+                let sdkBundle = Bundle(for: DYMobileSDK.self)
+                guard let resourceBundleURL = sdkBundle.url(forResource: "DingYue_iOS_SDK", withExtension: "bundle")else { fatalError("DingYue_iOS_SDK.bundle not found, do not display SDK default paywall!") }
+                guard let resourceBundle = Bundle(url: resourceBundleURL)else { fatalError("Cannot access DingYue_iOS_SDK.bundle,do not display SDK default paywall!") }
+                let path = resourceBundle.path(forResource: "index", ofType: "html")
+                let htmlUrl = URL(fileURLWithPath: path!)
+                webView.loadFileURL(htmlUrl, allowingReadAccessTo: htmlUrl)
+            }
         }
     }
     ///刷新页面

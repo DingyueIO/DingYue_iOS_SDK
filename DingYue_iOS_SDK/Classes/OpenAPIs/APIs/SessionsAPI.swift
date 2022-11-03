@@ -301,5 +301,77 @@ open class SessionsAPI {
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
+    
+    
+    
+    /**
+     * enum for parameter X_PLATFORM
+     */
+    public enum XPLATFORM_reportGlobalSwitch: String, CaseIterable {
+        case ios = "ios"
+        case android = "android"
+    }
+
+    /**
+     report global switch
+     
+     - parameter X_USER_ID: (header) an unique string represents the current user
+     - parameter userAgent: (header) user agent
+     - parameter X_APP_ID: (header) an unique string represents the current user
+     - parameter X_PLATFORM: (header) an unique string represents the current user
+     - parameter X_VERSION: (header) sdk version
+     - parameter globalSwitch: (body) test text/plain
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    @discardableResult
+    open class func reportGlobalSwitch(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportGlobalSwitch, X_VERSION: String, globalSwitch: GlobalSwitch, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: SimpleStatusResult?, _ error: Error?) -> Void)) -> RequestTask {
+        return reportGlobalSwitchWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, X_VERSION: X_VERSION, globalSwitch: globalSwitch).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+    
+    
+    /**
+     report global switch
+     - POST /report/global_switch
+     - API Key:
+       - type: apiKey X-API-KEY
+       - name: ApiKeyAuth
+     - parameter X_USER_ID: (header) an unique string represents the current user
+     - parameter userAgent: (header) user agent
+     - parameter X_APP_ID: (header) an unique string represents the current user
+     - parameter X_PLATFORM: (header) an unique string represents the current user
+     - parameter X_VERSION: (header) sdk version
+     - parameter globalSwitch: (body) test text/plain
+     - returns: RequestBuilder<SimpleStatusResult>
+     */
+    open class func reportGlobalSwitchWithRequestBuilder(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportGlobalSwitch, X_VERSION: String, globalSwitch: GlobalSwitch) -> RequestBuilder<SimpleStatusResult> {
+        let localVariablePath = "/report/global_switch"
+        let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: globalSwitch)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        let X_API_KEY = DYMConstants.APIKeys.secretKey
+        let localVariableNillableHeaders: [String: Any?] = [
+            "X-USER-ID": X_USER_ID.encodeToJSON(),
+            "User-Agent": userAgent.encodeToJSON(),
+            "X-APP-ID": X_APP_ID.encodeToJSON(),
+            "X-PLATFORM": X_PLATFORM.encodeToJSON(),
+            "X-VERSION": X_VERSION.encodeToJSON(),
+            "X-API-KEY": X_API_KEY.encodeToJSON()
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<SimpleStatusResult>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+    }
 
 }

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi" />
+    <title>清理五-purchase</title>
+    <link rel="icon" type="img/x-icon" href="favicon.ico">
+    <script src="./vue.js" type="text/javascript"></script>
+    <script src='./locale.js' type="text/javascript"></script>
+</head>
+<style>
+    * {
+        -webkit-touch-callout: none;
+        /*系统默认菜单被禁用*/
+        -webkit-user-select: none;
+        /*webkit浏览器*/
+        -khtml-user-select: none;
+        /*早期浏览器*/
+        -moz-user-select: none;
+        /*火狐*/
+        -ms-user-select: none;
+        /*IE10*/
+        user-select: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    
+    #app {
+        min-height: 100vh;
+        background: url('./img/pic_bg_buy@3x.png') no-repeat 0 0;
+        background-size: 100% auto;
+    }
+    
+    .header {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        z-index: 10;
+        padding-right: 19px;
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 56px;
+        box-sizing: border-box;
+    }
+    
+    .moreTitle {
+        height: calc(100vw * 1.08);
+        /* position: fixed;
+        top: 110px;
+        left: 0; */
+        width: 100%;
+        box-sizing: border-box;
+        padding: 110px 24px 0;
+    }
+    
+    .moreTitle .list {
+        padding: 0 3px;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: flex-start;
+        margin-bottom: 8px;
+    }
+    
+    .moreTitle>div {
+        font-size: 16px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #FFFFFF;
+        line-height: 22px;
+    }
+    
+    .listPay {
+        width: 100%;
+        padding: 0 16px;
+        margin-top: 44px;
+        box-sizing: border-box;
+    }
+    
+    .swiper {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    
+    .swiper::-webkit-scrollbar {
+        display: none
+    }
+    
+    .products {
+        display: inline-block;
+        width: calc((100% - 18px)/3);
+        padding-bottom: 40px;
+        transform: scale(0.85);
+        border-radius: 8px;
+        transition: transform 0.3s linear;
+        border: 1px solid rgba(47, 46, 65, 0.15);
+        text-align: center;
+    }
+    
+    .products .feature {
+        font-size: 14px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #2F2E41;
+        line-height: 20px;
+        margin: 22px 0 8px;
+    }
+    
+    .products .price {
+        font-size: 26px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #0B033E;
+        line-height: 38px;
+        margin-bottom: 3px;
+    }
+    
+    .products .duration {
+        font-size: 14px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: rgba(47, 46, 65, 0.5);
+        line-height: 20px;
+    }
+    
+    .active {
+        transform: scale(1);
+        border: 3px solid #6A72F7;
+    }
+    
+    .buy_btn {
+        margin-top: 50px;
+        text-align: center;
+    }
+    
+    .buy_btn .btn {
+        width: 343px;
+        height: 48px;
+        background: linear-gradient(204deg, #63A7F8 0%, #9384F5 100%);
+        box-shadow: 0px 2px 10px 0px rgba(22, 41, 105, 0.23);
+        border-radius: 24px;
+        font-size: 17px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #FFFFFF;
+        line-height: 24px;
+        border: none;
+    }
+    
+    .content {
+        margin-top: 11px;
+        text-align: center;
+        padding: 0 8px;
+    }
+    
+    .content .content_text {
+        width: 100%;
+        text-align: center;
+        word-wrap: break-word;
+        font-size: 12px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.5);
+        line-height: 17px;
+    }
+    
+    .textd {
+        font-size: 12px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #63A7F8;
+        line-height: 17px;
+    }
+    
+    .recover {
+        text-align: center;
+        margin-top: 36px;
+    }
+    
+    .recover .recoveText {
+        font-size: 14px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #63A7F8;
+        line-height: 20px;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <div class="header">
+            <image @click="close" src="./img/btn_close_vip@3x.png" style="width: 24px; height: 24px;">
+            </image>
+        </div>
+        <div class="moreTitle">
+            <div style="font-size: 28px;
+                font-family: PingFangSC-Medium, PingFang SC;
+                font-weight: 500;
+                color: #FFFFFF;
+                line-height: 40px;
+                margin-bottom: 10px;">{{page_data.title}}</div>
+            <div class="list" v-for="(item,index) in page_data.introduceText" :key="index">
+                <div style="height:16px;margin: 3px 8px 3px 0;">
+                    <image style="width: 16px;height: 16px;" src="./img/icon_buy@3x.png"></image>
+                </div>
+                <div class="">{{item}}</div>
+            </div>
+        </div>
+        <!--  -->
+        <div class="listPay">
+            <div class="swiper">
+                <div @click="choose(index)" v-for="(item,index) in products" :key="index" class="products" :class="selected==index?'active':''">
+                    <div class="feature">{{item.feature}}</div>
+                    <div class="price">{{item.price}}</div>
+                    <div class="duration">{{item.duration}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="buy_btn">
+            <button @click="purchase" class="btn">
+                {{page_data.continue}}
+            </button>
+        </div>
+        <div class="content">
+            <span class="content_text">
+                {{page_data.remind0}}
+                <span @click="privacy" class="textd">
+                    {{page_data.remind2}}
+                </span> {{page_data.remind1}}
+            <span @click="terms" class="textd">
+                    {{page_data.remind3}}
+                </span>
+            </span>
+        </div>
+        <div class="recover">
+            <span @click="restore" class="recoveText">{{page_data.restore}}</span>
+        </div>
+        <div :style="{'height':`${safeAreaInsets_bottom}px`}"></div>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                // 屏幕各尺寸
+                statusBarHeight: 0,
+                safeAreaInsets_bottom: 34,
+                selected: 1,
+                page_data: {},
+                showReal: false,
+                language: 'zh-Hans',
+                productIds: [
+                    "testWeek",
+                    "com.product.purchase.week",
+                    "testYear"
+                ],
+                products: [{
+                    "type": "WEEK",
+                    "duration": "每周",
+                    "feature": "最受欢迎",
+                    "price": "$1.99"
+                }, {
+                    "type": "MONTH",
+                    "duration": "每月",
+                    "feature": "推荐",
+                    "price": "$5.99"
+                }, {
+                    "type": "YEAR",
+                    "duration": "每年",
+                    "feature": "最实惠",
+                    "price": "$14.99"
+                }, ],
+                subscriptions: "",
+                priceCode: {
+                    "USD": "$",
+                    "AED": "AED",
+                    "EGP": "E£,",
+                    "EUR": "€",
+                    "AUD": "$",
+                    "PKR": "Rs,",
+                    "BRL": "R$",
+                    "BGN": "BGN",
+                    "PEN": "PEN",
+                    "PLN": "zł",
+                    "DKK": "kr",
+                    "RUB": "₽,",
+                    "PHP": "₱,",
+                    "COP": "$,",
+                    "KZT": "₸,",
+                    "KRW": "₩,",
+                    "CAD": "$",
+                    "CZK": "Kč,",
+                    "QAR": "QAR",
+                    "HRK": "kn",
+                    "RON": "lei",
+                    "MYR": "RM",
+                    "MXN": "$,",
+                    "ZAR": "R,",
+                    "NGN": "₦,",
+                    "NOK": "kr",
+                    "JPY": "¥,",
+                    "SEK": "kr",
+                    "CHF": "CHF",
+                    "SAR": "SAR",
+                    "TWD": "NT$,",
+                    "THB": "฿,",
+                    "TZS": "TZS,",
+                    "TRY": "₺,",
+                    "HKD": "$",
+                    "SGD": "$",
+                    "NZD": "$",
+                    "HUF": "Ft,",
+                    "ILS": "₪",
+                    "INR": "₹,",
+                    "IDR": "Rp,,",
+                    "GBP": "£",
+                    "VND": "₫,,",
+                    "CLP": "$,",
+                    "CNY": "¥"
+                },
+
+            }
+        },
+        //   "GC.cleaner89.week",
+        // "GC.cleaner89.month",
+        // "GC.cleaner89.year"
+        beforeMount() {
+            this.page_data = locales[this.getCode(this.language)] ? locales[this.getCode(this.language)] :
+                locales.en;
+            this.products = this.page_data.products;
+        },
+        mounted() {
+            this.banTouch()
+            window.iostojs = this.iostojs;
+            // this.iostojs()
+        },
+        methods: {
+            getCode(language) {
+                let allLanguage = [
+                        "ar",
+                        "ca",
+                        "cs",
+                        "da",
+                        "de",
+                        "el",
+                        "en",
+                        "es",
+                        "fi",
+                        "fr",
+                        "he",
+                        "hi",
+                        "hr",
+                        "hu",
+                        "id",
+                        "it",
+                        "ja",
+                        "ko",
+                        "ms",
+                        "nb",
+                        "nl",
+                        "pl",
+                        "pt",
+                        "ro",
+                        "ru",
+                        "sk",
+                        "sv",
+                        "th",
+                        "tr",
+                        "uk",
+                        "vi",
+                        "zh-Hans",
+                        "zh-Hant",
+                    ],
+                    targetLanguage = ''
+
+                allLanguage.forEach((item) => {
+                    let language_index = language.indexOf(item)
+                    if (language_index != '-1') {
+                        targetLanguage = item
+                    }
+                })
+                if (targetLanguage) {
+                    return targetLanguage
+                } else {
+                    return 'en'
+                }
+                // let result;
+                // languageCodes.forEach((ele) => {
+                //     if (language.indexOf(ele) !== -1) {
+                //         result = ele;
+                //     }
+                // })
+                // console.log(result);
+                // if (result) {
+                //     return result
+                // } else {
+                //     return 'en'
+                // }
+            },
+            // 购买按钮点击时间，将产品id汇报给原生端
+            purchase() {
+                if (this.subscriptions) {
+                    var productId = this.products[this.selected].platformProductId;
+                    console.log(1234);
+                    // jstoios
+                    window.webkit.messageHandlers.vip_purchase.postMessage({
+                        type: "purchase_web",
+                        productId: productId
+                    });
+                }
+            },
+            // 选择购买项事件
+            choose(index) {
+                this.selected = index;
+                let msg = this.products[index]
+                window.webkit.messageHandlers.vip_choose.postMessage({
+                    type: msg.type,
+                    productId: msg.platformProductId,
+                    period: msg.period || ""
+                });
+            },
+            // 页面关闭事件
+            close() {
+                window.webkit.messageHandlers.vip_close.postMessage({
+                    type: "close_web"
+                });
+            },
+            // 点击服务协议文字
+            terms() {
+                window.webkit.messageHandlers.vip_terms.postMessage({
+                    type: "terms_web"
+                });
+            },
+            // 点击隐私政策文字
+            privacy() {
+                window.webkit.messageHandlers.vip_privacy.postMessage({
+                    type: "privacy_web"
+                });
+            },
+            // 点击恢复购买按钮
+            restore() {
+                window.webkit.messageHandlers.vip_restore.postMessage({
+                    type: "restore_web"
+                });
+            },
+            decode(str) {
+                // Going backwards: from bytestream, to percent-encoding, to original string.
+                return decodeURIComponent(atob(str).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+            },
+            banTouch() {
+                var lastTouchEnd = 0;
+                document.documentElement.addEventListener('touchend', function(event) {
+                    var now = Date.now();
+                    if (now - lastTouchEnd <= 300) {
+                        event.preventDefault();
+                    }
+                    lastTouchEnd = now;
+                }, false);
+            },
+            // ios调用js入口
+            iostojs(action) {
+                let json = JSON.parse(this.decode(action));
+                // let json = {
+                //     "system_language": "en-CN",
+                //     "products": [{
+                //         "period": "YEAR",
+                //         "platformProductId": "testWeek",
+                //         "type": "SUBSCRIPTION",
+                //         "currency": "USD",
+                //         "description": "",
+                //         "name": "组1年",
+                //         "price": "9.99"
+                //     }, {
+                //         "price": "1.99",
+                //         "type": "SUBSCRIPTION",
+                //         "platformProductId": "testMonth",
+                //         "name": "组1周",
+                //         "currency": "USD",
+                //         "description": "",
+                //         "period": "WEEK"
+                //     }]
+                // }
+                this.language = json.system_language;
+                this.page_data = locales[this.getCode(this.language)] ? locales[this.getCode(this.language)] :
+                    locales.en;
+                this.products = this.page_data.products;
+                this.subscriptions = json.products;
+                this.getShow()
+                return (
+                    'ok'
+                )
+            },
+            getShow() {
+                if (this.subscriptions) {
+                    let productsAll = [];
+                    this.products.forEach((it, index) => {
+                        var val = this.subscriptions.find(ele => {
+                            return ele.platformProductId == this.productIds[index]
+                        })
+                        if (val) {
+                            productsAll.push({
+                                ...it,
+                                ...val,
+                                price: (this.priceCode[val.currency] || '$') + val.price
+                            })
+                        }
+                    })
+                    this.products = [...productsAll]
+                } else {
+                    this.products = this.page_data.products
+                }
+                if (this.products.length <= 2) {
+                    this.selected = 0
+                }
+            },
+
+        }
+    })
+</script>
+
+</html>

@@ -14,8 +14,8 @@ public typealias ErrorCompletion = (ErrorResponse?) -> Void
 public typealias AdsCompletion = (SimpleStatusResult?,Error) -> Void
 public typealias FirstReceiptCompletion = ([String:Any]?,Error?) -> Void
 public typealias RecoverReceiptCompletion = ([String:Any]?,Error?) -> Void
-
-public typealias sessionActivateCompletion = ([SwitchItem]?,[[String:Any]]?,Error?) -> Void
+//public typealias sessionActivateCompletion = ([SwitchItem]?,[[String:Any]]?,Bool?,String?,Error?) -> Void
+public typealias sessionActivateCompletion = ([String:Any]?,Error?) -> Void
 
 class ApiManager {
     var completion:sessionActivateCompletion?
@@ -37,17 +37,32 @@ class ApiManager {
                     if let paywall = data?.paywall {
                         DYMDefaultsManager.shared.cachedPaywalls = [paywall]
                         if paywall.downloadUrl != "" {
-                            if let paywallId = data?.paywallId{
-                                let version = paywall.version
-                                self.paywallIdentifier = paywallId + "/" + String(version)
-                                self.paywallCustomize = paywall.customize
-                                if self.paywallIdentifier != DYMDefaultsManager.shared.cachedPaywallPageIdentifier {
-                                    self.downloadWebTemplate(url: URL(string: paywall.downloadUrl)!) { res, err in
-                                    }
-                                } else {
+                            if paywall.downloadUrl == "local" {
+                                if let nativePaywallId = data?.paywallId {
+                                    let version = paywall.version
+                                    self.paywallIdentifier = nativePaywallId
+                                    DYMDefaultsManager.shared.cachedPaywallPageIdentifier = nativePaywallId + "/" + String(version)
+                                    self.paywallCustomize = paywall.customize
+
+                                    DYMDefaultsManager.shared.isUseNativePaywall = true
                                     DYMDefaultsManager.shared.isLoadingStatus = true
                                 }
+
+                            } else {
+                                DYMDefaultsManager.shared.isUseNativePaywall = false
+                                if let paywallId = data?.paywallId {
+                                    let version = paywall.version
+                                    self.paywallIdentifier = paywallId + "/" + String(version)
+                                    self.paywallCustomize = paywall.customize
+                                    if self.paywallIdentifier != DYMDefaultsManager.shared.cachedPaywallPageIdentifier {
+                                        self.downloadWebTemplate(url: URL(string: paywall.downloadUrl)!) { res, err in
+                                        }
+                                    } else {
+                                        DYMDefaultsManager.shared.isLoadingStatus = true
+                                    }
+                                }
                             }
+
                         }
                         //内购项信息
                         var subsArray:[Subscription] = []
@@ -64,14 +79,32 @@ class ApiManager {
 
                     DYMDefaultsManager.shared.cachedSwitchItems = data?.switchItems
                     DYMDefaultsManager.shared.cachedSubscribedObjects = data?.subscribedProducts
+                    DYMDefaultsManager.shared.cachedGlobalSwitch = data?.globalSwitchItems
                     print(data ?? "")
-                    //session report 返回开关状态数据和购买的产品信息
+
                     let subscribedOjects = DYMDefaultsManager.shared.subscribedObjects(subscribedObjectArray: DYMDefaultsManager.shared.cachedSubscribedObjects)
-                    self.completion?(DYMDefaultsManager.shared.cachedSwitchItems,subscribedOjects,nil)
+
+                    var results = [
+                        "switchs": DYMDefaultsManager.shared.cachedSwitchItems as Any,
+                        "subscribedOjects":subscribedOjects,
+                        "isUseNativePaywall":DYMDefaultsManager.shared.isUseNativePaywall
+                    ] as [String : Any]
+
+                    if DYMDefaultsManager.shared.isUseNativePaywall {
+                        results["nativePaywallId"] = self.paywallIdentifier
+                    }
+
+                    if let globalSwitchItems = DYMDefaultsManager.shared.cachedGlobalSwitch {
+                        if globalSwitchItems.count > 0 {
+                            results["globalSwitchItems"] = globalSwitchItems
+                        }
+                    }
+
+                    self.completion?(results,nil)
                 }else{
                     DYMLogManager.logError(data?.errmsg as Any)
                     DYMDefaultsManager.shared.isLoadingStatus = true
-                    self.completion?(nil,nil,DYMError.failed)
+                    self.completion?(nil,DYMError.failed)
                 }
             }
         }
@@ -175,5 +208,11 @@ class ApiManager {
     func verifySubscriptionRecover(receipt: String,completion:@escaping RecoverReceiptCompletion) {
         let receiptObj = ReceiptVerifyPostObject(appleReceipt: receipt)
         ReceiptAPI.verifyReceipt(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: ReceiptAPI.XPLATFORM_verifyReceipt.ios, X_VERSION: UserProperties.sdkVersion, receiptVerifyPostObject: receiptObj, completion: completion)
+    }
+    
+    func addGlobalSwitch(globalSwitch:GlobalSwitch,complete:@escaping ((SimpleStatusResult?,Error?)->())) {
+        SessionsAPI.reportGlobalSwitch(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: SessionsAPI.XPLATFORM_reportGlobalSwitch.ios, X_VERSION: UserProperties.sdkVersion, globalSwitch: globalSwitch) { data, error in
+            complete(data,error)
+        }
     }
 }

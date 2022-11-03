@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		470157E7290A52B2000ABC76 /* 7306588143563858788 in Resources */ = {isa = PBXBuildFile; fileRef = 470157E6290A52B2000ABC76 /* 7306588143563858788 */; };
 		47D4EAAC289CC4BB009814FC /* DingYue.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47D4EAAB289CC4BB009814FC /* DingYue.plist */; };
 		47FF2D702876F21300437080 /* LBWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FF2D6F2876F21300437080 /* LBWebViewController.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		470157E6290A52B2000ABC76 /* 7306588143563858788 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = 7306588143563858788; sourceTree = "<group>"; };
 		47D4EAAB289CC4BB009814FC /* DingYue.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DingYue.plist; sourceTree = "<group>"; };
 		47DF7A12287D49E800033058 /* DingYue_iOS_SDK_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DingYue_iOS_SDK_Example.entitlements; sourceTree = "<group>"; };
 		47FF2D6F2876F21300437080 /* LBWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LBWebViewController.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				470157E6290A52B2000ABC76 /* 7306588143563858788 */,
 				47DF7A12287D49E800033058 /* DingYue_iOS_SDK_Example.entitlements */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for DingYue_iOS_SDK */,
@@ -257,6 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
+				470157E7290A52B2000ABC76 /* 7306588143563858788 in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				47D4EAAC289CC4BB009814FC /* DingYue.plist in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
@@ -503,6 +507,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				DEVELOPMENT_TEAM = 6758SSTNXL;
 				INFOPLIST_FILE = DingYue_iOS_SDK/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = iospp.com.test;
@@ -524,6 +529,7 @@
 				CODE_SIGN_ENTITLEMENTS = DingYue_iOS_SDK_Example.entitlements;
 				DEVELOPMENT_TEAM = 6758SSTNXL;
 				INFOPLIST_FILE = DingYue_iOS_SDK/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";

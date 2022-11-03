@@ -40,6 +40,15 @@ class ViewController: UIViewController {
         btn2.setTitle(NSLocale.current.regionCode, for: [])
         btn2.setTitleColor(UIColor.black, for: [])
         self.view.addSubview(btn2)
+
+        //创建总开关
+        DYMobileSDK.createGlobalSwitch(globalSwitch: GlobalSwitch(showName: "TestDebug2", varName: "TestDebug2", value: true)) { results, error in
+            if error == nil {
+                if results?.errmsg == nil {
+                    print("ok")
+                }
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,10 +63,10 @@ class ViewController: UIViewController {
         DYMobileSDK.showVisualPaywall(products: [defaultProuct1,defaultProuct2], rootController: self) { receipt, purchasedResult, error in
             if error == nil {
                //购买成功
+                print("订阅购买成功")
 
             }
         }
-
     }
 
 }

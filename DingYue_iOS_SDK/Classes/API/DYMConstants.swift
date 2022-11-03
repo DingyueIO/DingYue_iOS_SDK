@@ -29,7 +29,7 @@ class DYMConstants: NSObject {
     }
 
     enum Versions {
-        static let SDKVersion = "0.2.6"
+        static let SDKVersion = "0.2.7"
         static let SDKBuild = 1
     }
     enum BundleKeys {
@@ -50,6 +50,7 @@ class DYMConstants: NSObject {
         static let cachedPaywalls            = "DYMSDK_Cached_Purchase_Containers"
         static let cachedProducts            = "DYMSDK_Cached_Products"
         static let cachedSwitchItems         = "DYMSDK_Cached_SwitchItems"
+        static let cachedGlobalSwitch        = "DYMSDK_Cached_GlobalSwitch"
         static let cachedSubscribedObjects   = "DYMSDK_Cached_SubscribedObjects"
         static let appleSearchAdsSyncDate    = "DYMSDK_Apple_Search_Ads_Sync_Date"
         static let externalAnalyticsDisabled = "DYMSDK_External_Analytics_Disabled"

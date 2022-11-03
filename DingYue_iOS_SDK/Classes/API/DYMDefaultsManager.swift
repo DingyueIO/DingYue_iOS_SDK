@@ -140,6 +140,20 @@ class DYMDefaultsManager {
         }
     }
 
+    var cachedGlobalSwitch: [GlobalSwitch]? {
+        get {
+            if let data = defaults.object(forKey: DYMConstants.UserDefaults.cachedGlobalSwitch) as? Data, let products = try? JSONDecoder().decode([GlobalSwitch].self, from: data) {
+                return products
+            }
+
+            return nil
+        }
+        set {
+            let data = try? JSONEncoder().encode(newValue)
+            defaults.set(data, forKey: DYMConstants.UserDefaults.cachedGlobalSwitch)
+        }
+    }
+
     var cachedSubscribedObjects: [SubscribedObject]? {
         get {
             if let data = defaults.object(forKey: DYMConstants.UserDefaults.cachedSubscribedObjects) as? Data, let products = try? JSONDecoder().decode([SubscribedObject].self, from: data) {
@@ -215,6 +229,9 @@ class DYMDefaultsManager {
     }
 
     var isLoadingStatus: Bool = false
+    var isUseNativePaywall: Bool = false
+    var nativePaywallPath: String!
+    var nativePaywallBasePath: String!
 
     func subscribedObjects(subscribedObjectArray: [SubscribedObject?]?) -> [[String:Any]] {
         var subsArray:[[String:Any]] = []
