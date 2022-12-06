@@ -153,29 +153,38 @@ class ApiManager {
         URLSession.shared.downloadTask(with: turl) { url, response, error in
             if response != nil {
                 if (response as! HTTPURLResponse).statusCode == 200 {
-                    let dstPath = UserProperties.pallwallPath
-                    let success = SSZipArchive.unzipFile(atPath: url!.path, toDestination: dstPath!)
-                    if success {
-                        var items: [String]
-                          do {
-                              items = try FileManager.default.contentsOfDirectory(atPath: dstPath!)
-                              DYMDefaultsManager.shared.isLoadingStatus = true
-                          } catch {
-                           return
-                          }
 
-                        if self.paywallCustomize == false {
-                            if items.contains("config.js") {//订阅提供的内购页一定有config.js
+                    if let zipFileUrl = url, let targetUnzipUrl = UserProperties.pallwallPath {
+                        let success = SSZipArchive.unzipFile(atPath: zipFileUrl.path, toDestination: targetUnzipUrl)
+                        if success {
+                            var items: [String]
+                              do {
+                                  items = try FileManager.default.contentsOfDirectory(atPath: targetUnzipUrl)
+                                  DYMDefaultsManager.shared.isLoadingStatus = true
+                              } catch {
+                               return
+                              }
+
+                            if self.paywallCustomize == false {
+                                if items.contains("config.js") {
+                                    DYMDefaultsManager.shared.cachedPaywallPageIdentifier = self.paywallIdentifier
+                                }
+                            } else {
                                 DYMDefaultsManager.shared.cachedPaywallPageIdentifier = self.paywallIdentifier
                             }
                         } else {
-                            DYMDefaultsManager.shared.cachedPaywallPageIdentifier = self.paywallIdentifier
+                            DYMDefaultsManager.shared.isLoadingStatus = true
                         }
+                        try? FileManager.default.removeItem(at: zipFileUrl)
+                    } else {
+                        DYMDefaultsManager.shared.isLoadingStatus = true
                     }
-                    try? FileManager.default.removeItem(at: url!)
                 }else {
                     DYMLogManager.logError(error as Any)
+                    DYMDefaultsManager.shared.isLoadingStatus = true
                 }
+            } else {
+                DYMDefaultsManager.shared.isLoadingStatus = true
             }
         }.resume()
     }

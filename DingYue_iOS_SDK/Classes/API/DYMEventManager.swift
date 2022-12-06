@@ -30,6 +30,8 @@ class DYMEventManager {
         eventParams["name"] = name
         eventParams["extra"] = extra
         eventParams["user"] = user
+        eventParams["sessionId"] = UserProperties.staticUuid
+
         cachedEvents.append(eventParams)
         DispatchQueue.global(qos: .background).async {
             self.syncEvents()
@@ -38,7 +40,8 @@ class DYMEventManager {
     
     private func syncEvents() {
         let currentEvents = cachedEvents
-        let events = currentEvents.map { Event(name: $0["name"]!, extra: $0["extra"], user: $0["user"])}
+        let events = currentEvents.map { Event(name: $0["name"] as! String, extra: $0["extra"] as? String, user: $0["user"] as? String, sessionId: $0["sessionId"] as? String)}
+
         SessionsAPI.reportEvents(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: SessionsAPI.XPLATFORM_reportEvents.ios, X_VERSION: UserProperties.sdkVersion, eventReportObject: EventReportObject(events: events)) { data, error in
             if error == nil {
                 let leftEvents = Set(self.cachedEvents).subtracting(Set(currentEvents))

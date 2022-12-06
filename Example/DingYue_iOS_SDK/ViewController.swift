@@ -36,8 +36,8 @@ class ViewController: UIViewController {
         self.view.addSubview(purchaseBtn)
 
         let btn2 = UIButton(type: .custom)
-        btn2.frame = CGRect(x: 10, y: 20, width: 200, height: 50)
-        btn2.setTitle(NSLocale.current.regionCode, for: [])
+        btn2.frame = CGRect(x: 10, y: 20, width: 300, height: 50)
+        btn2.setTitle("9999", for: [])
         btn2.setTitleColor(UIColor.black, for: [])
         self.view.addSubview(btn2)
 
@@ -49,6 +49,10 @@ class ViewController: UIViewController {
                 }
             }
         }
+
+        //
+        print("dingyue uuid = \(DYMobileSDK.requestDeviceUUID())")
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,6 +60,11 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     @objc func goPurchase(){
+        let timeInterval: TimeInterval = Date.init(timeIntervalSinceNow: 0).timeIntervalSince1970
+        let milli = CLongLong(round(timeInterval*1000))
+        print("客户端 时间戳 = \(milli)")
+
+        DYMobileSDK.track(event: "上次失败发送Test - Pa0-0B@\(milli)")
 
         //显示内购页-可以传复合要求的内购项信息对象
         let defaultProuct1 = Subscription(type: "SUBSCRIPTION", name: "Week", platformProductId: "testWeek", price: "7.99", currencyCode: "USD", countryCode: "US")
@@ -64,7 +73,6 @@ class ViewController: UIViewController {
             if error == nil {
                //购买成功
                 print("订阅购买成功")
-
             }
         }
     }

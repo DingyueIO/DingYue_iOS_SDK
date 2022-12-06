@@ -18,17 +18,20 @@ public struct Event: Codable, JSONEncodable, Hashable {
     /** the event extra information if needed */
     public var extra: String?
     public var user: String?
+    public var sessionId: String?
 
-    public init(name: String, extra: String? = nil, user: String? = nil) {
+    public init(name: String, extra: String? = nil, user: String? = nil, sessionId:String? = nil) {
         self.name = name
         self.extra = extra
         self.user = user
+        self.sessionId = sessionId
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case name
         case extra
         case user
+        case sessionId
     }
 
     // Encodable protocol methods
@@ -38,6 +41,7 @@ public struct Event: Codable, JSONEncodable, Hashable {
         try container.encode(name, forKey: .name)
         try container.encodeIfPresent(extra, forKey: .extra)
         try container.encodeIfPresent(user, forKey: .user)
+        try container.encodeIfPresent(sessionId, forKey: .sessionId)
     }
 }
 
