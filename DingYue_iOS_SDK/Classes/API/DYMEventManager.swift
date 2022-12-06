@@ -15,38 +15,21 @@ class DYMEventManager {
     private init() {
 
     }
-
-    private var cachedEvents: [[String: String]] {
-        get {
-            return DYMDefaultsManager.shared.cachedEvents
-        }
-        set {
-            DYMDefaultsManager.shared.cachedEvents = newValue
-        }
-    }
+    private var event:Event!
 
     func track(event name: String, extra: String? = nil, user: String? = nil) {
-        var eventParams = [String:String]()
-        eventParams["name"] = name
-        eventParams["extra"] = extra
-        eventParams["user"] = user
-        eventParams["sessionId"] = UserProperties.staticUuid
 
-        cachedEvents.append(eventParams)
+        let sessionId = UserProperties.staticUuid
+        self.event = Event(name: name, extra: extra, user: user, sessionId: sessionId)
+
         DispatchQueue.global(qos: .background).async {
             self.syncEvents()
         }
     }
     
     private func syncEvents() {
-        let currentEvents = cachedEvents
-        let events = currentEvents.map { Event(name: $0["name"] as! String, extra: $0["extra"] as? String, user: $0["user"] as? String, sessionId: $0["sessionId"] as? String)}
-
-        SessionsAPI.reportEvents(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: SessionsAPI.XPLATFORM_reportEvents.ios, X_VERSION: UserProperties.sdkVersion, eventReportObject: EventReportObject(events: events)) { data, error in
-            if error == nil {
-                let leftEvents = Set(self.cachedEvents).subtracting(Set(currentEvents))
-                self.cachedEvents = Array(leftEvents)
-            }
+        SessionsAPI.reportEvents(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: SessionsAPI.XPLATFORM_reportEvents.ios, X_VERSION: UserProperties.sdkVersion, eventReportObject: EventReportObject(events: [self.event])) { data, error in
+            
         }
     }
 }
