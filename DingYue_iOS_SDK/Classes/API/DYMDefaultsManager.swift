@@ -68,15 +68,6 @@ class DYMDefaultsManager {
         }
     }
 
-    var cachedEvents: [[String: String]] {
-        get {
-            return defaults.array(forKey: DYMConstants.UserDefaults.cachedEvents) as? [[String: String]] ?? []
-        }
-        set {
-            defaults.set(newValue, forKey: DYMConstants.UserDefaults.cachedEvents)
-        }
-    }
-
     var cachedVariationsIds: [String: String] {
         get {
             return defaults.dictionary(forKey: DYMConstants.UserDefaults.cachedVariationsIds) as? [String: String] ?? [:]
@@ -271,7 +262,6 @@ class DYMDefaultsManager {
     }
 
     func clean() {
-        defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedEvents)
         defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedVariationsIds)
         defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedPaywalls)
         defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedPayWallPageIdentifier)

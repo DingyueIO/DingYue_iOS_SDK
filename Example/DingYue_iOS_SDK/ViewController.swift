@@ -64,8 +64,6 @@ class ViewController: UIViewController {
         let milli = CLongLong(round(timeInterval*1000))
         print("客户端 时间戳 = \(milli)")
 
-        DYMobileSDK.track(event: "上次失败发送Test - Pa0-0B@\(milli)")
-
         //显示内购页-可以传复合要求的内购项信息对象
         let defaultProuct1 = Subscription(type: "SUBSCRIPTION", name: "Week", platformProductId: "testWeek", price: "7.99", currencyCode: "USD", countryCode: "US")
         let defaultProuct2 = Subscription(type: "SUBSCRIPTION", name: "Year", platformProductId: "testYear", appleSubscriptionGroupId: nil, description: "default product item", period: "Year", price: "49.99", currencyCode: "USD", countryCode: "US", priceTier: nil, gracePeriod: nil, icon: nil, renewPriceChange: nil)
