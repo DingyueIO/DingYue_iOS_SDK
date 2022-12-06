@@ -322,6 +322,12 @@ import StoreKit
         completion(nil,nil)
         #endif
     }
+
+    ///MARK: - request device unique uuid
+    @objc public class func requestDeviceUUID() -> String {
+        DYMLogManager.logMessage("Calling now: \(#function)")
+        return UserProperties.requestUUID
+    }
 }
 
 extension DYMobileSDK: DYMAppDelegateSwizzlerDelegate {
