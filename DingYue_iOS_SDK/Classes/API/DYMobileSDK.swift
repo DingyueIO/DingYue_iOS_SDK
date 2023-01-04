@@ -93,9 +93,7 @@ import StoreKit
 
         iapManager.startObserverPurchase()
         #if os(iOS)
-        if UserProperties.idfa != nil {
-            reportAppleSearchAdsAttribution()
-        }
+        reportAppleSearchAdsAttribution()
         #endif
     }
 
