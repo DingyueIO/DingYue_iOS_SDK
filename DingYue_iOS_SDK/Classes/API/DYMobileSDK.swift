@@ -11,6 +11,7 @@ import FCUUID
 import SSZipArchive
 import AnyCodable
 import StoreKit
+import AppTrackingTransparency
 #endif
 
 @objc public class DYMobileSDK: NSObject {
@@ -92,9 +93,30 @@ import StoreKit
         apiManager.startSession()
 
         iapManager.startObserverPurchase()
-        #if os(iOS)
-        reportAppleSearchAdsAttribution()
-        #endif
+        sendAppleSearchAdsAttribution()
+    }
+    
+    func sendAppleSearchAdsAttribution() {
+        //IDFA
+        if #available(iOS 14.3, *) {
+            let state = ATTrackingManager.trackingAuthorizationStatus
+            if state == .notDetermined {
+                var isSendRequest = false
+                NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidBecomeActive, object: nil, queue: .main) { notification in
+                    if isSendRequest == false {
+                        ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
+                            isSendRequest = true
+                            self.reportAppleSearchAdsAttribution()
+                        })
+                    }
+                }
+            } else{
+                reportAppleSearchAdsAttribution()
+            }
+        } else {
+            reportAppleSearchAdsAttribution()
+        }
+
     }
 
     // MARK: - idfa
@@ -158,17 +180,18 @@ import StoreKit
             guard let attribution = attribution, DYMDefaultsManager.shared.appleSearchAdsSyncDate == nil else { return }
 
             func update(attribution: Dictionary<String,Any>, asa: Bool) {
-                var attribution = attribution
-                attribution["asa-attribution"] = asa
+//                var attribution = attribution
+//                attribution["asa-attribution"] = asa
                 Self.reportSearchAds(attribution: attribution)
             }
 
             if let values = attribution.values.map({ $0 }).first as? Parameters,
                let iAdAttribution = values["iad-attribution"] as? NSString {
                 // check if the user clicked an Apple Search Ads impression up to 30 days before app download
-                if iAdAttribution.boolValue == true {
-                    update(attribution: attribution, asa: false)
-                }
+//                if iAdAttribution.boolValue == true {
+//                    update(attribution: attribution, asa: false)
+//                }
+                update(attribution: attribution, asa: false)
             } else {
                 update(attribution: attribution, asa: true)
             }
@@ -189,7 +212,7 @@ import StoreKit
                 } else {
                     print("(dingyue):report SearchAdsAttribution fail, errmsg = \(result?.errmsg ?? "")")
                 }
-        }
+            }
         }
     }
 

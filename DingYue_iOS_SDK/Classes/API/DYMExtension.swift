@@ -95,6 +95,14 @@ extension AppleSearchAdsAttribution {
             self.iadKeywordMatchtype = IadKeywordMatchtype(rawValue: version31["iad-keyword-matchtype"] as? String ?? "BOARD")
             self.iadCreativesetId = version31["iad-creativeset-id"] as? String
             self.iadCreativesetName = version31["iad-creativeset-name"] as? String
+        } else {
+            self.iadAttribution = (attribution["attribution"] as? Bool) == true ? "true" : "false" //attribution
+            self.iadOrgId = "\(attribution["orgId"] ?? "")"
+            self.iadCampaignId = "\(attribution["campaignId"] ?? "")"
+            self.iadConversationType = IadConversationType(rawValue:"\(attribution["conversionType"] ?? "newdownload")")
+            self.iadAdgroupId = "\(attribution["adGroupId"] ?? "")"
+            self.iadCountryOrRegion = "\(attribution["countryOrRegion"] ?? "")"
+            self.iadKeywordId = "\(attribution["keywordId"] ?? "")"
         }
     }
 }
