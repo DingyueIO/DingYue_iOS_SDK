@@ -4,46 +4,48 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>AnyCodable-FlightSchool.xcscheme_^#shared#^_</key>
+		<key>AnyCodable-FlightSchool.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>8</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>DingYue_iOS_SDK-DingYue_iOS_SDK.xcscheme_^#shared#^_</key>
+		<key>DingYue_iOS_SDK-DingYue_iOS_SDK.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>DingYue_iOS_SDK.xcscheme_^#shared#^_</key>
+		<key>DingYue_iOS_SDK.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>FCUUID.xcscheme_^#shared#^_</key>
+		<key>FCUUID.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>4</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>Pods-DingYue_iOS_SDK_Example.xcscheme_^#shared#^_</key>
+		<key>Pods-DingYue_iOS_SDK_Example.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>6</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>Pods-DingYue_iOS_SDK_Tests.xcscheme_^#shared#^_</key>
+		<key>Pods-DingYue_iOS_SDK_Tests.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>7</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>SSZipArchive.xcscheme_^#shared#^_</key>
+		<key>SSZipArchive.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>5</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>UICKeyChainStore.xcscheme_^#shared#^_</key>
+		<key>UICKeyChainStore.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict/>
 </dict>
 </plist>

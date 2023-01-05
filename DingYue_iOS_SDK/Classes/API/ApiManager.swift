@@ -14,7 +14,6 @@ public typealias ErrorCompletion = (ErrorResponse?) -> Void
 public typealias AdsCompletion = (SimpleStatusResult?,Error) -> Void
 public typealias FirstReceiptCompletion = ([String:Any]?,Error?) -> Void
 public typealias RecoverReceiptCompletion = ([String:Any]?,Error?) -> Void
-//public typealias sessionActivateCompletion = ([SwitchItem]?,[[String:Any]]?,Bool?,String?,Error?) -> Void
 public typealias sessionActivateCompletion = ([String:Any]?,Error?) -> Void
 
 class ApiManager {
