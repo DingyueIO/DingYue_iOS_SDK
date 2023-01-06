@@ -177,10 +177,9 @@ public typealias Parameters = [String: Any]
 
 
     #if os(iOS)
-    class func appleSearchAdsAttribution(completion: @escaping (Parameters?, Error?) -> Void) {
+    class func appleSearchAdsAttribution(completion: @escaping (Parameters, Error?) -> Void) {
         ADClient.shared().requestAttributionDetails { (attribution, error) in
             if let attribution = attribution {
-                print(attribution)
                 completion(attribution, error)
             } else {
                 modernAppleSearchAdsAttribution(completion: completion)
@@ -188,7 +187,7 @@ public typealias Parameters = [String: Any]
         }
     }
 
-    private class func modernAppleSearchAdsAttribution(completion: @escaping (Parameters?, Error?) -> Void) {
+    private class func modernAppleSearchAdsAttribution(completion: @escaping (Parameters, Error?) -> Void) {
         if #available(iOS 14.3, *) {
             do {
                 let attributionToken = try AAAttribution.attributionToken()
@@ -198,22 +197,22 @@ public typealias Parameters = [String: Any]
                 request.httpBody = Data(attributionToken.utf8)
                 let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, _, error) in
                     guard let data = data else {
-                        completion(nil, error)
+                        completion(["":""], error)
                         return
                     }
                     do {
                         let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? Parameters
-                        completion(result, nil)
+                        completion(result ?? ["":""], nil)
                     } catch {
-                        completion(nil, error)
+                        completion(["":""], error)
                     }
                 }
                 task.resume()
             } catch  {
-                completion(nil, error)
+                completion(["":""], error)
             }
         } else {
-            completion(nil, nil)
+            completion(["":""], nil)
         }
     }
     #endif

@@ -24,13 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     if let isUseNativePaywall = result["isUseNativePaywall"] as? Bool, let nativePaywallId = result["nativePaywallId"] as? String {
                         if isUseNativePaywall == true {
                             let filePath1 = Bundle.main.path(forResource: "index", ofType: ".html", inDirectory: nativePaywallId)
-                            DYMobileSDK.loadNativePaywall(paywallFullPath: filePath1!, basePath: Bundle.main.bundlePath + nativePaywallId)
+//                            DYMobileSDK.loadNativePaywall(paywallFullPath: filePath1!, basePath: Bundle.main.bundlePath + nativePaywallId)
                         }
                     }
                 }
             }
         }
-
 
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy年MM月dd日HH时mm分ss秒"

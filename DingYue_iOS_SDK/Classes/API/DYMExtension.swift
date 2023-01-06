@@ -85,24 +85,64 @@ extension AppleSearchAdsAttribution {
             self.iadCampaignName = version31["iad-campaign-name"] as? String
             self.iadClickDate = version31["iad-click-date"] as? String
             self.iadPurchaseDate = version31["iad-purchase-date"] as? String
-            self.iadConversationDate = version31["iad-conversation-date"] as? String
-            self.iadConversationType = IadConversationType(rawValue: version31["iad-conversation-type"] as? String ?? "newdownload")
+            
+            if let iadConversationDate = version31["iad-conversation-date"] as? String {
+                self.iadConversationDate = iadConversationDate
+            } else {
+               if let iadConversationDate = version31["iad-conversion-date"] as? String {
+                   self.iadConversationDate = iadConversationDate
+                }
+            }
+            
+            if let iadConversationType = version31["iad-conversation-type"] as? String {
+                self.iadConversationType = IadConversationType(rawValue: iadConversationType)
+            } else {
+                if let iadConversationType = version31["iad-conversion-type"] as? String {
+                    if iadConversationType == "Download" {
+                        self.iadConversationType = .newdownload
+                    } else {
+                        self.iadConversationType = .redownload
+                    }
+                }
+            }
             self.iadAdgroupName = version31["iad-adgroup-name"] as? String
             self.iadAdgroupId = version31["iad-adgroup-id"] as? String
             self.iadCountryOrRegion = version31["iad-country-or-region"] as? String
             self.iadKeyword = version31["iad-keyword"] as? String
             self.iadKeywordId = version31["iad-keyword-id"] as? String
-            self.iadKeywordMatchtype = IadKeywordMatchtype(rawValue: version31["iad-keyword-matchtype"] as? String ?? "BOARD")
+            if let iadKeywordMatchtype = version31["iad-keyword-matchtype"] as? String {
+                self.iadKeywordMatchtype = IadKeywordMatchtype(rawValue: iadKeywordMatchtype)
+            }
             self.iadCreativesetId = version31["iad-creativeset-id"] as? String
             self.iadCreativesetName = version31["iad-creativeset-name"] as? String
         } else {
-            self.iadAttribution = (attribution["attribution"] as? Bool) == true ? "true" : "false" //attribution
-            self.iadOrgId = "\(attribution["orgId"] ?? "")"
-            self.iadCampaignId = "\(attribution["campaignId"] ?? "")"
-            self.iadConversationType = IadConversationType(rawValue:"\(attribution["conversionType"] ?? "newdownload")")
-            self.iadAdgroupId = "\(attribution["adGroupId"] ?? "")"
-            self.iadCountryOrRegion = "\(attribution["countryOrRegion"] ?? "")"
-            self.iadKeywordId = "\(attribution["keywordId"] ?? "")"
+            
+            if let attribute = attribution["attribution"] as? Bool{
+                self.iadAttribution = (attribute == true) ? "true" : "false"
+            }
+            if let iadOrgId = attribution["orgId"] {
+                self.iadOrgId = "\(iadOrgId)"
+            }
+            if let iadCampaignId = attribution["campaignId"] {
+                self.iadCampaignId = "\(iadCampaignId)"
+            }
+            if let conversion = attribution["conversionType"] {
+                if "\(conversion)" == "Download" {
+                    self.iadConversationType = .newdownload
+                } else {
+                    self.iadConversationType = .redownload
+                }
+            }
+            if let iadAdgroupId = attribution["adGroupId"] {
+                self.iadAdgroupId = "\(iadAdgroupId)"
+            }
+            if let iadCountryOrRegion = attribution["countryOrRegion"] {
+                self.iadCountryOrRegion = "\(iadCountryOrRegion)"
+            }
+            if let iadKeywordId = attribution["keywordId"] {
+                self.iadKeywordId = "\(iadKeywordId)"
+            }
+            
         }
     }
 }
