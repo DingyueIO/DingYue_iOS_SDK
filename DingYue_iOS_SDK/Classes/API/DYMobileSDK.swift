@@ -12,6 +12,7 @@ import SSZipArchive
 import AnyCodable
 import StoreKit
 import AppTrackingTransparency
+import AdSupport
 #endif
 
 @objc public class DYMobileSDK: NSObject {
@@ -93,28 +94,45 @@ import AppTrackingTransparency
         apiManager.startSession()
 
         iapManager.startObserverPurchase()
+        
         sendAppleSearchAdsAttribution()
     }
     
     func sendAppleSearchAdsAttribution() {
         //IDFA
-        if #available(iOS 14.3, *) {
+        if #available(iOS 14, *) {
             let state = ATTrackingManager.trackingAuthorizationStatus
             if state == .notDetermined {
+                self.reportAppleSearchAdsAttribution()
                 var isSendRequest = false
                 NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidBecomeActive, object: nil, queue: .main) { notification in
                     if isSendRequest == false {
                         ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
                             isSendRequest = true
                             self.reportAppleSearchAdsAttribution()
+                            
+                            if status == .authorized {
+                                Self.reportIdfa(idfa: ASIdentifierManager.shared().advertisingIdentifier.uuidString)
+                            }
+                            
                         })
                     }
                 }
-            } else{
+            } else {
                 reportAppleSearchAdsAttribution()
+                
+                if state == .authorized {
+                    Self.reportIdfa(idfa: ASIdentifierManager.shared().advertisingIdentifier.uuidString)
+                }
+                
             }
         } else {
             reportAppleSearchAdsAttribution()
+            
+            if ASIdentifierManager.shared().isAdvertisingTrackingEnabled {
+                Self.reportIdfa(idfa: ASIdentifierManager.shared().advertisingIdentifier.uuidString)
+            }
+            
         }
 
     }
@@ -176,25 +194,8 @@ import AppTrackingTransparency
 #if os(iOS)
     private func reportAppleSearchAdsAttribution() {
         UserProperties.appleSearchAdsAttribution { (attribution, error) in
-            // check if this is an actual first sync
-            guard let attribution = attribution, DYMDefaultsManager.shared.appleSearchAdsSyncDate == nil else { return }
-
-            func update(attribution: Dictionary<String,Any>, asa: Bool) {
-//                var attribution = attribution
-//                attribution["asa-attribution"] = asa
-                Self.reportSearchAds(attribution: attribution)
-            }
-
-            if let values = attribution.values.map({ $0 }).first as? Parameters,
-               let iAdAttribution = values["iad-attribution"] as? NSString {
-                // check if the user clicked an Apple Search Ads impression up to 30 days before app download
-//                if iAdAttribution.boolValue == true {
-//                    update(attribution: attribution, asa: false)
-//                }
-                update(attribution: attribution, asa: false)
-            } else {
-                update(attribution: attribution, asa: true)
-            }
+            print(attribution)
+            Self.reportSearchAds(attribution: attribution)
         }
     }
 #endif
