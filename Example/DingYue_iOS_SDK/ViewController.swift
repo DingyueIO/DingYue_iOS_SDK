@@ -71,6 +71,9 @@ class ViewController: UIViewController {
             if error == nil {
                //购买成功
                 print("订阅购买成功")
+                DispatchQueue.main.async {
+                    self.purchaseBtn  .setTitle("订阅购买成功", for: [])
+                }
             }
         }
     }

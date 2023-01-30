@@ -223,6 +223,7 @@ class DYMDefaultsManager {
     var isUseNativePaywall: Bool = false
     var nativePaywallPath: String!
     var nativePaywallBasePath: String!
+    var defaultPaywallPath:String?
 
     func subscribedObjects(subscribedObjectArray: [SubscribedObject?]?) -> [[String:Any]] {
         var subsArray:[[String:Any]] = []

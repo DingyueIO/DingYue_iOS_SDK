@@ -17,6 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let defaultPaywallNativePath = Bundle.main.path(forResource: "index", ofType: ".html", inDirectory: "7306588143563858788")
+        DYMobileSDK.setDefaultPaywall(paywallFullPath: defaultPaywallNativePath!, basePath: "")
+        
+        DYMobileSDK.defaultConversionValueEnabled = true //use default cv rule
+        
         //session report
         DYMobileSDK.activate { results, error in
             if error == nil {
@@ -31,14 +36,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy年MM月dd日HH时mm分ss秒"
-        formatter.timeZone = TimeZone(abbreviation: "UTC+8")
-
-        let nowDate = NSDate(timeIntervalSinceNow: 0) as Date
-        print("时间戳转日期 = \(formatter.string(from: nowDate))")
-        let name = "Dingyue-Launch@" + "\(formatter.string(from: nowDate))"
-        DYMobileSDK.track(event: name)
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "yyyy年MM月dd日HH时mm分ss秒"
+//        formatter.timeZone = TimeZone(abbreviation: "UTC+8")
+//
+//        let nowDate = NSDate(timeIntervalSinceNow: 0) as Date
+//        print("时间戳转日期 = \(formatter.string(from: nowDate))")
+//        let name = "Dingyue-Launch@" + "\(formatter.string(from: nowDate))"
+//        DYMobileSDK.track(event: name)
         return true
     }
 
