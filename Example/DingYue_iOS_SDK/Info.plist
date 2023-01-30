@@ -37,5 +37,7 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 	</array>
+	<key>NSAdvertisingAttributionReportEndpoint</key>
+	<string>https://server url</string>
 </dict>
 </plist>

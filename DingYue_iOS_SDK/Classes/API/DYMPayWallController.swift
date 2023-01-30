@@ -20,6 +20,7 @@ import StoreKit
 
 public class DYMPayWallController: UIViewController {
     var custemedProducts:[Subscription] = []
+    var tempCachedProducts:[Dictionary<String,Any>] = []
     var paywalls:[SKProduct] = []
     var completion:DYMPurchaseCompletion?
     weak var delegate: DYMPayWallActionDelegate?
@@ -127,12 +128,18 @@ public class DYMPayWallController: UIViewController {
                 let url = URL(fileURLWithPath: fullPath)
                 webView.loadFileURL(url, allowingReadAccessTo: URL(fileURLWithPath: basePath))
             } else {
-                let sdkBundle = Bundle(for: DYMobileSDK.self)
-                guard let resourceBundleURL = sdkBundle.url(forResource: "DingYue_iOS_SDK", withExtension: "bundle")else { fatalError("DingYue_iOS_SDK.bundle not found, do not display SDK default paywall!") }
-                guard let resourceBundle = Bundle(url: resourceBundleURL)else { fatalError("Cannot access DingYue_iOS_SDK.bundle,do not display SDK default paywall!") }
-                let path = resourceBundle.path(forResource: "index", ofType: "html")
-                let htmlUrl = URL(fileURLWithPath: path!)
-                webView.loadFileURL(htmlUrl, allowingReadAccessTo: htmlUrl)
+                
+                if let defaultPaywallPath = DYMDefaultsManager.shared.defaultPaywallPath {
+                    let url = URL(fileURLWithPath: defaultPaywallPath)
+                    webView.loadFileURL(url, allowingReadAccessTo: url)
+                } else {
+                    let sdkBundle = Bundle(for: DYMobileSDK.self)
+                    guard let resourceBundleURL = sdkBundle.url(forResource: "DingYue_iOS_SDK", withExtension: "bundle")else { fatalError("DingYue_iOS_SDK.bundle not found, do not display SDK default paywall!") }
+                    guard let resourceBundle = Bundle(url: resourceBundleURL)else { fatalError("Cannot access DingYue_iOS_SDK.bundle,do not display SDK default paywall!") }
+                    let path = resourceBundle.path(forResource: "index", ofType: "html")
+                    let htmlUrl = URL(fileURLWithPath: path!)
+                    webView.loadFileURL(htmlUrl, allowingReadAccessTo: htmlUrl)
+                }
             }
         }
     }
@@ -175,6 +182,7 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
             ]
             productsArray.append(array)
         }
+        self.tempCachedProducts = productsArray
         //传给内购页的数据字典
         let dic = [
             "system_language":languageCode,
@@ -222,7 +230,16 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
 
             let dic = message.body as? Dictionary<String,Any>
             if let productId = dic?["productId"] as? String {
-                self.buyWithProductId(productId)
+                var productPrice:String?
+                if self.tempCachedProducts.count > 0 {
+                    for dic in self.tempCachedProducts {
+                        if productId == dic["platformProductId"] as? String {
+                            productPrice = dic["price"] as? String
+                            print("dingyue update cv 订阅内购页回传的数据 匹配上的 价格 - \(String(describing: productPrice))")
+                        }
+                    }
+                }
+                self.buyWithProductId(productId, productPrice: productPrice)
             }else {
                 self.completion?(nil,nil,.noProductIds)
             }
@@ -230,9 +247,9 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
         }
     }
 
-    func buyWithProductId(_ productId:String) {
+    func buyWithProductId(_ productId:String, productPrice:String? = nil) {
         ProgressView.show(rootViewConroller: self)
-        DYMobileSDK.purchase(productId: productId) { receipt, purchaseResult, error in
+        DYMobileSDK.purchase(productId: productId, productPrice: productPrice) { receipt, purchaseResult, error in
             ProgressView.stop()
             self.completion?(receipt,purchaseResult,error)
             if error == nil {
