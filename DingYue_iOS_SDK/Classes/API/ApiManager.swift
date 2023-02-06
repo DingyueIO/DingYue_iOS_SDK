@@ -105,6 +105,14 @@ class ApiManager {
                     DYMDefaultsManager.shared.isLoadingStatus = true
                     self.completion?(nil,DYMError.failed)
                 }
+                
+                print("DYMDefaultsManager.shared.isMultipleLaunch - \(DYMDefaultsManager.shared.isMultipleLaunch )")
+                if DYMobileSDK.defaultConversionValueEnabled && !DYMDefaultsManager.shared.isMultipleLaunch {
+                    DYMobileSDK().updateConversionValueWithDefaultRule(value: 1)
+                    DYMDefaultsManager.shared.isMultipleLaunch = true
+                    print("DYMDefaultsManager.shared.isMultipleLaunch - 启动 执行 updateConversionValue")
+                }
+
             }
         }
     }
@@ -221,6 +229,13 @@ class ApiManager {
     func addGlobalSwitch(globalSwitch:GlobalSwitch,complete:@escaping ((SimpleStatusResult?,Error?)->())) {
         SessionsAPI.reportGlobalSwitch(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: SessionsAPI.XPLATFORM_reportGlobalSwitch.ios, X_VERSION: UserProperties.sdkVersion, globalSwitch: globalSwitch) { data, error in
             complete(data,error)
+        }
+    }
+    
+    func reportConversionValue(cv:Int, coarseValue:ConversionRequest.CoarseValue? = nil) {
+        let cvObject = ConversionRequest(conversionValue: cv, coarseValue: coarseValue)
+        SessionsAPI.reportConversion(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: SessionsAPI.XPLATFORM_reportConversion.ios, X_VERSION: UserProperties.sdkVersion, conversionRequest: cvObject) { data, error in
+            print("update dingyue conversion value - \(String(describing: error))")
         }
     }
 }

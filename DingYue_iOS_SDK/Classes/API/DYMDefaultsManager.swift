@@ -218,6 +218,16 @@ class DYMDefaultsManager {
         }
         return subsArray
     }
+    
+    var isMultipleLaunch: Bool {
+        get {
+            return (defaults.bool(forKey: DYMConstants.UserDefaults.multipleLaunch))
+        }
+        
+        set {
+            defaults.setValue(newValue, forKey: DYMConstants.UserDefaults.multipleLaunch)
+        }
+    }
 
     var isLoadingStatus: Bool = false
     var isUseNativePaywall: Bool = false

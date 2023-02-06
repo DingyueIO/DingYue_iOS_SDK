@@ -98,11 +98,6 @@ import AdSupport
         iapManager.startObserverPurchase()
         
         sendAppleSearchAdsAttribution()
-        
-        if DYMobileSDK.defaultConversionValueEnabled {
-            updateConversionValueWithDefaultRule(value: 1)
-        }
-        
     }
 
     // MARK: - idfa
@@ -352,34 +347,54 @@ import AdSupport
     }
     
     
-    private func updateConversionValueWithDefaultRule(value: Int) {
+    func updateConversionValueWithDefaultRule(value: Int) {
         //update conversion value
         if #available(iOS 16.1, *) {
+            
+        #if compiler(>=5.7)
             var coarse = SKAdNetwork.CoarseConversionValue.low
+            var coarseDY = ConversionRequest.CoarseValue.low
             if value <= 21 {
                 coarse = SKAdNetwork.CoarseConversionValue.low
+                coarseDY = ConversionRequest.CoarseValue.low
             } else if value > 21 && value <= 42 {
                 coarse = SKAdNetwork.CoarseConversionValue.medium
+                coarseDY = ConversionRequest.CoarseValue.medium
             } else { //>42
                 coarse = SKAdNetwork.CoarseConversionValue.high
+                coarseDY = ConversionRequest.CoarseValue.high
             }
-            SKAdNetwork.updatePostbackConversionValue(value, coarseValue: coarse, lockWindow: true) { error in
+            SKAdNetwork.updatePostbackConversionValue(value, coarseValue: coarse, lockWindow: false) { error in
+                print("dingyue cv iOS 16.1 * compiler high value is \(value)")
+                
+                DYMobileSDK.shared.apiManager.reportConversionValue(cv: value, coarseValue: coarseDY)
             }
+        #else
+            SKAdNetwork.updatePostbackConversionValue(value) { error in
+                print("dingyue cv iOS 16.1 * compiler low value is \(value)")
+                DYMobileSDK.shared.apiManager.reportConversionValue(cv: value)
+            }
+        #endif
             
         } else {
             // Fallback on earlier versions
             if #available(iOS 15.4, *) {
                 SKAdNetwork.updatePostbackConversionValue(value) { error in
+                    print("dingyue cv iOS 15.4 * value is \(value)")
+                    DYMobileSDK.shared.apiManager.reportConversionValue(cv: value)
                 }
  
             } else {
                 // Fallback on earlier versions
                 if #available(iOS 14.0, *) {
                     SKAdNetwork.updateConversionValue(value)
+                    DYMobileSDK.shared.apiManager.reportConversionValue(cv: value)
+                    print("dingyue cv iOS 14.0 * value is \(value)")
                 } else {
                     // Fallback on earlier versions
                     if #available(iOS 11.3, *) {
                         SKAdNetwork.registerAppForAdNetworkAttribution()
+                        DYMobileSDK.shared.apiManager.reportConversionValue(cv: 0)
                     }
                 }
             }

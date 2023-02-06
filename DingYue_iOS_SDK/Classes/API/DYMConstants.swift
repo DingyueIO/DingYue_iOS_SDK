@@ -29,7 +29,7 @@ class DYMConstants: NSObject {
     }
 
     enum Versions {
-        static let SDKVersion = "0.3.3"
+        static let SDKVersion = "0.3.4"
         static let SDKBuild = 1
     }
     enum BundleKeys {
@@ -57,6 +57,7 @@ class DYMConstants: NSObject {
         static let responseJSONCaches        = "DYMSDK_Response_JSON_Caches"
         static let postRequestParamsHashes   = "DYMSDK_Post_Request_Params_Hashes"
         static let cachedPayWallPageIdentifier      = "DYMSDK_Cached_PayWall_Page_Identifier"
+        static let multipleLaunch            = "DYMSDK_is_Multiple_Launch"
     }
     ///App信息plist文件
     enum AppInfoName {
