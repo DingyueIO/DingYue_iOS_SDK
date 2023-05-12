@@ -80,7 +80,7 @@ import AdSupport
         }
         DYMConstants.APIKeys.appId = appId
         DYMConstants.APIKeys.secretKey = apiKey
-
+        
         shared.configure(completion: completion)
     }
     ///Configure
@@ -228,24 +228,39 @@ import AdSupport
         DYMLogManager.logMessage("Calling now: \(#function)")
         shared.apiManager.verifySubscriptionRecover(receipt: receipt, completion: completion)
     }
-    /// MARK: - Events
+    // MARK: - Events
     @objc public class func track(event: String, extra: String? = nil, user: String? = nil) {
         DYMLogManager.logMessage("Calling now: \(#function)")
         if event != "" {
+            if DYMConstants.APIKeys.appId == "" || DYMConstants.APIKeys.secretKey == "" {
+                //读取DingYue.plist信息
+                let path = Bundle.main.path(forResource: DYMConstants.AppInfoName.plistName, ofType: DYMConstants.AppInfoName.plistType)
+                guard let plistPath = path else {
+                    return
+                }
+                guard let appInfoDictionary = NSMutableDictionary(contentsOfFile: plistPath) else {
+                    return
+                }
+                guard let appId = appInfoDictionary.value(forKey: DYMConstants.AppInfoName.appId) as? String, let apiKey = appInfoDictionary.value(forKey: DYMConstants.AppInfoName.apiKey) as? String else{
+                    return
+                }
+                DYMConstants.APIKeys.appId = appId
+                DYMConstants.APIKeys.secretKey = apiKey
+            }
             shared.eventManager.track(event: event, extra: extra, user: user)
         }
     }
-    /// MARK: - load native paywall
+    // MARK: - Load native paywall
     @objc public class func loadNativePaywall(paywallFullPath: String,basePath:String) {
         DYMLogManager.logMessage("Calling now: \(#function)")
         DYMDefaultsManager.shared.nativePaywallBasePath = basePath
         DYMDefaultsManager.shared.nativePaywallPath = paywallFullPath
     }
-    /// MARK: - set default paywall url
+    // MARK: - Default paywall
     @objc public class func setDefaultPaywall(paywallFullPath: String,basePath:String) {
         DYMDefaultsManager.shared.defaultPaywallPath = paywallFullPath
     }
-
+    //MARK: - Handle remote notification
     @objc public class func handlePushNotification(_ userInfo: [AnyHashable : Any], completion: Error?) {
         DYMLogManager.logMessage("Calling now: \(#function)")
 
@@ -261,6 +276,7 @@ import AdSupport
         }
     }
 
+    // MARK: - Switchs
     //request switch status with switch name
     @objc public class func getSwitchStatus(switchName: String)->Bool {
         guard let switchItems = DYMDefaultsManager.shared.cachedSwitchItems else {
@@ -274,7 +290,7 @@ import AdSupport
         return false
     }
     
-    /// MARK: - Switchs info
+    ///Golbal Switch
     @objc public class func createGlobalSwitch(globalSwitch: GlobalSwitch,completion:@escaping ((SimpleStatusResult?,Error?)->())) {
         DYMLogManager.logMessage("Calling now: \(#function)")
         #if DEBUG
@@ -409,6 +425,7 @@ extension DYMobileSDK: DYMAppDelegateSwizzlerDelegate {
         Self.apnsToken = deviceToken
         if let token = self.apnsTokenStr {
             Self.reportDeviceToken(token: token)
+            print("token - \(token)")
         }
     }
 }

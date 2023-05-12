@@ -17,33 +17,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        let defaultPaywallNativePath = Bundle.main.path(forResource: "index", ofType: ".html", inDirectory: "7306588143563858788")
-        DYMobileSDK.setDefaultPaywall(paywallFullPath: defaultPaywallNativePath!, basePath: "")
         
-        DYMobileSDK.defaultConversionValueEnabled = true //use default cv rule
+//        let defaultPaywallNativePath = Bundle.main.path(forResource: "index", ofType: ".html", inDirectory: "7306588143563858788")
+//        DYMobileSDK.setDefaultPaywall(paywallFullPath: defaultPaywallNativePath!, basePath: "")
         
+
         //session report
+        DYMobileSDK.defaultConversionValueEnabled = true //use default cv rule
         DYMobileSDK.activate { results, error in
             if error == nil {
                 if let result = results {
-                    if let isUseNativePaywall = result["isUseNativePaywall"] as? Bool, let nativePaywallId = result["nativePaywallId"] as? String {
-                        if isUseNativePaywall == true {
-                            let filePath1 = Bundle.main.path(forResource: "index", ofType: ".html", inDirectory: nativePaywallId)
-//                            DYMobileSDK.loadNativePaywall(paywallFullPath: filePath1!, basePath: Bundle.main.bundlePath + nativePaywallId)
-                        }
-                    }
+                    print("Dingyue SDK activate ok! - \(result)")
                 }
             }
         }
-
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "yyyy年MM月dd日HH时mm分ss秒"
-//        formatter.timeZone = TimeZone(abbreviation: "UTC+8")
-//
-//        let nowDate = NSDate(timeIntervalSinceNow: 0) as Date
-//        print("时间戳转日期 = \(formatter.string(from: nowDate))")
-//        let name = "Dingyue-Launch@" + "\(formatter.string(from: nowDate))"
-//        DYMobileSDK.track(event: name)
+//        DYMobileSDK.track(event: "test")
         return true
     }
 
