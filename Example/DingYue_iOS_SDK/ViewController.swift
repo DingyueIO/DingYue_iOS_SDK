@@ -41,16 +41,6 @@ class ViewController: UIViewController {
         btn2.setTitleColor(UIColor.black, for: [])
         self.view.addSubview(btn2)
 
-        //创建总开关
-        DYMobileSDK.createGlobalSwitch(globalSwitch: GlobalSwitch(showName: "TestDebug2", varName: "TestDebug2", value: true)) { results, error in
-            if error == nil {
-                if results?.errmsg == nil {
-                    print("ok")
-                }
-            }
-        }
-
-        //
         print("dingyue uuid = \(DYMobileSDK.requestDeviceUUID())")
 
     }

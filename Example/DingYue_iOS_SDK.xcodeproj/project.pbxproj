@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18B8C8302A0B935F001A22E4 /* DingYue.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18B8C82F2A0B935F001A22E4 /* DingYue.plist */; };
 		470157E7290A52B2000ABC76 /* 7306588143563858788 in Resources */ = {isa = PBXBuildFile; fileRef = 470157E6290A52B2000ABC76 /* 7306588143563858788 */; };
-		47D4EAAC289CC4BB009814FC /* DingYue.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47D4EAAB289CC4BB009814FC /* DingYue.plist */; };
 		47FF2D702876F21300437080 /* LBWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FF2D6F2876F21300437080 /* LBWebViewController.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
@@ -31,8 +31,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		18B8C82F2A0B935F001A22E4 /* DingYue.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DingYue.plist; sourceTree = "<group>"; };
 		470157E6290A52B2000ABC76 /* 7306588143563858788 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = 7306588143563858788; sourceTree = "<group>"; };
-		47D4EAAB289CC4BB009814FC /* DingYue.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DingYue.plist; sourceTree = "<group>"; };
 		47DF7A12287D49E800033058 /* DingYue_iOS_SDK_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DingYue_iOS_SDK_Example.entitlements; sourceTree = "<group>"; };
 		47FF2D6F2876F21300437080 /* LBWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LBWebViewController.swift; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* DingYue_iOS_SDK_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DingYue_iOS_SDK_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,7 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				607FACD41AFB9204008FA782 /* Info.plist */,
-				47D4EAAB289CC4BB009814FC /* DingYue.plist */,
+				18B8C82F2A0B935F001A22E4 /* DingYue.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -259,10 +259,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18B8C8302A0B935F001A22E4 /* DingYue.plist in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				470157E7290A52B2000ABC76 /* 7306588143563858788 in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
-				47D4EAAC289CC4BB009814FC /* DingYue.plist in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

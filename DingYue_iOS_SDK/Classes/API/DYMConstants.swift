@@ -15,10 +15,6 @@ class DYMConstants: NSObject {
         static var secretKey = ""
         static var appId = ""
     }
-    ///网络链接
-    enum URLs {
-        static let host = "mobile.dingyueio.com"
-    }
     
     ///请求头
     enum Headers {
@@ -29,7 +25,7 @@ class DYMConstants: NSObject {
     }
 
     enum Versions {
-        static let SDKVersion = "0.3.4"
+        static let SDKVersion = "0.3.5"
         static let SDKBuild = 1
     }
     enum BundleKeys {

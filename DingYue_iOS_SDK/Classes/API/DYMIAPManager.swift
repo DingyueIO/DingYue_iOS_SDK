@@ -143,6 +143,7 @@ class DYMIAPManager: NSObject {
     
     private func createPayment(for product:DYMProductModel,completion:PurchaseCompletion? = nil) {
         let payment = SKMutablePayment(product: product.skproduct!)
+        payment.applicationUsername = UserProperties.requestUUID
         purchaseTemplates.append((product:product,
                                   payment:payment,
                                   completion:completion))

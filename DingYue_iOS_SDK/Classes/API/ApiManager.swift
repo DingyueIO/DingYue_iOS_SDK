@@ -106,11 +106,9 @@ class ApiManager {
                     self.completion?(nil,DYMError.failed)
                 }
                 
-                print("DYMDefaultsManager.shared.isMultipleLaunch - \(DYMDefaultsManager.shared.isMultipleLaunch )")
                 if DYMobileSDK.defaultConversionValueEnabled && !DYMDefaultsManager.shared.isMultipleLaunch {
                     DYMobileSDK().updateConversionValueWithDefaultRule(value: 1)
                     DYMDefaultsManager.shared.isMultipleLaunch = true
-                    print("DYMDefaultsManager.shared.isMultipleLaunch - 启动 执行 updateConversionValue")
                 }
 
             }
