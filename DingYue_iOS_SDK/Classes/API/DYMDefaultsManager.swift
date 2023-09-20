@@ -213,6 +213,9 @@ class DYMDefaultsManager {
                 if let expiresAt = sub.expiresAt {
                     subDic["expiresAt"] = expiresAt
                 }
+                if let groupId = sub.appleSubscriptionGroupId {
+                    subDic["appleSubscriptionGroupId"] = groupId
+                }
                 subsArray.append(subDic)
             }
         }
@@ -246,6 +249,9 @@ class DYMDefaultsManager {
                 }
                 if let expiresAt = sub?.expiresAt {
                     subDic["expiresAt"] = expiresAt
+                }
+                if let groupId = sub?.appleSubscriptionGroupId {
+                    subDic["appleSubscriptionGroupId"] = groupId
                 }
                 subsArray.append(subDic)
             }

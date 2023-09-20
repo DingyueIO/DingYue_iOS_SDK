@@ -35,6 +35,7 @@ class DYMIAPManager: NSObject {
     
     private var restoreCompletion: RestoreCompletion?
     private var restorePurchaseTimes: Int = 0
+    public var productQuantity: Int = 1
     
     static let shared = DYMIAPManager()
     override private init() { super.init() }
@@ -144,6 +145,7 @@ class DYMIAPManager: NSObject {
     private func createPayment(for product:DYMProductModel,completion:PurchaseCompletion? = nil) {
         let payment = SKMutablePayment(product: product.skproduct!)
         payment.applicationUsername = UserProperties.requestUUID
+        payment.quantity = self.productQuantity
         purchaseTemplates.append((product:product,
                                   payment:payment,
                                   completion:completion))

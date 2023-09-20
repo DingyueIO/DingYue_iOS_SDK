@@ -16,26 +16,29 @@ public struct SubscribedObject: Codable, JSONEncodable, Hashable {
     public var platformProductId: String
     public var originalTransactionId: String
     public var expiresAt: Int64?
+    public var appleSubscriptionGroupId: String?
 
-    public init(platformProductId: String, originalTransactionId: String, expiresAt: Int64? = nil) {
+    public init(platformProductId: String, originalTransactionId: String, expiresAt: Int64? = nil, appleSubscriptionGroupId: String? = nil) {
         self.platformProductId = platformProductId
         self.originalTransactionId = originalTransactionId
         self.expiresAt = expiresAt
+        self.appleSubscriptionGroupId = appleSubscriptionGroupId
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case platformProductId
         case originalTransactionId
         case expiresAt
+        case appleSubscriptionGroupId
     }
 
     // Encodable protocol methods
-
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(platformProductId, forKey: .platformProductId)
         try container.encode(originalTransactionId, forKey: .originalTransactionId)
         try container.encodeIfPresent(expiresAt, forKey: .expiresAt)
+        try container.encodeIfPresent(appleSubscriptionGroupId, forKey: .appleSubscriptionGroupId)
     }
 }
 
