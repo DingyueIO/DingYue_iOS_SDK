@@ -26,6 +26,7 @@ public class DYMPayWallController: UIViewController {
     weak var delegate: DYMPayWallActionDelegate?
     var loadingTimer:Timer?
     var currentPaywallId:String?
+    var extras:[String:Any]?
 
     lazy var activity:UIActivityIndicatorView = {
         let activity = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
@@ -151,11 +152,17 @@ public class DYMPayWallController: UIViewController {
 
 extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
     
-    private func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if navigationAction.targetFrame == nil {
-            webView .load(navigationAction.request)
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        //跳转到应用
+        if navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url{
+            UIApplication.shared.open(url)
+            decisionHandler(WKNavigationActionPolicy.cancel)
+        } else {
+            if navigationAction.targetFrame == nil {
+                webView.load(navigationAction.request)
+            }
+            decisionHandler(WKNavigationActionPolicy.allow)
         }
-        decisionHandler(WKNavigationActionPolicy.allow)
     }
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -163,15 +170,13 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
         let languageCode = NSLocale.preferredLanguages[0]
         //内购项信息
         var cachedProducts:[Subscription] = self.custemedProducts
-        if let products = DYMDefaultsManager.shared.cachedProducts {
-            if !products.isEmpty {
-                cachedProducts = products
-            }
+        if let products = DYMDefaultsManager.shared.cachedProducts, !products.isEmpty{
+            cachedProducts = products
         }
 
         var productsArray = [Dictionary<String,Any>]()
         for item in cachedProducts {
-            let array:Dictionary<String, Any> = [
+            var array:Dictionary<String, Any> = [
                 "type":item.type,
                 "name":item.name,
                 "platformProductId":item.platformProductId,
@@ -180,14 +185,21 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
                 "price": item.price.description.stringValue,
                 "description":item.subscriptionDescription ?? ""
             ]
+            if let groupId = item.appleSubscriptionGroupId {
+                array["appleSubscriptionGroupId"] = groupId
+            }
             productsArray.append(array)
         }
         self.tempCachedProducts = productsArray
         //传给内购页的数据字典
-        let dic = [
+        var dic = [
             "system_language":languageCode,
-            "products":productsArray,
+            "products":productsArray
         ] as [String : Any]
+        
+        if let extra = extras {
+            dic["extra"] = extra
+        }
 
         let jsonString = getJSONStringFromDictionary(dictionary: dic as NSDictionary)
         let data = jsonString.data(using: .utf8)
@@ -235,15 +247,14 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
                     for dic in self.tempCachedProducts {
                         if productId == dic["platformProductId"] as? String {
                             productPrice = dic["price"] as? String
-                            print("dingyue update cv 订阅内购页回传的数据 匹配上的 价格 - \(String(describing: productPrice))")
                         }
                     }
                 }
                 self.buyWithProductId(productId, productPrice: productPrice)
-            }else {
+            } else {
                 self.completion?(nil,nil,.noProductIds)
+                self.eventManager.track(event: "PURCHASE_FAIL_DETAIL", extra: "no productId from h5")
             }
-
         }
     }
 
@@ -258,6 +269,7 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
                 self.dismiss(animated: true, completion: nil)
             } else {
                 self.trackWithPayWallInfo(eventName: "PURCHASE_FAIL")
+                self.eventManager.track(event: "PURCHASE_FAIL_DETAIL", extra: error?.debugDescription)
             }
         }
     }

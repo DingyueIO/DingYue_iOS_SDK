@@ -10,64 +10,94 @@ import UIKit
 import DingYue_iOS_SDK
 
 class ViewController: UIViewController {
-    lazy var purchaseBtn: UIButton = {
+    lazy var purchaseSubscriptionBtn: UIButton = {
         let btn = UIButton(type: .custom)
-        btn.frame = CGRect(x: 0, y: 0, width: 200, height: 50)
-        btn.center = self.view.center
-
-        let perferLang = NSLocale.preferredLanguages[0]
-        var langParamStr = NSLocale.current.languageCode ?? ""
-        if (perferLang.range(of: "Hans") != nil) {
-            langParamStr = "zh-Hans"
-        } else if (perferLang.range(of: "Hant") != nil) {
-            langParamStr = "zh-Hant"
-        }
-
-        btn.setTitle(NSLocale.preferredLanguages[0], for: [])
+        btn.setTitle("SubscriptionBtn", for: [])
         btn.setTitleColor(UIColor.black, for: [])
-        btn.addTarget(self, action: #selector(goPurchase), for: .touchUpInside)
-
+        btn.addTarget(self, action: #selector(goPurchaseSubscriptionAction), for: .touchUpInside)
+        btn.backgroundColor = .red
+        return btn
+    }()
+    
+    lazy var purchaseConsumptionBtn: UIButton = {
+        let btn = UIButton(type: .custom)
+        btn.setTitle("ConsumptionBtn", for: [])
+        btn.setTitleColor(UIColor.black, for: [])
+        btn.addTarget(self, action: #selector(goPurchaseConsumptionAction), for: .touchUpInside)
+        btn.backgroundColor = .blue
         return btn
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        self.view.addSubview(purchaseBtn)
-
-        let btn2 = UIButton(type: .custom)
-        btn2.frame = CGRect(x: 10, y: 20, width: 300, height: 50)
-        btn2.setTitle("9999", for: [])
-        btn2.setTitleColor(UIColor.black, for: [])
-        self.view.addSubview(btn2)
-
-        print("dingyue uuid = \(DYMobileSDK.requestDeviceUUID())")
-
+        self.view.addSubview(purchaseSubscriptionBtn)
+        self.view.addSubview(purchaseConsumptionBtn)
+        
+        
+        purchaseSubscriptionBtn.translatesAutoresizingMaskIntoConstraints = false
+        purchaseSubscriptionBtn.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,constant: 16.0).isActive = true
+        purchaseSubscriptionBtn.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        purchaseSubscriptionBtn.heightAnchor.constraint(equalToConstant: 56).isActive = true
+        
+        purchaseConsumptionBtn.translatesAutoresizingMaskIntoConstraints = false
+        purchaseConsumptionBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16.0).isActive = true
+        purchaseConsumptionBtn.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        purchaseConsumptionBtn.heightAnchor.constraint(equalToConstant: 56).isActive = true
+        purchaseConsumptionBtn.leadingAnchor.constraint(equalTo: purchaseSubscriptionBtn.trailingAnchor, constant: 10).isActive = true
+        purchaseConsumptionBtn.widthAnchor.constraint(equalTo: purchaseSubscriptionBtn.widthAnchor).isActive = true
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    @objc func goPurchase(){
-        let timeInterval: TimeInterval = Date.init(timeIntervalSinceNow: 0).timeIntervalSince1970
-        let milli = CLongLong(round(timeInterval*1000))
-        print("客户端 时间戳 = \(milli)")
-
+    
+    
+    @objc func goPurchaseSubscriptionAction(){
         //显示内购页-可以传复合要求的内购项信息对象
         let defaultProuct1 = Subscription(type: "SUBSCRIPTION", name: "Week", platformProductId: "testWeek", price: "7.99", currencyCode: "USD", countryCode: "US")
         let defaultProuct2 = Subscription(type: "SUBSCRIPTION", name: "Year", platformProductId: "testYear", appleSubscriptionGroupId: nil, description: "default product item", period: "Year", price: "49.99", currencyCode: "USD", countryCode: "US", priceTier: nil, gracePeriod: nil, icon: nil, renewPriceChange: nil)
-        DYMobileSDK.showVisualPaywall(products: [defaultProuct1,defaultProuct2], rootController: self) { receipt, purchasedResult, error in
+        //显示内购页
+        
+        let extra:[String:Any] = [
+            "phoneNumber": "1999999999",
+            "phoneCountry" : "国家",
+            "purchasedProducts" : purchasedProducts,
+            "mainColor": "white"
+        ]
+        
+        DYMobileSDK.showVisualPaywall(products: [defaultProuct1,defaultProuct2], rootController: self, extras: extra) { receipt, purchasedResult, error in
             if error == nil {
                //购买成功
                 print("订阅购买成功")
                 DispatchQueue.main.async {
-                    self.purchaseBtn  .setTitle("订阅购买成功", for: [])
+                    self.purchaseSubscriptionBtn.setTitle("订阅购买成功", for: [])
+                    
+                    DYMobileSDK.activate { results, error in
+                        if let res = results, let hasPurchasedItems = res["subscribedOjects"] as? [[String:Any]] {
+                            purchasedProducts = hasPurchasedItems
+                            
+                            for sub in DYMobileSDK.getProductItems() ?? [] {
+                                print("test ----, getProductItems = \(sub.platformProductId)")
+                            }
+                        }
+                    }
                 }
+            } else {
+                print("订阅购买失败， error = \(error)")
             }
         }
     }
-
+    
+    @objc func goPurchaseConsumptionAction() {
+        let testConsumptionProductIf = "test.consumablesA"
+        DYMobileSDK.purchaseConsumption(productId: testConsumptionProductIf, count: 2) { receipt, purchaseResult, error in
+            if error == nil {
+               //购买成功
+                print("消耗品购买成功")
+                DispatchQueue.main.async {
+                    self.purchaseConsumptionBtn.setTitle("消耗品购买成功", for: [])
+                }
+            } else {
+                print("消耗品购买成功， error = \(error)")
+            }
+        }
+    }
 }
 
 //implement methods to purchase page user terms and privacy click events
@@ -75,7 +105,7 @@ extension UIViewController:DYMPayWallActionDelegate {
     public func clickTermsAction(baseViewController: UIViewController) {
         //do some customed thing
         let vc = LBWebViewController.init()
-        vc.url = "https://www.caretiveapp.com/tou/1549634329/"
+        vc.url = "url"
         vc.title = NSLocalizedString("Terms_of_Service", comment: "")
         let nav = UINavigationController.init(rootViewController: vc)
         nav.modalPresentationStyle = .fullScreen
@@ -84,7 +114,7 @@ extension UIViewController:DYMPayWallActionDelegate {
 
     public func clickPrivacyAction(baseViewController: UIViewController) {
         let vc = LBWebViewController.init()
-        vc.url = "https://www.caretiveapp.com/pp/1549634329/"
+        vc.url = "url"
         vc.title = NSLocalizedString("Privacy_Policy", comment: "")
         let nav = UINavigationController.init(rootViewController: vc)
         nav.modalPresentationStyle = .fullScreen

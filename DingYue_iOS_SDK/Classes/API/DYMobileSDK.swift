@@ -23,8 +23,6 @@ import AdSupport
     @objc public static var idfaCollectionDisabled: Bool = false
     ///判断是否使用默认CV规则
     @objc public static var defaultConversionValueEnabled: Bool = false
-    ///是否已完成配置
-    private var isConfigured = false
     ///场景控制器
     private lazy var sessionsManager: SessionsManager = {
         return SessionsManager()
@@ -85,8 +83,6 @@ import AdSupport
     }
     ///Configure
     private func configure(completion:@escaping sessionActivateCompletion) {
-        if isConfigured { return }
-        isConfigured = true
         performInitialRequests(completion: completion)
         DYMAppDelegateSwizzler.startSwizzlingIfPossible(self)
     }
@@ -133,17 +129,6 @@ import AdSupport
     private class func reportSearchAds(attribution: DYMParams) {
         let data = AnyCodable(attribution)
         shared.apiManager.updateSearchAdsAttribution(attribution: data) { result, error in
-            if error != nil {
-                print("(dingyue):report SearchAdsAttribution fail, error = \(error!)")
-            }
-
-            if result != nil {
-                if result?.status == .ok {
-                    print("(dingyue):report SearchAdsAttribution ok")
-                } else {
-                    print("(dingyue):report SearchAdsAttribution fail, errmsg = \(result?.errmsg ?? "")")
-                }
-            }
         }
     }
 
@@ -151,6 +136,7 @@ import AdSupport
     ///通过产品ID 购买
     @objc public class func purchase(productId: String, productPrice:String? = nil, completion:@escaping DYMPurchaseCompletion) {
         DYMLogManager.logMessage("Calling now: \(#function)")
+        shared.iapManager.productQuantity = 1
         shared.iapManager.buy(productId: productId) { purchase, receiptVerifyMobileResponse in
             switch purchase {
             case .succeed(let purchase):
@@ -199,15 +185,16 @@ import AdSupport
     
     #if os(iOS)
     ///展示支付页面
-    @objc public class func showVisualPaywall(products:[Subscription]? = nil,rootController: UIViewController, completion:@escaping DYMRestoreCompletion){
-        let controller = getVisualPaywall(for: products, completion: completion)
+    @objc public class func showVisualPaywall(products:[Subscription]? = nil,rootController: UIViewController, extras:[String:Any]? = nil, completion:@escaping DYMRestoreCompletion){
+        let controller = getVisualPaywall(for: products, extras: extras, completion: completion)
         rootController.present(controller, animated: true)
         controller.delegate = (rootController as? DYMPayWallActionDelegate)
     }
 
-    public class func getVisualPaywall(for products:[Subscription]? = nil,completion: @escaping DYMRestoreCompletion) -> DYMPayWallController {
+    public class func getVisualPaywall(for products:[Subscription]? = nil, extras:[String:Any]? = nil, completion: @escaping DYMRestoreCompletion) -> DYMPayWallController {
         let paywallViewController = DYMPayWallController()
         paywallViewController.custemedProducts = products ?? []
+        paywallViewController.extras = extras
         paywallViewController.completion = completion
         paywallViewController.modalPresentationStyle = .fullScreen
         return paywallViewController
@@ -417,6 +404,33 @@ import AdSupport
         }
     }
     
+    @objc public class func getProductItems() -> [Subscription]? {
+        return DYMDefaultsManager.shared.cachedProducts
+    }
+}
+
+// MARK: - Consume
+extension DYMobileSDK {
+    @objc public class func purchaseConsumption(productId:String, count:Int,productPrice:String? = nil, completion:@escaping DYMPurchaseCompletion) {
+        DYMLogManager.logMessage("Calling now: \(#function)")
+        shared.iapManager.productQuantity = count
+        shared.iapManager.buy(productId: productId) { purchase, receiptVerifyMobileResponse in
+            switch purchase {
+            case .succeed(let purchase):
+                if self.defaultConversionValueEnabled && productPrice != nil  {
+                    self.updateCVWithTargetProductPrice(price: productPrice!)
+                }
+
+                if let subs = receiptVerifyMobileResponse {
+                    completion(purchase.receipt,subs["subscribledObject"] as? [[String : Any]],nil)
+                } else {
+                    completion(purchase.receipt,nil,nil)
+                }
+            case .failure(let error):
+                completion(nil,nil,error)
+            }
+        }
+    }
 }
 
 extension DYMobileSDK: DYMAppDelegateSwizzlerDelegate {
