@@ -1,6 +1,6 @@
 PODS:
-  - AnyCodable-FlightSchool (0.6.5)
-  - DingYue_iOS_SDK (0.3.6):
+  - AnyCodable-FlightSchool (0.6.7)
+  - DingYue_iOS_SDK (0.3.7):
     - AnyCodable-FlightSchool (~> 0.6.1)
     - FCUUID (~> 1.3.1)
     - SSZipArchive (~> 2.2.3)
@@ -24,12 +24,12 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  AnyCodable-FlightSchool: 84b795a9d3ec7ba9e5488673d15cc1b37a566af4
-  DingYue_iOS_SDK: e18d764a4f548790d971b1236ff6eef725cde434
+  AnyCodable-FlightSchool: 261cbe76757802b17d471b9059b21e6fa5edf57b
+  DingYue_iOS_SDK: d025b2fc05c6b0de5088e8400fa6cbf29727b709
   FCUUID: bb054fc90cd7cd99320f9f6ff8e130fe607fba05
   SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
   UICKeyChainStore: 85db518bb1d294366d15ec9b92a416c4e670518f
 
-PODFILE CHECKSUM: 03dbda39e3b566f93bf8b4cf4e4c3d875e9fdf52
+PODFILE CHECKSUM: 1bd5622de76668f202f1e08d19de8f351f612c5e
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.11.3

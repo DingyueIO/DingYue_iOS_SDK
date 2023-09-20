@@ -1,3 +1,4 @@
+import Foundation
 /**
  A type-erased `Codable` value.
 
@@ -58,6 +59,12 @@ extension AnyCodable: Equatable {
             return lhs == rhs
         case let (lhs as [AnyCodable], rhs as [AnyCodable]):
             return lhs == rhs
+        case let (lhs as [String: Any], rhs as [String: Any]):
+            return NSDictionary(dictionary: lhs) == NSDictionary(dictionary: rhs)
+        case let (lhs as [Any], rhs as [Any]):
+            return NSArray(array: lhs) == NSArray(array: rhs)
+        case is (NSNull, NSNull):
+            return true
         default:
             return false
         }
@@ -93,6 +100,7 @@ extension AnyCodable: ExpressibleByBooleanLiteral {}
 extension AnyCodable: ExpressibleByIntegerLiteral {}
 extension AnyCodable: ExpressibleByFloatLiteral {}
 extension AnyCodable: ExpressibleByStringLiteral {}
+extension AnyCodable: ExpressibleByStringInterpolation {}
 extension AnyCodable: ExpressibleByArrayLiteral {}
 extension AnyCodable: ExpressibleByDictionaryLiteral {}
 

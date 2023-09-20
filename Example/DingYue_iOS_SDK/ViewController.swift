@@ -78,8 +78,6 @@ class ViewController: UIViewController {
                         }
                     }
                 }
-            } else {
-                print("订阅购买失败， error = \(error)")
             }
         }
     }
@@ -93,8 +91,6 @@ class ViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.purchaseConsumptionBtn.setTitle("消耗品购买成功", for: [])
                 }
-            } else {
-                print("消耗品购买成功， error = \(error)")
             }
         }
     }

@@ -25,7 +25,7 @@ class DYMConstants: NSObject {
     }
 
     enum Versions {
-        static let SDKVersion = "0.3.6"
+        static let SDKVersion = "0.3.7"
         static let SDKBuild = 1
     }
     enum BundleKeys {
