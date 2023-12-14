@@ -120,7 +120,7 @@ import AdSupport
 #if os(iOS)
     private func reportAppleSearchAdsAttribution() {
         UserProperties.appleSearchAdsAttribution { (attribution, error) in
-            print(attribution)
+//            print(attribution)
             Self.reportSearchAds(attribution: attribution)
         }
     }
@@ -300,37 +300,27 @@ import AdSupport
             let state = ATTrackingManager.trackingAuthorizationStatus
             if state == .notDetermined {
                 self.reportAppleSearchAdsAttribution()
-                var isSendRequest = false
                 NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidBecomeActive, object: nil, queue: .main) { notification in
-                    if isSendRequest == false {
-                        ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
-                            isSendRequest = true
-                            self.reportAppleSearchAdsAttribution()
-                            
-                            if status == .authorized {
-                                Self.reportIdfa(idfa: ASIdentifierManager.shared().advertisingIdentifier.uuidString)
-                            }
-                            
-                        })
-                    }
+                    ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
+                        self.reportAppleSearchAdsAttribution()
+                        
+                        if status == .authorized {
+                            Self.reportIdfa(idfa: ASIdentifierManager.shared().advertisingIdentifier.uuidString)
+                        }
+                    })
                 }
             } else {
                 reportAppleSearchAdsAttribution()
-                
                 if state == .authorized {
                     Self.reportIdfa(idfa: ASIdentifierManager.shared().advertisingIdentifier.uuidString)
                 }
-                
             }
         } else {
             reportAppleSearchAdsAttribution()
-            
             if ASIdentifierManager.shared().isAdvertisingTrackingEnabled {
                 Self.reportIdfa(idfa: ASIdentifierManager.shared().advertisingIdentifier.uuidString)
             }
-            
         }
-
     }
     
     private class func updateCVWithTargetProductPrice(price:String) {
