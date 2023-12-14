@@ -178,13 +178,7 @@ public typealias Parameters = [String: Any]
 
     #if os(iOS)
     class func appleSearchAdsAttribution(completion: @escaping (Parameters, Error?) -> Void) {
-        ADClient.shared().requestAttributionDetails { (attribution, error) in
-            if let attribution = attribution {
-                completion(attribution, error)
-            } else {
-                modernAppleSearchAdsAttribution(completion: completion)
-            }
-        }
+        modernAppleSearchAdsAttribution(completion: completion)
     }
 
     private class func modernAppleSearchAdsAttribution(completion: @escaping (Parameters, Error?) -> Void) {
