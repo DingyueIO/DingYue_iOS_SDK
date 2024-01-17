@@ -258,6 +258,18 @@ class DYMDefaultsManager {
         }
         return subsArray
     }
+    
+    func paywallConfigurations(configurations: [PaywallConfiguration]) -> [[String:Any]] {
+        var config:[[String:Any]] = []
+        for con in configurations {
+            var subCon:[String:Any] = [:]
+            subCon["key"] = con.key
+            subCon["defaultValue"] = con.defaultValue
+            subCon["localeValues"] = con.localeValues
+            config.append(subCon)
+        }
+        return config
+    }
 
     func firstReceiptResponse(firstReceiptResponse: FirstReceiptVerifyMobileResponse?) -> [String:Any] {
         var response:[String:Any] = [:]
