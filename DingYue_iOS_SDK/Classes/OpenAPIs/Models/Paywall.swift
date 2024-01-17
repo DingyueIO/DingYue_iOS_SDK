@@ -21,14 +21,16 @@ public struct Paywall: Codable, JSONEncodable, Hashable {
     public var downloadUrl: String
     public var previewUrl: String?
     public var customize: Bool
+    public var configurations: [PaywallConfiguration]?
 
-    public init(name: String, version: Double, subscriptions: [PaywallSubscriptions], downloadUrl: String, previewUrl: String? = nil, customize: Bool) {
+    public init(name: String, version: Double, subscriptions: [PaywallSubscriptions], downloadUrl: String, previewUrl: String? = nil, customize: Bool, configurations: [PaywallConfiguration]? = nil) {
         self.name = name
         self.version = version
         self.subscriptions = subscriptions
         self.downloadUrl = downloadUrl
         self.previewUrl = previewUrl
         self.customize = customize
+        self.configurations = configurations
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -38,6 +40,7 @@ public struct Paywall: Codable, JSONEncodable, Hashable {
         case downloadUrl
         case previewUrl
         case customize
+        case configurations
     }
 
     // Encodable protocol methods
@@ -50,6 +53,7 @@ public struct Paywall: Codable, JSONEncodable, Hashable {
         try container.encode(downloadUrl, forKey: .downloadUrl)
         try container.encodeIfPresent(previewUrl, forKey: .previewUrl)
         try container.encode(customize, forKey: .customize)
+        try container.encode(configurations, forKey: .configurations)
     }
 }
 

@@ -16,6 +16,8 @@ import StoreKit
     @objc optional func clickTermsAction(baseViewController:UIViewController)//使用协议
     @objc optional func clickPrivacyAction(baseViewController:UIViewController)//隐私政策
     @objc optional func clickCloseButton(baseViewController:UIViewController)//关闭按钮事件
+    @objc optional func clickPurchaseButton(baseViewController:UIViewController)//购买
+    @objc optional func clickRestoreButton(baseViewController:UIViewController)//恢复
 }
 
 public class DYMPayWallController: UIViewController {
@@ -228,6 +230,8 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
                     self.trackWithPayWallInfo(eventName: "RESTORE_PURCHASE_FAIL")
                 }
             }
+            
+            self.delegate?.clickRestoreButton?(baseViewController: self)
         } else if message.name == "vip_terms" {
             eventManager.track(event: "ABOUT_TERMSOFSERVICE")
             if ((self.delegate?.clickTermsAction?(baseViewController: self)) != nil) {
@@ -255,6 +259,8 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
                 self.completion?(nil,nil,.noProductIds)
                 self.eventManager.track(event: "PURCHASE_FAIL_DETAIL", extra: "no productId from h5")
             }
+            
+            self.delegate?.clickPurchaseButton?(baseViewController: self)
         }
     }
 

@@ -33,6 +33,7 @@ class ApiManager {
 
             }else{
                 if data?.status == .ok {
+                    var configurations:[[String:Any]]?
                     if let paywall = data?.paywall {
                         DYMDefaultsManager.shared.cachedPaywalls = [paywall]
                         if paywall.downloadUrl != "" {
@@ -70,6 +71,11 @@ class ApiManager {
                             subsArray.append(sub)
                         }
                         DYMDefaultsManager.shared.cachedProducts = subsArray
+                        
+                        //热更新配置信息
+                        if let config = paywall.configurations {
+                            configurations = DYMDefaultsManager.shared.paywallConfigurations(configurations: config)
+                        }
                     } else {
                         DYMDefaultsManager.shared.isLoadingStatus = true
                         DYMDefaultsManager.shared.cachedPaywalls = nil
@@ -98,7 +104,11 @@ class ApiManager {
                             results["globalSwitchItems"] = globalSwitchItems
                         }
                     }
-
+                    
+                    if let config = configurations, !config.isEmpty {
+                        results["configurations"] = config
+                    }
+                    
                     self.completion?(results,nil)
                 }else{
                     DYMLogManager.logError(data?.errmsg as Any)
