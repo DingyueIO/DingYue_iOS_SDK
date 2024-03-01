@@ -120,7 +120,7 @@ import AdSupport
 #if os(iOS)
     private func reportAppleSearchAdsAttribution() {
         UserProperties.appleSearchAdsAttribution { (attribution, error) in
-//            print(attribution)
+            print(attribution)
             Self.reportSearchAds(attribution: attribution)
         }
     }

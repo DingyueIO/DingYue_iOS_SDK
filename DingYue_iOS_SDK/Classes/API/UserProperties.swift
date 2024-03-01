@@ -181,7 +181,7 @@ public typealias Parameters = [String: Any]
         modernAppleSearchAdsAttribution(completion: completion)
     }
 
-    private class func modernAppleSearchAdsAttribution(completion: @escaping (Parameters, Error?) -> Void) {
+    private class func modernAppleSearchAdsAttribution(retry:Int? = 2, completion: @escaping (Parameters, Error?) -> Void) {
         if #available(iOS 14.3, *) {
             do {
                 let attributionToken = try AAAttribution.attributionToken()
@@ -189,13 +189,34 @@ public typealias Parameters = [String: Any]
                 request.httpMethod = "POST"
                 request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
                 request.httpBody = Data(attributionToken.utf8)
-                let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, _, error) in
+                let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
+                    
+                    if let r = retry, r != 0, let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
+                        
+                        DYMEventManager.shared.track(event: "ASA_FAIL", extra: "status code: \(httpResponse.statusCode), error: \(error?.localizedDescription ?? "no error")")
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
+                            modernAppleSearchAdsAttribution(retry: (r - 1), completion: completion)
+                        }
+                        return
+                    }
+                    
                     guard let data = data else {
-                        completion(["":""], error)
+                        if let r = retry, r != 0, let httpResponse = response as? HTTPURLResponse {
+                            DYMEventManager.shared.track(event: "ASA_FAIL", extra: "status code: \(httpResponse.statusCode), error: \(error?.localizedDescription ?? "data is nil")")
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
+                                modernAppleSearchAdsAttribution(retry: (r - 1), completion: completion)
+                            }
+                        } else {
+                            completion(["":""], error)
+                        }
                         return
                     }
                     do {
                         let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? Parameters
+                        if result != nil {
+                            DYMEventManager.shared.track(event: "ASA_SUCCESS", extra: "status code: 200")
+                        }
                         completion(result ?? ["":""], nil)
                     } catch {
                         completion(["":""], error)
