@@ -81,6 +81,26 @@ import AdSupport
         
         shared.configure(completion: completion)
     }
+    ///Activate SDK
+    @objc public class func activate(encryptionKey:String,completion:@escaping sessionActivateCompletion) {
+        
+        //读取DingYue.plist信息
+        let path = Bundle.main.path(forResource: DYMConstants.AppInfoName.plistName, ofType: DYMConstants.AppInfoName.plistType)
+        guard let plistPath = path else {
+            return
+        }
+        guard let appInfoDictionary = NSMutableDictionary(contentsOfFile: plistPath) else {
+            return
+        }
+        guard let appId = appInfoDictionary.value(forKey: DYMConstants.AppInfoName.appId) as? String, let apiKey = appInfoDictionary.value(forKey: DYMConstants.AppInfoName.apiKey) as? String else{
+            return
+        }
+        
+        DYMConstants.APIKeys.appId = appId
+        DYMConstants.APIKeys.secretKey = apiKey
+        DYMConstants.APIEncryptionKey.key = encryptionKey
+        shared.configure(completion: completion)
+    }
     ///Configure
     private func configure(completion:@escaping sessionActivateCompletion) {
         performInitialRequests(completion: completion)

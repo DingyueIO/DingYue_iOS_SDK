@@ -181,6 +181,107 @@ open class URLSessionRequestBuilder<T>: RequestBuilder<T> {
 
         return requestTask
     }
+    
+    @discardableResult
+    open override func encryptionExecute(_ apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, _ completion: @escaping (_ result: Swift.Result<Response<T>, ErrorResponse>) -> Void) -> RequestTask {
+        let urlSession = createURLSession()
+
+        guard let xMethod = HTTPMethod(rawValue: method) else {
+            fatalError("Unsupported Http method - \(method)")
+        }
+
+        let encoding: ParameterEncoding
+
+        switch xMethod {
+        case .get, .head:
+            encoding = URLEncoding()
+
+        case .options, .post, .put, .patch, .delete, .trace, .connect:
+            let contentType = headers["Content-Type"] ?? "application/json"
+
+            if contentType == "application/json" {
+                encoding = JSONDataEncoding()
+            } else if contentType == "multipart/form-data" {
+                encoding = FormDataEncoding(contentTypeForFormPart: contentTypeForFormPart(fileURL:))
+            } else if contentType == "application/x-www-form-urlencoded" {
+                encoding = FormURLEncoding()
+            } else {
+                fatalError("Unsupported Media Type - \(contentType)")
+            }
+        }
+
+        do {
+            var request = try createURLRequest(urlSession: urlSession, method: xMethod, encoding: encoding, headers: headers)
+            
+            //body加密
+            if let httpBody = request.httpBody, DYMConstants.APIEncryptionKey.key != "" {
+                let encryptedJsonData = EncryptionTools.encrypt(data: httpBody, with: DYMConstants.APIEncryptionKey.key)
+                request.httpBody = encryptedJsonData
+            }
+
+            var taskIdentifier: Int?
+             let cleanupRequest = {
+                 if let taskIdentifier = taskIdentifier {
+                     challengeHandlerStore[taskIdentifier] = nil
+                     credentialStore[taskIdentifier] = nil
+                 }
+             }
+
+            let dataTask = urlSession.dataTask(with: request) { data, response, error in
+
+                if let taskCompletionShouldRetry = self.taskCompletionShouldRetry {
+
+                    taskCompletionShouldRetry(data, response, error) { shouldRetry in
+
+                        if shouldRetry {
+                            cleanupRequest()
+                            self.execute(apiResponseQueue, completion)
+                        } else {
+                            apiResponseQueue.async {
+                                
+                                var tmpData:Data? = data
+                                if let returnData = data, DYMConstants.APIEncryptionKey.key != "" {
+                                    tmpData = EncryptionTools.decrypt(data: returnData, with: DYMConstants.APIEncryptionKey.key)
+                                }
+                                
+                                self.processRequestResponse(urlRequest: request, data: tmpData, response: response, error: error, completion: completion)
+                                cleanupRequest()
+                            }
+                        }
+                    }
+                } else {
+                    apiResponseQueue.async {
+                        
+                        var tmpData:Data? = data
+                        if let returnData = data, DYMConstants.APIEncryptionKey.key != "" {
+                            tmpData = EncryptionTools.decrypt(data: returnData, with: DYMConstants.APIEncryptionKey.key)
+                        }
+                        
+                        self.processRequestResponse(urlRequest: request, data: tmpData, response: response, error: error, completion: completion)
+                        cleanupRequest()
+                    }
+                }
+            }
+
+            if #available(iOS 11.0, macOS 10.13, macCatalyst 13.0, tvOS 11.0, watchOS 4.0, *) {
+                onProgressReady?(dataTask.progress)
+            }
+
+            taskIdentifier = dataTask.taskIdentifier
+            challengeHandlerStore[dataTask.taskIdentifier] = taskDidReceiveChallenge
+            credentialStore[dataTask.taskIdentifier] = credential
+
+            dataTask.resume()
+
+            requestTask.set(task: dataTask)
+        } catch {
+            apiResponseQueue.async {
+                completion(.failure(ErrorResponse.error(415, nil, nil, error)))
+            }
+        }
+
+        return requestTask
+    }
 
     fileprivate func processRequestResponse(urlRequest: URLRequest, data: Data?, response: URLResponse?, error: Error?, completion: @escaping (_ result: Swift.Result<Response<T>, ErrorResponse>) -> Void) {
 

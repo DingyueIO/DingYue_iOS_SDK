@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         //session report
         DYMobileSDK.defaultConversionValueEnabled = true //use default cv rule
-        DYMobileSDK.activate { results, error in
+        DYMobileSDK.activate(encryptionKey: dingyueKeyStr) { results, error in
             if error == nil {
                 if let res = results {
                     if let hasPurchasedItems = res["subscribedOjects"] as? [[String:Any]] {

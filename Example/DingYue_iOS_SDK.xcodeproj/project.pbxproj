@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18773BE02BF6FF4A0064FB3F /* DataKeyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18773BDF2BF6FF4A0064FB3F /* DataKeyTest.swift */; };
 		18B8C8302A0B935F001A22E4 /* DingYue.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18B8C82F2A0B935F001A22E4 /* DingYue.plist */; };
 		470157E7290A52B2000ABC76 /* 7306588143563858788 in Resources */ = {isa = PBXBuildFile; fileRef = 470157E6290A52B2000ABC76 /* 7306588143563858788 */; };
 		47FF2D702876F21300437080 /* LBWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FF2D6F2876F21300437080 /* LBWebViewController.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		18773BDF2BF6FF4A0064FB3F /* DataKeyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataKeyTest.swift; sourceTree = "<group>"; };
 		18B8C82F2A0B935F001A22E4 /* DingYue.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DingYue.plist; sourceTree = "<group>"; };
 		470157E6290A52B2000ABC76 /* 7306588143563858788 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = 7306588143563858788; sourceTree = "<group>"; };
 		47DF7A12287D49E800033058 /* DingYue_iOS_SDK_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DingYue_iOS_SDK_Example.entitlements; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				47FF2D6F2876F21300437080 /* LBWebViewController.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				18773BDF2BF6FF4A0064FB3F /* DataKeyTest.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -357,6 +360,7 @@
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				47FF2D702876F21300437080 /* LBWebViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				18773BE02BF6FF4A0064FB3F /* DataKeyTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,7 +447,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -489,7 +493,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -507,7 +511,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				DEVELOPMENT_TEAM = 6758SSTNXL;
 				INFOPLIST_FILE = DingYue_iOS_SDK/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = iospp.com.test;
@@ -530,7 +534,7 @@
 				CODE_SIGN_ENTITLEMENTS = DingYue_iOS_SDK_Example.entitlements;
 				DEVELOPMENT_TEAM = 6758SSTNXL;
 				INFOPLIST_FILE = DingYue_iOS_SDK/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
@@ -557,7 +561,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -576,7 +580,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

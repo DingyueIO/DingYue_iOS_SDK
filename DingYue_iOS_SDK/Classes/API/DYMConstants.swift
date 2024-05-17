@@ -9,7 +9,10 @@ import UIKit
 import StoreKit
 
 class DYMConstants: NSObject {
-
+    ///APIEncryptionKey
+    enum APIEncryptionKey {
+        static var key = ""
+    }
     ///API Key
     enum APIKeys {
         static var secretKey = ""
