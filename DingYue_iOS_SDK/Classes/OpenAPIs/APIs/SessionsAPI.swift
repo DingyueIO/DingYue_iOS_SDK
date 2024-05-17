@@ -104,7 +104,7 @@ open class SessionsAPI {
      */
     @discardableResult
     open class func reportSession(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportSession, X_VERSION: String, uniqueUserObject: UniqueUserObject, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: ReportSessionResult?, _ error: Error?) -> Void)) -> RequestTask {
-        return reportSessionWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, X_VERSION: X_VERSION, uniqueUserObject: uniqueUserObject).execute(apiResponseQueue) { result in
+        return reportSessionWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, X_VERSION: X_VERSION, uniqueUserObject: uniqueUserObject).encryptionExecute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                     completion(response.body, nil)
@@ -130,7 +130,7 @@ open class SessionsAPI {
      - returns: RequestBuilder<ReportSessionResult>
      */
     open class func reportSessionWithRequestBuilder(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_reportSession, X_VERSION: String, uniqueUserObject: UniqueUserObject) -> RequestBuilder<ReportSessionResult> {
-        let localVariablePath = "/sessions/report"
+        let localVariablePath = "/v2/sessions/report"
         let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: uniqueUserObject)
 

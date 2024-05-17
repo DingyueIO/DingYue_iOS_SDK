@@ -59,6 +59,11 @@ open class RequestBuilder<T> {
     open func execute(_ apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, _ completion: @escaping (_ result: Swift.Result<Response<T>, ErrorResponse>) -> Void) -> RequestTask {
         return requestTask
     }
+    
+    @discardableResult
+    open func encryptionExecute(_ apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, _ completion: @escaping (_ result: Swift.Result<Response<T>, ErrorResponse>) -> Void) -> RequestTask {
+        return requestTask
+    }
 
     public func addHeader(name: String, value: String) -> Self {
         if !value.isEmpty {
