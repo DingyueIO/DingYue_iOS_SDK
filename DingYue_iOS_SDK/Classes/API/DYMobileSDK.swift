@@ -145,6 +145,8 @@ import AdSupport
                 }
                 
                 if let subs = receiptVerifyMobileResponse {
+                    //更新用户属性 --- 以甄别购买来源是通过内购页还是直接调用API
+                    shared.apiManager.updateUserProperties()
                     completion(purchase.receipt,subs["subscribledObject"] as? [[String : Any]],nil)
                 } else {
                     completion(purchase.receipt,nil,nil)
