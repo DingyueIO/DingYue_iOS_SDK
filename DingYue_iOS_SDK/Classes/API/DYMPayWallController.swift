@@ -266,6 +266,7 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
 
     func buyWithProductId(_ productId:String, productPrice:String? = nil) {
         ProgressView.show(rootViewConroller: self)
+        UserProperties.userSubscriptionPurchasedSourcesType = .DYPaywall//以更新用户购买来源属性
         DYMobileSDK.purchase(productId: productId, productPrice: productPrice) { receipt, purchaseResult, error in
             ProgressView.stop()
             self.completion?(receipt,purchaseResult,error)

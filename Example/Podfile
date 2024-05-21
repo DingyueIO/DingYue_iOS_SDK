@@ -11,7 +11,6 @@ target 'DingYue_iOS_SDK_Example' do
     
   end
 end
-
 post_install do |installer|
     installer.generated_projects.each do |project|
         project.targets.each do |target|
