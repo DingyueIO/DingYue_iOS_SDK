@@ -28,7 +28,7 @@ class DYMConstants: NSObject {
     }
 
     enum Versions {
-        static let SDKVersion = "0.3.10"
+        static let SDKVersion = "0.3.11"
         static let SDKBuild = 1
     }
     enum BundleKeys {
@@ -57,6 +57,8 @@ class DYMConstants: NSObject {
         static let postRequestParamsHashes   = "DYMSDK_Post_Request_Params_Hashes"
         static let cachedPayWallPageIdentifier      = "DYMSDK_Cached_PayWall_Page_Identifier"
         static let multipleLaunch            = "DYMSDK_is_Multiple_Launch"
+        static let cachedPaywallName         = "DYMSDK_Cached_PayWall_Page_Name"
+        
     }
     ///App信息plist文件
     enum AppInfoName {
@@ -77,6 +79,18 @@ public enum DYMAttributionSource: UInt {
             case .appsFlyer: return "APPSFLYER"
             case .adjust: return "ADJUST"
             case .amplitude: return "AMPLITUDE"
+        }
+    }
+}
+
+public enum DYMUserSubscriptionPurchasedSourceType: UInt {
+    case DYPaywall
+    case DYAPICall
+
+    var rawString: String {
+        switch self {
+            case .DYPaywall: return "订阅内购页"
+            case .DYAPICall: return "订阅API调用"
         }
     }
 }

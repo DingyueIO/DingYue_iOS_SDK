@@ -19,6 +19,7 @@ public typealias sessionActivateCompletion = ([String:Any]?,Error?) -> Void
 class ApiManager {
     var completion:sessionActivateCompletion?
     var paywallIdentifier = ""
+    var paywallName = ""
     var paywallCustomize = false
 
     @objc func startSession(){
@@ -37,22 +38,24 @@ class ApiManager {
                     if let paywall = data?.paywall {
                         DYMDefaultsManager.shared.cachedPaywalls = [paywall]
                         if paywall.downloadUrl != "" {
-                            if paywall.downloadUrl == "local" {
+                            if paywall.downloadUrl == "local" {//使用项目中带的内购页
                                 if let nativePaywallId = data?.paywallId {
                                     let version = paywall.version
                                     self.paywallIdentifier = nativePaywallId
                                     DYMDefaultsManager.shared.cachedPaywallPageIdentifier = nativePaywallId + "/" + String(version)
+                                    DYMDefaultsManager.shared.cachedPaywallName = paywall.name
                                     self.paywallCustomize = paywall.customize
 
                                     DYMDefaultsManager.shared.isUseNativePaywall = true
                                     DYMDefaultsManager.shared.isLoadingStatus = true
                                 }
 
-                            } else {
+                            } else {//订阅下发的内购页信息
                                 DYMDefaultsManager.shared.isUseNativePaywall = false
                                 if let paywallId = data?.paywallId {
                                     let version = paywall.version
                                     self.paywallIdentifier = paywallId + "/" + String(version)
+                                    self.paywallName = paywall.name
                                     self.paywallCustomize = paywall.customize
                                     if self.paywallIdentifier != DYMDefaultsManager.shared.cachedPaywallPageIdentifier {
                                         self.downloadWebTemplate(url: URL(string: paywall.downloadUrl)!) { res, err in
@@ -85,7 +88,6 @@ class ApiManager {
                     DYMDefaultsManager.shared.cachedSwitchItems = data?.switchItems
                     DYMDefaultsManager.shared.cachedSubscribedObjects = data?.subscribedProducts
                     DYMDefaultsManager.shared.cachedGlobalSwitch = data?.globalSwitchItems
-                    print(data ?? "")
 
                     let subscribedOjects = DYMDefaultsManager.shared.subscribedObjects(subscribedObjectArray: DYMDefaultsManager.shared.cachedSubscribedObjects)
 
@@ -183,9 +185,11 @@ class ApiManager {
                             if self.paywallCustomize == false {
                                 if items.contains("config.js") {
                                     DYMDefaultsManager.shared.cachedPaywallPageIdentifier = self.paywallIdentifier
+                                    DYMDefaultsManager.shared.cachedPaywallName = self.paywallName
                                 }
                             } else {
                                 DYMDefaultsManager.shared.cachedPaywallPageIdentifier = self.paywallIdentifier
+                                DYMDefaultsManager.shared.cachedPaywallName = self.paywallName
                             }
                         } else {
                             DYMDefaultsManager.shared.isLoadingStatus = true
@@ -243,7 +247,28 @@ class ApiManager {
     func reportConversionValue(cv:Int, coarseValue:ConversionRequest.CoarseValue? = nil) {
         let cvObject = ConversionRequest(conversionValue: cv, coarseValue: coarseValue)
         SessionsAPI.reportConversion(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: SessionsAPI.XPLATFORM_reportConversion.ios, X_VERSION: UserProperties.sdkVersion, conversionRequest: cvObject) { data, error in
-            print("update dingyue conversion value - \(String(describing: error))")
+        }
+    }
+    
+    func updateUserProperties() {
+        var source = DYMUserSubscriptionPurchasedSourceType.DYAPICall.rawString//默认是api调用
+        if let type = UserProperties.userSubscriptionPurchasedSourcesType, type == .DYPaywall {
+            source = DYMUserSubscriptionPurchasedSourceType.DYPaywall.rawString
+            if let paywallname = DYMDefaultsManager.shared.cachedPaywallName {
+                source.append(":\(paywallname)")
+            }
+            if let paywallId = DYMDefaultsManager.shared.cachedPaywallPageIdentifier {
+                source.append("/\(paywallId)")
+            }
+        } else {
+            source = DYMUserSubscriptionPurchasedSourceType.DYAPICall.rawString
+        }
+        
+        let editStringUnit = EditStringUnit(key: UserProperties.userSubscriptionPurchasedSources, value: source, type: .string)
+        let editOneOf = EditOneOf.typeEditStringUnit(editStringUnit)
+        
+        SessionsAPI.updateUserAttribute(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: SessionsAPI.XPLATFORM_updateUserAttribute.ios, X_VERSION: UserProperties.sdkVersion, editOneOf: [editOneOf]) { data, error in
+            UserProperties.userSubscriptionPurchasedSourcesType = nil
         }
     }
 }

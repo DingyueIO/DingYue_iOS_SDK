@@ -15,6 +15,7 @@ public struct EditStringUnit: Codable, JSONEncodable, Hashable {
     public enum ModelType: String, Codable, CaseIterable {
         case string = "string"
         case json = "json"
+        case array = "array"
     }
     public var key: String
     public var value: String
