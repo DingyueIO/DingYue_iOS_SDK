@@ -102,6 +102,18 @@ class DYMDefaultsManager {
             defaults.set(newValue, forKey: DYMConstants.UserDefaults.cachedPayWallPageIdentifier)
         }
     }
+    
+    var cachedPaywallName: String? {
+        get {
+            if let data = defaults.object(forKey: DYMConstants.UserDefaults.cachedPaywallName) as? String {
+                return data
+            }
+            return nil
+        }
+        set {
+            defaults.set(newValue, forKey: DYMConstants.UserDefaults.cachedPaywallName)
+        }
+    }
 
     var cachedProducts: [Subscription]? {
         get {
@@ -302,5 +314,6 @@ class DYMDefaultsManager {
         defaults.removeObject(forKey: DYMConstants.UserDefaults.previousResponseHashes)
         defaults.removeObject(forKey: DYMConstants.UserDefaults.responseJSONCaches)
         defaults.removeObject(forKey: DYMConstants.UserDefaults.postRequestParamsHashes)
+        defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedPaywallName)
     }
 }

@@ -174,8 +174,8 @@ open class SessionsAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func updateUserAttribute(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_updateUserAttribute, editOneOf: [EditOneOf], apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: SimpleStatusResult?, _ error: Error?) -> Void)) -> RequestTask {
-        return updateUserAttributeWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, editOneOf: editOneOf).execute(apiResponseQueue) { result in
+    open class func updateUserAttribute(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_updateUserAttribute, X_VERSION:String, editOneOf: [EditOneOf], apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: SimpleStatusResult?, _ error: Error?) -> Void)) -> RequestTask {
+        return updateUserAttributeWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, X_VERSION: X_VERSION, editOneOf: editOneOf).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -198,7 +198,7 @@ open class SessionsAPI {
      - parameter editOneOf: (body)  
      - returns: RequestBuilder<SimpleStatusResult> 
      */
-    open class func updateUserAttributeWithRequestBuilder(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_updateUserAttribute, editOneOf: [EditOneOf]) -> RequestBuilder<SimpleStatusResult> {
+    open class func updateUserAttributeWithRequestBuilder(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_updateUserAttribute, X_VERSION:String, editOneOf: [EditOneOf]) -> RequestBuilder<SimpleStatusResult> {
         let localVariablePath = "/users/attribute/update"
         let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: editOneOf)
@@ -210,6 +210,7 @@ open class SessionsAPI {
             "User-Agent": userAgent.encodeToJSON(),
             "X-APP-ID": X_APP_ID.encodeToJSON(),
             "X-PLATFORM": X_PLATFORM.encodeToJSON(),
+            "X-VERSION": X_VERSION.encodeToJSON(),
             "X-API-KEY": X_API_KEY.encodeToJSON()
         ]
 

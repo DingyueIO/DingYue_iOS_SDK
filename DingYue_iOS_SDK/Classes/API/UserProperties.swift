@@ -48,6 +48,10 @@ public typealias Parameters = [String: Any]
     static var userAgent: String {
         return "user-agent"
     }
+    static var userSubscriptionPurchasedSources: String {
+        return "uniqueUser.extraData.userPurchasedSources"
+    }
+    static var userSubscriptionPurchasedSourcesType:DYMUserSubscriptionPurchasedSourceType? = nil
     static var appID: String = ""
     static var idfa: String? {
         // Get and return IDFA
