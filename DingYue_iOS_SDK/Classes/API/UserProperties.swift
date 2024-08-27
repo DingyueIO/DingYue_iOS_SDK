@@ -235,4 +235,29 @@ public typealias Parameters = [String: Any]
         }
     }
     #endif
+    
+    public static var luaScriptDirectoryPath:String?{
+        return createLuaScriptDirectory()
+    }
+    class func createLuaScriptDirectory() -> String? {
+        let filePath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0].appending("/LuaScriptDirectory")
+        var isDir : ObjCBool = false
+        
+        if FileManager.default.fileExists(atPath: filePath, isDirectory: &isDir) {
+            if isDir.boolValue{
+                DYMLogManager.logMessage("ScriptLuas directory already exists")
+                return filePath
+            }else{
+                return nil
+            }
+        } else{
+            do {
+                try FileManager.default.createDirectory(atPath: filePath, withIntermediateDirectories: false, attributes: nil)
+                return filePath
+            } catch {
+                DYMLogManager.logError(error)
+                return nil
+            }
+        }
+    }
 }

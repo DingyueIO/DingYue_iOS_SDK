@@ -25,19 +25,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         //session report
         DYMobileSDK.defaultConversionValueEnabled = true //use default cv rule
-        DYMobileSDK.activate { results, error in
-            if error == nil {
-                if let res = results {
-                    if let hasPurchasedItems = res["subscribedOjects"] as? [[String:Any]] {
-                        purchasedProducts = hasPurchasedItems
-                                                
-                        for sub in DYMobileSDK.getProductItems() ?? [] {
-                            print("test ----, AppDelegate getProductItems = \(sub.platformProductId)")
-                        }
-                    }
-                }
-            }
-        }
+//        DYMobileSDK.activate { results, error in
+//            if error == nil {
+//                if let res = results {
+//                    if let hasPurchasedItems = res["subscribedOjects"] as? [[String:Any]] {
+//                        purchasedProducts = hasPurchasedItems
+//                                                
+//                        for sub in DYMobileSDK.getProductItems() ?? [] {
+//                            print("test ----, AppDelegate getProductItems = \(sub.platformProductId)")
+//                        }
+//                    }
+//                }
+//            }
+//        }
+        TestLuaOperation.sharedInstance().initLua()
         return true
     }
 }

@@ -18,6 +18,8 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		982A1D28A32B7564E180FFC5 /* Pods_DingYue_iOS_SDK_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 570B4A50E4F2C17EAE4FCCB8 /* Pods_DingYue_iOS_SDK_Example.framework */; };
+		CF4007132C60C69600BCC8A5 /* TestLuaOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4007122C60C69600BCC8A5 /* TestLuaOperation.m */; };
+		CF40072F2C60D0A100BCC8A5 /* test.lua in Resources */ = {isa = PBXBuildFile; fileRef = CF40072E2C60D0A100BCC8A5 /* test.lua */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +54,9 @@
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		7CC801443CAA057578187925 /* Pods-DingYue_iOS_SDK_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DingYue_iOS_SDK_Tests.release.xcconfig"; path = "Target Support Files/Pods-DingYue_iOS_SDK_Tests/Pods-DingYue_iOS_SDK_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		B07008925911D6003CEC7D05 /* DingYue_iOS_SDK.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = DingYue_iOS_SDK.podspec; path = ../DingYue_iOS_SDK.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		CF4007112C60C69600BCC8A5 /* TestLuaOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestLuaOperation.h; sourceTree = "<group>"; };
+		CF4007122C60C69600BCC8A5 /* TestLuaOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestLuaOperation.m; sourceTree = "<group>"; };
+		CF40072E2C60D0A100BCC8A5 /* test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.lua; sourceTree = "<group>"; };
 		D3F4F9F0EBFADEE30EFAD52A /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		F44888B234F8D3863CADE2BB /* Pods_DingYue_iOS_SDK_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DingYue_iOS_SDK_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB117E54BCC9BB23D4FB9DD1 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -103,6 +108,7 @@
 		607FACD21AFB9204008FA782 /* Example for DingYue_iOS_SDK */ = {
 			isa = PBXGroup;
 			children = (
+				CF4007102C60C66200BCC8A5 /* LuaTest */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				47FF2D6F2876F21300437080 /* LBWebViewController.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
@@ -170,6 +176,16 @@
 				F44888B234F8D3863CADE2BB /* Pods_DingYue_iOS_SDK_Tests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CF4007102C60C66200BCC8A5 /* LuaTest */ = {
+			isa = PBXGroup;
+			children = (
+				CF4007112C60C69600BCC8A5 /* TestLuaOperation.h */,
+				CF4007122C60C69600BCC8A5 /* TestLuaOperation.m */,
+				CF40072E2C60D0A100BCC8A5 /* test.lua */,
+			);
+			name = LuaTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,6 +281,7 @@
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				470157E7290A52B2000ABC76 /* 7306588143563858788 in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
+				CF40072F2C60D0A100BCC8A5 /* test.lua in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -356,6 +373,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF4007132C60C69600BCC8A5 /* TestLuaOperation.m in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				47FF2D702876F21300437080 /* LBWebViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
@@ -509,7 +527,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				DEVELOPMENT_TEAM = 6758SSTNXL;
 				INFOPLIST_FILE = DingYue_iOS_SDK/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = iospp.com.test;
@@ -532,7 +550,7 @@
 				CODE_SIGN_ENTITLEMENTS = DingYue_iOS_SDK_Example.entitlements;
 				DEVELOPMENT_TEAM = 6758SSTNXL;
 				INFOPLIST_FILE = DingYue_iOS_SDK/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
@@ -559,7 +577,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -578,7 +596,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

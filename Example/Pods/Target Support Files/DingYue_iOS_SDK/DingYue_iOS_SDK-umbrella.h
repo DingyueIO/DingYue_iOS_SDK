@@ -10,6 +10,12 @@
 #endif
 #endif
 
+#import "dingyue_extensions.h"
+#import "DYLuaExtension.h"
+#import "lauxlib.h"
+#import "lua.h"
+#import "luaconf.h"
+#import "lualib.h"
 
 FOUNDATION_EXPORT double DingYue_iOS_SDKVersionNumber;
 FOUNDATION_EXPORT const unsigned char DingYue_iOS_SDKVersionString[];

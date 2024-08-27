@@ -27,12 +27,21 @@ class ViewController: UIViewController {
         btn.backgroundColor = .blue
         return btn
     }()
+    lazy var luaTestButton: UIButton = {
+        let btn = UIButton(type: .custom)
+        btn.setTitle("LuaScriptBtn", for: [])
+        btn.setTitleColor(UIColor.black, for: [])
+        btn.addTarget(self, action: #selector(luaTestAction), for: .touchUpInside)
+        btn.backgroundColor = .blue
+        return btn
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(purchaseSubscriptionBtn)
         self.view.addSubview(purchaseConsumptionBtn)
-        
+        self.view.addSubview(luaTestButton)
+
         
         purchaseSubscriptionBtn.translatesAutoresizingMaskIntoConstraints = false
         purchaseSubscriptionBtn.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,constant: 16.0).isActive = true
@@ -45,6 +54,12 @@ class ViewController: UIViewController {
         purchaseConsumptionBtn.heightAnchor.constraint(equalToConstant: 56).isActive = true
         purchaseConsumptionBtn.leadingAnchor.constraint(equalTo: purchaseSubscriptionBtn.trailingAnchor, constant: 10).isActive = true
         purchaseConsumptionBtn.widthAnchor.constraint(equalTo: purchaseSubscriptionBtn.widthAnchor).isActive = true
+        
+        luaTestButton.translatesAutoresizingMaskIntoConstraints = false
+        luaTestButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,constant: 16.0).isActive = true
+        luaTestButton.topAnchor.constraint(equalTo: purchaseSubscriptionBtn.bottomAnchor,constant: 16).isActive = true
+        luaTestButton.heightAnchor.constraint(equalTo: purchaseSubscriptionBtn.heightAnchor).isActive = true
+        luaTestButton.widthAnchor.constraint(equalTo: purchaseSubscriptionBtn.widthAnchor).isActive = true
     }
     
     
@@ -93,6 +108,15 @@ class ViewController: UIViewController {
                 }
             }
         }
+    }
+    @objc func luaTestAction() {
+        TestLuaOperation.sharedInstance().callLuaFunction("fun5", withParams: [], withReturnCount: 0, withKeepEnv: true) { error in
+            
+        }
+        
+//        DYMLuaScriptManager.downloadLuaScriptZip(url: URL(string: "https://github.com/quantopian/zipline/archive/refs/heads/master.zip")!) { result, error in
+//            print("\(result)")
+//        }
     }
 }
 
