@@ -179,6 +179,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AnyCodable-FlightSchool/AnyCodable.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/DingYue_iOS_SDK/DingYue_iOS_SDK.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FCUUID/FCUUID.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/UICKeyChainStore/UICKeyChainStore.framework"
 fi
@@ -186,6 +187,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AnyCodable-FlightSchool/AnyCodable.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/DingYue_iOS_SDK/DingYue_iOS_SDK.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FCUUID/FCUUID.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/UICKeyChainStore/UICKeyChainStore.framework"
 fi

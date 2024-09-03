@@ -8,6 +8,7 @@
 import UIKit
 import WebKit
 import StoreKit
+import NVActivityIndicatorView
 @objc public protocol DYMGuideActionDelegate: NSObjectProtocol {
     @objc optional func guideDidAppear(baseViewController:UIViewController)//引导页显示
     @objc optional func guideDidDisappear(baseViewController:UIViewController)//引导页消失
@@ -39,16 +40,15 @@ public class DYMGuideController: UIViewController {
     var extras:[String:Any]?
     var guidePageSwiperSize:Int?
 
-    lazy var activity:UIActivityIndicatorView = {
-        let activity = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
-        activity.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
-        activity.center = self.view.center
-        activity.backgroundColor = .white
-        activity.color = .gray
-        activity.startAnimating()
-        return activity
-    }()
     
+    lazy var customIndicatiorV:NVActivityIndicatorView =  {
+       let view = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 64, height: 34))
+        view.type =  GuidePageConfig.type(from: DYMConfiguration.shared.guidePageConfig.indicatorType)
+        view.color = DYMConfiguration.shared.guidePageConfig.indicatorColor
+        view.startAnimating()
+        view.translatesAutoresizingMaskIntoConstraints = false 
+        return view
+    }()
     private lazy var webView: WKWebView = {
         let preference = WKPreferences()
         let config = WKWebViewConfiguration()
@@ -91,13 +91,20 @@ public class DYMGuideController: UIViewController {
         if let launchView = launchScreenView {
             self.view.addSubview(launchView)
         }
-        view.addSubview(activity)
+        view.addSubview(customIndicatiorV)
+        NSLayoutConstraint.activate([
+            customIndicatiorV.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            customIndicatiorV.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -DYMConfiguration.shared.guidePageConfig.bottomSpacing)
+        ])
+      
         if DYMDefaultsManager.shared.guideLoadingStatus == true {
-            activity.isHidden = true
+            customIndicatiorV.isHidden = true
             launchScreenView?.isHidden = true
             loadWebView()
         } else {
-            activity.isHidden = false
+            if DYMConfiguration.shared.guidePageConfig.isVisible {
+                customIndicatiorV.isHidden = false
+            }
             launchScreenView?.isHidden = false
             loadingTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(changeLoadingStatus), userInfo: nil, repeats: true)
         }
@@ -106,7 +113,7 @@ public class DYMGuideController: UIViewController {
 
     @objc func changeLoadingStatus() {
         if DYMDefaultsManager.shared.guideLoadingStatus == true {
-            activity.isHidden = true
+            customIndicatiorV.isHidden = true
             launchScreenView?.isHidden = true
             loadWebView()
             stopLoadingTimer()

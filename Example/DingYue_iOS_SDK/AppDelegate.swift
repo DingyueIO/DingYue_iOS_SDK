@@ -25,6 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         //session report
         DYMobileSDK.defaultConversionValueEnabled = true //use default cv rule
+        //进行配置
+        DYMConfiguration.shared.guidePageConfig.indicatorColor = .orange
         self.setUpRootVC()
 
         DYMobileSDK.activate { results, error in

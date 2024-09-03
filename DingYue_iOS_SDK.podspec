@@ -37,8 +37,6 @@ TODO: DingYue_iOS_SDK: manage your purchase process and collect data to analyze 
   
    s.resource_bundle = {
      'DingYue_iOS_SDK' => 'DingYue_iOS_SDK/Assets/Resources/Purchase/*'
-     'DingYue_iOS_SDK' => 'DingYue_iOS_SDK/Assets/Resources/Guide.bundle'
-
    }
 
   s.swift_version = '4.0'
@@ -49,6 +47,8 @@ TODO: DingYue_iOS_SDK: manage your purchase process and collect data to analyze 
   s.dependency 'FCUUID','~> 1.3.1'
   s.dependency 'AnyCodable-FlightSchool', '~> 0.6.1'
   s.dependency 'SSZipArchive', '~> 2.2.3'
+#  s.dependency 'ActivityIndicatorView','~> 1.1.1'
+  s.dependency 'NVActivityIndicatorView','~> 5.2.0'
   s.frameworks = 'Foundation', 'StoreKit'
   s.ios.framework = 'UIKit', 'iAd', 'AdSupport','AppTrackingTransparency'
   s.ios.weak_frameworks = 'AdServices'

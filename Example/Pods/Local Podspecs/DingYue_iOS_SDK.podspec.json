@@ -25,7 +25,7 @@
   "vendored_libraries": "DingYue_iOS_SDK/Libs/**/*.a",
   "public_header_files": "DingYue_iOS_SDK/Libs/**/*.h",
   "resource_bundles": {
-    "DingYue_iOS_SDK": "DingYue_iOS_SDK/Assets/Resources/*"
+    "DingYue_iOS_SDK": "DingYue_iOS_SDK/Assets/Resources/Purchase/*"
   },
   "swift_versions": "4.0",
   "dependencies": {
@@ -37,6 +37,9 @@
     ],
     "SSZipArchive": [
       "~> 2.2.3"
+    ],
+    "NVActivityIndicatorView": [
+      "~> 5.2.0"
     ]
   },
   "frameworks": [
