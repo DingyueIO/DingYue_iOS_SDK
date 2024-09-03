@@ -72,10 +72,12 @@ public class DYMGuideController: UIViewController {
     private lazy var eventManager: DYMEventManager = {
         return DYMEventManager.shared
     }()
-    // 懒加载 LaunchScreen view
+
+    
+    //     懒加载 LaunchScreen view
     lazy var launchScreenView: UIView? = {
-        guard let launchView = Bundle.main.loadNibNamed("LaunchScreen", owner: self, options: nil)?.first as? UIView else {
-            return nil
+        guard let launchView = self.loadLaunchScreen() else {
+                  return nil
         }
         // 设置 launchScreenView 的 frame 以适应整个屏幕
         launchView.frame = self.view.bounds
@@ -375,4 +377,29 @@ extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
         let JSONString = NSString(data:data as Data,encoding: String.Encoding.utf8.rawValue)
         return JSONString! as String
     }
+}
+//MARK: Private Method
+extension DYMGuideController {
+    func loadLaunchScreen() -> UIView? {
+        let nibName = "LaunchScreen"
+        // 检查 .storyboard 文件
+        if let storyboardPath = Bundle.main.path(forResource: nibName, ofType: "storyboardc") {
+            print("Storyboard path: \(storyboardPath)")
+            let storyboard = UIStoryboard(name: nibName, bundle: nil)
+            if let view = storyboard.instantiateInitialViewController()?.view {
+                return view
+            } else {
+                print("Failed to instantiate storyboard view")
+            }
+        } else {
+            if let view = Bundle.main.loadNibNamed(nibName, owner: nil, options: nil)?.first as? UIView {
+                return view
+            } else {
+                print("Failed to load XIB")
+            }
+        }
+        
+        return nil
+    }
+
 }
