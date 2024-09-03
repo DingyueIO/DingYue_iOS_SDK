@@ -435,3 +435,40 @@ extension DYMobileSDK: DYMAppDelegateSwizzlerDelegate {
         }
     }
 }
+//MARK: Guide 引导页相关
+extension DYMobileSDK {
+    // MARK: - Load native guide
+    @objc public class func loadNativeGuidePage(paywallFullPath: String,basePath:String) {
+        DYMLogManager.logMessage("Calling now: \(#function)")
+        DYMDefaultsManager.shared.nativeGuideBasePath = basePath
+        DYMDefaultsManager.shared.nativeGuidePath = paywallFullPath
+    }
+    // MARK: - Default guide
+    @objc public class func setDefaultGuidePage(paywallFullPath: String,basePath:String) {
+        DYMDefaultsManager.shared.defaultGuidePath = paywallFullPath
+    }
+    // MARK:
+    #if os(iOS)
+    /// 显示引导页
+    @objc public class func showVisualGuide(products: [Subscription]? = nil, rootAppdelegate: UIApplicationDelegate, extras: [String: Any]? = nil, completion: @escaping DYMRestoreCompletion) {
+        guard let appDelegate = UIApplication.shared.delegate  else {
+            fatalError("UIApplication.shared.delegate is not of type AppDelegate")
+        }
+
+        let guideController = getVisualGuide(for: products, extras: extras, completion: completion)
+        guideController.delegate = rootAppdelegate as? DYMGuideActionDelegate
+        
+        appDelegate.window??.rootViewController = guideController
+        appDelegate.window??.makeKeyAndVisible()
+    }
+
+    public class func getVisualGuide(for products: [Subscription]? = nil, extras: [String: Any]? = nil, completion: @escaping DYMRestoreCompletion) -> DYMGuideController {
+        let guideController = DYMGuideController()
+        guideController.custemedProducts = products ?? []
+        guideController.extras = extras
+        guideController.completion = completion
+        guideController.modalPresentationStyle = .fullScreen
+        return guideController
+    }
+    #endif
+}

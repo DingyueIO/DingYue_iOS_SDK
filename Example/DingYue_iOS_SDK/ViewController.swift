@@ -35,12 +35,21 @@ class ViewController: UIViewController {
         btn.backgroundColor = .blue
         return btn
     }()
+    lazy var showWebGuideBtn: UIButton = {
+        let btn = UIButton(type: .custom)
+        btn.setTitle("guidePageBtn", for: [])
+        btn.setTitleColor(UIColor.black, for: [])
+        btn.addTarget(self, action: #selector(gotoWebGuide), for: .touchUpInside)
+        btn.backgroundColor = .red
+        return btn
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(purchaseSubscriptionBtn)
         self.view.addSubview(purchaseConsumptionBtn)
         self.view.addSubview(luaTestButton)
+        self.view.addSubview(showWebGuideBtn)
 
         
         purchaseSubscriptionBtn.translatesAutoresizingMaskIntoConstraints = false
@@ -60,6 +69,13 @@ class ViewController: UIViewController {
         luaTestButton.topAnchor.constraint(equalTo: purchaseSubscriptionBtn.bottomAnchor,constant: 16).isActive = true
         luaTestButton.heightAnchor.constraint(equalTo: purchaseSubscriptionBtn.heightAnchor).isActive = true
         luaTestButton.widthAnchor.constraint(equalTo: purchaseSubscriptionBtn.widthAnchor).isActive = true
+        
+        showWebGuideBtn.translatesAutoresizingMaskIntoConstraints = false
+        showWebGuideBtn.leadingAnchor.constraint(equalTo: luaTestButton.trailingAnchor, constant: 10).isActive = true
+        showWebGuideBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16.0).isActive = true
+        showWebGuideBtn.topAnchor.constraint(equalTo: purchaseConsumptionBtn.bottomAnchor,constant: 16).isActive = true
+        showWebGuideBtn.heightAnchor.constraint(equalToConstant: 56).isActive = true
+        showWebGuideBtn.widthAnchor.constraint(equalTo: purchaseSubscriptionBtn.widthAnchor).isActive = true
     }
     
     
@@ -118,6 +134,26 @@ class ViewController: UIViewController {
 //            print("\(result)")
 //        }
     }
+    
+    @objc func gotoWebGuide() {
+        //显示内购页-可以传复合要求的内购项信息对象
+        let defaultProuct1 = Subscription(type: "SUBSCRIPTION", name: "Week", platformProductId: "testWeek", price: "7.99", currencyCode: "USD", countryCode: "US")
+        let defaultProuct2 = Subscription(type: "SUBSCRIPTION", name: "Year", platformProductId: "testYear", appleSubscriptionGroupId: nil, description: "default product item", period: "Year", price: "49.99", currencyCode: "USD", countryCode: "US", priceTier: nil, gracePeriod: nil, icon: nil, renewPriceChange: nil)
+        //显示内购页
+        
+        let extra:[String:Any] = [
+            "phoneNumber": "1999999999",
+            "phoneCountry" : "国家",
+            "purchasedProducts" : purchasedProducts,
+            "mainColor": "white"
+        ]
+
+        
+        DYMobileSDK.showVisualGuide(products: [defaultProuct1,defaultProuct2], rootAppdelegate: UIApplication.shared.delegate!,extras: extra) { receipt, purchaseResult, error in
+            
+        }
+    }
+    
 }
 
 //implement methods to purchase page user terms and privacy click events

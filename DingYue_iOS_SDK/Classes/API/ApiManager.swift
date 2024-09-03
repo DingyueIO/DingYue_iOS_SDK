@@ -21,17 +21,30 @@ class ApiManager {
     var paywallIdentifier = ""
     var paywallName = ""
     var paywallCustomize = false
+    
+    var guidePageIdentifier = ""
+    var guidePageName = ""
+    var guideCustomize = false
+    var retryCount = 0
+    var maxRetries = 10
 
     @objc func startSession(){
         SessionsAPI.reportSession(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: SessionsAPI.XPLATFORM_reportSession.ios, X_VERSION: UserProperties.sdkVersion, uniqueUserObject: UniqueUserObject(), apiResponseQueue: OpenAPIClientAPI.apiResponseQueue) { data, error in
             if (error != nil) {
                 DYMLogManager.logError(error!)
-
-                let time: TimeInterval = 1.0
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + time) {
-                    self.startSession()
+               
+                //引导页暂定重新请求10次
+                if self.retryCount < self.maxRetries {
+                    self.retryCount += 1
+                    let time: TimeInterval = 1.0
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + time) {
+                        self.startSession()
+                    }
+                }else {
+                    DYMDefaultsManager.shared.guideLoadingStatus = true
+                    DYMDefaultsManager.shared.isLoadingStatus = true
+                    self.completion?(nil,DYMError.failed)
                 }
-
             }else{
                 if data?.status == .ok {
                     var configurations:[[String:Any]]?
@@ -84,37 +97,70 @@ class ApiManager {
                         DYMDefaultsManager.shared.cachedPaywalls = nil
                         DYMDefaultsManager.shared.cachedProducts = nil
                     }
-
+                    
+                    if let guide = data?.guidePage {
+                        DYMDefaultsManager.shared.cachedGuides = [guide]
+                        if guide.downloadUrl ==  "local" {
+                            if let nativeGuidePageId = data?.guidePageId {
+                                let guideVersion = guide.version
+                                self.guidePageIdentifier = nativeGuidePageId
+                                DYMDefaultsManager.shared.cachedGuidePageIdentifier = nativeGuidePageId + "/" + String(guideVersion)
+                                DYMDefaultsManager.shared.cachedGuideName = guide.name
+                                self.guideCustomize = guide.customize
+                                DYMDefaultsManager.shared.isUseNativeGuide = true
+                                DYMDefaultsManager.shared.guideLoadingStatus = true
+                            }
+                        }else {
+                            DYMDefaultsManager.shared.isUseNativeGuide = false
+                            if let guidePageId = data?.guidePageId {
+                                let guideVersion = guide.version
+                                self.guidePageIdentifier = guidePageId + "/" + String(guideVersion)
+                                self.guidePageName = guide.name
+                                self.guideCustomize = guide.customize
+                                if self.guidePageIdentifier != DYMDefaultsManager.shared.cachedGuidePageIdentifier {
+                                    self.downloadGuideWebTemplate(url: URL(string: guide.downloadUrl)!) { res, error in
+                                    }
+                                }else {
+                                    DYMDefaultsManager.shared.guideLoadingStatus = true
+                                }
+                            }
+                        }                                                                        
+                    }else {
+                        DYMDefaultsManager.shared.guideLoadingStatus = true
+                        DYMDefaultsManager.shared.cachedGuides = nil
+                    }
+                    
                     DYMDefaultsManager.shared.cachedSwitchItems = data?.switchItems
                     DYMDefaultsManager.shared.cachedSubscribedObjects = data?.subscribedProducts
                     DYMDefaultsManager.shared.cachedGlobalSwitch = data?.globalSwitchItems
 
                     let subscribedOjects = DYMDefaultsManager.shared.subscribedObjects(subscribedObjectArray: DYMDefaultsManager.shared.cachedSubscribedObjects)
-
                     var results = [
                         "switchs": DYMDefaultsManager.shared.cachedSwitchItems as Any,
                         "subscribedOjects":subscribedOjects,
-                        "isUseNativePaywall":DYMDefaultsManager.shared.isUseNativePaywall
+                        "isUseNativePaywall":DYMDefaultsManager.shared.isUseNativePaywall,
+                        "isUseNativeGuide":DYMDefaultsManager.shared.isUseNativeGuide
                     ] as [String : Any]
 
                     if DYMDefaultsManager.shared.isUseNativePaywall {
                         results["nativePaywallId"] = self.paywallIdentifier
                     }
-
+                    if DYMDefaultsManager.shared.isUseNativeGuide {
+                        results["nativeGuidePageId"] = self.guidePageIdentifier
+                    }
                     if let globalSwitchItems = DYMDefaultsManager.shared.cachedGlobalSwitch {
                         if globalSwitchItems.count > 0 {
                             results["globalSwitchItems"] = globalSwitchItems
                         }
                     }
-                    
                     if let config = configurations, !config.isEmpty {
                         results["configurations"] = config
                     }
-                    
                     self.completion?(results,nil)
                 }else{
                     DYMLogManager.logError(data?.errmsg as Any)
                     DYMDefaultsManager.shared.isLoadingStatus = true
+                    DYMDefaultsManager.shared.guideLoadingStatus = true
                     self.completion?(nil,DYMError.failed)
                 }
                 
@@ -122,7 +168,6 @@ class ApiManager {
                     DYMobileSDK().updateConversionValueWithDefaultRule(value: 1)
                     DYMDefaultsManager.shared.isMultipleLaunch = true
                 }
-
             }
         }
     }
@@ -164,13 +209,12 @@ class ApiManager {
         }
     }
 
-    //下载内购页zip
+    //MARK: 下载内购页zip
     func downloadWebTemplate(url: URL, completion:@escaping (SimpleStatusResult?,Error?) -> Void) {
         let turl = url
         URLSession.shared.downloadTask(with: turl) { url, response, error in
             if response != nil {
                 if (response as! HTTPURLResponse).statusCode == 200 {
-
                     if let zipFileUrl = url, let targetUnzipUrl = UserProperties.pallwallPath {
                         let success = SSZipArchive.unzipFile(atPath: zipFileUrl.path, toDestination: targetUnzipUrl)
                         if success {
@@ -207,6 +251,7 @@ class ApiManager {
             }
         }.resume()
     }
+    
 
     func verifySubscriptionFirst(receipt: String,for product: SKProduct?,completion:@escaping FirstReceiptCompletion) {
         guard let product = product else {
@@ -270,5 +315,52 @@ class ApiManager {
         SessionsAPI.updateUserAttribute(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: SessionsAPI.XPLATFORM_updateUserAttribute.ios, X_VERSION: UserProperties.sdkVersion, editOneOf: [editOneOf]) { data, error in
             UserProperties.userSubscriptionPurchasedSourcesType = nil
         }
+    }
+}
+
+//MARK: 引导页相关
+extension ApiManager {
+    //MARK: 下载引导页
+    func downloadGuideWebTemplate(url: URL, completion:@escaping (SimpleStatusResult?,Error?) -> Void) {
+        let turl = url
+        URLSession.shared.downloadTask(with: turl) { url, response, error in
+            if response != nil {
+                if (response as! HTTPURLResponse).statusCode == 200 {
+
+                    if let zipFileUrl = url, let targetUnzipUrl = UserProperties.guidePath {
+                        let success = SSZipArchive.unzipFile(atPath: zipFileUrl.path, toDestination: targetUnzipUrl)
+                        if success {
+                            var items: [String]
+                              do {
+                                  items = try FileManager.default.contentsOfDirectory(atPath: targetUnzipUrl)
+                                  DYMDefaultsManager.shared.guideLoadingStatus = true
+                              } catch {
+                               return
+                              }
+
+                            if self.paywallCustomize == false {
+                                if items.contains("config.js") {
+                                    DYMDefaultsManager.shared.cachedGuidePageIdentifier = self.guidePageIdentifier
+                                    DYMDefaultsManager.shared.cachedGuideName = self.guidePageName
+                                }
+                            } else {
+                                DYMDefaultsManager.shared.cachedGuidePageIdentifier = self.guidePageIdentifier
+                                DYMDefaultsManager.shared.cachedGuideName = self.guidePageName
+                            }
+                        } else {
+                            DYMDefaultsManager.shared.guideLoadingStatus = true
+                        }
+                        try? FileManager.default.removeItem(at: zipFileUrl)
+                    } else {
+                        DYMDefaultsManager.shared.guideLoadingStatus = true
+                    }
+                }else {
+                    DYMLogManager.logError(error as Any)
+                    DYMDefaultsManager.shared.guideLoadingStatus = true
+                }
+            } else {
+                DYMDefaultsManager.shared.guideLoadingStatus = true
+            }
+        }.resume()
     }
 }

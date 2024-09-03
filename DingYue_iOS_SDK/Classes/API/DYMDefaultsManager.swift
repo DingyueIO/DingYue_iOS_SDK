@@ -82,7 +82,6 @@ class DYMDefaultsManager {
             if let data = defaults.object(forKey: DYMConstants.UserDefaults.cachedPaywalls) as? Data, let paywalls = try? JSONDecoder().decode([Paywall].self, from: data) {
                 return paywalls
             }
-
             return nil
         }
         set {
@@ -250,6 +249,14 @@ class DYMDefaultsManager {
     var nativePaywallBasePath: String!
     var defaultPaywallPath:String?
 
+    //guide相关 -began
+    var guideLoadingStatus: Bool = false
+    var isUseNativeGuide: Bool = false
+    var nativeGuidePath: String!
+    var nativeGuideBasePath: String!
+    var defaultGuidePath:String?
+    //guide相关 -end
+    
     func subscribedObjects(subscribedObjectArray: [SubscribedObject?]?) -> [[String:Any]] {
         var subsArray:[[String:Any]] = []
         if let subscribledObjects = subscribedObjectArray {
@@ -315,5 +322,62 @@ class DYMDefaultsManager {
         defaults.removeObject(forKey: DYMConstants.UserDefaults.responseJSONCaches)
         defaults.removeObject(forKey: DYMConstants.UserDefaults.postRequestParamsHashes)
         defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedPaywallName)
+        
+        defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedGuides)
+        defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedGuideName)
+        defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedGuidePageIdentifier)
     }
+}
+
+//MARK:  Guide 引导页相关
+extension DYMDefaultsManager {
+    var cachedGuides: [DYMGuideObject]? {
+        get {
+            if let data = defaults.object(forKey: DYMConstants.UserDefaults.cachedGuides) as? Data, let paywalls = try? JSONDecoder().decode([DYMGuideObject].self, from: data) {
+                return paywalls
+            }
+
+            return nil
+        }
+        set {
+            let data = try? JSONEncoder().encode(newValue)
+            defaults.set(data, forKey: DYMConstants.UserDefaults.cachedGuides)
+        }
+    }
+
+    var cachedGuidePageIdentifier: String? {
+        get {
+            if let data = defaults.object(forKey: DYMConstants.UserDefaults.cachedGuidePageIdentifier) as? String {
+                return data
+            }
+            return nil
+        }
+        set {
+            defaults.set(newValue, forKey: DYMConstants.UserDefaults.cachedGuidePageIdentifier)
+        }
+    }
+    
+    var cachedGuideName: String? {
+        get {
+            if let data = defaults.object(forKey: DYMConstants.UserDefaults.cachedGuideName) as? String {
+                return data
+            }
+            return nil
+        }
+        set {
+            defaults.set(newValue, forKey: DYMConstants.UserDefaults.cachedGuideName)
+        }
+    }
+    func guideConfigurations(configurations: [DYMGuideConfiguration]) -> [[String:Any]] {
+        var config:[[String:Any]] = []
+        for con in configurations {
+            var subCon:[String:Any] = [:]
+            subCon["key"] = con.key
+            subCon["defaultValue"] = con.defaultValue
+            subCon["localeValues"] = con.localeValues
+            config.append(subCon)
+        }
+        return config
+    }
+
 }
