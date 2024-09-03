@@ -106,7 +106,7 @@ public class DYMGuideController: UIViewController {
                 customIndicatiorV.isHidden = false
             }
             launchScreenView?.isHidden = false
-            loadingTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(changeLoadingStatus), userInfo: nil, repeats: true)
+            loadingTimer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(changeLoadingStatus), userInfo: nil, repeats: true)
         }
         
     }
