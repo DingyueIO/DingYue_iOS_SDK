@@ -129,6 +129,33 @@ public typealias Parameters = [String: Any]
             }
         }
     }
+    
+    static var guidePath: String? {
+        return createGuideDirPath()
+    }
+    class func createGuideDirPath() ->String?{
+        let DocumentPaths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        let filePath = DocumentPaths[0].appending("/GuideWeb")
+        var isDir : ObjCBool = false
+        if FileManager.default.fileExists(atPath: filePath, isDirectory: &isDir) {
+            if isDir.boolValue{
+                DYMLogManager.logMessage("guide directory already exists")
+                return filePath
+            }else{
+                return nil
+            }
+        }else{
+            do {
+                try FileManager.default.createDirectory(atPath: filePath, withIntermediateDirectories: false, attributes: nil)
+                return filePath
+            } catch {
+                DYMLogManager.logError(error)
+                return nil
+            }
+        }
+    }
+    
+    
     static var device: String {
         #if os(macOS) || targetEnvironment(macCatalyst)
         let matchingDict = IOServiceMatching("IOPlatformExpertDevice")

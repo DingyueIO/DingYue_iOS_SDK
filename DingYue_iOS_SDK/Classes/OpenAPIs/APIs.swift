@@ -16,9 +16,9 @@ public typealias OpenAPIClient = OpenAPIClientAPI
 open class OpenAPIClientAPI {
     public static var basePath:String = {
         if let countryCode = Locale.current.regionCode, countryCode == "CN" && NSLocale.preferredLanguages[0] == "zh-Hans-CN" {
-            return "https://mobile.dingyueio.cn"
+            return "http://172.168.1.43:51026" //"https://mobile.dingyueio.cn"
         } else {
-            return "https://mobile.dingyue.io"
+            return "http://172.168.1.43:51026"  //"https://mobile.dingyue.io"
         }
     }()
     public static var customHeaders: [String: String] = [:]

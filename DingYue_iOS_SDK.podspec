@@ -36,7 +36,9 @@ TODO: DingYue_iOS_SDK: manage your purchase process and collect data to analyze 
 #  s.source_files = 'DingYue_iOS_SDK/Classes/**/*'
   
    s.resource_bundle = {
-     'DingYue_iOS_SDK' => 'DingYue_iOS_SDK/Assets/Resources/*'
+     'DingYue_iOS_SDK' => 'DingYue_iOS_SDK/Assets/Resources/Purchase/*'
+     'DingYue_iOS_SDK' => 'DingYue_iOS_SDK/Assets/Resources/Guide.bundle'
+
    }
 
   s.swift_version = '4.0'

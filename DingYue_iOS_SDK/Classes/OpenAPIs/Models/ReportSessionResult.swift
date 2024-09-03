@@ -22,15 +22,19 @@ public struct ReportSessionResult: Codable, JSONEncodable, Hashable {
     public var errmsg: String?
     public var paywall: Paywall?
     public var paywallId: String?
+    public var guidePage: DYMGuideObject?
+    public var guidePageId: String?    
     public var switchItems: [SwitchItem]?
     public var subscribedProducts: [SubscribedObject]?
     public var globalSwitchItems: [GlobalSwitch]?
 
-    public init(status: Status, errmsg: String? = nil, paywall: Paywall? = nil, paywallId: String? = nil, switchItems: [SwitchItem]? = nil, subscribedProducts: [SubscribedObject]? = nil, globalSwitchItems: [GlobalSwitch]? = nil) {
+    public init(status: Status, errmsg: String? = nil, paywall: Paywall? = nil, paywallId: String? = nil, guidePage:DYMGuideObject? = nil,guidePageId:String? = nil, switchItems: [SwitchItem]? = nil, subscribedProducts: [SubscribedObject]? = nil, globalSwitchItems: [GlobalSwitch]? = nil) {
         self.status = status
         self.errmsg = errmsg
         self.paywall = paywall
         self.paywallId = paywallId
+        self.guidePage = guidePage
+        self.guidePageId = guidePageId
         self.switchItems = switchItems
         self.subscribedProducts = subscribedProducts
         self.globalSwitchItems = globalSwitchItems
@@ -41,6 +45,8 @@ public struct ReportSessionResult: Codable, JSONEncodable, Hashable {
         case errmsg
         case paywall
         case paywallId
+        case guidePage
+        case guidePageId
         case switchItems
         case subscribedProducts
         case globalSwitchItems
@@ -54,6 +60,8 @@ public struct ReportSessionResult: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(errmsg, forKey: .errmsg)
         try container.encodeIfPresent(paywall, forKey: .paywall)
         try container.encodeIfPresent(paywallId, forKey: .paywallId)
+        try container.encodeIfPresent(guidePage, forKey: .guidePage)
+        try container.encodeIfPresent(guidePageId, forKey: .guidePageId)
         try container.encodeIfPresent(switchItems, forKey: .switchItems)
         try container.encodeIfPresent(subscribedProducts, forKey: .subscribedProducts)
         try container.encodeIfPresent(globalSwitchItems, forKey: .globalSwitchItems)

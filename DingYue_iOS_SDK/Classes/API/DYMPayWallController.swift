@@ -112,6 +112,7 @@ public class DYMPayWallController: UIViewController {
     
     public func loadWebView() {
 
+       
         if DYMDefaultsManager.shared.isUseNativePaywall {
             if let nativePaywallFullPath = DYMDefaultsManager.shared.nativePaywallPath, let basePath = DYMDefaultsManager.shared.nativePaywallBasePath {
                 let url = URL(fileURLWithPath: nativePaywallFullPath)
@@ -234,14 +235,15 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
             self.delegate?.clickRestoreButton?(baseViewController: self)
         } else if message.name == "vip_terms" {
             eventManager.track(event: "ABOUT_TERMSOFSERVICE")
-            if ((self.delegate?.clickTermsAction?(baseViewController: self)) != nil) {
-                self.delegate?.clickTermsAction!(baseViewController: self)
-            }
+            if let delegate = self.delegate, delegate.responds(to: #selector(delegate.clickTermsAction(baseViewController:))) {
+                   delegate.clickTermsAction?(baseViewController: self)
+               }
         }else if message.name == "vip_privacy" {
             eventManager.track(event: "ABOUT_PRIVACYPOLICY")
-            if ((self.delegate?.clickPrivacyAction?(baseViewController: self)) != nil) {
-                self.delegate?.clickPrivacyAction!(baseViewController: self)
-            }
+            if let delegate = self.delegate, delegate.responds(to: #selector(delegate.clickPrivacyAction(baseViewController:))) {
+                  delegate.clickPrivacyAction?(baseViewController: self)
+              }
+            
         }else if message.name == "vip_purchase" {
 
             let dic = message.body as? Dictionary<String,Any>
