@@ -139,15 +139,14 @@ class ApiManager {
                         "switchs": DYMDefaultsManager.shared.cachedSwitchItems as Any,
                         "subscribedOjects":subscribedOjects,
                         "isUseNativePaywall":DYMDefaultsManager.shared.isUseNativePaywall,
-                        "isUseNativeGuide":DYMDefaultsManager.shared.isUseNativeGuide
+                        "isUseNativeGuide":DYMDefaultsManager.shared.isUseNativeGuide,
+                        "nativeGuidePageId":self.guidePageIdentifier
                     ] as [String : Any]
 
                     if DYMDefaultsManager.shared.isUseNativePaywall {
                         results["nativePaywallId"] = self.paywallIdentifier
-                    }
-                    if DYMDefaultsManager.shared.isUseNativeGuide {
-                        results["nativeGuidePageId"] = self.guidePageIdentifier
-                    }
+                    }                
+
                     if let globalSwitchItems = DYMDefaultsManager.shared.cachedGlobalSwitch {
                         if globalSwitchItems.count > 0 {
                             results["globalSwitchItems"] = globalSwitchItems

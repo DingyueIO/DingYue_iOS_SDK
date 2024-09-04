@@ -31,7 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DYMConfiguration.shared.guidePageConfig.indicatorColor = .orange
         /*
          连续请求10次失败之后 将会进入之前下载的默认引导页(如果没有默认下载的引导页，则需要在clickGuideCloseButton代理中，设置下一步操作，例如，进入主页，
-         也可以 在sdk回调中进行设置。可根据 nativeGuidePageId 进行判断 （ 未返回，或者为空  代表未配置 web引导页） 可设置为 切换到原生引导页。如果不设置，
+         也可以 在sdk回调中进行设置。可根据 nativeGuidePageId 进行判断 （ 未返回，或者为空  代表未配置 web引导页） 可设置为 切换到原生引导页。
+         如果不设置，则会在网络成功的情况下进入web 引导页
          */
         self.showWebGuideVC()
         DYMobileSDK.activate { results, error in
@@ -77,7 +78,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             "mainColor": "white"
         ]
         DYMobileSDK.showVisualGuide(products: [defaultProuct1,defaultProuct2],rootAppdelegate:self,extras: extra) { receipt, purchaseResult, error in
-            print("7666666")
+            print("进入主页")
+            self.window?.rootViewController = ViewController()
+            self.window?.backgroundColor = .white
+            self.window?.makeKeyAndVisible()
         }
         
     }
