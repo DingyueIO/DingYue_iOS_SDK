@@ -131,7 +131,9 @@ extension AppDelegate:DYMGuideActionDelegate {
  
     public func clickGuideCloseButton(baseViewController: UIViewController, closeType: String) {
         print("clickGuideCloseButton---closeType--\(closeType)")
-        
+        if closeType != "NO_LOCAL_WEB_GUIDE_CLOSE" {
+         // 可以设置 是否还会再显示引导页
+        }
         self.window?.rootViewController = ViewController()
         self.window?.backgroundColor = .white
         self.window?.makeKeyAndVisible()
