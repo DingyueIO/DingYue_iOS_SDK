@@ -336,16 +336,8 @@ extension ApiManager {
                               } catch {
                                return
                               }
-
-                            if self.paywallCustomize == false {
-                                if items.contains("config.js") {
-                                    DYMDefaultsManager.shared.cachedGuidePageIdentifier = self.guidePageIdentifier
-                                    DYMDefaultsManager.shared.cachedGuideName = self.guidePageName
-                                }
-                            } else {
-                                DYMDefaultsManager.shared.cachedGuidePageIdentifier = self.guidePageIdentifier
-                                DYMDefaultsManager.shared.cachedGuideName = self.guidePageName
-                            }
+                            DYMDefaultsManager.shared.cachedGuidePageIdentifier = self.guidePageIdentifier
+                            DYMDefaultsManager.shared.cachedGuideName = self.guidePageName
                         } else {
                             DYMDefaultsManager.shared.guideLoadingStatus = true
                         }

@@ -440,6 +440,8 @@ extension DYMobileSDK {
     // MARK: - Load native guide
     @objc public class func loadNativeGuidePage(paywallFullPath: String,basePath:String) {
         DYMLogManager.logMessage("Calling now: \(#function)")
+        DYMDefaultsManager.shared.isUseNativeGuide = true
+        DYMDefaultsManager.shared.guideLoadingStatus = true
         DYMDefaultsManager.shared.nativeGuideBasePath = basePath
         DYMDefaultsManager.shared.nativeGuidePath = paywallFullPath
     }
