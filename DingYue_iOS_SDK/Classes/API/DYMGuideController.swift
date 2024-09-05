@@ -101,13 +101,11 @@ public class DYMGuideController: UIViewController {
       
         if DYMDefaultsManager.shared.guideLoadingStatus == true {
             customIndicatiorV.isHidden = true
-            launchScreenView?.isHidden = true
             loadWebView()
         } else {
             if DYMConfiguration.shared.guidePageConfig.isVisible {
                 customIndicatiorV.isHidden = false
             }
-            launchScreenView?.isHidden = false
             loadingTimer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(changeLoadingStatus), userInfo: nil, repeats: true)
         }
         
@@ -116,7 +114,6 @@ public class DYMGuideController: UIViewController {
     @objc func changeLoadingStatus() {
         if DYMDefaultsManager.shared.guideLoadingStatus == true {
             customIndicatiorV.isHidden = true
-            launchScreenView?.isHidden = true
             loadWebView()
             stopLoadingTimer()
         }
@@ -261,6 +258,30 @@ extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
         let data = jsonString.data(using: .utf8)
         let base64Str:String? = data?.base64EncodedString() as? String
         webView.evaluateJavaScript("iostojs('\(base64Str!)')") { (response, error) in
+        }
+        
+
+        if let launchView = launchScreenView {
+            fadeView(launchView, hide: true)
+        }
+
+    }
+    
+    func fadeView(_ view: UIView, hide: Bool, duration: TimeInterval = 1) {
+        if hide {
+            // 进行淡出动画
+            UIView.animate(withDuration: duration, animations: {
+                view.alpha = 0
+            }) { _ in
+                view.isHidden = true  // 动画完成后将视图隐藏
+            }
+        } else {
+            // 取消隐藏并进行淡入动画
+            view.isHidden = false
+            view.alpha = 0
+            UIView.animate(withDuration: duration, animations: {
+                view.alpha = 1
+            })
         }
     }
     
