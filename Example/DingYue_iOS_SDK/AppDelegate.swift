@@ -44,21 +44,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             print("test ----, AppDelegate getProductItems = \(sub.platformProductId)")
                         }
                     }
-//                    // 未返回 nativeGuidePageId 代表 未配置 web引导页
-//                    if let nativeGuidePageId = res["nativeGuidePageId"] as? String {
-//                        
-//                    }else {
-//                        self.window?.rootViewController = ViewController()
-//                        self.window?.backgroundColor = .white
-//                        self.window?.makeKeyAndVisible()
-//                    }
+                    // 未返回 nativeGuidePageId 代表 未配置 web引导页
+                    if let nativeGuidePageId = res["nativeGuidePageId"] as? String , nativeGuidePageId.count <= 0 {
+                        // 手动指定本地h5路径
+                        // 或者 原生 引导页面
+  
+                    }else {
+                      // 如果配置 则 自动加载 引导页
+                    }
+                    
+                    
+                    
                 }
                 
             }else {
+                // 接口请求失败的话，会自动调用 clickGuideCloseButton 代理。 closetype 是 “NO_LOCAL_WEB_GUIDE_CLOSE”
 //                self.window?.rootViewController = ViewController()
 //                self.window?.backgroundColor = .white
 //                self.window?.makeKeyAndVisible()
+            
             }
+            
+             // 本地web guide
+//            self.setLocalGuidePaths()
         }
         //lua 脚本相关
 //        TestLuaOperation.sharedInstance().initLua()
@@ -66,6 +74,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func showWebGuideVC() {
+      
+        
         //显示引导页-可以传符合要求的内购项信息对象
         let defaultProuct1 = Subscription(type: "SUBSCRIPTION", name: "Week", platformProductId: "testWeek", price: "7.99", currencyCode: "USD", countryCode: "US")
         let defaultProuct2 = Subscription(type: "SUBSCRIPTION", name: "Year", platformProductId: "testYear", appleSubscriptionGroupId: nil, description: "default product item", period: "Year", price: "49.99", currencyCode: "USD", countryCode: "US", priceTier: nil, gracePeriod: nil, icon: nil, renewPriceChange: nil)
@@ -84,8 +94,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.makeKeyAndVisible()
         }
         
+ 
     }
     
+    
+    //加载本地web 路径
+    func setLocalGuidePaths() {
+          // 获取主 Bundle 的路径
+        let bundlePath = Bundle.main.bundlePath
+        // 拼接子文件夹路径
+        let subfolderPath = (bundlePath as NSString).appendingPathComponent("7306588143563858788")
+        // 拼接最终文件路径
+        let filePath = (subfolderPath as NSString).appendingPathComponent("index.html")
+        
+        // 确保文件存在
+        if FileManager.default.fileExists(atPath: filePath) {
+            // 设置 DYMDefaultsManager 的路径属性
+            DYMobileSDK.loadNativeGuidePage(paywallFullPath: filePath, basePath: subfolderPath)
+
+        } else {
+            print("index.html file not found at path: \(filePath)")
+        }
+
+      }
     
 }
 
