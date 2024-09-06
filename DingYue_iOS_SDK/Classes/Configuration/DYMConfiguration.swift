@@ -20,6 +20,7 @@ import NVActivityIndicatorView
      @objc private override init() {
          // 设置默认配置值
          self.guidePageConfig = GuidePageConfig(
+             isVip: false,
              isVisible: true,
              indicatorType: 1,
              indicatorColor: .red,
@@ -35,8 +36,10 @@ import NVActivityIndicatorView
     @objc public var indicatorColor: UIColor
     @objc public var indicatorSize: CGSize
     @objc public var bottomSpacing: CGFloat
+    @objc public var isVIP: Bool
     
-    @objc public init(isVisible: Bool, indicatorType: Int, indicatorColor: UIColor, indicatorSize: CGSize, bottomSpacing: CGFloat) {
+    @objc public init(isVip:Bool, isVisible: Bool, indicatorType: Int, indicatorColor: UIColor, indicatorSize: CGSize, bottomSpacing: CGFloat) {
+        self.isVIP = isVip
         self.isVisible = isVisible
         self.indicatorType = indicatorType
         self.indicatorColor = indicatorColor

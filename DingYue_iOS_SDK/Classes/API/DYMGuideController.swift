@@ -252,7 +252,7 @@ extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
         if let extra = extras {
             dic["extra"] = extra
         }
-
+        dic["isVIP"] = DYMConfiguration.shared.guidePageConfig.isVIP
         let jsonString = getJSONStringFromDictionary(dictionary: dic as NSDictionary)
         
         let data = jsonString.data(using: .utf8)
