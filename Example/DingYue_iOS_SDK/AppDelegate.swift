@@ -15,6 +15,7 @@ var purchasedProducts:[[String:Any]] = [] {
         print("test ----, purchasedProducts = \(purchasedProducts)")
     }
 }
+let HasDisplayedGuide = "HasDisplayedGuide"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -44,29 +45,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             print("test ----, AppDelegate getProductItems = \(sub.platformProductId)")
                         }
                     }
+                    
+                    
+                    DYMConfiguration.shared.guidePageConfig.isVIP = true
                     // 未返回 nativeGuidePageId 代表 未配置 web引导页
                     if let nativeGuidePageId = res["nativeGuidePageId"] as? String , nativeGuidePageId.count <= 0 {
                         // 手动指定本地h5路径
                         // 或者 原生 引导页面
+                        self.setRootVC()
+                        // 本地web guide
+                        // self.setLocalGuidePaths()
   
                     }else {
-                      // 如果配置 则 自动加载 引导页
+                      // 如果配置 则 自动加载 引导页 或者进入主页
+                        if UserDefaults.standard.bool(forKey: HasDisplayedGuide) {
+                            self.window?.backgroundColor = .white
+                            self.window?.rootViewController = ViewController()
+                        }
                     }
-                    
-                    
-                    
                 }
                 
             }else {
                 // 接口请求失败的话，会自动调用 clickGuideCloseButton 代理。 closetype 是 “NO_LOCAL_WEB_GUIDE_CLOSE”
-//                self.window?.rootViewController = ViewController()
-//                self.window?.backgroundColor = .white
-//                self.window?.makeKeyAndVisible()
-            
+                self.setRootVC()
             }
             
-             // 本地web guide
-//            self.setLocalGuidePaths()
+
         }
         //lua 脚本相关
 //        TestLuaOperation.sharedInstance().initLua()
@@ -118,6 +122,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
       }
     
+    func setRootVC() {
+        self.window = UIWindow.init(frame: UIScreen.main.bounds)
+        self.window?.backgroundColor = UIColor.white
+        self.window?.makeKeyAndVisible()
+        if UserDefaults.standard.bool(forKey: HasDisplayedGuide) {
+            self.window?.rootViewController = ViewController()
+        }else{
+            // 原生引导页
+        }
+        
+    }
+    
+    func gotoMainVC() {
+        UserDefaults.standard.set(true, forKey: HasDisplayedGuide)
+        UserDefaults.standard.synchronize()
+        self.window = UIWindow.init(frame: UIScreen.main.bounds)
+        self.window?.backgroundColor = UIColor.white
+        self.window?.makeKeyAndVisible()
+        
+    }
+    
 }
 
 extension AppDelegate:DYMGuideActionDelegate {
@@ -133,6 +158,8 @@ extension AppDelegate:DYMGuideActionDelegate {
         print("clickGuideCloseButton---closeType--\(closeType)")
         if closeType != "NO_LOCAL_WEB_GUIDE_CLOSE" {
          // 可以设置 是否还会再显示引导页
+            UserDefaults.standard.set(true, forKey: HasDisplayedGuide)
+            UserDefaults.standard.synchronize()
         }
         self.window?.rootViewController = ViewController()
         self.window?.backgroundColor = .white
