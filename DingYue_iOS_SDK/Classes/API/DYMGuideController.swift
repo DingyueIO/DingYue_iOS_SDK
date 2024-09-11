@@ -27,6 +27,10 @@ import NVActivityIndicatorView
     ///   - swiperSize: 总页数
     @objc optional func clickGudieContinueButton(baseViewController:UIViewController ,currentIndex:Int,nextIndex:Int ,swiperSize:Int)
 }
+ 
+@objc public protocol DYMWindowManaging: NSObjectProtocol {
+    var window: UIWindow? { get set }
+}
 
 
 public class DYMGuideController: UIViewController {
@@ -267,7 +271,7 @@ extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
 
     }
     
-    func fadeView(_ view: UIView, hide: Bool, duration: TimeInterval = 1) {
+    func fadeView(_ view: UIView, hide: Bool, duration: TimeInterval = 0.6) {
         if hide {
             // 进行淡出动画
             UIView.animate(withDuration: duration, animations: {

@@ -452,18 +452,37 @@ extension DYMobileSDK {
     // MARK:
     #if os(iOS)
     /// 显示引导页
-    @objc public class func showVisualGuide(products: [Subscription]? = nil, rootAppdelegate: UIApplicationDelegate, extras: [String: Any]? = nil, completion: @escaping DYMRestoreCompletion) {
-        guard let appDelegate = UIApplication.shared.delegate  else {
-            fatalError("UIApplication.shared.delegate is not of type AppDelegate")
+//    @objc public class func showVisualGuide(products: [Subscription]? = nil, rootAppdelegate: UIApplicationDelegate, extras: [String: Any]? = nil, completion: @escaping DYMRestoreCompletion) {
+//        guard let appDelegate = UIApplication.shared.delegate  else {
+//            fatalError("UIApplication.shared.delegate is not of type AppDelegate")
+//        }
+//
+//        let guideController = getVisualGuide(for: products, extras: extras, completion: completion)
+//        guideController.delegate = rootAppdelegate as? DYMGuideActionDelegate
+//        
+//        appDelegate.window??.rootViewController = guideController
+//        appDelegate.window??.makeKeyAndVisible()
+//
+//    }
+    @objc public class func showVisualGuide(products: [Subscription]? = nil, rootDelegate: DYMWindowManaging, extras: [String: Any]? = nil, completion: @escaping DYMRestoreCompletion) {
+        let guideController = getVisualGuide(for: products, extras: extras, completion: completion)
+        guideController.delegate = rootDelegate as? DYMGuideActionDelegate
+
+        guard let window = rootDelegate.window else {
+            // 如果没有找到窗口，创建一个新的 UIWindow
+           print("No key window found. Creating a new UIWindow.")
+           let newWindow = UIWindow(frame: UIScreen.main.bounds)
+           newWindow.rootViewController = guideController
+           newWindow.backgroundColor = .white
+           newWindow.makeKeyAndVisible()
+           // 你可以在这里添加额外的处理，比如通知或者日志记录
+           print("A new UIWindow has been created and set.")
+           return
         }
 
-        let guideController = getVisualGuide(for: products, extras: extras, completion: completion)
-        guideController.delegate = rootAppdelegate as? DYMGuideActionDelegate
-        
-        appDelegate.window??.rootViewController = guideController
-        appDelegate.window??.makeKeyAndVisible()
+        window.rootViewController = guideController
+        window.makeKeyAndVisible()
     }
-
     public class func getVisualGuide(for products: [Subscription]? = nil, extras: [String: Any]? = nil, completion: @escaping DYMRestoreCompletion) -> DYMGuideController {
         let guideController = DYMGuideController()
         guideController.custemedProducts = products ?? []
