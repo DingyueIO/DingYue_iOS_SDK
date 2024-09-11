@@ -149,7 +149,7 @@ class ViewController: UIViewController {
         ]
 
         
-        DYMobileSDK.showVisualGuide(products: [defaultProuct1,defaultProuct2], rootAppdelegate: UIApplication.shared.delegate!,extras: extra) { receipt, purchaseResult, error in
+        DYMobileSDK.showVisualGuide(products: [defaultProuct1,defaultProuct2], rootDelegate: UIApplication.shared.delegate as! DYMWindowManaging,extras: extra) { receipt, purchaseResult, error in
             
         }
     }

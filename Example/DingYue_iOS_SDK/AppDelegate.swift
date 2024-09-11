@@ -91,7 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             "purchasedProducts" : purchasedProducts,
             "mainColor": "white"
         ]
-        DYMobileSDK.showVisualGuide(products: [defaultProuct1,defaultProuct2],rootAppdelegate:self,extras: extra) { receipt, purchaseResult, error in
+        DYMobileSDK.showVisualGuide(products: [defaultProuct1,defaultProuct2],rootDelegate:self,extras: extra) { receipt, purchaseResult, error in
             print("进入主页")
             self.window?.rootViewController = ViewController()
             self.window?.backgroundColor = .white
@@ -145,7 +145,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 }
 
-extension AppDelegate:DYMGuideActionDelegate {
+/*遵循协议
+ DYMWindowManaging: window 的获取
+ DYMGuideActionDelegate: web引导页 具体函数执行方法
+ */
+extension AppDelegate: DYMWindowManaging,DYMGuideActionDelegate {
    
     public func guideDidAppear(baseViewController: UIViewController) {
         print("guideDidAppear")
@@ -195,4 +199,5 @@ extension AppDelegate:DYMGuideActionDelegate {
         print("clickGudieContinueButton--currentIndex:\(currentIndex) --- nextIndex:\(nextIndex)")
     }
 }
+
 
