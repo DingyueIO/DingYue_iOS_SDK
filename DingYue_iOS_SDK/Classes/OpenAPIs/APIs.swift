@@ -15,11 +15,7 @@ public typealias OpenAPIClient = OpenAPIClientAPI
 
 open class OpenAPIClientAPI {
     public static var basePath:String = {
-        if let countryCode = Locale.current.regionCode, countryCode == "CN" && NSLocale.preferredLanguages[0] == "zh-Hans-CN" {
-            return "https://mobile.dingyueio.cn"
-        } else {
-            return "https://mobile.dingyue.io"
-        }
+        return "https://mobile.flashapps.link"
     }()
     public static var customHeaders: [String: String] = [:]
     public static var credential: URLCredential?
