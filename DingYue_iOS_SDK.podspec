@@ -21,11 +21,11 @@ Pod::Spec.new do |s|
 TODO: DingYue_iOS_SDK: manage your purchase process and collect data to analyze data conveniently
                        DESC
 
-  s.homepage         = 'https://github.com/DingYueIO/DingYue_iOS_SDK'
+  s.homepage         = 'https://dingyue.io'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'DingYueIO' => 'support@dingyue.io' }
-  s.source           = { :git => 'https://github.com/DingYueIO/DingYue_iOS_SDK.git', :tag => s.version.to_s }
+  s.source           = { :git => 'git@cpa.asoplus.cn:dingyueIosSdk_private.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '12.0'
