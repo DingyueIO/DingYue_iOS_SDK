@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          也可以 在sdk回调中进行设置。可根据 nativeGuidePageId 进行判断 （ 未返回，或者为空  代表未配置 web引导页） 可设置为 切换到原生引导页。
          如果不设置，则会在网络成功的情况下进入web 引导页
          */
-        self.showWebGuideVC()
+//        self.showWebGuideVC()
         DYMobileSDK.activate { results, error in
             if error == nil {
                 if let res = results {
@@ -45,7 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             print("test ----, AppDelegate getProductItems = \(sub.platformProductId)")
                         }
                     }
-                    
                     
                     DYMConfiguration.shared.guidePageConfig.isVIP = true
                     // 未返回 nativeGuidePageId 代表 未配置 web引导页
