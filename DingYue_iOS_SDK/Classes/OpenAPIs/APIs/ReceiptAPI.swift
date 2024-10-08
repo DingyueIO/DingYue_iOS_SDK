@@ -73,7 +73,6 @@ open class ReceiptAPI {
         let X_API_KEY = DYMConstants.APIKeys.secretKey
         let localVariableNillableHeaders: [String: Any?] = [
             "X-USER-ID": X_USER_ID.encodeToJSON(),
-            "User-Agent": userAgent.encodeToJSON(),
             "X-APP-ID": X_APP_ID.encodeToJSON(),
             "X-PLATFORM": X_PLATFORM.encodeToJSON(),
             "X-VERSION": X_VERSION.encodeToJSON(),
@@ -147,7 +146,6 @@ open class ReceiptAPI {
         let X_API_KEY = DYMConstants.APIKeys.secretKey//new add
         let localVariableNillableHeaders: [String: Any?] = [
             "X-USER-ID": X_USER_ID.encodeToJSON(),
-            "User-Agent": userAgent.encodeToJSON(),
             "X-APP-ID": X_APP_ID.encodeToJSON(),
             "X-PLATFORM": X_PLATFORM.encodeToJSON(),
             "X-VERSION": X_VERSION.encodeToJSON(),
