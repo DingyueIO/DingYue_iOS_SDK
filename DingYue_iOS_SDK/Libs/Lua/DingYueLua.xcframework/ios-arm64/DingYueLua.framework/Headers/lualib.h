@@ -8,7 +8,7 @@
 #ifndef lualib_h
 #define lualib_h
 
-#include <DinYueLua/lua.h>
+#include <DingYueLua/lua.h>
 
 
 /* version suffix for environment variable names */

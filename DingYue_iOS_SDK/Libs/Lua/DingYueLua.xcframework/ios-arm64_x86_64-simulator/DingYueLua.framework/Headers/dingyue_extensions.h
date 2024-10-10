@@ -8,10 +8,10 @@
 #ifndef fartech_extensions_h
 #define fartech_extensions_h
 
-#include <DinYueLua/lua.h>
-#include <DinYueLua/lualib.h>
-#include <DinYueLua/lauxlib.h>
-#include <DinYueLua/luaconf.h>
+#include <DingYueLua/lua.h>
+#include <DingYueLua/lualib.h>
+#include <DingYueLua/lauxlib.h>
+#include <DingYueLua/luaconf.h>
 
 NSArray* call_lua_function(
         lua_State *L,
