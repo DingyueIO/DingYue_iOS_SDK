@@ -16,12 +16,12 @@
 #import "lua.h"
 #import "luaconf.h"
 #import "lualib.h"
-//#import "DingYueLua.h"
-//#import "dingyue_extensions.h"
-//#import "lauxlib.h"
-//#import "lua.h"
-//#import "luaconf.h"
-//#import "lualib.h"
+#import "DingYueLua.h"
+#import "dingyue_extensions.h"
+#import "lauxlib.h"
+#import "lua.h"
+#import "luaconf.h"
+#import "lualib.h"
 #import "DYLuaExtension.h"
 
 FOUNDATION_EXPORT double DingYue_iOS_SDKVersionNumber;

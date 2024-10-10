@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <DingYueLua/dingyue_extensions.h>
+#import <DingYueLua/DingYueLua.h>
 NS_ASSUME_NONNULL_BEGIN
 
 @interface DYLuaExtension : NSObject
