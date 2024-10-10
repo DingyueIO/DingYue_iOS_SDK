@@ -72,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         }
         //lua 脚本相关
-//        TestLuaOperation.sharedInstance().initLua()
+        TestLuaOperation.sharedInstance().initLua()
         return true
     }
     

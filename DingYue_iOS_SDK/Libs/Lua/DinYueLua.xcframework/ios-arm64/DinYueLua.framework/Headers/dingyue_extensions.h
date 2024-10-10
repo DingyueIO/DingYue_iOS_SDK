@@ -8,10 +8,10 @@
 #ifndef fartech_extensions_h
 #define fartech_extensions_h
 
-#include "lua.h"
-#include "lualib.h"
-#include "lauxlib.h"
-#include "luaconf.h"
+#include <DinYueLua/lua.h>
+#include <DinYueLua/lualib.h>
+#include <DinYueLua/lauxlib.h>
+#include <DinYueLua/luaconf.h>
 
 NSArray* call_lua_function(
         lua_State *L,
@@ -24,6 +24,7 @@ NSArray* call_lua_function(
 
 lua_State* lua_init(const char* user_module_name, luaL_Reg* user_module_function_defs);
 lua_State *lua_init_multiple(int module_count, const char **module_names, luaL_Reg **module_function_defs);
+
 int load_lua_script_from_file(lua_State* L, NSString* scriptFilename);
 
 int load_lua_script(lua_State* L, NSString* script);
