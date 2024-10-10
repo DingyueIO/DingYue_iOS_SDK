@@ -4,21 +4,21 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>Headers/DinYueLua.h</key>
+		<key>Headers/DingYueLua.h</key>
 		<data>
-		Q0Njw8KzSDaM/OzdYFarMU83Zvo=
+		i0a8sd2ivJFn8M8RGBUkWl8b3f4=
 		</data>
 		<key>Headers/dingyue_extensions.h</key>
 		<data>
-		JUXAiLxKypx2hGsrsCeW8eZGyHk=
+		T2F5coyFwb1ZhWmwOKQb1cNh5y8=
 		</data>
 		<key>Headers/lauxlib.h</key>
 		<data>
-		IPwNjXoNvZ9UXO+K/SUsGVXpnuI=
+		1laVappfLP6tzhbVlIcvdi2INqE=
 		</data>
 		<key>Headers/lua.h</key>
 		<data>
-		qoHl7lG+9ezS/i57CHtmyNFxGNI=
+		X6zVLy4EOWxRYwhI95qA0lPaqL0=
 		</data>
 		<key>Headers/luaconf.h</key>
 		<data>
@@ -26,45 +26,45 @@
 		</data>
 		<key>Headers/lualib.h</key>
 		<data>
-		devBfQj0g1B9y0JfnZUE2TEhNUM=
+		xc+qkWPeZ9WJZjcBW4SZ9CFEnvs=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		xdxJOH4gUB9EAcDUi+7RKrvwsHs=
+		4F4Dp8WcySnLaGCHjdn2dUbL/5Q=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
-		tzgltrhtebj3LUHUrGas2B9p1as=
+		AtqnwWjmbVmDs7edeae2kIfkGLI=
 		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Headers/DinYueLua.h</key>
+		<key>Headers/DingYueLua.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			fzSvbJzriL7QLUc8yhsxmw9Mis9LNxBtKVTZDsi3wN0=
+			djnlyJrXxayGmPUS2hXYKOH1xIMSfcbFDTiX4rnA0kg=
 			</data>
 		</dict>
 		<key>Headers/dingyue_extensions.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Ii8OYm+W/lhk1FCkwcAMhok+VnAmgXP5O+OnhS9o9Lo=
+			JR9TT0AgbESFCZzqtqr0wRmVGomM2z5RZTh2x9ziVUM=
 			</data>
 		</dict>
 		<key>Headers/lauxlib.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7xBpdAJi9gZKvwGsgPUOQsqwPw88t76RTdoFA1NQy/k=
+			fzpB0flIVjOz2k5RnBmhlR4GDdDUwrRYuX5qdDSPsRE=
 			</data>
 		</dict>
 		<key>Headers/lua.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			oUH8iO9a6TCNw3EHKRf9NqIYODiqx3lfM8LrdTLfUCs=
+			meO+4yKQRMjOdTpw9D11AcaUwuwjca4IJEMUt/JOvn0=
 			</data>
 		</dict>
 		<key>Headers/luaconf.h</key>
@@ -78,14 +78,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			RVkq8Aj81OyhdNBe3ZDf4aO/6Ep9IZQbDtdydTd6cqM=
+			YZPWecuA+Cv/Buq/d5icv6vOk3Q1l3mcNfVIAFPfs3Y=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			jUWZHjCPDOfaT2b1iv+ggM9OO6r+oPficGIP3/CVV/4=
+			7uHiz/Q4XmGvZxylfr6KbAtOODo46x31iV1Is6m0ifA=
 			</data>
 		</dict>
 	</dict>

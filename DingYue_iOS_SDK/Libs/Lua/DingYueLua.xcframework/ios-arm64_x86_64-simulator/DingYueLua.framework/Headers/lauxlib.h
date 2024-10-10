@@ -12,8 +12,8 @@
 #include <stddef.h>
 #include <stdio.h>
 
-#include <DinYueLua/luaconf.h>
-#include <DinYueLua/lua.h>
+#include <DingYueLua/luaconf.h>
+#include <DingYueLua/lua.h>
 
 
 /* global table */
