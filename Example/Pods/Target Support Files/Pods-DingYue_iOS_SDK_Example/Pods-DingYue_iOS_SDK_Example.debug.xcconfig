@@ -1,11 +1,11 @@
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
 CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AnyCodable-FlightSchool" "${PODS_CONFIGURATION_BUILD_DIR}/DingYue_iOS_SDK" "${PODS_CONFIGURATION_BUILD_DIR}/FCUUID" "${PODS_CONFIGURATION_BUILD_DIR}/NVActivityIndicatorView" "${PODS_CONFIGURATION_BUILD_DIR}/SSZipArchive" "${PODS_CONFIGURATION_BUILD_DIR}/UICKeyChainStore"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AnyCodable-FlightSchool" "${PODS_CONFIGURATION_BUILD_DIR}/DingYue_iOS_SDK" "${PODS_CONFIGURATION_BUILD_DIR}/FCUUID" "${PODS_CONFIGURATION_BUILD_DIR}/NVActivityIndicatorView" "${PODS_CONFIGURATION_BUILD_DIR}/SSZipArchive" "${PODS_CONFIGURATION_BUILD_DIR}/UICKeyChainStore" "${PODS_ROOT}/../../DingYue_iOS_SDK/Libs/Lua" "${PODS_XCFRAMEWORKS_BUILD_DIR}/DingYue_iOS_SDK"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AnyCodable-FlightSchool/AnyCodable.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/DingYue_iOS_SDK/DingYue_iOS_SDK.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/FCUUID/FCUUID.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SSZipArchive/SSZipArchive.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/UICKeyChainStore/UICKeyChainStore.framework/Headers"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) /usr/lib/swift '@executable_path/Frameworks' '@loader_path/Frameworks'
-LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/../../DingYue_iOS_SDK/Libs/Lua" "${TOOLCHAIN_DIR}/usr/lib/swift/${PLATFORM_NAME}" /usr/lib/swift
-OTHER_LDFLAGS = $(inherited) -ObjC -l"iconv" -l"z" -framework "AdSupport" -framework "AnyCodable" -framework "AppTrackingTransparency" -framework "DingYue_iOS_SDK" -framework "FCUUID" -framework "Foundation" -framework "NVActivityIndicatorView" -framework "QuartzCore" -framework "SSZipArchive" -framework "Security" -framework "StoreKit" -framework "UICKeyChainStore" -framework "UIKit" -framework "iAd" -weak_framework "AdServices"
+LIBRARY_SEARCH_PATHS = $(inherited) "${TOOLCHAIN_DIR}/usr/lib/swift/${PLATFORM_NAME}" /usr/lib/swift
+OTHER_LDFLAGS = $(inherited) -l"iconv" -l"z" -framework "AdSupport" -framework "AnyCodable" -framework "AppTrackingTransparency" -framework "DinYueLua" -framework "DingYue_iOS_SDK" -framework "FCUUID" -framework "Foundation" -framework "NVActivityIndicatorView" -framework "QuartzCore" -framework "SSZipArchive" -framework "Security" -framework "StoreKit" -framework "UICKeyChainStore" -framework "UIKit" -framework "iAd" -weak_framework "AdServices"
 OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)

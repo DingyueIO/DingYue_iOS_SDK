@@ -1,0 +1,6 @@
+framework module DinYueLua {
+  umbrella header "DinYueLua.h"
+  export *
+
+  module * { export * }
+}
