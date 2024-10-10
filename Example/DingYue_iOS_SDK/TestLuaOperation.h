@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <DingYue_iOS_SDK/dingyue_extensions.h>
+#import <DingYue_iOS_SDK/DYLuaExtension.h>
 @import DingYue_iOS_SDK;
 NS_ASSUME_NONNULL_BEGIN
 
