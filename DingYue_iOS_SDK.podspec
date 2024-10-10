@@ -32,8 +32,8 @@ TODO: DingYue_iOS_SDK: manage your purchase process and collect data to analyze 
   
   s.source_files = 'DingYue_iOS_SDK/Classes/**/*','DingYue_iOS_SDK/Libs/**/*.{h,m,swift}'
   s.vendored_frameworks = 'DingYue_iOS_SDK/Libs/**/*.xcframework'
-  #  s.vendored_libraries = 'DingYue_iOS_SDK/Libs/**/*.a'
-  #  s.public_header_files = 'DingYue_iOS_SDK/Libs/**/*.h'
+    s.vendored_libraries = 'DingYue_iOS_SDK/Libs/**/*.a'
+    s.public_header_files = 'DingYue_iOS_SDK/Libs/**/*.h'
 #  s.source_files = 'DingYue_iOS_SDK/Classes/**/*'
   
    s.resource_bundle = {
