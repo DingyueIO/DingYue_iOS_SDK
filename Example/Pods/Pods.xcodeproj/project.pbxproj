@@ -13,8 +13,8 @@
 		07D0279DF6BBC7FCCEDE280622853D93 /* ZipArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = 34C187CFC8DFED38D9071BC94759373A /* ZipArchive.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0890166DFB2A1B1D08BA14755EC5AC9D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 953E1AC21ADA9BF8C6EAFD317CD22B98 /* QuartzCore.framework */; };
 		091C7C632FAC32BF17793027310F74CF /* NVActivityIndicatorAnimationBallGridBeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCF9E9835850FF1276EE0FFE0D49CD7 /* NVActivityIndicatorAnimationBallGridBeat.swift */; };
-		0963DE10DF87FD0D63ECFD36DBBBC490 /* dingyue_extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 20F66B6B498CBA030737B7B8AF0BA519 /* dingyue_extensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B2823C36CF2455F1B0DE7A2055130F5 /* NVActivityIndicatorAnimationBallGridPulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20970ADBE581D28651013870925ED00 /* NVActivityIndicatorAnimationBallGridPulse.swift */; };
+		0C26758DEBBE15BCB8DF7A7357598DD8 /* luaconf.h in Headers */ = {isa = PBXBuildFile; fileRef = 132664970F7B3C6857431AF842249B53 /* luaconf.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		105470102F6A4F82FD2DB5A7DBF2F8C3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89529E8E68D8B1A3D4D1C22A9F7EB534 /* UIKit.framework */; };
 		11578C50232C95553280426FE3D5BCC6 /* GlobalSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D236287A88BC2CD4176247890880C8 /* GlobalSwitch.swift */; };
 		11C8A694B9C65DABC17082956F3730E1 /* DingYue_iOS_SDK-DingYue_iOS_SDK in Resources */ = {isa = PBXBuildFile; fileRef = 74BAC4DCA3736CC75382CD625F237BD1 /* DingYue_iOS_SDK-DingYue_iOS_SDK */; };
@@ -30,7 +30,6 @@
 		1D6DFD083C20A34E9647B62E98B01608 /* EditArrayStringUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A0CE8539587A0C620504573E502F58 /* EditArrayStringUnit.swift */; };
 		1E94F35CA49181EF718025672AF3A382 /* mz_compat.c in Sources */ = {isa = PBXBuildFile; fileRef = 37602FFE176B17333B0360EC540512EE /* mz_compat.c */; };
 		1F4F03FBBF9E8337ACA9068543B2A17D /* DYMConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62E91314DD2E0E0552A56BD937144C7 /* DYMConfiguration.swift */; };
-		1FBAC0BC3C05D4D60FC8A36554017CE5 /* lua.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A908CAF278C84492BC15B7F91CC2A9C /* lua.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		200EE5AD09EF962C495184C8FD2EE777 /* mz_strm_buf.c in Sources */ = {isa = PBXBuildFile; fileRef = 7DFA79BB5714A18AA57D986B7C9FA7EF /* mz_strm_buf.c */; };
 		20E8E0EF1D1195037734FACD01173753 /* NVActivityIndicatorAnimationBallScaleRippleMultiple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D223D6B567BDE51364FAAE7D293CF2E /* NVActivityIndicatorAnimationBallScaleRippleMultiple.swift */; };
 		21E928FF4E4ED077DCA8543D097861C5 /* NVActivityIndicatorAnimationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4CE4FFED62463D58BD24CC0B9F9C42 /* NVActivityIndicatorAnimationDelegate.swift */; };
@@ -51,9 +50,9 @@
 		30857897C945B96D12215A2D9DAA61F9 /* NVActivityIndicatorAnimationOrbit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A103CF83238B82FFAEA7F1E077F637F /* NVActivityIndicatorAnimationOrbit.swift */; };
 		339F6F2D10A88A3311B1BC848A43F41A /* PaywallSubscriptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93C907352870B364F6BF31ECD05182E /* PaywallSubscriptions.swift */; };
 		33DE9A7AE15718A0954CB9733D4325F5 /* NVActivityIndicatorAnimationBallPulseSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25898D0B71D02A790A54E1F9A3E9FC6E /* NVActivityIndicatorAnimationBallPulseSync.swift */; };
+		3412169FD585979EA43FDC6A6933148B /* DYLuaExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = AC12D6AD7F4FB7E80BF480819400C9F0 /* DYLuaExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		359B7804A37C4461228490CC75A7A22B /* FirstReceiptVerifyMobileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B5626233D70274BB6CA263B8F7F030 /* FirstReceiptVerifyMobileResponse.swift */; };
 		37C0C9B1C6CADD12E09F158EC1CFEAD7 /* mz_strm_pkcrypt.h in Headers */ = {isa = PBXBuildFile; fileRef = 26158FE2C1EC127AB0A9838A9BF92047 /* mz_strm_pkcrypt.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		384090DF4C193C9B140E375634BB43C8 /* luaconf.h in Headers */ = {isa = PBXBuildFile; fileRef = F537953138FE6CD858DBE25FCF4D8D16 /* luaconf.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		391A102E645038AABEE59D3FBD3F64DA /* DYMParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3A865BE9D10208D8DFCE99413422EC /* DYMParameter.swift */; };
 		3C081A6DE4E219880B65522B7D390B65 /* mz_strm.h in Headers */ = {isa = PBXBuildFile; fileRef = CC20984A2963852C1DE11B6898089C7A /* mz_strm.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		3CA6E8DB70598E2D67C3A6B1750A1838 /* NVActivityIndicatorAnimationBallScaleRipple.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64612312CDE589BA83758F236FC21F1 /* NVActivityIndicatorAnimationBallScaleRipple.swift */; };
@@ -93,8 +92,8 @@
 		754CBBA5DAC2A99AF2ACF4514BDE5BD0 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2EA229ECB84D189A76F9687B1B7AE7 /* Event.swift */; };
 		7627B6AFC2FF4048E212A47D8F2638E9 /* mz_strm.c in Sources */ = {isa = PBXBuildFile; fileRef = E238DFDA2E7E3B91BD5C366A87A77F13 /* mz_strm.c */; };
 		79D164D6ADAB9441A14C6EE41B698D0B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1BF7BDED89D3B57B1AD6DBF98736C0 /* Foundation.framework */; };
+		7C0F6480165361CB6EAFF3FC538C3C2E /* lauxlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 54DDC261F0174B1C7162DBDA2F933A28 /* lauxlib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7C95BBA44B9790295068F53FF934F6BA /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74D82487451B595781EC74456605FAE /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift */; };
-		7D44EBCF0E79EFB38EC8C986FEFFCDCB /* DinYueLua.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BEB10A5F5708C4A923D9EB436AB9EAA /* DinYueLua.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7EDE71776C368991EDA0A46738B7CDF9 /* NVActivityIndicatorShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377E1151833F5D6A22C2E74BAC12277F /* NVActivityIndicatorShape.swift */; };
 		82F3504F3EFFF6D462926854FE1A410D /* DYMGuideObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35752E0395D930F4A54BA1F522719E1 /* DYMGuideObject.swift */; };
 		835966FA7F195BACAE2523B6CC2A3D88 /* CodableHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076BB14E26E7E0BF9D84912C66B58A06 /* CodableHelper.swift */; };
@@ -109,6 +108,7 @@
 		8779CE790A2783A6ED251A3C0AC75F63 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1BF7BDED89D3B57B1AD6DBF98736C0 /* Foundation.framework */; };
 		883D08A325B3D6629889FBAE8E00799E /* AppleSearchAdsAttributionReportObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120FE8C536C5A47386BA92A57D7D558D /* AppleSearchAdsAttributionReportObject.swift */; };
 		89FC02206DDBB58CB1D6D560E10B0B7D /* mz.h in Headers */ = {isa = PBXBuildFile; fileRef = FE9A988F44E551E4FA74CBBA2B1163C7 /* mz.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		8A9D0A09368C552D7F818EE1027430C0 /* lua.h in Headers */ = {isa = PBXBuildFile; fileRef = 424AA6DD0302EC32840250F68F9AC864 /* lua.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8C6A27BFF55BE06FA67E5EEC6D28DDA5 /* mz_strm_split.c in Sources */ = {isa = PBXBuildFile; fileRef = 43A2247F2F18E5B4A65B0CD4B1E0FDCE /* mz_strm_split.c */; };
 		8D1AE0993E544374A61EB7E2512E0F30 /* mz_strm_os_posix.c in Sources */ = {isa = PBXBuildFile; fileRef = 315F1DAA8A3B417EBC0ED93D1322B846 /* mz_strm_os_posix.c */; };
 		8F3B33F8A4D48286086F9A1257FE6702 /* mz_strm_zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 63DD55F759F15731058F3634F4EF7C53 /* mz_strm_zlib.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -131,10 +131,11 @@
 		A67548DE8FDC95C2C7266F7EA1C82376 /* vue.js in Resources */ = {isa = PBXBuildFile; fileRef = 71EF4350A94A6B902CE81F17C6C02F38 /* vue.js */; };
 		A6C151DF4630FD8835040E7AB1160D75 /* mz_crypt_apple.c in Sources */ = {isa = PBXBuildFile; fileRef = FAA789B14B016A2FA1E34587572F3493 /* mz_crypt_apple.c */; };
 		A72FEDB4521F73D558FF589EBA3A93BF /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABE450A464F07CE9B67E6033CEDCDF5 /* Configuration.swift */; };
-		A86D9A1C896CD8106585E64FE952EB2D /* lualib.h in Headers */ = {isa = PBXBuildFile; fileRef = 00E1EB186CCF91C8625BA57B47B9A8EF /* lualib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9B2C1F222E84488B15921DEF43483D1 /* NVActivityIndicatorAnimationBallTrianglePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270C11C88A126286DE744BC15D94708B /* NVActivityIndicatorAnimationBallTrianglePath.swift */; };
+		ABCC589157E0016B729A765AFA25F80C /* DingYue_iOS_SDK-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = ED372E81705ECA197F7241D489D455FE /* DingYue_iOS_SDK-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AC107D591D9485A41E91EF02778ECBAF /* AnyDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3942603DA57A4EE0187809C31DCFC7 /* AnyDecodable.swift */; };
 		AC2108C0274B94FEC9A993999E358BBA /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5785934FB180A8D70E4F66D90F58B734 /* AppTrackingTransparency.framework */; };
+		ACE71F2D1C36717E2B0FDE00CD75CEFA /* dingyue_extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 8AC61251FCA23C5ED7CEEA60C7E04826 /* dingyue_extensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AD6BE92097D2A3CD26F2481F85AEBC57 /* UICKeyChainStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FB91F2CD9C7303550057C736CB15EF3 /* UICKeyChainStore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ADB32387E678B21FC4E8A2FCF7583085 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F63AB36D12F439A748AF4866BB69E5 /* Subscription.swift */; };
 		B05A848DD7F1A9AB5102C42BD6419081 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FD6BC6D3872E48B3D5BD01AB35DD73 /* ApiManager.swift */; };
@@ -166,11 +167,11 @@
 		D013E96277B405FD561F8FB354845EEF /* AnyCodable-FlightSchool-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A1E9E3A1722A83AA4CFADBB9E582EF85 /* AnyCodable-FlightSchool-dummy.m */; };
 		D143BC128CCE8A2904602606EF4E9636 /* UniqueUserObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7068BE8AAB6144428B17F5F5BDB56438 /* UniqueUserObject.swift */; };
 		D3112CF52E18E4011AC7342F9FDEE03F /* SSZipCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 1099ED5E1DC12AFEECC139FEC60D2CCF /* SSZipCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D3D05A3FD27423A74496E415D870FA7E /* DYLuaExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D14D4087FA8715DA7E2BB32B71B045 /* DYLuaExtension.m */; };
+		D3D05A3FD27423A74496E415D870FA7E /* DYLuaExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A3716ADF139184BD95EACDCE5614FE /* DYLuaExtension.m */; };
 		D3E5323BE68D7D899AAC9526B983B544 /* DYMIAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552C05D9C87CFB1D7F3D1AC3FF01A81B /* DYMIAPManager.swift */; };
-		D65B71B2C33001F44BFFC79DE12B7CB9 /* DYLuaExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = B8739E1C2236D203A470AC0534FC2405 /* DYLuaExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D67CC57A763FDE2A8C0A9172BFB2FAF1 /* SSZipArchive-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = AEB64BE0DBC37AFDBF98EFEEB4427680 /* SSZipArchive-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D90A1833938E902F620FA0510E5E8F56 /* SubscriptionPriceTier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093AA2A9085300691975F1CA43185484 /* SubscriptionPriceTier.swift */; };
+		DB2D8430D4D881FBF080CFBEB836ACB7 /* DingYueLua.h in Headers */ = {isa = PBXBuildFile; fileRef = B42A1D3985B4A50ED0694A5DD2C0CC76 /* DingYueLua.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DBEEF27BBCF6B5A865D7F5B7D4E7844C /* mz_compat.h in Headers */ = {isa = PBXBuildFile; fileRef = 1ABB0675A6D89F786DE91B5F7D3D341D /* mz_compat.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		DC471BCC62689DB4F5AB3453C64F3344 /* URLSessionImplementations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265B69D4F6362CC769A9454235010CEC /* URLSessionImplementations.swift */; };
 		DF0966DFCA73D9F66933AFD46608C034 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1BF7BDED89D3B57B1AD6DBF98736C0 /* Foundation.framework */; };
@@ -181,7 +182,7 @@
 		E529420D1DC8A1C36EB0BA5DA7A29C36 /* NVActivityIndicatorAnimationBallScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4ECAB859EED983E4F5C26ADAF28B874 /* NVActivityIndicatorAnimationBallScale.swift */; };
 		E5B71F4BEE01AC527075776FD77C7DD9 /* FCUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A26D503DCF49292277583E404B5BC0E /* FCUUID.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		E619B4A811100A65FE40B1FF143BD037 /* NVActivityIndicatorView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 332FEBC444CD6AE47EE0B30B67C7D54E /* NVActivityIndicatorView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E829FC3FDE4348082C5A8094F2B40151 /* lauxlib.h in Headers */ = {isa = PBXBuildFile; fileRef = BF64077EFCB567C437B609F9221ADBE2 /* lauxlib.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EA17CB42431C7905C0703919FC97F2E8 /* lualib.h in Headers */ = {isa = PBXBuildFile; fileRef = 96C90A674D8DA5F458B59220F113A095 /* lualib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EAA8F558B120765C91760C25A58B10C8 /* APIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0279A1D0D2D0F72801E6B4E0E3100B35 /* APIHelper.swift */; };
 		EAB90AA3A178499483CB35E77131A36D /* AnyEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F1C3C158ACFEB77EEAC1FD6B390F28 /* AnyEncodable.swift */; };
 		EAD4CC966AD4EE4FE7D8BECAB69758E5 /* DYMDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08D4E81E60FCAA7EA1FBA1190BF7CAF /* DYMDefaultsManager.swift */; };
@@ -196,7 +197,6 @@
 		F8D41BE897540842D12F57F71FFC97C6 /* Pods-DingYue_iOS_SDK_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E8AFB244D0784965896CA409BC9DE504 /* Pods-DingYue_iOS_SDK_Tests-dummy.m */; };
 		FB935B2F472AA4F9412F40A7C3FAEA3C /* mz_os_posix.c in Sources */ = {isa = PBXBuildFile; fileRef = 06C0C225FCA7E28451A5B37DBF6F8AFB /* mz_os_posix.c */; };
 		FCA8A7515F4996FFAB6AB84E94543CA9 /* JSONEncodingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F8EE5BFF480BCBBECC8B09F1620934 /* JSONEncodingHelper.swift */; };
-		FCCADBCDE1EBB1AB5202B5949AAC945A /* DingYue_iOS_SDK-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = ED372E81705ECA197F7241D489D455FE /* DingYue_iOS_SDK-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FD724B0C22497AD9D6281D5932691072 /* UIDevice+FCUUID.h in Headers */ = {isa = PBXBuildFile; fileRef = 44B1D158BD176E4C7F1D66939072DD2F /* UIDevice+FCUUID.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FE1A96BFF51174FFC122974DBB96159C /* mz_strm_pkcrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 692297AC8621DDA86312D77CA05A5BD6 /* mz_strm_pkcrypt.c */; };
 		FFAE480CBC5F245966AABAFEBEAA2B72 /* NVActivityIndicatorAnimationLineScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0802CBAFCD0942461E7095DEFAAADE0 /* NVActivityIndicatorAnimationLineScale.swift */; };
@@ -297,11 +297,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E1EB186CCF91C8625BA57B47B9A8EF /* lualib.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = lualib.h; sourceTree = "<group>"; };
 		0279A1D0D2D0F72801E6B4E0E3100B35 /* APIHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = APIHelper.swift; sourceTree = "<group>"; };
 		04BE1E89E9C7D5BC766FAB0F841BFE50 /* SSZipArchive-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SSZipArchive-dummy.m"; sourceTree = "<group>"; };
 		058E90A89B716A23BF1C2D2CBE1EB668 /* locale.js */ = {isa = PBXFileReference; includeInIndex = 1; name = locale.js; path = DingYue_iOS_SDK/Assets/Resources/Purchase/locale.js; sourceTree = "<group>"; };
-		05D14D4087FA8715DA7E2BB32B71B045 /* DYLuaExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DYLuaExtension.m; sourceTree = "<group>"; };
 		06C0C225FCA7E28451A5B37DBF6F8AFB /* mz_os_posix.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_os_posix.c; path = SSZipArchive/minizip/mz_os_posix.c; sourceTree = "<group>"; };
 		076BB14E26E7E0BF9D84912C66B58A06 /* CodableHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CodableHelper.swift; sourceTree = "<group>"; };
 		081711A98DD9B41BFA795B7B063C3E23 /* FCUUID.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FCUUID.release.xcconfig; sourceTree = "<group>"; };
@@ -312,22 +310,20 @@
 		1099ED5E1DC12AFEECC139FEC60D2CCF /* SSZipCommon.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSZipCommon.h; path = SSZipArchive/SSZipCommon.h; sourceTree = "<group>"; };
 		10FCF9CDFDBB9A953B172943D0559153 /* SimpleStatusResult.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SimpleStatusResult.swift; sourceTree = "<group>"; };
 		120FE8C536C5A47386BA92A57D7D558D /* AppleSearchAdsAttributionReportObject.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppleSearchAdsAttributionReportObject.swift; sourceTree = "<group>"; };
+		132664970F7B3C6857431AF842249B53 /* luaconf.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = luaconf.h; sourceTree = "<group>"; };
 		132890144BC54543C7DB71C789803056 /* SwitchItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SwitchItem.swift; sourceTree = "<group>"; };
 		1548DAB1A21498475B57A268F2A8FEFF /* Pods-DingYue_iOS_SDK_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DingYue_iOS_SDK_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		164248A3FAC0DA06DD01C49528303FA9 /* dingyue_extensions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = dingyue_extensions.h; sourceTree = "<group>"; };
 		16512765DB8A3FA32AEC07218F675311 /* UICKeyChainStore-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "UICKeyChainStore-Info.plist"; sourceTree = "<group>"; };
-		167965F81B49DB3B4AFCDAA3DC23CA96 /* lauxlib.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = lauxlib.h; sourceTree = "<group>"; };
 		16D236287A88BC2CD4176247890880C8 /* GlobalSwitch.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GlobalSwitch.swift; sourceTree = "<group>"; };
 		17B74D7AA985C567ADA0853F05FE54FD /* ReportObject.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReportObject.swift; sourceTree = "<group>"; };
-		1A908CAF278C84492BC15B7F91CC2A9C /* lua.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = lua.h; sourceTree = "<group>"; };
 		1ABB0675A6D89F786DE91B5F7D3D341D /* mz_compat.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_compat.h; path = SSZipArchive/minizip/mz_compat.h; sourceTree = "<group>"; };
 		1B480DE1D89AF618B5AB6F2ABC249486 /* NVActivityIndicatorAnimationBallDoubleBounce.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallDoubleBounce.swift; path = Sources/Base/Animations/NVActivityIndicatorAnimationBallDoubleBounce.swift; sourceTree = "<group>"; };
 		1C4E9F0869EAC24727440CE40991F013 /* mz_strm_os.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_strm_os.h; path = SSZipArchive/minizip/mz_strm_os.h; sourceTree = "<group>"; };
 		1CD9AF5002645012EA5D531FDA62C5AE /* mz_strm_zlib.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_strm_zlib.c; path = SSZipArchive/minizip/mz_strm_zlib.c; sourceTree = "<group>"; };
 		1CEEA11960066E7947952B8057DC1962 /* Models.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		1DDAEE77D622C23EE2797AD23AC12785 /* mz_strm_mem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_strm_mem.h; path = SSZipArchive/minizip/mz_strm_mem.h; sourceTree = "<group>"; };
-		1FAB0AAB2F082A3F4724E93B7AE43A8A /* lua.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = lua.h; sourceTree = "<group>"; };
 		20F033F2C1DC0675D9AF0E0EE06D245D /* ReportSessionResult.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReportSessionResult.swift; sourceTree = "<group>"; };
-		20F66B6B498CBA030737B7B8AF0BA519 /* dingyue_extensions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = dingyue_extensions.h; sourceTree = "<group>"; };
 		22A09ED9E17E254C5B4261A18A99BA61 /* FCUUID-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FCUUID-dummy.m"; sourceTree = "<group>"; };
 		249B00EA20CE37878390C4AB3996C8D6 /* DingYue_iOS_SDK */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = DingYue_iOS_SDK; path = DingYue_iOS_SDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25898D0B71D02A790A54E1F9A3E9FC6E /* NVActivityIndicatorAnimationBallPulseSync.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallPulseSync.swift; path = Sources/Base/Animations/NVActivityIndicatorAnimationBallPulseSync.swift; sourceTree = "<group>"; };
@@ -337,6 +333,7 @@
 		265B69D4F6362CC769A9454235010CEC /* URLSessionImplementations.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = URLSessionImplementations.swift; sourceTree = "<group>"; };
 		270C11C88A126286DE744BC15D94708B /* NVActivityIndicatorAnimationBallTrianglePath.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallTrianglePath.swift; path = Sources/Base/Animations/NVActivityIndicatorAnimationBallTrianglePath.swift; sourceTree = "<group>"; };
 		2ABE450A464F07CE9B67E6033CEDCDF5 /* Configuration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		2E668166A0214D29D09B906F2D3AB525 /* lua.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = lua.h; sourceTree = "<group>"; };
 		30DA30DAA4CEB83FDFA25E4714906C0B /* DingYue_iOS_SDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DingYue_iOS_SDK.release.xcconfig; sourceTree = "<group>"; };
 		315F1DAA8A3B417EBC0ED93D1322B846 /* mz_strm_os_posix.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_strm_os_posix.c; path = SSZipArchive/minizip/mz_strm_os_posix.c; sourceTree = "<group>"; };
 		32A7644C20557781E623CF928638D499 /* AppleSearchAdsAttribution.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppleSearchAdsAttribution.swift; sourceTree = "<group>"; };
@@ -347,12 +344,14 @@
 		377E1151833F5D6A22C2E74BAC12277F /* NVActivityIndicatorShape.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorShape.swift; path = Sources/Base/NVActivityIndicatorShape.swift; sourceTree = "<group>"; };
 		39625288658256B234E362ADDCD5832E /* FCUUID-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FCUUID-prefix.pch"; sourceTree = "<group>"; };
 		3995FCB091DF2D459C54A81E21E8ED9D /* AnyCodable-FlightSchool-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "AnyCodable-FlightSchool-Info.plist"; sourceTree = "<group>"; };
+		3BE2E5A4EE79CEB7D8267947B441D477 /* luaconf.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = luaconf.h; sourceTree = "<group>"; };
 		3CCF9E9835850FF1276EE0FFE0D49CD7 /* NVActivityIndicatorAnimationBallGridBeat.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallGridBeat.swift; path = Sources/Base/Animations/NVActivityIndicatorAnimationBallGridBeat.swift; sourceTree = "<group>"; };
 		3CE2D42ED8E05756279162E65A5D89A5 /* mz_os.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_os.h; path = SSZipArchive/minizip/mz_os.h; sourceTree = "<group>"; };
 		3E3942603DA57A4EE0187809C31DCFC7 /* AnyDecodable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AnyDecodable.swift; path = Sources/AnyCodable/AnyDecodable.swift; sourceTree = "<group>"; };
 		3E489332DD7C1DC678D4ECD843694451 /* DYMobileSDK.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DYMobileSDK.swift; sourceTree = "<group>"; };
 		3E683B0D5389443868BFB4827DF6A4D5 /* AnyCodable-FlightSchool.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "AnyCodable-FlightSchool.debug.xcconfig"; sourceTree = "<group>"; };
 		40845271F666424616B18E42907DAF42 /* EventReportObject.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EventReportObject.swift; sourceTree = "<group>"; };
+		424AA6DD0302EC32840250F68F9AC864 /* lua.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = lua.h; sourceTree = "<group>"; };
 		430BB15B692D76B02BDEC21442D8261F /* Pods-DingYue_iOS_SDK_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DingYue_iOS_SDK_Example-dummy.m"; sourceTree = "<group>"; };
 		43A2247F2F18E5B4A65B0CD4B1E0FDCE /* mz_strm_split.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_strm_split.c; path = SSZipArchive/minizip/mz_strm_split.c; sourceTree = "<group>"; };
 		43C92A420625DF49939BF59798FCDA2D /* FCUUID.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FCUUID.debug.xcconfig; sourceTree = "<group>"; };
@@ -372,10 +371,12 @@
 		4EB357D8FC0D83EBFF90407393CD7242 /* NVActivityIndicatorAnimationAudioEqualizer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationAudioEqualizer.swift; path = Sources/Base/Animations/NVActivityIndicatorAnimationAudioEqualizer.swift; sourceTree = "<group>"; };
 		4EFB0CF66504F822AB69B0FC5FD3568E /* DYMGuideController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DYMGuideController.swift; sourceTree = "<group>"; };
 		4F3C2692E08D8E13EE2C6A040002FDEA /* mz_strm_buf.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_strm_buf.h; path = SSZipArchive/minizip/mz_strm_buf.h; sourceTree = "<group>"; };
+		4F443F0E4267917FD937E4CDA58DB1E5 /* DingYueLua.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DingYueLua.h; sourceTree = "<group>"; };
 		50EBB6BE605B8C2600EDE6019F991EC1 /* NVActivityIndicatorAnimationBallPulse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallPulse.swift; path = Sources/Base/Animations/NVActivityIndicatorAnimationBallPulse.swift; sourceTree = "<group>"; };
 		51E4387D66403EEE4E3B6345D84FF976 /* DYMJson.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DYMJson.swift; sourceTree = "<group>"; };
 		53A4E0AF27F2A21B67038CA9584FACB8 /* DYMProgressManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DYMProgressManager.swift; sourceTree = "<group>"; };
 		54AEE6CDDD324FFE9FF524A93547C348 /* SessionsAPI.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SessionsAPI.swift; sourceTree = "<group>"; };
+		54DDC261F0174B1C7162DBDA2F933A28 /* lauxlib.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = lauxlib.h; sourceTree = "<group>"; };
 		552C05D9C87CFB1D7F3D1AC3FF01A81B /* DYMIAPManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DYMIAPManager.swift; sourceTree = "<group>"; };
 		555D592BAAD061BB4B490D920E7C0789 /* UniqueUserObjectAttribution.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UniqueUserObjectAttribution.swift; sourceTree = "<group>"; };
 		55731F97F68123E93AFE1B8C8ED593DB /* Pods-DingYue_iOS_SDK_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DingYue_iOS_SDK_Example-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -402,6 +403,7 @@
 		6E7755857AE06349036E7E587CFBB442 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		6FB91F2CD9C7303550057C736CB15EF3 /* UICKeyChainStore.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = UICKeyChainStore.h; path = Lib/UICKeyChainStore/UICKeyChainStore.h; sourceTree = "<group>"; };
 		7068BE8AAB6144428B17F5F5BDB56438 /* UniqueUserObject.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UniqueUserObject.swift; sourceTree = "<group>"; };
+		70A3716ADF139184BD95EACDCE5614FE /* DYLuaExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DYLuaExtension.m; sourceTree = "<group>"; };
 		70E619FF6AE7D694F83E77BCE5D54935 /* DYMLogManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DYMLogManager.swift; sourceTree = "<group>"; };
 		719B3243370AA0DEE65C75DF172C910E /* SSZipArchive.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSZipArchive.h; path = SSZipArchive/SSZipArchive.h; sourceTree = "<group>"; };
 		71EF4350A94A6B902CE81F17C6C02F38 /* vue.js */ = {isa = PBXFileReference; includeInIndex = 1; name = vue.js; path = DingYue_iOS_SDK/Assets/Resources/Purchase/vue.js; sourceTree = "<group>"; };
@@ -409,7 +411,6 @@
 		749D01102500DA18FF35307E79B6D8EC /* Pods-DingYue_iOS_SDK_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DingYue_iOS_SDK_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		74B00C2904D31D906810EB5A6028CC42 /* NVActivityIndicatorAnimationCubeTransition.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationCubeTransition.swift; path = Sources/Base/Animations/NVActivityIndicatorAnimationCubeTransition.swift; sourceTree = "<group>"; };
 		74BAC4DCA3736CC75382CD625F237BD1 /* DingYue_iOS_SDK-DingYue_iOS_SDK */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "DingYue_iOS_SDK-DingYue_iOS_SDK"; path = DingYue_iOS_SDK.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		74BE2828CA35EB07DC9E79FAB3957C8A /* DinYueLua.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = DinYueLua.xcframework; path = DingYue_iOS_SDK/Libs/Lua/DinYueLua.xcframework; sourceTree = "<group>"; };
 		74CF1249C4030E87CE2216BE0872D593 /* SSZipArchive.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SSZipArchive.modulemap; sourceTree = "<group>"; };
 		75BB335BE547504FD7E3D7C920BEF872 /* SessionsManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SessionsManager.swift; sourceTree = "<group>"; };
 		781F38E8569F4E09C367CEE898D2A342 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -428,13 +429,14 @@
 		88F8EE5BFF480BCBBECC8B09F1620934 /* JSONEncodingHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JSONEncodingHelper.swift; sourceTree = "<group>"; };
 		89529E8E68D8B1A3D4D1C22A9F7EB534 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		8A103CF83238B82FFAEA7F1E077F637F /* NVActivityIndicatorAnimationOrbit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationOrbit.swift; path = Sources/Base/Animations/NVActivityIndicatorAnimationOrbit.swift; sourceTree = "<group>"; };
+		8AC61251FCA23C5ED7CEEA60C7E04826 /* dingyue_extensions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = dingyue_extensions.h; sourceTree = "<group>"; };
 		8AF9855A4255CBEB799692C8C75B2FEB /* UICKeyChainStore.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = UICKeyChainStore.debug.xcconfig; sourceTree = "<group>"; };
-		8BEB10A5F5708C4A923D9EB436AB9EAA /* DinYueLua.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DinYueLua.h; sourceTree = "<group>"; };
 		8C4D5DD059F86A3E2A8B9AB21E9F61B6 /* SSZipArchive-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SSZipArchive-prefix.pch"; sourceTree = "<group>"; };
 		8E456617EBCFAAA489779D23402AC27E /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/AdSupport.framework; sourceTree = DEVELOPER_DIR; };
 		91B23470DEB9A986332BEB5034234BC7 /* SSZipArchive */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SSZipArchive; path = SSZipArchive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93DA0B699226880A54923147E9585330 /* NVActivityIndicatorAnimationBlank.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBlank.swift; path = Sources/Base/Animations/NVActivityIndicatorAnimationBlank.swift; sourceTree = "<group>"; };
 		953E1AC21ADA9BF8C6EAFD317CD22B98 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		96C90A674D8DA5F458B59220F113A095 /* lualib.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = lualib.h; sourceTree = "<group>"; };
 		9850997B5FD5FAD3B88B2E55008D1505 /* AnyCodable-FlightSchool.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "AnyCodable-FlightSchool.modulemap"; sourceTree = "<group>"; };
 		98FC00FDBF61914D9A3D5BD102BAAE36 /* Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		9AF0FAC104DD950D9A2AC90A5E7BFD22 /* SSZipArchive.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SSZipArchive.release.xcconfig; sourceTree = "<group>"; };
@@ -455,12 +457,13 @@
 		A43BE8348373527FF77758D7DEC649D5 /* UICKeyChainStore-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UICKeyChainStore-dummy.m"; sourceTree = "<group>"; };
 		A74D82487451B595781EC74456605FAE /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationLineSpinFadeLoader.swift; path = Sources/Base/Animations/NVActivityIndicatorAnimationLineSpinFadeLoader.swift; sourceTree = "<group>"; };
 		A7E4A6EE427594EE6627CE33E7CB1C0C /* NVActivityIndicatorView-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "NVActivityIndicatorView-Info.plist"; sourceTree = "<group>"; };
+		A854EBF9EE47F2C6D609F69F10C72364 /* DingYueLua.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = DingYueLua.xcframework; path = DingYue_iOS_SDK/Libs/Lua/DingYueLua.xcframework; sourceTree = "<group>"; };
 		A8792EDB2EA0A26CA0AC118705A51DA1 /* Attribution.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Attribution.swift; sourceTree = "<group>"; };
 		A88BFB3B8E56C3355B2052DEE69E4FC3 /* DYMConstants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DYMConstants.swift; sourceTree = "<group>"; };
 		A9C66EF13EDF572DCE0D700975200EF3 /* UserProperties.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UserProperties.swift; sourceTree = "<group>"; };
 		A9EEE43522E64102DD09232809B66500 /* DingYue_iOS_SDK-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "DingYue_iOS_SDK-xcframeworks.sh"; sourceTree = "<group>"; };
 		AB6B4A24920986D1C6F70A136CB0D832 /* Pods-DingYue_iOS_SDK_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DingYue_iOS_SDK_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
-		ACBAF3C3725366E38C8389F1303D00D9 /* dingyue_extensions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = dingyue_extensions.h; sourceTree = "<group>"; };
+		AC12D6AD7F4FB7E80BF480819400C9F0 /* DYLuaExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DYLuaExtension.h; sourceTree = "<group>"; };
 		AEB64BE0DBC37AFDBF98EFEEB4427680 /* SSZipArchive-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SSZipArchive-umbrella.h"; sourceTree = "<group>"; };
 		AEFAECDFD0941378A57673BE487F3F48 /* APIs.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = APIs.swift; sourceTree = "<group>"; };
 		B0292285EA8C1955E94174593C1EB3AD /* EditStringUnit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditStringUnit.swift; sourceTree = "<group>"; };
@@ -468,9 +471,9 @@
 		B164A3167B13DD82D47C2A901A83EFF2 /* NVActivityIndicatorAnimationLineScalePulseOut.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationLineScalePulseOut.swift; path = Sources/Base/Animations/NVActivityIndicatorAnimationLineScalePulseOut.swift; sourceTree = "<group>"; };
 		B1F1B7612298CF0DB19F2601CCF165D4 /* FCUUID-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "FCUUID-Info.plist"; sourceTree = "<group>"; };
 		B393D04213A1455EC7745FD19D90DAD2 /* mz_strm_split.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mz_strm_split.h; path = SSZipArchive/minizip/mz_strm_split.h; sourceTree = "<group>"; };
+		B42A1D3985B4A50ED0694A5DD2C0CC76 /* DingYueLua.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DingYueLua.h; sourceTree = "<group>"; };
 		B7417477CFA34E08AE15A1A91CC53907 /* SSZipArchive.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SSZipArchive.m; path = SSZipArchive/SSZipArchive.m; sourceTree = "<group>"; };
 		B74D429E5E9BB66148B40747EFE7B0E0 /* FCUUID.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FCUUID.h; path = FCUUID/FCUUID.h; sourceTree = "<group>"; };
-		B8739E1C2236D203A470AC0534FC2405 /* DYLuaExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DYLuaExtension.h; sourceTree = "<group>"; };
 		BAF97673CEEDABD321B921CF97220810 /* DingYue_iOS_SDK.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = DingYue_iOS_SDK.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BB7F492167A951B945C5756A849E2489 /* SSZipArchive-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SSZipArchive-Info.plist"; sourceTree = "<group>"; };
 		BCF9CE1231737F69EFD315B89C18D136 /* Pods-DingYue_iOS_SDK_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-DingYue_iOS_SDK_Example.modulemap"; sourceTree = "<group>"; };
@@ -478,7 +481,6 @@
 		BE87A7D769C35AFCE09E2B71C9DA5DF1 /* Pods-DingYue_iOS_SDK_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-DingYue_iOS_SDK_Tests-umbrella.h"; sourceTree = "<group>"; };
 		BE9BA0D34CED3610C8F006FE0AB12B39 /* Paywall.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Paywall.swift; sourceTree = "<group>"; };
 		BE9F379DE5356FB928800EA78D949C06 /* DYMLuaScriptManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DYMLuaScriptManager.swift; sourceTree = "<group>"; };
-		BF64077EFCB567C437B609F9221ADBE2 /* lauxlib.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = lauxlib.h; sourceTree = "<group>"; };
 		BFD5C50D0B5C77F9B1A6518E6EEC7FB1 /* DYMError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DYMError.swift; sourceTree = "<group>"; };
 		BFF938300854F7B80A76FE1D72A1D0B3 /* NVActivityIndicatorView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NVActivityIndicatorView.release.xcconfig; sourceTree = "<group>"; };
 		C0AC05EE7AF1835864DDC2CCFA414B20 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
@@ -501,9 +503,8 @@
 		D35752E0395D930F4A54BA1F522719E1 /* DYMGuideObject.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DYMGuideObject.swift; sourceTree = "<group>"; };
 		D453ACEEF8F9896E30552EFD056BCC83 /* NVActivityIndicatorAnimationBallClipRotate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallClipRotate.swift; path = Sources/Base/Animations/NVActivityIndicatorAnimationBallClipRotate.swift; sourceTree = "<group>"; };
 		D64612312CDE589BA83758F236FC21F1 /* NVActivityIndicatorAnimationBallScaleRipple.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallScaleRipple.swift; path = Sources/Base/Animations/NVActivityIndicatorAnimationBallScaleRipple.swift; sourceTree = "<group>"; };
-		D6C06F1285C05188FA5BB78801BDF17B /* DinYueLua.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DinYueLua.h; sourceTree = "<group>"; };
-		D6DAB90DA1C7E4BEDA991304E1FE9BD9 /* luaconf.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = luaconf.h; sourceTree = "<group>"; };
 		D8B5626233D70274BB6CA263B8F7F030 /* FirstReceiptVerifyMobileResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirstReceiptVerifyMobileResponse.swift; sourceTree = "<group>"; };
+		DD5270FC3AF964ABE1197E2258DA588D /* lauxlib.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = lauxlib.h; sourceTree = "<group>"; };
 		DE4D96480D6782CC2043D5FDF7AADC56 /* NVActivityIndicatorAnimationSemiCircleSpin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationSemiCircleSpin.swift; path = Sources/Base/Animations/NVActivityIndicatorAnimationSemiCircleSpin.swift; sourceTree = "<group>"; };
 		DF1BF7BDED89D3B57B1AD6DBF98736C0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		DF2EA229ECB84D189A76F9687B1B7AE7 /* Event.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -526,17 +527,16 @@
 		EB0D6B4138BCEF7A2D359669824A19BC /* Pods-DingYue_iOS_SDK_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DingYue_iOS_SDK_Tests-Info.plist"; sourceTree = "<group>"; };
 		ED372E81705ECA197F7241D489D455FE /* DingYue_iOS_SDK-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DingYue_iOS_SDK-umbrella.h"; sourceTree = "<group>"; };
 		EDBDE987D4D67A6C54A1736D17306045 /* ReceiptVerifyMobileResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReceiptVerifyMobileResponse.swift; sourceTree = "<group>"; };
-		F095C752B80EF5EED23D9140090D7CB3 /* lualib.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = lualib.h; sourceTree = "<group>"; };
 		F0D9C6734CD1EEFAC319FAC1697764DC /* SynchronizedDictionary.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SynchronizedDictionary.swift; sourceTree = "<group>"; };
 		F0E3D13971CAD9FB6A071D498467E467 /* ReceiptVerifyPostObject.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReceiptVerifyPostObject.swift; sourceTree = "<group>"; };
 		F1670C79D111A424A87669BBA59F69C2 /* Pods-DingYue_iOS_SDK_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DingYue_iOS_SDK_Example.release.xcconfig"; sourceTree = "<group>"; };
 		F319AA9644AAED802CB447FF38CAB8BE /* ConversionRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConversionRequest.swift; sourceTree = "<group>"; };
 		F427B3B6A90724A57275DEEB75FABED1 /* UICKeyChainStore.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = UICKeyChainStore.modulemap; sourceTree = "<group>"; };
 		F4ECAB859EED983E4F5C26ADAF28B874 /* NVActivityIndicatorAnimationBallScale.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallScale.swift; path = Sources/Base/Animations/NVActivityIndicatorAnimationBallScale.swift; sourceTree = "<group>"; };
-		F537953138FE6CD858DBE25FCF4D8D16 /* luaconf.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = luaconf.h; sourceTree = "<group>"; };
 		F5739F6669B61DF09493B37866C43EC8 /* ReceiptAPI.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReceiptAPI.swift; sourceTree = "<group>"; };
 		F589891239C57B7A38C9D0AABAC8838F /* NVActivityIndicatorAnimationBallClipRotatePulse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallClipRotatePulse.swift; path = Sources/Base/Animations/NVActivityIndicatorAnimationBallClipRotatePulse.swift; sourceTree = "<group>"; };
 		F5F63AB36D12F439A748AF4866BB69E5 /* Subscription.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
+		F65C1C1A546EF46DA2BF6F7C20480E10 /* lualib.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = lualib.h; sourceTree = "<group>"; };
 		F93C907352870B364F6BF31ECD05182E /* PaywallSubscriptions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PaywallSubscriptions.swift; sourceTree = "<group>"; };
 		FAA789B14B016A2FA1E34587572F3493 /* mz_crypt_apple.c */ = {isa = PBXFileReference; includeInIndex = 1; name = mz_crypt_apple.c; path = SSZipArchive/minizip/mz_crypt_apple.c; sourceTree = "<group>"; };
 		FAE50A9C8DC84628F6C67146633C5618 /* DYMEventManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DYMEventManager.swift; sourceTree = "<group>"; };
@@ -631,15 +631,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		011DD20AD8D6D44DEBEC1E02A9CF5F31 /* Headers */ = {
+		00A26DD0A2A3E8A51014A8A063D0BA4B /* Lua */ = {
 			isa = PBXGroup;
 			children = (
-				ACBAF3C3725366E38C8389F1303D00D9 /* dingyue_extensions.h */,
-				D6C06F1285C05188FA5BB78801BDF17B /* DinYueLua.h */,
-				167965F81B49DB3B4AFCDAA3DC23CA96 /* lauxlib.h */,
-				1FAB0AAB2F082A3F4724E93B7AE43A8A /* lua.h */,
-				D6DAB90DA1C7E4BEDA991304E1FE9BD9 /* luaconf.h */,
-				F095C752B80EF5EED23D9140090D7CB3 /* lualib.h */,
+				AC12D6AD7F4FB7E80BF480819400C9F0 /* DYLuaExtension.h */,
+				70A3716ADF139184BD95EACDCE5614FE /* DYLuaExtension.m */,
+				840062502780703E7BD61007C5DDB53C /* DingYueLua.xcframework */,
+			);
+			name = Lua;
+			path = Lua;
+			sourceTree = "<group>";
+		};
+		09F37FD6C392F63F94381AE1F45BE9A7 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				164248A3FAC0DA06DD01C49528303FA9 /* dingyue_extensions.h */,
+				4F443F0E4267917FD937E4CDA58DB1E5 /* DingYueLua.h */,
+				DD5270FC3AF964ABE1197E2258DA588D /* lauxlib.h */,
+				2E668166A0214D29D09B906F2D3AB525 /* lua.h */,
+				3BE2E5A4EE79CEB7D8267947B441D477 /* luaconf.h */,
+				F65C1C1A546EF46DA2BF6F7C20480E10 /* lualib.h */,
 			);
 			name = Headers;
 			path = Headers;
@@ -658,15 +669,6 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/UICKeyChainStore";
-			sourceTree = "<group>";
-		};
-		1CFB9E9434EA5D96BCE5406E2EF92253 /* DinYueLua.framework */ = {
-			isa = PBXGroup;
-			children = (
-				8BB2D978E62A79BB55D6B130BF8DC961 /* Headers */,
-			);
-			name = DinYueLua.framework;
-			path = DinYueLua.framework;
 			sourceTree = "<group>";
 		};
 		234E550E6F4E47641B986990EC4C2C22 /* Support Files */ = {
@@ -753,7 +755,7 @@
 				058E90A89B716A23BF1C2D2CBE1EB668 /* locale.js */,
 				71EF4350A94A6B902CE81F17C6C02F38 /* vue.js */,
 				B4738633088C70097A40B49C5213DC14 /* Classes */,
-				7C16ECD89BA66291B73A3FB2E559E896 /* Frameworks */,
+				7020C13854FF4DA536B6C7E357BFE86D /* Frameworks */,
 				688ADC2B2A4D4ECFBA4A1F72212D141B /* Libs */,
 				51CA4C4F5EA626A1DD9219981868882C /* Pod */,
 				234E550E6F4E47641B986990EC4C2C22 /* Support Files */,
@@ -782,15 +784,6 @@
 				9D1F864116742B7035E7C2BA6F47702B /* README.md */,
 			);
 			name = Pod;
-			sourceTree = "<group>";
-		};
-		52C46617EA2B437B1DC17EF972A1AC99 /* ios-arm64 */ = {
-			isa = PBXGroup;
-			children = (
-				6544064E6832E9FC4083A4FD50CE8F46 /* DinYueLua.framework */,
-			);
-			name = "ios-arm64";
-			path = "ios-arm64";
 			sourceTree = "<group>";
 		};
 		54DBD8174245CC3C60FA9A3251B1328A /* Development Pods */ = {
@@ -848,19 +841,19 @@
 			path = "Target Support Files/Pods-DingYue_iOS_SDK_Example";
 			sourceTree = "<group>";
 		};
-		6544064E6832E9FC4083A4FD50CE8F46 /* DinYueLua.framework */ = {
+		6401727D0A565559642D340CA257C67E /* DingYueLua.framework */ = {
 			isa = PBXGroup;
 			children = (
-				011DD20AD8D6D44DEBEC1E02A9CF5F31 /* Headers */,
+				CDB70C26C7BC12EAC5D3CD4E27F4ABED /* Headers */,
 			);
-			name = DinYueLua.framework;
-			path = DinYueLua.framework;
+			name = DingYueLua.framework;
+			path = DingYueLua.framework;
 			sourceTree = "<group>";
 		};
 		688ADC2B2A4D4ECFBA4A1F72212D141B /* Libs */ = {
 			isa = PBXGroup;
 			children = (
-				DD09F9D29A34457E1F833DBB66675607 /* Lua */,
+				00A26DD0A2A3E8A51014A8A063D0BA4B /* Lua */,
 			);
 			name = Libs;
 			path = DingYue_iOS_SDK/Libs;
@@ -881,6 +874,14 @@
 			path = "../Target Support Files/AnyCodable-FlightSchool";
 			sourceTree = "<group>";
 		};
+		7020C13854FF4DA536B6C7E357BFE86D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A854EBF9EE47F2C6D609F69F10C72364 /* DingYueLua.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		779D0E6CA27C0163B47390DA88759A11 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -896,26 +897,23 @@
 			path = "../Target Support Files/FCUUID";
 			sourceTree = "<group>";
 		};
-		7C16ECD89BA66291B73A3FB2E559E896 /* Frameworks */ = {
+		840062502780703E7BD61007C5DDB53C /* DingYueLua.xcframework */ = {
 			isa = PBXGroup;
 			children = (
-				74BE2828CA35EB07DC9E79FAB3957C8A /* DinYueLua.xcframework */,
+				869FE75F4C8E6F964924946329202D1E /* ios-arm64 */,
+				DD4D3F3C293656E1CE239125122BE238 /* ios-arm64_x86_64-simulator */,
 			);
-			name = Frameworks;
+			name = DingYueLua.xcframework;
+			path = DingYueLua.xcframework;
 			sourceTree = "<group>";
 		};
-		8BB2D978E62A79BB55D6B130BF8DC961 /* Headers */ = {
+		869FE75F4C8E6F964924946329202D1E /* ios-arm64 */ = {
 			isa = PBXGroup;
 			children = (
-				20F66B6B498CBA030737B7B8AF0BA519 /* dingyue_extensions.h */,
-				8BEB10A5F5708C4A923D9EB436AB9EAA /* DinYueLua.h */,
-				BF64077EFCB567C437B609F9221ADBE2 /* lauxlib.h */,
-				1A908CAF278C84492BC15B7F91CC2A9C /* lua.h */,
-				F537953138FE6CD858DBE25FCF4D8D16 /* luaconf.h */,
-				00E1EB186CCF91C8625BA57B47B9A8EF /* lualib.h */,
+				96DD3B1E467816F8894B9189D5EDB94C /* DingYueLua.framework */,
 			);
-			name = Headers;
-			path = Headers;
+			name = "ios-arm64";
+			path = "ios-arm64";
 			sourceTree = "<group>";
 		};
 		8FE103A84E6219B19C1FCD562B499462 /* SSZipArchive */ = {
@@ -1033,6 +1031,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		96DD3B1E467816F8894B9189D5EDB94C /* DingYueLua.framework */ = {
+			isa = PBXGroup;
+			children = (
+				09F37FD6C392F63F94381AE1F45BE9A7 /* Headers */,
+			);
+			name = DingYueLua.framework;
+			path = DingYueLua.framework;
+			sourceTree = "<group>";
+		};
 		B4738633088C70097A40B49C5213DC14 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1053,6 +1060,20 @@
 			);
 			name = APIs;
 			path = APIs;
+			sourceTree = "<group>";
+		};
+		CDB70C26C7BC12EAC5D3CD4E27F4ABED /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				8AC61251FCA23C5ED7CEEA60C7E04826 /* dingyue_extensions.h */,
+				B42A1D3985B4A50ED0694A5DD2C0CC76 /* DingYueLua.h */,
+				54DDC261F0174B1C7162DBDA2F933A28 /* lauxlib.h */,
+				424AA6DD0302EC32840250F68F9AC864 /* lua.h */,
+				132664970F7B3C6857431AF842249B53 /* luaconf.h */,
+				96C90A674D8DA5F458B59220F113A095 /* lualib.h */,
+			);
+			name = Headers;
+			path = Headers;
 			sourceTree = "<group>";
 		};
 		CF1408CF629C7361332E53B88F7BD30C = {
@@ -1138,21 +1159,10 @@
 			path = "../Target Support Files/NVActivityIndicatorView";
 			sourceTree = "<group>";
 		};
-		DD09F9D29A34457E1F833DBB66675607 /* Lua */ = {
+		DD4D3F3C293656E1CE239125122BE238 /* ios-arm64_x86_64-simulator */ = {
 			isa = PBXGroup;
 			children = (
-				B8739E1C2236D203A470AC0534FC2405 /* DYLuaExtension.h */,
-				05D14D4087FA8715DA7E2BB32B71B045 /* DYLuaExtension.m */,
-				F4E59617EB9379A9B6F17566B4ECC787 /* DinYueLua.xcframework */,
-			);
-			name = Lua;
-			path = Lua;
-			sourceTree = "<group>";
-		};
-		DDB29BCB1EA8FB4390A131C5006E33AA /* ios-arm64_x86_64-simulator */ = {
-			isa = PBXGroup;
-			children = (
-				1CFB9E9434EA5D96BCE5406E2EF92253 /* DinYueLua.framework */,
+				6401727D0A565559642D340CA257C67E /* DingYueLua.framework */,
 			);
 			name = "ios-arm64_x86_64-simulator";
 			path = "ios-arm64_x86_64-simulator";
@@ -1206,16 +1216,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F4E59617EB9379A9B6F17566B4ECC787 /* DinYueLua.xcframework */ = {
-			isa = PBXGroup;
-			children = (
-				52C46617EA2B437B1DC17EF972A1AC99 /* ios-arm64 */,
-				DDB29BCB1EA8FB4390A131C5006E33AA /* ios-arm64_x86_64-simulator */,
-			);
-			name = DinYueLua.xcframework;
-			path = DinYueLua.xcframework;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1235,6 +1235,27 @@
 				2A3A235A8F893F4BEAE4D766954AA0FA /* FCUUID.h in Headers */,
 				BD210BE65BE2AC23296E7F8AEAE36188 /* FCUUID-umbrella.h in Headers */,
 				FD724B0C22497AD9D6281D5932691072 /* UIDevice+FCUUID.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97919E664EC44407CB44D322A2969707 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ACE71F2D1C36717E2B0FDE00CD75CEFA /* dingyue_extensions.h in Headers */,
+				ACE71F2D1C36717E2B0FDE00CD75CEFA /* dingyue_extensions.h in Headers */,
+				ABCC589157E0016B729A765AFA25F80C /* DingYue_iOS_SDK-umbrella.h in Headers */,
+				DB2D8430D4D881FBF080CFBEB836ACB7 /* DingYueLua.h in Headers */,
+				DB2D8430D4D881FBF080CFBEB836ACB7 /* DingYueLua.h in Headers */,
+				3412169FD585979EA43FDC6A6933148B /* DYLuaExtension.h in Headers */,
+				7C0F6480165361CB6EAFF3FC538C3C2E /* lauxlib.h in Headers */,
+				7C0F6480165361CB6EAFF3FC538C3C2E /* lauxlib.h in Headers */,
+				8A9D0A09368C552D7F818EE1027430C0 /* lua.h in Headers */,
+				8A9D0A09368C552D7F818EE1027430C0 /* lua.h in Headers */,
+				0C26758DEBBE15BCB8DF7A7357598DD8 /* luaconf.h in Headers */,
+				0C26758DEBBE15BCB8DF7A7357598DD8 /* luaconf.h in Headers */,
+				EA17CB42431C7905C0703919FC97F2E8 /* lualib.h in Headers */,
+				EA17CB42431C7905C0703919FC97F2E8 /* lualib.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1268,27 +1289,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E619B4A811100A65FE40B1FF143BD037 /* NVActivityIndicatorView-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CACC2D4E3035CC27374595F71D0E63D7 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0963DE10DF87FD0D63ECFD36DBBBC490 /* dingyue_extensions.h in Headers */,
-				0963DE10DF87FD0D63ECFD36DBBBC490 /* dingyue_extensions.h in Headers */,
-				FCCADBCDE1EBB1AB5202B5949AAC945A /* DingYue_iOS_SDK-umbrella.h in Headers */,
-				7D44EBCF0E79EFB38EC8C986FEFFCDCB /* DinYueLua.h in Headers */,
-				7D44EBCF0E79EFB38EC8C986FEFFCDCB /* DinYueLua.h in Headers */,
-				D65B71B2C33001F44BFFC79DE12B7CB9 /* DYLuaExtension.h in Headers */,
-				E829FC3FDE4348082C5A8094F2B40151 /* lauxlib.h in Headers */,
-				E829FC3FDE4348082C5A8094F2B40151 /* lauxlib.h in Headers */,
-				1FBAC0BC3C05D4D60FC8A36554017CE5 /* lua.h in Headers */,
-				1FBAC0BC3C05D4D60FC8A36554017CE5 /* lua.h in Headers */,
-				384090DF4C193C9B140E375634BB43C8 /* luaconf.h in Headers */,
-				384090DF4C193C9B140E375634BB43C8 /* luaconf.h in Headers */,
-				A86D9A1C896CD8106585E64FE952EB2D /* lualib.h in Headers */,
-				A86D9A1C896CD8106585E64FE952EB2D /* lualib.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1342,8 +1342,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9196FE9AD3435124F7B3EB493FFC5C8A /* Build configuration list for PBXNativeTarget "DingYue_iOS_SDK" */;
 			buildPhases = (
-				CACC2D4E3035CC27374595F71D0E63D7 /* Headers */,
-				94D397DC412630F7AE9365BA666138E2 /* [CP] Copy XCFrameworks */,
+				97919E664EC44407CB44D322A2969707 /* Headers */,
+				611D6E884FFB11DD346903864D8330B9 /* [CP] Copy XCFrameworks */,
 				8DADD5E1F8522CA8235E5AF2C7C2FAC9 /* Sources */,
 				C4E4CAF778F152ECF3984737AA0AA320 /* Frameworks */,
 				0CB39FE5DBEFB496049E8F6BD923FECD /* Resources */,
@@ -1602,18 +1602,18 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		94D397DC412630F7AE9365BA666138E2 /* [CP] Copy XCFrameworks */ = {
+		611D6E884FFB11DD346903864D8330B9 /* [CP] Copy XCFrameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/DingYue_iOS_SDK/DingYue_iOS_SDK-xcframeworks.sh",
-				"${PODS_ROOT}/../../DingYue_iOS_SDK/Libs/Lua/DinYueLua.xcframework",
+				"${PODS_ROOT}/../../DingYue_iOS_SDK/Libs/Lua/DingYueLua.xcframework",
 			);
 			name = "[CP] Copy XCFrameworks";
 			outputPaths = (
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/DingYue_iOS_SDK/DinYueLua.framework",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/DingYue_iOS_SDK/DingYueLua.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

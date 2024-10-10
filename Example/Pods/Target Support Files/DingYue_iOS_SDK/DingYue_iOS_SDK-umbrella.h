@@ -10,14 +10,14 @@
 #endif
 #endif
 
+#import "DingYueLua.h"
 #import "dingyue_extensions.h"
-#import "DinYueLua.h"
 #import "lauxlib.h"
 #import "lua.h"
 #import "luaconf.h"
 #import "lualib.h"
+#import "DingYueLua.h"
 #import "dingyue_extensions.h"
-#import "DinYueLua.h"
 #import "lauxlib.h"
 #import "lua.h"
 #import "luaconf.h"
