@@ -1,9 +1,9 @@
 {
   "name": "DingYue_iOS_SDK",
-  "version": "0.3.12",
+  "version": "0.3.13",
   "summary": "DingYue_iOS_SDK podspec file .",
   "description": "TODO: DingYue_iOS_SDK: manage your purchase process and collect data to analyze data conveniently",
-  "homepage": "https://github.com/DingYueIO/DingYue_iOS_SDK",
+  "homepage": "https://dingyue.io",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -12,19 +12,15 @@
     "DingYueIO": "support@dingyue.io"
   },
   "source": {
-    "git": "https://github.com/DingYueIO/DingYue_iOS_SDK.git",
-    "tag": "0.3.12"
+    "git": "git@cpa.asoplus.cn:dingyueIosSdk_private.git",
+    "tag": "0.3.13"
   },
   "platforms": {
     "ios": "12.0"
   },
-  "source_files": [
-    "DingYue_iOS_SDK/Classes/**/*",
-    "DingYue_iOS_SDK/Libs/**/*.{h,m,swift}"
-  ],
-  "vendored_libraries": "DingYue_iOS_SDK/Libs/**/*.a",
-  "public_header_files": "DingYue_iOS_SDK/Libs/**/*.h",
-  "vendored_frameworks": "DingYue_iOS_SDK/Libs/**/*.xcframework",
+  "source_files": "DingYue_iOS_SDK/Classes/**/*.{h,m,swift}",
+  "vendored_frameworks": "DingYue_iOS_SDK/Libs/Lua/DingYueLua.xcframework",
+  "public_header_files": "DingYue_iOS_SDK/Libs/Lua/*.h",
   "resource_bundles": {
     "DingYue_iOS_SDK": "DingYue_iOS_SDK/Assets/Resources/Purchase/*"
   },
