@@ -13,7 +13,7 @@
 #include <stddef.h>
 
 
-#include <DinYueLua/luaconf.h>
+#include <DingYueLua/luaconf.h>
 
 
 #define LUA_VERSION_MAJOR	"5"
