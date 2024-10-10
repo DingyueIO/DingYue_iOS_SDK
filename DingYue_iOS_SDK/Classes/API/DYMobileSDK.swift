@@ -23,6 +23,14 @@ import AdSupport
     @objc public static var idfaCollectionDisabled: Bool = false
     ///判断是否使用默认CV规则
     @objc public static var defaultConversionValueEnabled: Bool = false
+    
+    @objc public static var basePath:String = "" {
+        didSet {
+            if !basePath.isEmpty {
+                OpenAPIClientAPI.basePath = basePath
+            }
+        }
+    }
     ///场景控制器
     private lazy var sessionsManager: SessionsManager = {
         return SessionsManager()

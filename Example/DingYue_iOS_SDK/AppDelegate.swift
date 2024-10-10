@@ -26,8 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         //session report
         DYMobileSDK.defaultConversionValueEnabled = true //use default cv rule
-        //进行配置
-     
+        //进行配置 basePath
+        DYMobileSDK.basePath = "https://mobile.dingyueio.cn"
        
         DYMConfiguration.shared.guidePageConfig.indicatorColor = .orange
         /*
