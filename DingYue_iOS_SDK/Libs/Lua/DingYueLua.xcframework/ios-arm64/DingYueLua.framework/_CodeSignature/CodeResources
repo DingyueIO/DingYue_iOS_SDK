@@ -4,6 +4,10 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>Headers/DingYueLua.h</key>
+		<data>
+		i0a8sd2ivJFn8M8RGBUkWl8b3f4=
+		</data>
 		<key>Headers/dingyue_extensions.h</key>
 		<data>
 		T2F5coyFwb1ZhWmwOKQb1cNh5y8=
@@ -28,9 +32,20 @@
 		<data>
 		rf2Cx7PdliTGMdmDKTuGiIiadSU=
 		</data>
+		<key>Modules/module.modulemap</key>
+		<data>
+		AtqnwWjmbVmDs7edeae2kIfkGLI=
+		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>Headers/DingYueLua.h</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			djnlyJrXxayGmPUS2hXYKOH1xIMSfcbFDTiX4rnA0kg=
+			</data>
+		</dict>
 		<key>Headers/dingyue_extensions.h</key>
 		<dict>
 			<key>hash2</key>
@@ -64,6 +79,13 @@
 			<key>hash2</key>
 			<data>
 			YZPWecuA+Cv/Buq/d5icv6vOk3Q1l3mcNfVIAFPfs3Y=
+			</data>
+		</dict>
+		<key>Modules/module.modulemap</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			7uHiz/Q4XmGvZxylfr6KbAtOODo46x31iV1Is6m0ifA=
 			</data>
 		</dict>
 	</dict>
