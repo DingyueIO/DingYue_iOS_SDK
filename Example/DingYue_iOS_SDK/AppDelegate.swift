@@ -26,16 +26,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         //session report
         DYMobileSDK.defaultConversionValueEnabled = true //use default cv rule
-        //进行配置
-     
+        //进行配置 basePath
+        DYMobileSDK.basePath = "https://mobile.dingyueio.cn"
        
-        DYMConfiguration.shared.guidePageConfig.indicatorColor = .orange
         /*
          连续请求10次失败之后 将会进入之前下载的默认引导页(如果没有默认下载的引导页，则需要在clickGuideCloseButton代理中，设置下一步操作，例如，进入主页，
          也可以 在sdk回调中进行设置。可根据 nativeGuidePageId 进行判断 （ 未返回，或者为空  代表未配置 web引导页） 可设置为 切换到原生引导页。
          如果不设置，则会在网络成功的情况下进入web 引导页
          */
-//        self.showWebGuideVC()
+        self.showWebGuideVC()
+        self.setLocalGuidePaths()
         DYMobileSDK.activate { results, error in
             if error == nil {
                 if let res = results {
@@ -49,12 +49,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     DYMConfiguration.shared.guidePageConfig.isVIP = true
                     // 未返回 nativeGuidePageId 代表 未配置 web引导页
                     if let nativeGuidePageId = res["nativeGuidePageId"] as? String , nativeGuidePageId.count <= 0 {
-                        // 手动指定本地h5路径
-                        // 或者 原生 引导页面
+                        // 原生 rootvc相关逻辑
                         self.setRootVC()
-                        // 本地web guide
-                        // self.setLocalGuidePaths()
-  
                     }else {
                       // 如果配置 则 自动加载 引导页 或者进入主页
                         if UserDefaults.standard.bool(forKey: HasDisplayedGuide) {
@@ -65,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
                 
             }else {
-                // 接口请求失败的话，会自动调用 clickGuideCloseButton 代理。 closetype 是 “NO_LOCAL_WEB_GUIDE_CLOSE”
+                // 接口请求失败
                 self.setRootVC()
             }
             
@@ -77,8 +73,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func showWebGuideVC() {
-      
-        
+        self.window = UIWindow.init(frame: UIScreen.main.bounds)
+        self.window?.backgroundColor = UIColor.white
+        self.window?.makeKeyAndVisible()
+        DYMConfiguration.shared.guidePageConfig.indicatorColor = .orange
+
         //显示引导页-可以传符合要求的内购项信息对象
         let defaultProuct1 = Subscription(type: "SUBSCRIPTION", name: "Week", platformProductId: "testWeek", price: "7.99", currencyCode: "USD", countryCode: "US")
         let defaultProuct2 = Subscription(type: "SUBSCRIPTION", name: "Year", platformProductId: "testYear", appleSubscriptionGroupId: nil, description: "default product item", period: "Year", price: "49.99", currencyCode: "USD", countryCode: "US", priceTier: nil, gracePeriod: nil, icon: nil, renewPriceChange: nil)
@@ -91,15 +90,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             "mainColor": "white"
         ]
         DYMobileSDK.showVisualGuide(products: [defaultProuct1,defaultProuct2],rootDelegate:self,extras: extra) { receipt, purchaseResult, error in
-            print("进入主页")
-            self.window?.rootViewController = ViewController()
-            self.window?.backgroundColor = .white
-            self.window?.makeKeyAndVisible()
+            
+            if let res = purchaseResult,res.count > 0 {
+                let expireTime = self.calculateNewExpiryTime(from: res)
+                let now = self.getCurrentTimestamp()
+                if expireTime > Int(now){
+                    //引导页购买成功
+                    //自定义逻辑
+                    self.window?.rootViewController = ViewController()
+                    
+                }else {
+                    //引导页购买失败
+                }
+            }else {
+                //引导页购买失败
+            }
         }
         
  
     }
-    
+ 
     
     //加载本地web 路径
     func setLocalGuidePaths() {
@@ -122,13 +132,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       }
     
     func setRootVC() {
-        self.window = UIWindow.init(frame: UIScreen.main.bounds)
-        self.window?.backgroundColor = UIColor.white
-        self.window?.makeKeyAndVisible()
+       
         if UserDefaults.standard.bool(forKey: HasDisplayedGuide) {
             self.window?.rootViewController = ViewController()
         }else{
             // 原生引导页
+            self.window?.rootViewController = ViewController()
+
         }
         
     }
@@ -159,6 +169,7 @@ extension AppDelegate: DYMWindowManaging,DYMGuideActionDelegate {
  
     public func clickGuideCloseButton(baseViewController: UIViewController, closeType: String) {
         print("clickGuideCloseButton---closeType--\(closeType)")
+        // “NO_LOCAL_WEB_GUIDE_CLOSE” 代表无本地web 引导页，有可能是接口请求失败或其他原因
         if closeType != "NO_LOCAL_WEB_GUIDE_CLOSE" {
          // 可以设置 是否还会再显示引导页
             UserDefaults.standard.set(true, forKey: HasDisplayedGuide)
@@ -199,4 +210,26 @@ extension AppDelegate: DYMWindowManaging,DYMGuideActionDelegate {
     }
 }
 
-
+//MARK: private method
+extension AppDelegate {
+    func calculateNewExpiryTime(from products: [[String: Any]]) -> Int {
+        var latestExpiry = ""
+        for product in products {
+            if let expiryDate = product["expiresAt"] as? String {
+                latestExpiry = expiryDate > latestExpiry ? expiryDate : latestExpiry
+            } else {
+                // 非订阅产品，自定义逻辑
+                let currentTimestamp = getCurrentTimestamp()
+                let oneWeekInMilliseconds = 7 * 24 * 3600 * 1000
+                return currentTimestamp + oneWeekInMilliseconds
+            }
+        }
+        return Int(latestExpiry) ?? 0
+    }
+    
+    func getCurrentTimestamp() -> Int {
+       let currentTimeInterval = Date().timeIntervalSince1970
+       let timestampInMilliseconds = Int(currentTimeInterval * 1000)
+       return timestampInMilliseconds
+   }
+}
