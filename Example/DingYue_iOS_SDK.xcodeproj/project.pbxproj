@@ -595,6 +595,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7CC801443CAA057578187925 /* Pods-DingYue_iOS_SDK_Tests.release.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 6758SSTNXL;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
