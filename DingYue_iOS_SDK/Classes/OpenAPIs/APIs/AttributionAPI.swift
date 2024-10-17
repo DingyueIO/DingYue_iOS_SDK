@@ -149,4 +149,67 @@ open class AttributionAPI {
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
+    
+    
+    
+    /**
+     Set custom properties for the user
+         
+     - parameter X_USER_ID: (header) a unique string representing the current user
+     - parameter userAgent: (header) user agent
+     - parameter X_APP_ID: (header) a unique string representing the current app
+     - parameter X_PLATFORM: (header) the platform the app is running on
+     - parameter X_VERSION: (header) SDK version
+     - parameter customProperties: (body) an array of key-value pairs for custom properties
+     - parameter apiResponseQueue: The queue on which API response is dispatched.
+     - parameter completion: Completion handler to receive the data and the error objects
+     */
+    @discardableResult
+    open class func setCustomProperties(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_attributionData, X_VERSION: String, customProperties: [String:Any?], apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: SimpleStatusResult?, _ error: Error?) -> Void)) -> RequestTask {
+        return setCustomPropertiesWithRequestBuilder(X_USER_ID: X_USER_ID, userAgent: userAgent, X_APP_ID: X_APP_ID, X_PLATFORM: X_PLATFORM, X_VERSION: X_VERSION, customProperties: customProperties).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+    
+    /**
+     Set custom properties for the user
+     - POST /customProperties/set
+     - Sets custom properties for a specific user. See body parameters for the property structure.
+     - API Key:
+       - type: apiKey X-API-KEY
+       - name: ApiKeyAuth
+     - parameter X_USER_ID: (header) a unique string representing the current user
+     - parameter userAgent: (header) user agent
+     - parameter X_APP_ID: (header) a unique string representing the current app
+     - parameter X_PLATFORM: (header) the platform the app is running on
+     - parameter X_VERSION: (header) SDK version
+     - parameter customProperties: (body) an array of key-value pairs for custom properties
+     - returns: RequestBuilder<SimpleStatusResult>
+     */
+    open class func setCustomPropertiesWithRequestBuilder(X_USER_ID: String, userAgent: String, X_APP_ID: String, X_PLATFORM: XPLATFORM_attributionData, X_VERSION: String, customProperties: [String:Any?]) -> RequestBuilder<SimpleStatusResult> {
+        let localVariablePath = "/users/custom_properties/set"
+        let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: customProperties)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        let X_API_KEY = DYMConstants.APIKeys.secretKey
+        let localVariableNillableHeaders: [String: Any?] = [
+            "X-USER-ID": X_USER_ID.encodeToJSON(),
+            "X-APP-ID": X_APP_ID.encodeToJSON(),
+            "X-PLATFORM": X_PLATFORM.encodeToJSON(),
+            "X-VERSION": X_VERSION.encodeToJSON(),
+            "X-API-KEY": X_API_KEY.encodeToJSON()
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<SimpleStatusResult>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+    }
 }

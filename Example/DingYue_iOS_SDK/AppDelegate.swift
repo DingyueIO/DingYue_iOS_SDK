@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          如果不设置，则会在网络成功的情况下进入web 引导页
          */
         self.showWebGuideVC()
-        self.setLocalGuidePaths()
+//        self.setLocalGuidePaths()
         DYMobileSDK.activate { results, error in
             if error == nil {
                 if let res = results {
@@ -68,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         }
         //lua 脚本相关
-        TestLuaOperation.sharedInstance().initLua()
+//        TestLuaOperation.sharedInstance().initLua()
         return true
     }
     

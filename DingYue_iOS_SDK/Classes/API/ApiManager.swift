@@ -207,6 +207,20 @@ class ApiManager {
             complete(data,error)
         }
     }
+    
+    func setCustomProperties(customProperties:[String:Any?]?,completion:@escaping ((SimpleStatusResult?,Error?)->())) {
+        guard let properties = customProperties else {
+            DYMLogManager.logMessage("properties is nil")
+            completion(nil,nil)
+            return
+        }
+        
+        AttributionAPI.setCustomProperties(X_USER_ID: UserProperties.requestUUID, userAgent:  UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: AttributionAPI.XPLATFORM_attributionData.ios, X_VERSION: UserProperties.sdkVersion, customProperties: properties, apiResponseQueue: OpenAPIClientAPI.apiResponseQueue) { data, error in
+            completion(data,error)
+        }
+        
+    }
+    
 
     //MARK: 下载内购页zip
     func downloadWebTemplate(url: URL, completion:@escaping (SimpleStatusResult?,Error?) -> Void) {
