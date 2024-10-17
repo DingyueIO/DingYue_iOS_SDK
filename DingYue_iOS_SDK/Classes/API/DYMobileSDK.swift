@@ -16,7 +16,7 @@ import AdSupport
 #endif
 
 @objc public class DYMobileSDK: NSObject {
-
+    
     private static let shared = DYMobileSDK()
     
     ///判断是否需要IDFA
@@ -31,6 +31,15 @@ import AdSupport
             }
         }
     }
+    
+    @objc public static var UUID:String = "" {
+        didSet {
+            if !UUID.isEmpty {
+                UserProperties.requestUUID = UUID
+            }
+        }
+    }
+
     ///场景控制器
     private lazy var sessionsManager: SessionsManager = {
         return SessionsManager()
