@@ -28,7 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DYMobileSDK.defaultConversionValueEnabled = true //use default cv rule
         //进行配置 basePath
         DYMobileSDK.basePath = "https://mobile.dingyueio.cn"
-       
+        //配置用户的UUID，包括内购时的applicationUsername 也是这个，如果不设置，则默认使用第三方库 FCUUID.uuidForDevice()获取的id
+        DYMobileSDK.UUID = "123456789"
         /*
          连续请求10次失败之后 将会进入之前下载的默认引导页(如果没有默认下载的引导页，则需要在clickGuideCloseButton代理中，设置下一步操作，例如，进入主页，
          也可以 在sdk回调中进行设置。可根据 nativeGuidePageId 进行判断 （ 未返回，或者为空  代表未配置 web引导页） 可设置为 切换到原生引导页。
