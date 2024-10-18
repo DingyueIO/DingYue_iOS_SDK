@@ -16,7 +16,7 @@ import AdSupport
 #endif
 
 @objc public class DYMobileSDK: NSObject {
-
+    
     private static let shared = DYMobileSDK()
     
     ///判断是否需要IDFA
@@ -31,6 +31,15 @@ import AdSupport
             }
         }
     }
+    
+    @objc public static var UUID:String = "" {
+        didSet {
+            if !UUID.isEmpty {
+                UserProperties.requestUUID = UUID
+            }
+        }
+    }
+
     ///场景控制器
     private lazy var sessionsManager: SessionsManager = {
         return SessionsManager()
@@ -500,4 +509,15 @@ extension DYMobileSDK {
         return guideController
     }
     #endif
+}
+
+//MARK: SetCustomProperties
+extension DYMobileSDK {
+    @objc public class func setCustomPropertiesWith(_ customProperties:NSDictionary,completion:@escaping ((SimpleStatusResult?,Error?)->())) {
+        DYMLogManager.logMessage("Calling now: \(#function)")
+        let propertiesDict = customProperties as? [String: Any?] ?? [:]        
+        shared.apiManager.setCustomProperties(customProperties: propertiesDict) { result, error in
+            completion(result,error)
+        }
+    }
 }
