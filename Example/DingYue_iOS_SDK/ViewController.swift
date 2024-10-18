@@ -8,6 +8,7 @@
 
 import UIKit
 import DingYue_iOS_SDK
+import FCUUID
 
 class ViewController: UIViewController {
     lazy var purchaseSubscriptionBtn: UIButton = {
@@ -43,6 +44,15 @@ class ViewController: UIViewController {
         btn.backgroundColor = .red
         return btn
     }()
+    
+    lazy var setCustomerPropertiesBtn: UIButton = {
+        let btn = UIButton(type: .custom)
+        btn.setTitle("CustomerProperties", for: [])
+        btn.setTitleColor(UIColor.black, for: [])
+        btn.addTarget(self, action: #selector(setCustomerProperties), for: .touchUpInside)
+        btn.backgroundColor = .red
+        return btn
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +60,7 @@ class ViewController: UIViewController {
         self.view.addSubview(purchaseConsumptionBtn)
         self.view.addSubview(luaTestButton)
         self.view.addSubview(showWebGuideBtn)
+        self.view.addSubview(setCustomerPropertiesBtn)
 
         
         purchaseSubscriptionBtn.translatesAutoresizingMaskIntoConstraints = false
@@ -76,6 +87,14 @@ class ViewController: UIViewController {
         showWebGuideBtn.topAnchor.constraint(equalTo: purchaseConsumptionBtn.bottomAnchor,constant: 16).isActive = true
         showWebGuideBtn.heightAnchor.constraint(equalToConstant: 56).isActive = true
         showWebGuideBtn.widthAnchor.constraint(equalTo: purchaseSubscriptionBtn.widthAnchor).isActive = true
+        
+        
+        setCustomerPropertiesBtn.translatesAutoresizingMaskIntoConstraints = false
+        setCustomerPropertiesBtn.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,constant: 16.0).isActive = true
+        setCustomerPropertiesBtn.topAnchor.constraint(equalTo: luaTestButton.bottomAnchor,constant: 16).isActive = true
+        setCustomerPropertiesBtn.heightAnchor.constraint(equalTo: luaTestButton.heightAnchor).isActive = true
+        setCustomerPropertiesBtn.widthAnchor.constraint(equalTo: luaTestButton.widthAnchor).isActive = true
+        
     }
     
     
@@ -154,6 +173,45 @@ class ViewController: UIViewController {
         }
     }
     
+    
+    
+    @objc func setCustomerProperties() {
+        let properties: [String: Any] = [
+            "customProperties": [
+                [
+                    "key": "test0",
+                    "value": "123131313"
+                ],
+                [
+                    "key": "test1",
+                    "value": "123131313"
+                ],
+                [
+                    "key": "test2",
+                    "value": "123131313"
+                ],
+                [
+                    "key": "test3",
+                    "value": "00000"
+                ],
+                [
+                    "key": "88888",
+                    "value": "99999"
+                ]
+            ]
+        ]
+        DYMobileSDK.setCustomPropertiesWith(properties as NSDictionary) { result, error in
+            if (error != nil) {
+                print("❌setCustomProperties:\(error?.localizedDescription)")
+
+            }else {
+                print("✅setCustomProperties:\(result?.status)\n uuid: \(FCUUID.uuidForDevice())")
+
+            }
+        }
+        
+        
+    }
 }
 
 //implement methods to purchase page user terms and privacy click events

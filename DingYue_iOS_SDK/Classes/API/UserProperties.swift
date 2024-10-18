@@ -42,8 +42,15 @@ public typealias Parameters = [String: Any]
     static var uuid: String {
         return UUID().stringValue//will have different value for every new instance
     }
-    static var requestUUID: String {
-        return FCUUID.uuidForDevice() ?? ""
+    private static var _requestUUID: String = FCUUID.uuidForDevice() ?? ""
+
+    public static var requestUUID: String {
+        get {
+            return _requestUUID
+        }
+        set {
+            _requestUUID = newValue
+        }
     }
     static var userAgent: String {
         return "user-agent"
