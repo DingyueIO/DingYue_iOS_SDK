@@ -117,7 +117,7 @@ public typealias Parameters = [String: Any]
     }
     class func createPaywallDir() -> String? {
         let DocumentPaths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-        let filePath = DocumentPaths[0].appending("/PayWalWeb")
+        let filePath = DocumentPaths[0].appending("/PayWallWeb")
         var isDir : ObjCBool = false
         if FileManager.default.fileExists(atPath: filePath, isDirectory: &isDir) {
             if isDir.boolValue{
