@@ -23,7 +23,8 @@ import AdSupport
     @objc public static var idfaCollectionDisabled: Bool = false
     ///判断是否使用默认CV规则
     @objc public static var defaultConversionValueEnabled: Bool = false
-    
+    ///是否使用通知(默认启用)
+    @objc public static var enableRemoteNotifications: Bool = true
     @objc public static var basePath:String = "" {
         didSet {
             if !basePath.isEmpty {
@@ -101,7 +102,9 @@ import AdSupport
     ///Configure
     private func configure(completion:@escaping sessionActivateCompletion) {
         performInitialRequests(completion: completion)
-        DYMAppDelegateSwizzler.startSwizzlingIfPossible(self)
+        if DYMobileSDK.enableRemoteNotifications {
+            DYMAppDelegateSwizzler.startSwizzlingIfPossible(self)
+        }
     }
     ///Initial requests
     private func performInitialRequests(completion:@escaping sessionActivateCompletion) {
@@ -517,6 +520,15 @@ extension DYMobileSDK {
         DYMLogManager.logMessage("Calling now: \(#function)")
         let propertiesDict = customProperties as? [String: Any?] ?? [:]        
         shared.apiManager.setCustomProperties(customProperties: propertiesDict) { result, error in
+            completion(result,error)
+        }
+    }
+}
+//MARK: GetAppSegmentInfo
+extension DYMobileSDK {
+    @objc public class func getSegmentInfo(completion:@escaping((SegmentInfoResult?,Error?)->())) {
+        DYMLogManager.logMessage("Calling now: \(#function)")
+        shared.apiManager.getSegmentInfo { result, error in
             completion(result,error)
         }
     }
