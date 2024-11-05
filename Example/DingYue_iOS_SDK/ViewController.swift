@@ -11,91 +11,38 @@ import DingYue_iOS_SDK
 import FCUUID
 
 class ViewController: UIViewController {
-    lazy var purchaseSubscriptionBtn: UIButton = {
-        let btn = UIButton(type: .custom)
-        btn.setTitle("SubscriptionBtn", for: [])
-        btn.setTitleColor(UIColor.black, for: [])
-        btn.addTarget(self, action: #selector(goPurchaseSubscriptionAction), for: .touchUpInside)
-        btn.backgroundColor = .red
-        return btn
-    }()
+ 
     
-    lazy var purchaseConsumptionBtn: UIButton = {
-        let btn = UIButton(type: .custom)
-        btn.setTitle("ConsumptionBtn", for: [])
-        btn.setTitleColor(UIColor.black, for: [])
-        btn.addTarget(self, action: #selector(goPurchaseConsumptionAction), for: .touchUpInside)
-        btn.backgroundColor = .blue
-        return btn
-    }()
-    lazy var luaTestButton: UIButton = {
-        let btn = UIButton(type: .custom)
-        btn.setTitle("LuaScriptBtn", for: [])
-        btn.setTitleColor(UIColor.black, for: [])
-        btn.addTarget(self, action: #selector(luaTestAction), for: .touchUpInside)
-        btn.backgroundColor = .blue
-        return btn
-    }()
-    lazy var showWebGuideBtn: UIButton = {
-        let btn = UIButton(type: .custom)
-        btn.setTitle("guidePageBtn", for: [])
-        btn.setTitleColor(UIColor.black, for: [])
-        btn.addTarget(self, action: #selector(gotoWebGuide), for: .touchUpInside)
-        btn.backgroundColor = .red
-        return btn
-    }()
-    
-    lazy var setCustomerPropertiesBtn: UIButton = {
-        let btn = UIButton(type: .custom)
-        btn.setTitle("CustomerProperties", for: [])
-        btn.setTitleColor(UIColor.black, for: [])
-        btn.addTarget(self, action: #selector(setCustomerProperties), for: .touchUpInside)
-        btn.backgroundColor = .red
-        return btn
-    }()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view.addSubview(purchaseSubscriptionBtn)
-        self.view.addSubview(purchaseConsumptionBtn)
-        self.view.addSubview(luaTestButton)
-        self.view.addSubview(showWebGuideBtn)
-        self.view.addSubview(setCustomerPropertiesBtn)
-
-        
-        purchaseSubscriptionBtn.translatesAutoresizingMaskIntoConstraints = false
-        purchaseSubscriptionBtn.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,constant: 16.0).isActive = true
-        purchaseSubscriptionBtn.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
-        purchaseSubscriptionBtn.heightAnchor.constraint(equalToConstant: 56).isActive = true
-        
-        purchaseConsumptionBtn.translatesAutoresizingMaskIntoConstraints = false
-        purchaseConsumptionBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16.0).isActive = true
-        purchaseConsumptionBtn.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
-        purchaseConsumptionBtn.heightAnchor.constraint(equalToConstant: 56).isActive = true
-        purchaseConsumptionBtn.leadingAnchor.constraint(equalTo: purchaseSubscriptionBtn.trailingAnchor, constant: 10).isActive = true
-        purchaseConsumptionBtn.widthAnchor.constraint(equalTo: purchaseSubscriptionBtn.widthAnchor).isActive = true
-        
-        luaTestButton.translatesAutoresizingMaskIntoConstraints = false
-        luaTestButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,constant: 16.0).isActive = true
-        luaTestButton.topAnchor.constraint(equalTo: purchaseSubscriptionBtn.bottomAnchor,constant: 16).isActive = true
-        luaTestButton.heightAnchor.constraint(equalTo: purchaseSubscriptionBtn.heightAnchor).isActive = true
-        luaTestButton.widthAnchor.constraint(equalTo: purchaseSubscriptionBtn.widthAnchor).isActive = true
-        
-        showWebGuideBtn.translatesAutoresizingMaskIntoConstraints = false
-        showWebGuideBtn.leadingAnchor.constraint(equalTo: luaTestButton.trailingAnchor, constant: 10).isActive = true
-        showWebGuideBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16.0).isActive = true
-        showWebGuideBtn.topAnchor.constraint(equalTo: purchaseConsumptionBtn.bottomAnchor,constant: 16).isActive = true
-        showWebGuideBtn.heightAnchor.constraint(equalToConstant: 56).isActive = true
-        showWebGuideBtn.widthAnchor.constraint(equalTo: purchaseSubscriptionBtn.widthAnchor).isActive = true
-        
-        
-        setCustomerPropertiesBtn.translatesAutoresizingMaskIntoConstraints = false
-        setCustomerPropertiesBtn.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,constant: 16.0).isActive = true
-        setCustomerPropertiesBtn.topAnchor.constraint(equalTo: luaTestButton.bottomAnchor,constant: 16).isActive = true
-        setCustomerPropertiesBtn.heightAnchor.constraint(equalTo: luaTestButton.heightAnchor).isActive = true
-        setCustomerPropertiesBtn.widthAnchor.constraint(equalTo: luaTestButton.widthAnchor).isActive = true
-        
-    }
+    private let tableView = UITableView()
+       private let buttonTitles = ["SubscriptionBtn", "ConsumptionBtn", "LuaScriptBtn", "guidePageBtn", "CustomerProperties","GetSegmentInfo"]
+       private let buttonActions: [Selector] = [
+           #selector(goPurchaseSubscriptionAction),
+           #selector(goPurchaseConsumptionAction),
+           #selector(luaTestAction),
+           #selector(gotoWebGuide),
+           #selector(setCustomerProperties),
+           #selector(getSegmentInfo)
+       ]
+       
+       override func viewDidLoad() {
+           super.viewDidLoad()
+           setupTableView()
+       }
+       
+       private func setupTableView() {
+           tableView.delegate = self
+           tableView.dataSource = self
+           tableView.register(ButtonCell.self, forCellReuseIdentifier: "ButtonCell")
+           tableView.translatesAutoresizingMaskIntoConstraints = false
+           
+           view.addSubview(tableView)
+           NSLayoutConstraint.activate([
+               tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+               tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+               tableView.topAnchor.constraint(equalTo: view.topAnchor),
+               tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+           ])
+       }
     
     
     @objc func goPurchaseSubscriptionAction(){
@@ -116,8 +63,7 @@ class ViewController: UIViewController {
                //购买成功
                 print("订阅购买成功")
                 DispatchQueue.main.async {
-                    self.purchaseSubscriptionBtn.setTitle("订阅购买成功", for: [])
-                    
+                    self.showAlert(title: "成功", message: "订阅购买成功")
                     DYMobileSDK.activate { results, error in
                         if let res = results, let hasPurchasedItems = res["subscribedOjects"] as? [[String:Any]] {
                             purchasedProducts = hasPurchasedItems
@@ -128,6 +74,9 @@ class ViewController: UIViewController {
                         }
                     }
                 }
+            } else {
+                self.showAlert(title: "失败", message: error?.localizedDescription ?? "订阅购买失败，请重试。")
+
             }
         }
     }
@@ -138,9 +87,9 @@ class ViewController: UIViewController {
             if error == nil {
                //购买成功
                 print("消耗品购买成功")
-                DispatchQueue.main.async {
-                    self.purchaseConsumptionBtn.setTitle("消耗品购买成功", for: [])
-                }
+                self.showAlert(title: "成功", message: "消耗品购买成功")
+            }else  {
+                self.showAlert(title: "失败", message: error?.localizedDescription ?? "购买失败，请重试。")
             }
         }
     }
@@ -203,14 +152,24 @@ class ViewController: UIViewController {
         DYMobileSDK.setCustomPropertiesWith(properties as NSDictionary) { result, error in
             if (error != nil) {
                 print("❌setCustomProperties:\(error?.localizedDescription)")
-
+                self.showAlert(title:"失败", message: "❌setCustomProperties:\(error?.localizedDescription)")
             }else {
                 print("✅setCustomProperties:\(result?.status)\n uuid: \(FCUUID.uuidForDevice())")
+                self.showAlert(title:"成功", message: "✅setCustomProperties:\(result?.status)\n uuid: \(FCUUID.uuidForDevice())")
 
             }
         }
-        
-        
+    }
+    @objc func getSegmentInfo() {
+        DYMobileSDK.getSegmentInfo { result, error in
+            if (error != nil) {
+                self.showAlert(title:"失败", message: "❌getSegmentInfo:\(error?.localizedDescription)")
+            }else {
+                let segmentListString:String =  result?.segmentList.joined(separator: ",") ?? "[]"
+                self.showAlert(title: "成功", message: "✅Segments: \(segmentListString)")
+                print("\( result?.segmentList)")
+            }
+        }
     }
 }
 
@@ -246,4 +205,66 @@ extension UIViewController:DYMPayWallActionDelegate {
         print("内购页消失")
     }
 }
+// MARK: Custom method
+extension ViewController {
+    private func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "确定", style: .default, handler: nil))
+        present(alertController, animated: true, completion: nil)
+    }
+}
+// MARK: - UITableViewDataSource
+extension ViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return buttonTitles.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ButtonCell", for: indexPath) as? ButtonCell else {
+            return UITableViewCell()
+        }
+        
+        cell.button.setTitle(buttonTitles[indexPath.row], for: .normal)
+        cell.button.addTarget(self, action: buttonActions[indexPath.row], for: .touchUpInside)
+        return cell
+    }
+}
 
+// MARK: - UITableViewDelegate
+extension ViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70 // Set the desired height for the cells
+    }
+}
+
+// MARK: - Custom Button Cell
+class ButtonCell: UITableViewCell {
+    let button: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setTitleColor(.black, for: .normal)
+        btn.layer.borderColor = UIColor.black.cgColor
+        btn.layer.borderWidth = 1.0
+        btn.layer.cornerRadius = 5.0
+        return btn
+    }()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupButton()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupButton() {
+        contentView.addSubview(button)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            button.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            button.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+        ])
+    }
+}
