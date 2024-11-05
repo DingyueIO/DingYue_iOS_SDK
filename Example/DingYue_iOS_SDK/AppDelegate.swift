@@ -25,7 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         //session report
-        DYMobileSDK.defaultConversionValueEnabled = true //use default cv rule
         //进行配置 basePath
         DYMobileSDK.basePath = "https://mobile.dingyueio.cn"
         //配置用户的UUID，包括内购时的applicationUsername 也是这个，如果不设置，则默认使用第三方库 FCUUID.uuidForDevice()获取的id
@@ -37,6 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          */
         self.showWebGuideVC()
 //        self.setLocalGuidePaths()
+        DYMobileSDK.defaultConversionValueEnabled = true //use default cv rule
         DYMobileSDK.activate { results, error in
             if error == nil {
                 if let res = results {
@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                       // 如果配置 则 自动加载 引导页 或者进入主页
                         if UserDefaults.standard.bool(forKey: HasDisplayedGuide) {
                             self.window?.backgroundColor = .white
-                            self.window?.rootViewController = ViewController()
+                            self.window?.rootViewController =  UINavigationController(rootViewController: ViewController())
                         }
                     }
                 }
@@ -69,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         }
         //lua 脚本相关
-//        TestLuaOperation.sharedInstance().initLua()
+        TestLuaOperation.sharedInstance().initLua()
         return true
     }
     
@@ -98,7 +98,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if expireTime > Int(now){
                     //引导页购买成功
                     //自定义逻辑
-                    self.window?.rootViewController = ViewController()
+                    self.window?.rootViewController =  UINavigationController(rootViewController: ViewController())
                     
                 }else {
                     //引导页购买失败
@@ -135,10 +135,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func setRootVC() {
        
         if UserDefaults.standard.bool(forKey: HasDisplayedGuide) {
-            self.window?.rootViewController = ViewController()
+            self.window?.rootViewController = UINavigationController(rootViewController: ViewController())
         }else{
             // 原生引导页
-            self.window?.rootViewController = ViewController()
+            self.window?.rootViewController =  UINavigationController(rootViewController: ViewController())
 
         }
         
@@ -176,7 +176,7 @@ extension AppDelegate: DYMWindowManaging,DYMGuideActionDelegate {
             UserDefaults.standard.set(true, forKey: HasDisplayedGuide)
             UserDefaults.standard.synchronize()
         }
-        self.window?.rootViewController = ViewController()
+        self.window?.rootViewController =  UINavigationController(rootViewController: ViewController())
         self.window?.backgroundColor = .white
         self.window?.makeKeyAndVisible()
     }
