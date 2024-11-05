@@ -369,3 +369,14 @@ extension ApiManager {
         }.resume()
     }
 }
+//MARK: GetAppSegmentInfo
+extension ApiManager {
+    func getSegmentInfo(completion:@escaping((SegmentInfoResult?,Error?)->())) {
+       
+        AttributionAPI.getUserGroupInfo(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: AttributionAPI.XPLATFORM_GroupInfoData.ios, X_VERSION: UserProperties.sdkVersion,apiResponseQueue: OpenAPIClientAPI.apiResponseQueue) { data, error in
+            completion(data,error)
+        }
+       
+    }
+    
+}
