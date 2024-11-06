@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DingYue_iOS_SDK'
-  s.version          = '0.3.12'
+  s.version          = '0.3.13'
   s.summary          = 'DingYue_iOS_SDK podspec file .'
 
 # This description is used to generate tags and improve search results.
@@ -25,7 +25,7 @@ TODO: DingYue_iOS_SDK: manage your purchase process and collect data to analyze 
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'DingYueIO' => 'support@dingyue.io' }
-  s.source           = { :git => 'https://github.com/DingYueIO/DingYue_iOS_SDK.git', :tag => s.version.to_s }
+  s.source           = { :git => 'git@cpa.asoplus.cn:dingyueIosSdk_private.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '12.0'
