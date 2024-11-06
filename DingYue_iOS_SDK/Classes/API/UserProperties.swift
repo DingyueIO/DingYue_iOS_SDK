@@ -320,6 +320,7 @@ public typealias Parameters = [String: Any]
 //MARK: Private method
 extension UserProperties {
     // 验证 UUID 格式是否符合标准
+    // Verify if the UUID format conforms to the standard
     private static func isValidUUID(_ uuidString: String) -> Bool {
         let uuidRegex = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
         let uuidTest = NSPredicate(format: "SELF MATCHES %@", uuidRegex)
@@ -327,13 +328,13 @@ extension UserProperties {
     }
 
     private static func convertToAppleUUIDFormat(_ uuidString: String) -> String {
-        // 如果字符串长度不等于 32，直接返回原始字符串
+        // If the string length is not 32, return the original string
         if uuidString.count != 32 {
             print("⚠️ The UUID '\(uuidString)' length is not 32 characters. Keeping the original value.")
             return uuidString
         }
 
-        // 获取 String.Index 来进行切割
+        // Use String.Index to slice the string
         let startIndex = uuidString.startIndex
         let part1 = uuidString.prefix(8)
         let part2 = uuidString[uuidString.index(startIndex, offsetBy: 8)..<uuidString.index(startIndex, offsetBy: 12)]
@@ -341,7 +342,7 @@ extension UserProperties {
         let part4 = uuidString[uuidString.index(startIndex, offsetBy: 16)..<uuidString.index(startIndex, offsetBy: 20)]
         let part5 = uuidString.suffix(12)
         
-        // 拼接成标准 UUID 格式
+        // Concatenate parts into standard UUID format
         return part1 + "-" + part2 + "-" + part3 + "-" + part4 + "-" + part5
     }
 }
