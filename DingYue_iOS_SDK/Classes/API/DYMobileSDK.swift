@@ -25,6 +25,7 @@ import AdSupport
     @objc public static var defaultConversionValueEnabled: Bool = false
     ///是否使用通知(默认启用)
     @objc public static var enableRemoteNotifications: Bool = true
+    
     @objc public static var basePath:String = "" {
         didSet {
             if !basePath.isEmpty {

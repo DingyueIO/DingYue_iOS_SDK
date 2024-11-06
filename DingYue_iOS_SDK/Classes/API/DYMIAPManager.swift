@@ -48,7 +48,7 @@ class DYMIAPManager: NSObject {
         }
     }
     
-    public func requestProdacts(identifiers: Set<String>?, completion:@escaping PaywallCompletion) {
+    public func requestProducts(identifiers: Set<String>?, completion:@escaping PaywallCompletion) {
         if let productIds = identifiers {
             templateProductIds = productIds
         }else {
@@ -109,7 +109,7 @@ class DYMIAPManager: NSObject {
         let cproduct = DYMProductModel(productId: productId)
         currentProducts.append(cproduct)
 
-        requestProdacts(identifiers: [productId]) { products, error in
+        requestProducts(identifiers: [productId]) { products, error in
             if error != nil {
                 completion?(.failure(error!),nil)
                 return
@@ -383,8 +383,11 @@ extension DYMIAPManager: SKProductsRequestDelegate {
         response.products.forEach { skProduct in
             paywallProducts?.filter({$0.vendorIdentifier == skProduct.productIdentifier}).forEach({$0.skproduct = skProduct})
             currentProducts.filter({ $0.vendorIdentifier == skProduct.productIdentifier}).forEach { $0.skproduct = skProduct }
+            
         }
-        
+        let productIds = response.products.map { $0.productIdentifier }.joined(separator: ", ")
+        DYMEventManager.shared.track(event: "PRODUCTS_REQUEST", extra: productIds)
+
         var products:[DYMProductModel] = []
         templateProductIds?.forEach({ productId in
             if let cproduct = self.product(for: productId) {
