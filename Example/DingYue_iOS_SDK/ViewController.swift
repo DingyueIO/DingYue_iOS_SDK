@@ -210,7 +210,15 @@ extension ViewController {
     private func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "确定", style: .default, handler: nil))
-        present(alertController, animated: true, completion: nil)
+        // 获取当前 window 的顶层 ViewController
+         if let topController = UIApplication.shared.windows.first?.rootViewController {
+             var currentController = topController
+             while let presentedController = currentController.presentedViewController {
+                 currentController = presentedController
+             }
+             // 在最上层的控制器上展示弹窗
+             currentController.present(alertController, animated: true, completion: nil)
+         }
     }
 }
 // MARK: - UITableViewDataSource
