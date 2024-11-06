@@ -46,12 +46,34 @@ public typealias Parameters = [String: Any]
 
     public static var requestUUID: String {
         get {
+            // If _requestUUID is not in UUID format, use the original value and print a warning
+            if _requestUUID.isEmpty || !isValidUUID(_requestUUID) {
+                let validUUID = convertToAppleUUIDFormat(FCUUID.uuidForDevice() ?? UUID().uuidString)
+                if !isValidUUID(validUUID) {
+                    // If the converted UUID still does not meet the format, use the original UUID and print a warning
+                    print("❌ The device UUID '\(_requestUUID)' is not in valid Apple UUID format. Using the original value.")
+                    _requestUUID = FCUUID.uuidForDevice() ?? ""
+                } else {
+                    _requestUUID = validUUID
+                }
+            }
             return _requestUUID
         }
         set {
-            _requestUUID = newValue
+            // If the new UUID is valid, assign it directly
+            if isValidUUID(newValue) {
+                _requestUUID = newValue
+            } else {
+                // If the UUID cannot be converted to a valid Apple UUID format, keep the original value
+                let validUUID = convertToAppleUUIDFormat(newValue)
+                // If the converted UUID is still invalid, keep the original value and print a warning
+                if !isValidUUID(validUUID) {
+                    print("❌ The provided UUID '\(newValue)' is not valid. Using the original value.")
+                }
+                _requestUUID = validUUID
+            }
         }
-    }
+    }    
     static var userAgent: String {
         return "user-agent"
     }
@@ -293,5 +315,34 @@ public typealias Parameters = [String: Any]
                 return nil
             }
         }
+    }
+}
+//MARK: Private method
+extension UserProperties {
+    // 验证 UUID 格式是否符合标准
+    // Verify if the UUID format conforms to the standard
+    private static func isValidUUID(_ uuidString: String) -> Bool {
+        let uuidRegex = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        let uuidTest = NSPredicate(format: "SELF MATCHES %@", uuidRegex)
+        return uuidTest.evaluate(with: uuidString)
+    }
+
+    private static func convertToAppleUUIDFormat(_ uuidString: String) -> String {
+        // If the string length is not 32, return the original string
+        if uuidString.count != 32 {
+            print("⚠️ The UUID '\(uuidString)' length is not 32 characters. Keeping the original value.")
+            return uuidString
+        }
+
+        // Use String.Index to slice the string
+        let startIndex = uuidString.startIndex
+        let part1 = uuidString.prefix(8)
+        let part2 = uuidString[uuidString.index(startIndex, offsetBy: 8)..<uuidString.index(startIndex, offsetBy: 12)]
+        let part3 = uuidString[uuidString.index(startIndex, offsetBy: 12)..<uuidString.index(startIndex, offsetBy: 16)]
+        let part4 = uuidString[uuidString.index(startIndex, offsetBy: 16)..<uuidString.index(startIndex, offsetBy: 20)]
+        let part5 = uuidString.suffix(12)
+        
+        // Concatenate parts into standard UUID format
+        return part1 + "-" + part2 + "-" + part3 + "-" + part4 + "-" + part5
     }
 }
