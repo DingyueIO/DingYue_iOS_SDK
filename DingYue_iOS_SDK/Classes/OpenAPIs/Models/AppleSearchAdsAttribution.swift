@@ -103,7 +103,7 @@ public struct AppleSearchAdsAttribution: Codable, JSONEncodable, Hashable {
         case iadCreativesetId = "iad-creativeset-id"
         case iadCreativesetName = "iad-creativeset-name"
         case iadAdId = "iad-Ad-id"
-        case iadClaimType = "iad-claimType"
+        case iadClaimType = "iad-claim-type"
     }
 
     // Encodable protocol methods

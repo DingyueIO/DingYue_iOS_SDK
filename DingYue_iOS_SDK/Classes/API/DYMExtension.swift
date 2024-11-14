@@ -117,7 +117,7 @@ extension AppleSearchAdsAttribution {
             self.iadCreativesetName = version31["iad-creativeset-name"] as? String
             
             self.iadAdId = version31["iad-Ad-id"] as? String
-            self.iadClaimType = version31["iad-claimType"] as? String
+            self.iadClaimType = version31["iad-claim-type"] as? String
             
         } else {
             
