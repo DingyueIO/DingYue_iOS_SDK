@@ -115,6 +115,10 @@ extension AppleSearchAdsAttribution {
             }
             self.iadCreativesetId = version31["iad-creativeset-id"] as? String
             self.iadCreativesetName = version31["iad-creativeset-name"] as? String
+            
+            self.iadAdId = version31["iad-Ad-id"] as? String
+            self.iadClaimType = version31["iad-claimType"] as? String
+            
         } else {
             
             if let attribute = attribution["attribution"] as? Bool{
@@ -141,6 +145,16 @@ extension AppleSearchAdsAttribution {
             }
             if let iadKeywordId = attribution["keywordId"] {
                 self.iadKeywordId = "\(iadKeywordId)"
+            }
+            
+            if let iadClickDate = attribution["clickDate"] {
+                self.iadClickDate = "\(iadClickDate)"
+            }
+            if let iadAdId = attribution["adId"] {
+                self.iadAdId = "\(iadAdId)"
+            }
+            if let iadClaimType = attribution["claimType"] {
+                self.iadClaimType = "\(iadClaimType)"
             }
             
         }
