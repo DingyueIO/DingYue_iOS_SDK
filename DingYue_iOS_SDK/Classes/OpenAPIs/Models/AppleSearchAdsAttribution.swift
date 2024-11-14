@@ -56,8 +56,13 @@ public struct AppleSearchAdsAttribution: Codable, JSONEncodable, Hashable {
     public var iadCreativesetId: String?
     /** The name of the Creative Set of which the corresponding ad was part. */
     public var iadCreativesetName: String?
-
-    public init(iadAttribution: String? = nil, iadOrgName: String? = nil, iadOrgId: String? = nil, iadCampaignId: String? = nil, iadCampaignName: String? = nil, iadClickDate: String? = nil, iadPurchaseDate: String? = nil, iadConversationDate: String? = nil, iadConversationType: IadConversationType? = nil, iadAdgroupName: String? = nil, iadAdgroupId: String? = nil, iadCountryOrRegion: String? = nil, iadKeyword: String? = nil, iadKeywordId: String? = nil, iadKeywordMatchtype: IadKeywordMatchtype? = nil, iadCreativesetId: String? = nil, iadCreativesetName: String? = nil) {
+    
+    /// The unique identifier for the ad associated with the attribution event.
+    public var iadAdId: String?
+    /// Specifies the type of claim, differentiating whether the download was driven by an ad view or ad click.
+    public var iadClaimType: String?
+    
+    public init(iadAttribution: String? = nil, iadOrgName: String? = nil, iadOrgId: String? = nil, iadCampaignId: String? = nil, iadCampaignName: String? = nil, iadClickDate: String? = nil, iadPurchaseDate: String? = nil, iadConversationDate: String? = nil, iadConversationType: IadConversationType? = nil, iadAdgroupName: String? = nil, iadAdgroupId: String? = nil, iadCountryOrRegion: String? = nil, iadKeyword: String? = nil, iadKeywordId: String? = nil, iadKeywordMatchtype: IadKeywordMatchtype? = nil, iadCreativesetId: String? = nil, iadCreativesetName: String? = nil, iadAdId:String? = nil, iadClaimType:String? = nil) {
         self.iadAttribution = iadAttribution
         self.iadOrgName = iadOrgName
         self.iadOrgId = iadOrgId
@@ -75,6 +80,8 @@ public struct AppleSearchAdsAttribution: Codable, JSONEncodable, Hashable {
         self.iadKeywordMatchtype = iadKeywordMatchtype
         self.iadCreativesetId = iadCreativesetId
         self.iadCreativesetName = iadCreativesetName
+        self.iadAdId = iadAdId
+        self.iadClaimType = iadClaimType
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -95,6 +102,8 @@ public struct AppleSearchAdsAttribution: Codable, JSONEncodable, Hashable {
         case iadKeywordMatchtype = "iad-keyword-matchtype"
         case iadCreativesetId = "iad-creativeset-id"
         case iadCreativesetName = "iad-creativeset-name"
+        case iadAdId = "iad-Ad-id"
+        case iadClaimType = "iad-claimType"
     }
 
     // Encodable protocol methods
@@ -117,6 +126,8 @@ public struct AppleSearchAdsAttribution: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(iadKeywordMatchtype, forKey: .iadKeywordMatchtype)
         try container.encodeIfPresent(iadCreativesetId, forKey: .iadCreativesetId)
         try container.encodeIfPresent(iadCreativesetName, forKey: .iadCreativesetName)
+        try container.encodeIfPresent(iadAdId, forKey: .iadAdId)
+        try container.encodeIfPresent(iadClaimType, forKey: .iadClaimType)
     }
 }
 
