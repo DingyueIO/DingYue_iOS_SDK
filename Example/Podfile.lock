@@ -1,16 +1,16 @@
 PODS:
   - AnyCodable-FlightSchool (0.6.7)
-  - DingYue_iOS_SDK (0.3.13):
-    - AnyCodable-FlightSchool (~> 0.6.1)
+  - DingYue_iOS_SDK (0.3.12):
+    - AnyCodable-FlightSchool (~> 0.6.7)
     - FCUUID (~> 1.3.1)
     - NVActivityIndicatorView (~> 5.2.0)
-    - SSZipArchive (~> 2.2.3)
+    - SSZipArchive (~> 2.4.3)
   - FCUUID (1.3.1):
     - UICKeyChainStore (~> 2.1.0)
   - NVActivityIndicatorView (5.2.0):
     - NVActivityIndicatorView/Base (= 5.2.0)
   - NVActivityIndicatorView/Base (5.2.0)
-  - SSZipArchive (2.2.3)
+  - SSZipArchive (2.4.3)
   - UICKeyChainStore (2.1.2)
 
 DEPENDENCIES:
@@ -30,12 +30,12 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AnyCodable-FlightSchool: 261cbe76757802b17d471b9059b21e6fa5edf57b
-  DingYue_iOS_SDK: 49c87a17e7265efeb9f384404430553093e1a090
+  DingYue_iOS_SDK: 513c634e908e01c900e10276a1d77618f113d994
   FCUUID: bb054fc90cd7cd99320f9f6ff8e130fe607fba05
   NVActivityIndicatorView: fe52a6a68664c2df8991d7d9e3d86d8d19453c53
-  SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
+  SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   UICKeyChainStore: 85db518bb1d294366d15ec9b92a416c4e670518f
 
 PODFILE CHECKSUM: d1614158c45849ca3f8d67b4f012891a88b05b05
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2
