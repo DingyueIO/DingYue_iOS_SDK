@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		18B8C8302A0B935F001A22E4 /* DingYue.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18B8C82F2A0B935F001A22E4 /* DingYue.plist */; };
-		25123A18A57E90AF0A9ED83C /* Pods_DingYue_iOS_SDK_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F44888B234F8D3863CADE2BB /* Pods_DingYue_iOS_SDK_Tests.framework */; };
+		3D1C6765E6A47CFB442CAE8C /* Pods_DingYue_iOS_SDK_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64482898C4A89C4567A17C94 /* Pods_DingYue_iOS_SDK_Example.framework */; };
 		470157E7290A52B2000ABC76 /* 7306588143563858788 in Resources */ = {isa = PBXBuildFile; fileRef = 470157E6290A52B2000ABC76 /* 7306588143563858788 */; };
 		47FF2D702876F21300437080 /* LBWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FF2D6F2876F21300437080 /* LBWebViewController.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
@@ -17,9 +17,9 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		982A1D28A32B7564E180FFC5 /* Pods_DingYue_iOS_SDK_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 570B4A50E4F2C17EAE4FCCB8 /* Pods_DingYue_iOS_SDK_Example.framework */; };
 		CF4007132C60C69600BCC8A5 /* TestLuaOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4007122C60C69600BCC8A5 /* TestLuaOperation.m */; };
 		CF40072F2C60D0A100BCC8A5 /* test.lua in Resources */ = {isa = PBXBuildFile; fileRef = CF40072E2C60D0A100BCC8A5 /* test.lua */; };
+		D7227DDDA415D92B06771B10 /* Pods_DingYue_iOS_SDK_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F95CBA03A9D7ED721DBBC2 /* Pods_DingYue_iOS_SDK_Tests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,13 +35,11 @@
 /* Begin PBXFileReference section */
 		18B8C82F2A0B935F001A22E4 /* DingYue.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DingYue.plist; sourceTree = "<group>"; };
 		18F570872BFC933300C4E142 /* DingYue_iOS_SDK_Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DingYue_iOS_SDK_Example-Bridging-Header.h"; sourceTree = "<group>"; };
-		459DD2EA94FCC04079A8BBA6 /* Pods-DingYue_iOS_SDK_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DingYue_iOS_SDK_Example.release.xcconfig"; path = "Target Support Files/Pods-DingYue_iOS_SDK_Example/Pods-DingYue_iOS_SDK_Example.release.xcconfig"; sourceTree = "<group>"; };
+		1B749BB451429D7F7FCA2FB4 /* Pods-DingYue_iOS_SDK_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DingYue_iOS_SDK_Tests.debug.xcconfig"; path = "Target Support Files/Pods-DingYue_iOS_SDK_Tests/Pods-DingYue_iOS_SDK_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		470157E6290A52B2000ABC76 /* 7306588143563858788 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = 7306588143563858788; sourceTree = "<group>"; };
 		47DF7A12287D49E800033058 /* DingYue_iOS_SDK_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DingYue_iOS_SDK_Example.entitlements; sourceTree = "<group>"; };
 		47FF2D6F2876F21300437080 /* LBWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LBWebViewController.swift; sourceTree = "<group>"; };
-		52E2F04E7B0C7463CBC58107 /* Pods-DingYue_iOS_SDK_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DingYue_iOS_SDK_Example.debug.xcconfig"; path = "Target Support Files/Pods-DingYue_iOS_SDK_Example/Pods-DingYue_iOS_SDK_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		570B4A50E4F2C17EAE4FCCB8 /* Pods_DingYue_iOS_SDK_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DingYue_iOS_SDK_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5AFEF2D6998D66DA68260DDF /* Pods-DingYue_iOS_SDK_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DingYue_iOS_SDK_Tests.debug.xcconfig"; path = "Target Support Files/Pods-DingYue_iOS_SDK_Tests/Pods-DingYue_iOS_SDK_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		587AC3974D3E9ADE412BEF62 /* Pods-DingYue_iOS_SDK_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DingYue_iOS_SDK_Example.debug.xcconfig"; path = "Target Support Files/Pods-DingYue_iOS_SDK_Example/Pods-DingYue_iOS_SDK_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* DingYue_iOS_SDK_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DingYue_iOS_SDK_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -52,13 +50,15 @@
 		607FACE51AFB9204008FA782 /* DingYue_iOS_SDK_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DingYue_iOS_SDK_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		7CC801443CAA057578187925 /* Pods-DingYue_iOS_SDK_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DingYue_iOS_SDK_Tests.release.xcconfig"; path = "Target Support Files/Pods-DingYue_iOS_SDK_Tests/Pods-DingYue_iOS_SDK_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		64482898C4A89C4567A17C94 /* Pods_DingYue_iOS_SDK_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DingYue_iOS_SDK_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		82D946ECB5CF56AB13175117 /* Pods-DingYue_iOS_SDK_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DingYue_iOS_SDK_Tests.release.xcconfig"; path = "Target Support Files/Pods-DingYue_iOS_SDK_Tests/Pods-DingYue_iOS_SDK_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		87F95CBA03A9D7ED721DBBC2 /* Pods_DingYue_iOS_SDK_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DingYue_iOS_SDK_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B07008925911D6003CEC7D05 /* DingYue_iOS_SDK.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = DingYue_iOS_SDK.podspec; path = ../DingYue_iOS_SDK.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		CF4007112C60C69600BCC8A5 /* TestLuaOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestLuaOperation.h; sourceTree = "<group>"; };
 		CF4007122C60C69600BCC8A5 /* TestLuaOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestLuaOperation.m; sourceTree = "<group>"; };
 		CF40072E2C60D0A100BCC8A5 /* test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.lua; sourceTree = "<group>"; };
 		D3F4F9F0EBFADEE30EFAD52A /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		F44888B234F8D3863CADE2BB /* Pods_DingYue_iOS_SDK_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DingYue_iOS_SDK_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F313C047D0DE43AA1CAE93CE /* Pods-DingYue_iOS_SDK_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DingYue_iOS_SDK_Example.release.xcconfig"; path = "Target Support Files/Pods-DingYue_iOS_SDK_Example/Pods-DingYue_iOS_SDK_Example.release.xcconfig"; sourceTree = "<group>"; };
 		FB117E54BCC9BB23D4FB9DD1 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -67,7 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				982A1D28A32B7564E180FFC5 /* Pods_DingYue_iOS_SDK_Example.framework in Frameworks */,
+				3D1C6765E6A47CFB442CAE8C /* Pods_DingYue_iOS_SDK_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,7 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25123A18A57E90AF0A9ED83C /* Pods_DingYue_iOS_SDK_Tests.framework in Frameworks */,
+				D7227DDDA415D92B06771B10 /* Pods_DingYue_iOS_SDK_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,7 +91,7 @@
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				A1823838A341DFB00BAF3015 /* Pods */,
-				BDF65C39251DEC2CD093367E /* Frameworks */,
+				8F396E24F261DAD331ACF3EE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -158,24 +158,24 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
+		8F396E24F261DAD331ACF3EE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				64482898C4A89C4567A17C94 /* Pods_DingYue_iOS_SDK_Example.framework */,
+				87F95CBA03A9D7ED721DBBC2 /* Pods_DingYue_iOS_SDK_Tests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A1823838A341DFB00BAF3015 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				52E2F04E7B0C7463CBC58107 /* Pods-DingYue_iOS_SDK_Example.debug.xcconfig */,
-				459DD2EA94FCC04079A8BBA6 /* Pods-DingYue_iOS_SDK_Example.release.xcconfig */,
-				5AFEF2D6998D66DA68260DDF /* Pods-DingYue_iOS_SDK_Tests.debug.xcconfig */,
-				7CC801443CAA057578187925 /* Pods-DingYue_iOS_SDK_Tests.release.xcconfig */,
+				587AC3974D3E9ADE412BEF62 /* Pods-DingYue_iOS_SDK_Example.debug.xcconfig */,
+				F313C047D0DE43AA1CAE93CE /* Pods-DingYue_iOS_SDK_Example.release.xcconfig */,
+				1B749BB451429D7F7FCA2FB4 /* Pods-DingYue_iOS_SDK_Tests.debug.xcconfig */,
+				82D946ECB5CF56AB13175117 /* Pods-DingYue_iOS_SDK_Tests.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		BDF65C39251DEC2CD093367E /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				570B4A50E4F2C17EAE4FCCB8 /* Pods_DingYue_iOS_SDK_Example.framework */,
-				F44888B234F8D3863CADE2BB /* Pods_DingYue_iOS_SDK_Tests.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		CF4007102C60C66200BCC8A5 /* LuaTest */ = {
@@ -195,11 +195,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "DingYue_iOS_SDK_Example" */;
 			buildPhases = (
-				9EAED5838526D87341C00F91 /* [CP] Check Pods Manifest.lock */,
+				B3025DE0B95D2C7CD8CD9A8D /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				10F22862913E3A1F8F49224E /* [CP] Embed Pods Frameworks */,
+				B20E5C6CFE6426E23F0088D6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -214,7 +214,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "DingYue_iOS_SDK_Tests" */;
 			buildPhases = (
-				FEF4F1886A2B090F21EE67E1 /* [CP] Check Pods Manifest.lock */,
+				0DD64FA9F0625D86D9887FA8 /* [CP] Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
@@ -296,7 +296,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		10F22862913E3A1F8F49224E /* [CP] Embed Pods Frameworks */ = {
+		0DD64FA9F0625D86D9887FA8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DingYue_iOS_SDK_Tests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B20E5C6CFE6426E23F0088D6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -326,7 +348,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DingYue_iOS_SDK_Example/Pods-DingYue_iOS_SDK_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9EAED5838526D87341C00F91 /* [CP] Check Pods Manifest.lock */ = {
+		B3025DE0B95D2C7CD8CD9A8D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -342,28 +364,6 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-DingYue_iOS_SDK_Example-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FEF4F1886A2B090F21EE67E1 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-DingYue_iOS_SDK_Tests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -523,7 +523,7 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 52E2F04E7B0C7463CBC58107 /* Pods-DingYue_iOS_SDK_Example.debug.xcconfig */;
+			baseConfigurationReference = 587AC3974D3E9ADE412BEF62 /* Pods-DingYue_iOS_SDK_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -547,7 +547,7 @@
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 459DD2EA94FCC04079A8BBA6 /* Pods-DingYue_iOS_SDK_Example.release.xcconfig */;
+			baseConfigurationReference = F313C047D0DE43AA1CAE93CE /* Pods-DingYue_iOS_SDK_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -570,7 +570,7 @@
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5AFEF2D6998D66DA68260DDF /* Pods-DingYue_iOS_SDK_Tests.debug.xcconfig */;
+			baseConfigurationReference = 1B749BB451429D7F7FCA2FB4 /* Pods-DingYue_iOS_SDK_Tests.debug.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 6758SSTNXL;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -594,7 +594,7 @@
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7CC801443CAA057578187925 /* Pods-DingYue_iOS_SDK_Tests.release.xcconfig */;
+			baseConfigurationReference = 82D946ECB5CF56AB13175117 /* Pods-DingYue_iOS_SDK_Tests.release.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 6758SSTNXL;
 				FRAMEWORK_SEARCH_PATHS = (
