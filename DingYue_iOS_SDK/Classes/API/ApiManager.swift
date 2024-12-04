@@ -26,7 +26,7 @@ class ApiManager {
     var guidePageName = ""
     var guideCustomize = false
     var retryCount = 0
-    var maxRetries = 10
+    var maxRetries = 15
 
     @objc func startSession(){
         SessionsAPI.reportSession(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: SessionsAPI.XPLATFORM_reportSession.ios, X_VERSION: UserProperties.sdkVersion, uniqueUserObject: UniqueUserObject(), apiResponseQueue: OpenAPIClientAPI.apiResponseQueue) { data, error in
@@ -162,6 +162,11 @@ class ApiManager {
                     DYMDefaultsManager.shared.guideLoadingStatus = true
                     self.completion?(nil,DYMError.failed)
                 }
+                
+                if let domainName = data?.domainName {
+                    DYMDefaultsManager.shared.cachedDomainName = domainName
+                }
+                
                 
                 if DYMobileSDK.defaultConversionValueEnabled && !DYMDefaultsManager.shared.isMultipleLaunch {
                     DYMobileSDK().updateConversionValueWithDefaultRule(value: 1)

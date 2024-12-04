@@ -25,7 +25,20 @@ import AdSupport
     @objc public static var defaultConversionValueEnabled: Bool = false
     ///是否使用通知(默认启用)
     @objc public static var enableRemoteNotifications: Bool = true
-    
+    /// 是否启用自动获取并使用域名 (默认关闭)。
+    /// 注意：
+    /// - 启用后，会从缓存中加载域名到 `basePath`，仅在当前 `basePath` 为空时生效。
+    /// - 如果在开启后，再次手动设置 `basePath`，手动设置的值将优先使用。
+    @objc public static var enableAutoDomain:Bool = false {
+        didSet {
+            if enableAutoDomain,basePath.isEmpty {
+                if let path = DYMDefaultsManager.shared.cachedDomainName, !path.isEmpty {
+                    basePath = path
+                }
+            }
+        }
+    }
+    ///手动设置固定path
     @objc public static var basePath:String = "" {
         didSet {
             if !basePath.isEmpty {
@@ -33,7 +46,7 @@ import AdSupport
             }
         }
     }
-    
+    ///手动设置用户uuid
     @objc public static var UUID:String = "" {
         didSet {
             if !UUID.isEmpty {
