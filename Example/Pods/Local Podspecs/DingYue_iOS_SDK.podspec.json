@@ -1,8 +1,8 @@
 {
   "name": "DingYue_iOS_SDK",
   "version": "0.3.12",
-  "summary": "DingYue_iOS_SDK podspec file .",
-  "description": "TODO: DingYue_iOS_SDK: manage your purchase process and collect data to analyze data conveniently",
+  "summary": "DingYue_iOS_SDK: manage your purchase process and collect data to analyze data conveniently.",
+  "description": "DingYue_iOS_SDK: This SDK helps manage the purchase process and provides tools to collect and analyze data.",
   "homepage": "https://github.com/DingYueIO/DingYue_iOS_SDK",
   "license": {
     "type": "MIT",
