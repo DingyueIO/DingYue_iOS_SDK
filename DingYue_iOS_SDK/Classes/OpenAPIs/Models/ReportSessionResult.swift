@@ -27,8 +27,10 @@ public struct ReportSessionResult: Codable, JSONEncodable, Hashable {
     public var switchItems: [SwitchItem]?
     public var subscribedProducts: [SubscribedObject]?
     public var globalSwitchItems: [GlobalSwitch]?
+    public var domainName: String?
 
-    public init(status: Status, errmsg: String? = nil, paywall: Paywall? = nil, paywallId: String? = nil, guidePage:DYMGuideObject? = nil,guidePageId:String? = nil, switchItems: [SwitchItem]? = nil, subscribedProducts: [SubscribedObject]? = nil, globalSwitchItems: [GlobalSwitch]? = nil) {
+
+    public init(status: Status, errmsg: String? = nil, paywall: Paywall? = nil, paywallId: String? = nil, guidePage:DYMGuideObject? = nil,guidePageId:String? = nil, switchItems: [SwitchItem]? = nil, subscribedProducts: [SubscribedObject]? = nil, globalSwitchItems: [GlobalSwitch]? = nil, domainName: String? = nil) {
         self.status = status
         self.errmsg = errmsg
         self.paywall = paywall
@@ -38,6 +40,7 @@ public struct ReportSessionResult: Codable, JSONEncodable, Hashable {
         self.switchItems = switchItems
         self.subscribedProducts = subscribedProducts
         self.globalSwitchItems = globalSwitchItems
+        self.domainName = domainName
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -50,6 +53,7 @@ public struct ReportSessionResult: Codable, JSONEncodable, Hashable {
         case switchItems
         case subscribedProducts
         case globalSwitchItems
+        case domainName
     }
 
     // Encodable protocol methods
@@ -65,6 +69,7 @@ public struct ReportSessionResult: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(switchItems, forKey: .switchItems)
         try container.encodeIfPresent(subscribedProducts, forKey: .subscribedProducts)
         try container.encodeIfPresent(globalSwitchItems, forKey: .globalSwitchItems)
+        try container.encodeIfPresent(domainName, forKey: .domainName)
     }
 }
 
