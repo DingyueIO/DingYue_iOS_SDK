@@ -379,5 +379,20 @@ extension DYMDefaultsManager {
         }
         return config
     }
-
+}
+//MARK: cached domainName
+extension DYMDefaultsManager {
+    
+    var cachedDomainName: String? {
+        get {
+            if let cachedDomain = defaults.object(forKey: DYMConstants.UserDefaults.cachedDomainName) as? String {
+                return cachedDomain
+            }else {
+                return nil
+            }
+        }
+        set {
+            defaults.set(newValue, forKey: DYMConstants.UserDefaults.cachedDomainName)
+        }
+    }    
 }
