@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'DingYue_iOS_SDK'
-  s.version          = '0.3.12'
+  s.version          = '0.3.13'
   s.summary          = 'DingYue_iOS_SDK: manage your purchase process and collect data to analyze data conveniently.'
 
   s.description      = <<-DESC

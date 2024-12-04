@@ -1,6 +1,6 @@
 {
   "name": "DingYue_iOS_SDK",
-  "version": "0.3.12",
+  "version": "0.3.13",
   "summary": "DingYue_iOS_SDK: manage your purchase process and collect data to analyze data conveniently.",
   "description": "DingYue_iOS_SDK: This SDK helps manage the purchase process and provides tools to collect and analyze data.",
   "homepage": "https://github.com/DingYueIO/DingYue_iOS_SDK",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/DingYueIO/DingYue_iOS_SDK.git",
-    "tag": "0.3.12"
+    "tag": "0.3.13"
   },
   "platforms": {
     "ios": "12.0"
