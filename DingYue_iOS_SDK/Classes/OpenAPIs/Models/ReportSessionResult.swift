@@ -28,9 +28,10 @@ public struct ReportSessionResult: Codable, JSONEncodable, Hashable {
     public var subscribedProducts: [SubscribedObject]?
     public var globalSwitchItems: [GlobalSwitch]?
     public var domainName: String?
+    public var plistInfo: DYMPlistInfo?
 
 
-    public init(status: Status, errmsg: String? = nil, paywall: Paywall? = nil, paywallId: String? = nil, guidePage:DYMGuideObject? = nil,guidePageId:String? = nil, switchItems: [SwitchItem]? = nil, subscribedProducts: [SubscribedObject]? = nil, globalSwitchItems: [GlobalSwitch]? = nil, domainName: String? = nil) {
+    public init(status: Status, errmsg: String? = nil, paywall: Paywall? = nil, paywallId: String? = nil, guidePage:DYMGuideObject? = nil,guidePageId:String? = nil, switchItems: [SwitchItem]? = nil, subscribedProducts: [SubscribedObject]? = nil, globalSwitchItems: [GlobalSwitch]? = nil, domainName: String? = nil, plistInfo: DYMPlistInfo? = nil) {
         self.status = status
         self.errmsg = errmsg
         self.paywall = paywall
@@ -41,6 +42,7 @@ public struct ReportSessionResult: Codable, JSONEncodable, Hashable {
         self.subscribedProducts = subscribedProducts
         self.globalSwitchItems = globalSwitchItems
         self.domainName = domainName
+        self.plistInfo = plistInfo
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -54,6 +56,7 @@ public struct ReportSessionResult: Codable, JSONEncodable, Hashable {
         case subscribedProducts
         case globalSwitchItems
         case domainName
+        case plistInfo
     }
 
     // Encodable protocol methods
@@ -70,6 +73,30 @@ public struct ReportSessionResult: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(subscribedProducts, forKey: .subscribedProducts)
         try container.encodeIfPresent(globalSwitchItems, forKey: .globalSwitchItems)
         try container.encodeIfPresent(domainName, forKey: .domainName)
+        try container.encodeIfPresent(plistInfo, forKey: .plistInfo)
     }
 }
 
+public struct DYMPlistInfo: Codable, JSONEncodable, Hashable {
+
+    public var appId: String?
+    public var apiKey: String?
+
+    public init(appId: String? = nil, apiKey: String? = nil) {
+        self.appId = appId
+        self.apiKey = apiKey
+    }
+
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case appId
+        case apiKey
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(appId, forKey: .appId)
+        try container.encodeIfPresent(apiKey, forKey: .apiKey)
+    }
+}

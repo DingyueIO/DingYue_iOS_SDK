@@ -61,6 +61,8 @@ class DYMConstants: NSObject {
         static let cachedGuideName           = "DYMSDK_Cached_Guide_Page_Name"
 
         static let cachedDomainName          = "DYMSDK_Cached_DomainName"
+        static let cachedAppId               = "DYMSDK_Cached_AppId"
+        static let cachedApiKey              = "DYMSDK_Cached_ApiKey"
         
     }
     ///App信息plist文件

@@ -167,6 +167,11 @@ class ApiManager {
                     DYMDefaultsManager.shared.cachedDomainName = domainName
                 }
                 
+                if let plistInfo = data?.plistInfo {
+                    DYMDefaultsManager.shared.cachedAppId = plistInfo.appId
+                    DYMDefaultsManager.shared.cachedApiKey = plistInfo.apiKey
+                }
+                
                 
                 if DYMobileSDK.defaultConversionValueEnabled && !DYMDefaultsManager.shared.isMultipleLaunch {
                     DYMobileSDK().updateConversionValueWithDefaultRule(value: 1)
