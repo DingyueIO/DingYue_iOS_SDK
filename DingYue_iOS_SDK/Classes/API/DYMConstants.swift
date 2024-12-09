@@ -25,7 +25,7 @@ class DYMConstants: NSObject {
     }
 
     enum Versions {
-        static let SDKVersion = "0.3.14"
+        static let SDKVersion = "0.3.13"
         static let SDKBuild = 1
     }
     enum BundleKeys {
@@ -61,6 +61,8 @@ class DYMConstants: NSObject {
         static let cachedGuideName           = "DYMSDK_Cached_Guide_Page_Name"
 
         static let cachedDomainName          = "DYMSDK_Cached_DomainName"
+        static let cachedAppId               = "DYMSDK_Cached_AppId"
+        static let cachedApiKey              = "DYMSDK_Cached_ApiKey"
         
     }
     ///App信息plist文件
