@@ -394,5 +394,30 @@ extension DYMDefaultsManager {
         set {
             defaults.set(newValue, forKey: DYMConstants.UserDefaults.cachedDomainName)
         }
-    }    
+    }
+    
+    var cachedAppId: String? {
+        get {
+            if let cachedID = defaults.object(forKey: DYMConstants.UserDefaults.cachedAppId) as? String {
+                return cachedID
+            }else {
+                return nil
+            }
+        }
+        set {
+            defaults.setValue(newValue, forKey: DYMConstants.UserDefaults.cachedAppId)
+        }
+    }
+    var cachedApiKey: String? {
+        get {
+            if let cachedKey = defaults.object(forKey: DYMConstants.UserDefaults.cachedApiKey) as? String {
+                return cachedKey
+            }else {
+                return nil
+            }
+        }
+        set {
+            defaults.setValue(newValue, forKey: DYMConstants.UserDefaults.cachedApiKey)
+        }
+    }
 }

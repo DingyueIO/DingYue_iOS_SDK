@@ -25,22 +25,30 @@ import AdSupport
     @objc public static var defaultConversionValueEnabled: Bool = false
     ///是否使用通知(默认启用)
     @objc public static var enableRemoteNotifications: Bool = true
-    /// 是否启用自动获取并使用域名 (默认关闭)。
+    /// 是否启用自动获取并使用缓存中的域名（默认关闭）。
     /// 注意：
-    /// - 启用后，会从缓存中加载域名到 `basePath`，仅在当前 `basePath` 为空时生效。
-    /// - 如果在开启后，再次手动设置 `basePath`，手动设置的值将优先使用。
-    @objc public static var enableAutoDomain:Bool = false {
+    /// - 启用后，`basePath` 会自动从缓存中加载域名（如果缓存中存在有效的域名）。
+    /// - 启用后，手动设置 `basePath` 将被忽略，并使用缓存的域名作为 `OpenAPIClientAPI.basePath`。，如果有缓存的plistInfo，对应的appId和apiKey也会从缓存中加载
+    /// - 禁用时，`basePath` 可手动设置为自定义路径，并会同步更新 `OpenAPIClientAPI.basePath`。
+    /// - 自动模式（启用 `enableAutoDomain`）与手动模式（禁用 `enableAutoDomain` 并设置 `basePath`）互斥。
+    @objc public static var enableAutoDomain: Bool = false {
         didSet {
-            if enableAutoDomain,basePath.isEmpty {
-                if let path = DYMDefaultsManager.shared.cachedDomainName, !path.isEmpty {
-                    basePath = path
-                }
-            }
+            updateBasePath()
         }
     }
     ///手动设置固定path
     @objc public static var basePath:String = "" {
         didSet {
+            updateBasePath()
+        }
+    }
+    /// 路径设置
+    private static func updateBasePath() {
+        if enableAutoDomain {
+            if let cachedPath = DYMDefaultsManager.shared.cachedDomainName, !cachedPath.isEmpty {
+                OpenAPIClientAPI.basePath = cachedPath
+            }
+        }else {
             if !basePath.isEmpty {
                 OpenAPIClientAPI.basePath = basePath
             }
@@ -108,8 +116,17 @@ import AdSupport
         guard let appId = appInfoDictionary.value(forKey: DYMConstants.AppInfoName.appId) as? String, let apiKey = appInfoDictionary.value(forKey: DYMConstants.AppInfoName.apiKey) as? String else{
             return
         }
-        DYMConstants.APIKeys.appId = appId
-        DYMConstants.APIKeys.secretKey = apiKey
+        
+        if enableAutoDomain,
+           let cachedAppId = DYMDefaultsManager.shared.cachedAppId, !cachedAppId.isEmpty,
+           let cachedApiKey = DYMDefaultsManager.shared.cachedApiKey, !cachedApiKey.isEmpty {
+            DYMConstants.APIKeys.appId = cachedAppId
+            DYMConstants.APIKeys.secretKey = cachedApiKey
+        } else {
+            DYMConstants.APIKeys.appId = appId
+            DYMConstants.APIKeys.secretKey = apiKey
+        }
+       
         
         shared.configure(completion: completion)
     }
