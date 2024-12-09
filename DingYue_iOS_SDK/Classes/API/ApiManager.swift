@@ -163,15 +163,16 @@ class ApiManager {
                     self.completion?(nil,DYMError.failed)
                 }
                 
-                if let domainName = data?.domainName {
+                if let domainName = data?.domainName, !domainName.isEmpty{
                     DYMDefaultsManager.shared.cachedDomainName = domainName
                 }
                 
-                if let plistInfo = data?.plistInfo {
-                    DYMDefaultsManager.shared.cachedAppId = plistInfo.appId
-                    DYMDefaultsManager.shared.cachedApiKey = plistInfo.apiKey
+                if let plistInfo = data?.plistInfo,
+                   let appId = plistInfo.appId, !appId.isEmpty,
+                   let apiKey = plistInfo.apiKey, !apiKey.isEmpty {
+                    DYMDefaultsManager.shared.cachedAppId = appId
+                    DYMDefaultsManager.shared.cachedApiKey = apiKey
                 }
-                
                 
                 if DYMobileSDK.defaultConversionValueEnabled && !DYMDefaultsManager.shared.isMultipleLaunch {
                     DYMobileSDK().updateConversionValueWithDefaultRule(value: 1)
