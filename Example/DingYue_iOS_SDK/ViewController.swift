@@ -64,15 +64,7 @@ class ViewController: UIViewController {
                 print("订阅购买成功")
                 DispatchQueue.main.async {
                     self.showAlert(title: "成功", message: "订阅购买成功")
-                    DYMobileSDK.activate { results, error in
-                        if let res = results, let hasPurchasedItems = res["subscribedOjects"] as? [[String:Any]] {
-                            purchasedProducts = hasPurchasedItems
-                            
-                            for sub in DYMobileSDK.getProductItems() ?? [] {
-                                print("test ----, getProductItems = \(sub.platformProductId)")
-                            }
-                        }
-                    }
+                    
                 }
             } else {
                 self.showAlert(title: "失败", message: error?.localizedDescription ?? "订阅购买失败，请重试。")
