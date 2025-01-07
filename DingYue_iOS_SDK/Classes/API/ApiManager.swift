@@ -33,7 +33,7 @@ class ApiManager {
             if (error != nil) {
                 DYMLogManager.logError(error!)
                
-                //引导页暂定重新请求10次
+                //引导页暂定重新请求15次
                 if self.retryCount < self.maxRetries {
                     self.retryCount += 1
                     let time: TimeInterval = 1.0
