@@ -34,7 +34,7 @@ class ViewController: UIViewController {
            tableView.dataSource = self
            tableView.register(ButtonCell.self, forCellReuseIdentifier: "ButtonCell")
            tableView.translatesAutoresizingMaskIntoConstraints = false
-           
+           tableView.backgroundColor = .white
            view.addSubview(tableView)
            NSLayoutConstraint.activate([
                tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -42,6 +42,8 @@ class ViewController: UIViewController {
                tableView.topAnchor.constraint(equalTo: view.topAnchor),
                tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
            ])
+           
+           self.view.backgroundColor = .white
        }
     
     
@@ -266,6 +268,7 @@ class ButtonCell: UITableViewCell {
     }
     
     private func setupButton() {
+        contentView.backgroundColor = .white
         contentView.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
