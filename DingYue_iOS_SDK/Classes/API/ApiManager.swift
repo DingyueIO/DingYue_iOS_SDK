@@ -155,6 +155,9 @@ class ApiManager {
                     if let config = configurations, !config.isEmpty {
                         results["configurations"] = config
                     }
+                    if let products = DYMDefaultsManager.shared.cachedProducts, !products.isEmpty {
+                        results["cachedProducts"] = products
+                    }
                     self.completion?(results,nil)
                 }else{
                     DYMLogManager.logError(data?.errmsg as Any)
