@@ -21,7 +21,7 @@ class AGHelper {
     }
     
     // 将 UniqueUserObject 转换为字典的函数
-    static func ag_convertToDictionary(_ object: UniqueUserObject) -> [String: Any]? {
+    static func ag_convertToDic<T: Encodable>(_ object: T) -> [String: Any]? {
         do {
             // 将结构体编码为 JSON 数据
             let jsonData = try JSONEncoder().encode(object)
@@ -34,6 +34,18 @@ class AGHelper {
             print("Error encoding JSON: \(error)")
         }
         return nil
+    }
+    
+    static func ag_convertToDicArr<T: Encodable>(_ objects: [T]) -> [[String: Any]] {
+        var result: [[String: Any]] = []
+        
+        for object in objects {
+            if let dictionary = ag_convertToDic(object) {
+                result.append(dictionary)
+            }
+        }
+        
+        return result
     }
     
 }

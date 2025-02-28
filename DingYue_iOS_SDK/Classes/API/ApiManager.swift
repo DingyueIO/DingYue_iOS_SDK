@@ -32,7 +32,7 @@ class ApiManager {
         
         //tj``:埋点-SessionsAPI.reportSession 请求前
         let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
-                              "uniqueUserObject":AGHelper.ag_convertToDictionary(UniqueUserObject()) ?? "",
+                              "uniqueUserObject":AGHelper.ag_convertToDic(UniqueUserObject()) ?? "",
                               "X_USER_ID":UserProperties.requestUUID,
                               "userAgent":UserProperties.userAgent,
                               "X_APP_ID":DYMConstants.APIKeys.appId,
@@ -89,6 +89,12 @@ class ApiManager {
                     var configurations:[[String:Any]]?
                     if let paywall = data?.paywall {
                         DYMDefaultsManager.shared.cachedPaywalls = [paywall]
+                        
+                        //tj``:埋点-Paywall 缓存订阅页配置
+                        let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                                             "configurations":DYMDefaultsManager.shared.paywallConfigurations(configurations: paywall.configurations ?? [])]
+                        DYMobileSDK.track(event: "SDK.Paywall.GetConfig", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+                        
                         if paywall.downloadUrl != "" {
                             if paywall.downloadUrl == "local" {//使用项目中带的内购页
                                 
@@ -166,6 +172,12 @@ class ApiManager {
                         //热更新配置信息
                         if let config = paywall.configurations {
                             configurations = DYMDefaultsManager.shared.paywallConfigurations(configurations: config)
+                            
+                            //tj``:埋点-Paywall 取出配置信息
+                            let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                                                 "configurations":configurations]
+                            DYMobileSDK.track(event: "SDK.Paywall.GetConfig", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+                            
                         }
                     } else {
                         DYMDefaultsManager.shared.isLoadingStatus = true
