@@ -76,12 +76,6 @@ class ApiManager {
                     
                     DYMDefaultsManager.shared.guideLoadingStatus = true
                     DYMDefaultsManager.shared.isLoadingStatus = true
-                    
-                    //tj``:埋点-Completion 调用completion回调前
-                    let ag_param_extra1:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
-                                                         "category":"session"]
-                    DYMobileSDK.track(event: "SDK.Session.Callback", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra1))
-                    
                     self.completion?(nil,DYMError.failed)
                 }
             }else{
@@ -97,6 +91,12 @@ class ApiManager {
                         DYMDefaultsManager.shared.cachedPaywalls = [paywall]
                         if paywall.downloadUrl != "" {
                             if paywall.downloadUrl == "local" {//使用项目中带的内购页
+                                
+                                //tj``:埋点-Paywall 判断download url类型
+                                let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                                                     "urlCategory":"local"]
+                                DYMobileSDK.track(event: "SDK.Paywall.DownloadURL", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+                                
                                 if let nativePaywallId = data?.paywallId {
                                     let version = paywall.version
                                     self.paywallIdentifier = nativePaywallId
@@ -109,6 +109,12 @@ class ApiManager {
                                 }
 
                             } else {//订阅下发的内购页信息
+                                
+                                //tj``:埋点-Paywall 判断download url类型
+                                let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                                                     "urlCategory":"server"]
+                                DYMobileSDK.track(event: "SDK.Paywall.DownloadURL", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+                                
                                 DYMDefaultsManager.shared.isUseNativePaywall = false
                                 if let paywallId = data?.paywallId {
                                     let version = paywall.version
@@ -170,6 +176,12 @@ class ApiManager {
                     if let guide = data?.guidePage {
                         DYMDefaultsManager.shared.cachedGuides = [guide]
                         if guide.downloadUrl ==  "local" {
+                            
+                            //tj``:埋点-Guide 判断download url类型
+                            let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                                                 "urlCategory":"local"]
+                            DYMobileSDK.track(event: "SDK.Guide.DownloadURL", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+                            
                             if let nativeGuidePageId = data?.guidePageId {
                                 let guideVersion = guide.version
                                 self.guidePageIdentifier = nativeGuidePageId
@@ -180,6 +192,12 @@ class ApiManager {
                                 DYMDefaultsManager.shared.guideLoadingStatus = true
                             }
                         }else {
+                            
+                            //tj``:埋点-Guide 判断download url类型
+                            let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                                                 "urlCategory":"server"]
+                            DYMobileSDK.track(event: "SDK.Guide.DownloadURL", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+                            
                             DYMDefaultsManager.shared.isUseNativeGuide = false
                             if let guidePageId = data?.guidePageId {
                                 let guideVersion = guide.version
@@ -251,6 +269,7 @@ class ApiManager {
                     
                     //tj``:埋点-Result 拼接result对象完成
                     let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                                         "result":results,
                                                           "category":"session"]
                     DYMobileSDK.track(event: "SDK.Session.Result", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
                     

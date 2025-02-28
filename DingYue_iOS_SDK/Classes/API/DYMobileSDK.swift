@@ -198,6 +198,13 @@ import AdSupport
                 if let subs = receiptVerifyMobileResponse {
                     //更新用户属性 --- 以甄别购买来源是通过内购页还是直接调用API
                     shared.apiManager.updateUserProperties()
+                    
+                    //tj``:埋点-Result 拼接result对象完成
+                    let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                                         "resunt":subs["subscribledObject"],
+                                                          "category":"purchase"]
+                    DYMobileSDK.track(event: "SDK.Purchase.Result", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+                    
                     completion(purchase.receipt,subs["subscribledObject"] as? [[String : Any]],nil)
                 } else {
                     completion(purchase.receipt,nil,nil)
@@ -229,6 +236,13 @@ import AdSupport
         DYMLogManager.logMessage("Calling now: \(#function)")
         shared.iapManager.restrePurchase { receipt, receiptVerifyMobileResponse, error in
             if let subs = receiptVerifyMobileResponse {
+                
+                //tj``:埋点-Result 拼接result对象完成
+                let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                                     "result":subs["subscribledObject"],
+                                                      "category":"restore"]
+                DYMobileSDK.track(event: "SDK.Restore.Result", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+                
                 completion?(receipt,subs["subscribledObject"] as? [[String : Any]],error)
             } else {
                 completion?(receipt,nil,error)
@@ -239,6 +253,13 @@ import AdSupport
     #if os(iOS)
     ///展示支付页面
     @objc public class func showVisualPaywall(products:[Subscription]? = nil,rootController: UIViewController, extras:[String:Any]? = nil, completion:@escaping DYMRestoreCompletion){
+        
+        //tj``:埋点-Paywall 开始处理Paywall
+        let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                             "products":products,
+                                             "extras":extras]
+        DYMobileSDK.track(event: "SDK.Paywall.Begin", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+        
         let controller = getVisualPaywall(for: products, extras: extras, completion: completion)
         rootController.present(controller, animated: true)
         controller.delegate = (rootController as? DYMPayWallActionDelegate)
@@ -516,6 +537,13 @@ extension DYMobileSDK {
 //
 //    }
     @objc public class func showVisualGuide(products: [Subscription]? = nil, rootDelegate: DYMWindowManaging, extras: [String: Any]? = nil, completion: @escaping DYMRestoreCompletion) {
+        
+        //tj``:埋点-Guide 开始处理Guide
+        let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                             "products":products,
+                                             "extras":extras]
+        DYMobileSDK.track(event: "SDK.Guide.Begin", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+        
         let guideController = getVisualGuide(for: products, extras: extras, completion: completion)
         guideController.delegate = rootDelegate as? DYMGuideActionDelegate
 

@@ -51,6 +51,12 @@ public class DYMPayWallController: UIViewController {
         config.userContentController.add(self, name: "vip_privacy")
         config.userContentController.add(self, name: "vip_purchase")
         config.userContentController.add(self, name: "vip_choose")
+        
+        // tj``:允许内联媒体播放
+        config.allowsInlineMediaPlayback = true
+        // tj``:媒体播放不需要用户操作
+        config.mediaPlaybackRequiresUserAction = false
+        
         let webView = WKWebView(frame: UIScreen.main.bounds, configuration: config)
         webView.scrollView.showsHorizontalScrollIndicator = false
         webView.scrollView.showsVerticalScrollIndicator = false
