@@ -10,14 +10,8 @@ import Foundation
 class AGHelper {
     
     static func ag_convertDicToJSONStr(dictionary: [String: Any]) -> String? {
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: dictionary, options: .prettyPrinted)
-            let jsonString = String(data: jsonData, encoding: .utf8)
-            return jsonString
-        } catch {
-            print("Error converting dictionary to JSON: \(error.localizedDescription)")
-            return nil
-        }
+        let result = AGValues.JSONString(dictionary)
+        return result
     }
     
     // 将 UniqueUserObject 转换为字典的函数
