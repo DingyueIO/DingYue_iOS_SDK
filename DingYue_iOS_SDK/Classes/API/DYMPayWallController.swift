@@ -8,6 +8,7 @@
 import UIKit
 import WebKit
 import StoreKit
+import ContactsUI
 
 @objc public protocol DYMPayWallActionDelegate: NSObjectProtocol {
     @objc optional func payWallDidAppear(baseViewController:UIViewController)//内购页显示
@@ -25,7 +26,7 @@ public class DYMPayWallController: UIViewController {
     var tempCachedProducts:[Dictionary<String,Any>] = []
     var paywalls:[SKProduct] = []
     var completion:DYMPurchaseCompletion?
-    weak var delegate: DYMPayWallActionDelegate?
+    public weak var delegate: DYMPayWallActionDelegate?
     var loadingTimer:Timer?
     var currentPaywallId:String?
     var extras:[String:Any]?
@@ -51,7 +52,7 @@ public class DYMPayWallController: UIViewController {
         config.userContentController.add(self, name: "vip_privacy")
         config.userContentController.add(self, name: "vip_purchase")
         config.userContentController.add(self, name: "vip_choose")
-        
+        config.userContentController.add(self, name: "xxx")
         // tj``:允许内联媒体播放
         config.allowsInlineMediaPlayback = true
         // tj``:媒体播放不需要用户操作
@@ -218,9 +219,34 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
     }
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if message.name == "vip_close" {
-            self.trackWithPayWallInfo(eventName: "EXIT_PURCHASE")
+        if message.name == "xxx" {
+            
+            if let messageBody = message.body as? [String: Any],
+               let type = messageBody["type"] as? String {
+                
+                switch type {
+                case "Log":
+                    if let data = messageBody["data"] as? [String: Any],
+                       let event = data["event"] as? String {
+                        let extra = data["extra"] as? String
+                        // 处理日志事件
+                        self.eventManager.track(event: event, extra: extra )
+                    }
+                   
+                case "contact":
+                    // 调起通讯录
+                    presentContactPicker()
 
+                case "join_circle":
+                    NotificationCenter.default.post(name: Notification.Name("JoinCircle"), object: nil)
+                default:
+                    print("未知的消息类型: \(type)")
+                }
+            }
+
+        } else if message.name == "vip_close" {
+            self.trackWithPayWallInfo(eventName: "EXIT_PURCHASE")
+            NotificationCenter.default.post(name: Notification.Name("PaywallCloseButtonTapped"), object: nil)
             self.dismiss(animated: true, completion: nil)
 
             self.delegate?.clickCloseButton?(baseViewController: self)
@@ -309,5 +335,64 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
         let data : NSData! = try! JSONSerialization.data(withJSONObject: dictionary, options: []) as NSData?
         let JSONString = NSString(data:data as Data,encoding: String.Encoding.utf8.rawValue)
         return JSONString! as String
+    }
+}
+
+// MARK: - 通讯录相关扩展
+extension DYMPayWallController: CNContactPickerDelegate {
+    
+    /// 调起通讯录选择器
+    func presentContactPicker() {
+        let contactPicker = CNContactPickerViewController()
+        contactPicker.delegate = self
+        contactPicker.displayedPropertyKeys = [CNContactPhoneNumbersKey]
+        self.present(contactPicker, animated: true, completion: nil)
+    }
+    
+    /// 用户选择联系人后的回调
+    public func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
+        // 获取联系人的电话号码
+        if let phoneNumber = contact.phoneNumbers.first?.value.stringValue {
+            // 将手机号回传给JS
+            sendPhoneNumberToJS(phoneNumber: phoneNumber)
+        }
+    }
+    
+    /// 用户选择联系人的电话号码后的回调
+    public func contactPicker(_ picker: CNContactPickerViewController, didSelect contactProperty: CNContactProperty) {
+        if contactProperty.key == CNContactPhoneNumbersKey {
+            if let phoneNumber = (contactProperty.value as? CNPhoneNumber)?.stringValue {
+                // 将手机号回传给JS
+                sendPhoneNumberToJS(phoneNumber: phoneNumber)
+            }
+        }
+    }
+    
+    /// 用户取消选择联系人
+    public func contactPickerDidCancel(_ picker: CNContactPickerViewController) {
+        // 用户取消了选择，可以在这里处理取消事件
+    }
+    
+    /// 将手机号回传给JS
+    private func sendPhoneNumberToJS(phoneNumber: String) {
+        // 创建回传数据
+        let contactData: [String: Any] = [
+            "type": "contactSelected",
+            "phone": phoneNumber
+        ]
+        
+        // 将数据转换为JSON字符串
+        if let jsonData = try? JSONSerialization.data(withJSONObject: contactData, options: []),
+           let jsonString = String(data: jsonData, encoding: .utf8) {
+            
+            // 调用JS函数将手机号回传
+            print("回传手机号到JS: \(jsonString)")
+            let jsCode = "window.onContactSelected('\(jsonString)')"
+            webView.evaluateJavaScript(jsCode) { (response, error) in
+                if let error = error {
+                    print("回传手机号到JS时出错: \(error)")
+                }
+            }
+        }
     }
 }

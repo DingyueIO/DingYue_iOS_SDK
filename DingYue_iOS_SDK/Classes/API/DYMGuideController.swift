@@ -38,7 +38,7 @@ public class DYMGuideController: UIViewController {
     var tempCachedProducts:[Dictionary<String,Any>] = []
     var paywalls:[SKProduct] = []
     var completion:DYMPurchaseCompletion?
-    weak var delegate: DYMGuideActionDelegate?
+    public weak var delegate: DYMGuideActionDelegate?
     var loadingTimer:Timer?
     var currentGuidePageId:String?
     var extras:[String:Any]?
@@ -85,7 +85,7 @@ public class DYMGuideController: UIViewController {
 
     
     //     懒加载 LaunchScreen view
-    lazy var launchScreenView: UIView? = {
+    public lazy var launchScreenView: UIView? = {
         guard let launchView = self.loadLaunchScreen() else {
                   return nil
         }
