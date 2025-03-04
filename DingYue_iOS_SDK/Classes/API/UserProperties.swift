@@ -73,7 +73,15 @@ public typealias Parameters = [String: Any]
                 _requestUUID = validUUID
             }
         }
-    }    
+    } 
+    
+    private static var _requestAppId: String = DYMConstants.APIKeys.appId
+    public static var requestAppId: String {
+        get {
+            return _requestAppId
+        }
+    }
+    
     static var userAgent: String {
         return "user-agent"
     }
