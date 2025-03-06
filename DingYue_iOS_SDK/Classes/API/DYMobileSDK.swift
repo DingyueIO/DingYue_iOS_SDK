@@ -194,16 +194,24 @@ import AdSupport
                 if self.defaultConversionValueEnabled && productPrice != nil  {
                     self.updateCVWithTargetProductPrice(price: productPrice!)
                 }
-                
+                // 已购买产品信息
+                let purchasedProduct:[String: Any] =  [
+                    "productId":purchase.productId,
+                    "productPrice":purchase.product.price.doubleValue,
+                    "currency":purchase.product.priceLocale.currencyCode ?? "",
+                    "salesRegion":purchase.product.priceLocale.regionCode ?? ""
+                ]
                 if let subs = receiptVerifyMobileResponse {
                     //更新用户属性 --- 以甄别购买来源是通过内购页还是直接调用API
                     shared.apiManager.updateUserProperties()
-                    completion(purchase.receipt,subs["subscribledObject"] as? [[String : Any]],nil)
+                    
+                    
+                    completion(purchase.receipt,subs["subscribledObject"] as? [[String : Any]],purchasedProduct,nil)
                 } else {
-                    completion(purchase.receipt,nil,nil)
+                    completion(purchase.receipt,nil,purchasedProduct,nil)
                 }
             case .failure(let error):
-                completion(nil,nil,error)
+                completion(nil,nil,nil,error)
             }
         }
     }
@@ -214,13 +222,20 @@ import AdSupport
         shared.iapManager.buy(product: product) { purchase, receiptVerifyMobileResponse in
             switch purchase {
             case .succeed(let purchase):
+                // 已购买产品信息
+                let purchasedProduct:[String: Any] =  [
+                    "productId":purchase.productId,
+                    "productPrice":purchase.product.price.doubleValue,
+                    "currency":purchase.product.priceLocale.currencyCode ?? "",
+                    "salesRegion":purchase.product.priceLocale.regionCode ?? ""
+                ]
                     if let subs = receiptVerifyMobileResponse {
-                        completion(purchase.receipt,subs["subscribledObject"] as? [[String : Any]],nil)
+                        completion(purchase.receipt,subs["subscribledObject"] as? [[String : Any]],purchasedProduct,nil)
                     } else {
-                        completion(purchase.receipt,nil,nil)
+                        completion(purchase.receipt,nil,purchasedProduct,nil)
                     }
             case .failure(let error):
-                completion(nil,nil,error)
+                completion(nil,nil,nil,error)
             }
         }
     }
@@ -229,9 +244,9 @@ import AdSupport
         DYMLogManager.logMessage("Calling now: \(#function)")
         shared.iapManager.restrePurchase { receipt, receiptVerifyMobileResponse, error in
             if let subs = receiptVerifyMobileResponse {
-                completion?(receipt,subs["subscribledObject"] as? [[String : Any]],error)
+                completion?(receipt,subs["subscribledObject"] as? [[String : Any]],nil,error)
             } else {
-                completion?(receipt,nil,error)
+                completion?(receipt,nil,nil,error)
             }
         }
     }
@@ -463,14 +478,21 @@ extension DYMobileSDK {
                 if self.defaultConversionValueEnabled && productPrice != nil  {
                     self.updateCVWithTargetProductPrice(price: productPrice!)
                 }
+                // 已购买产品信息
+                let purchasedProduct:[String: Any] =  [
+                    "productId":purchase.productId,
+                    "productPrice":purchase.product.price.doubleValue,
+                    "currency":purchase.product.priceLocale.currencyCode ?? "",
+                    "salesRegion":purchase.product.priceLocale.regionCode ?? ""
+                ]
 
                 if let subs = receiptVerifyMobileResponse {
-                    completion(purchase.receipt,subs["subscribledObject"] as? [[String : Any]],nil)
+                    completion(purchase.receipt,subs["subscribledObject"] as? [[String : Any]],purchasedProduct,nil)
                 } else {
-                    completion(purchase.receipt,nil,nil)
+                    completion(purchase.receipt,nil,purchasedProduct,nil)
                 }
             case .failure(let error):
-                completion(nil,nil,error)
+                completion(nil,nil,nil,error)
             }
         }
     }

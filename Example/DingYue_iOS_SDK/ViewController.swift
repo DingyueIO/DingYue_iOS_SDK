@@ -60,10 +60,11 @@ class ViewController: UIViewController {
             "mainColor": "white"
         ]
         
-        DYMobileSDK.showVisualPaywall(products: [defaultProuct1,defaultProuct2], rootController: self, extras: extra) { receipt, purchasedResult, error in
+        DYMobileSDK.showVisualPaywall(products: [defaultProuct1,defaultProuct2], rootController: self, extras: extra) { receipt, purchasedResult,purchasedProduct, error in
             if error == nil {
                //购买成功
                 print("订阅购买成功")
+                print(" 订阅购买的产品：\(purchasedProduct)\n 订阅返回结果:\(purchasedResult)")
                 DispatchQueue.main.async {
                     self.showAlert(title: "成功", message: "订阅购买成功")
                     
@@ -77,7 +78,7 @@ class ViewController: UIViewController {
     
     @objc func goPurchaseConsumptionAction() {
         let testConsumptionProductIf = "test.consumablesA"
-        DYMobileSDK.purchaseConsumption(productId: testConsumptionProductIf, count: 2) { receipt, purchaseResult, error in
+        DYMobileSDK.purchaseConsumption(productId: testConsumptionProductIf, count: 2) { receipt, purchaseResult,purchasedProduct ,error in
             if error == nil {
                //购买成功
                 print("消耗品购买成功")
@@ -111,7 +112,7 @@ class ViewController: UIViewController {
         ]
 
         
-        DYMobileSDK.showVisualGuide(products: [defaultProuct1,defaultProuct2], rootDelegate: UIApplication.shared.delegate as! DYMWindowManaging,extras: extra) { receipt, purchaseResult, error in
+        DYMobileSDK.showVisualGuide(products: [defaultProuct1,defaultProuct2], rootDelegate: UIApplication.shared.delegate as! DYMWindowManaging,extras: extra) { receipt, purchaseResult,purchasedProduct ,error in
             
         }
     }
