@@ -303,9 +303,9 @@ extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
         }else if message.name == "guide_restore" {
 
             ProgressView.show(rootViewConroller: self)
-            DYMobileSDK.restorePurchase { receipt, purchaseResult, error in
+            DYMobileSDK.restorePurchase { receipt, purchaseResult, purchasedProduct,error in
                 ProgressView.stop()
-                self.completion?(receipt,purchaseResult,error)
+                self.completion?(receipt,purchaseResult,purchasedProduct,error)
                 if error == nil {
                     self.trackWithPayWallInfo(eventName: "GUIDE_RESTORE_PURCHASE_SUCCESS")
                     self.dismiss(animated: true, completion: nil)
@@ -339,7 +339,7 @@ extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
                 }
                 self.buyWithProductId(productId, productPrice: productPrice)
             } else {
-                self.completion?(nil,nil,.noProductIds)
+                self.completion?(nil,nil,nil,.noProductIds)
                 self.eventManager.track(event: "GUIDE_PURCHASE_FAIL_DETAIL", extra: "no productId from guide h5")
             }
             
@@ -367,9 +367,9 @@ extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
     func buyWithProductId(_ productId:String, productPrice:String? = nil) {
         ProgressView.show(rootViewConroller: self)
         UserProperties.userSubscriptionPurchasedSourcesType = .DYPaywall//以更新用户购买来源属性
-        DYMobileSDK.purchase(productId: productId, productPrice: productPrice) { receipt, purchaseResult, error in
+        DYMobileSDK.purchase(productId: productId, productPrice: productPrice) { receipt, purchaseResult,purchasedProduct, error in
             ProgressView.stop()
-            self.completion?(receipt,purchaseResult,error)
+            self.completion?(receipt,purchaseResult,purchasedProduct,error)
             if error == nil {
                 self.trackWithPayWallInfo(eventName: "GUIDE_PURCHASE_SUCCESS")
 

@@ -133,5 +133,5 @@ public enum DYMPurchaseResult {
 }
 
 // MARK: - Block
-public typealias DYMPurchaseCompletion = (_ receipt: String?,_ purchaseResult: [[String:Any]]?,_ error: DYMError?) -> Void
-public typealias DYMRestoreCompletion = (_ receipt: String?,_ purchaseResult: [[String:Any]]?,_ error: DYMError?) -> Void
+public typealias DYMPurchaseCompletion = (_ receipt: String?,_ purchaseResult: [[String:Any]]?,_ product:[String: Any]?,_ error: DYMError?) -> Void
+public typealias DYMRestoreCompletion = (_ receipt: String?,_ purchaseResult: [[String:Any]]?,_ product:[String: Any]?,_ error: DYMError?) -> Void
