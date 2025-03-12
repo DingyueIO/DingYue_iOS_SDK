@@ -136,12 +136,14 @@ open class SessionsAPI {
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
         let X_API_KEY = DYMConstants.APIKeys.secretKey
 
+        let extraConfig = UserDefaults.standard.object(forKey: "ag_userDefaults_DingYueHeadersExtraConfig")
         let localVariableNillableHeaders: [String: Any?] = [
             "X-USER-ID": X_USER_ID.encodeToJSON(),
             "X-APP-ID": X_APP_ID.encodeToJSON(),
             "X-PLATFORM": X_PLATFORM.encodeToJSON(),
 	        "X-VERSION": X_VERSION.encodeToJSON(),
-            "X-API-KEY":X_API_KEY.encodeToJSON()
+            "X-API-KEY":X_API_KEY.encodeToJSON(),
+            "X-EXTRA-CONFIG":extraConfig
         ]
         print(localVariableNillableHeaders)
 
