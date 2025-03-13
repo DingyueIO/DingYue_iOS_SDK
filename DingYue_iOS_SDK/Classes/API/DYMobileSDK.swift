@@ -253,7 +253,7 @@ import AdSupport
     
     #if os(iOS)
     ///展示支付页面
-    @objc public class func showVisualPaywall(products:[Subscription]? = nil,rootController: UIViewController, extras:[String:Any]? = nil, completion:@escaping DYMRestoreCompletion){
+    @objc public class func showVisualPaywall(products:[Subscription]? = nil,rootController: UIViewController, extras:[String:Any]? = nil, completion:@escaping DYMPurchaseCompletion){
         let controller = getVisualPaywall(for: products, extras: extras, completion: completion)
         rootController.present(controller, animated: true)
         controller.delegate = (rootController as? DYMPayWallActionDelegate)
