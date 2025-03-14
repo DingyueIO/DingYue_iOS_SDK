@@ -102,6 +102,12 @@ import AdSupport
             return DYMDefaultsManager.shared.apnsTokenString
         }
     }
+    
+    /// 接收 Apple Search Ads 归因数据的回调，包含数据和错误信息。
+    @objc public var onAppleSearchAdsAttributionReceived: sessionActivateCompletion?
+    /// 缓存的 Apple Search Ads 归因数据
+    private var cachedAttribution: [String: Any]?
+
     // MARK: - Activate SDK
     ///Activate SDK
     @objc public class func activate(completion:@escaping sessionActivateCompletion) {
@@ -171,8 +177,9 @@ import AdSupport
 #if os(iOS)
     private func reportAppleSearchAdsAttribution() {
         UserProperties.appleSearchAdsAttribution { (attribution, error) in
-            print(attribution)
             Self.reportSearchAds(attribution: attribution)
+            self.onAppleSearchAdsAttributionReceived?(attribution,error)
+            self.cachedAttribution = attribution
         }
     }
 #endif
@@ -182,7 +189,7 @@ import AdSupport
         shared.apiManager.updateSearchAdsAttribution(attribution: data) { result, error in
         }
     }
-
+       
     // MARK: - Subscription
     ///通过产品ID 购买
     @objc public class func purchase(productId: String, productPrice:String? = nil, completion:@escaping DYMPurchaseCompletion) {
@@ -583,6 +590,70 @@ extension DYMobileSDK {
         DYMLogManager.logMessage("Calling now: \(#function)")
         shared.apiManager.getSegmentInfo { result, error in
             completion(result,error)
+        }
+    }
+}
+
+extension DYMobileSDK {
+    /// 获取 Apple Search Ads 归因数据的方法
+    ///
+    /// - Parameters:
+    ///   - mode: 请求模式，默认值为 `.waitForCallback`。
+    ///     - `.waitForCallback`：等待回调模式，不主动请求数据，等待外部触发回调。
+    ///     - `.returnCache`：返回缓存数据，如果缓存可用。
+    ///     - `.networkRequest`：触发网络请求获取最新数据。
+    ///   - completion: 完成回调，返回归因数据（`[String: Any]?`）和错误信息（`Error?`）。
+    ///
+    /// 该方法会根据传入的 `mode` 参数执行不同的操作：
+    /// - 如果是 `.waitForCallback`，则不进行任何操作，等待其他地方调用回调。
+    /// - 如果是 `.returnCache`，则返回缓存数据（如果有缓存）。
+    /// - 如果是 `.networkRequest`，则触发网络请求获取最新的 Apple Search Ads 归因数据。
+    @objc public class func retrieveAppleSearchAdsAttribution(mode: AppleSearchAdsAttributionRequestMode = .waitForCallback, completion: @escaping ([String: Any]?, Error?) -> Void) {
+        // 直接设置回调
+        DYMobileSDK.shared.onAppleSearchAdsAttributionReceived = completion
+        
+        // 获取数据（将触发回调）
+        DYMobileSDK.shared.fetchAppleSearchAdsAttribution(mode: mode)
+    }
+    /// 根据请求模式获取 Apple Search Ads 归因数据。
+    /// - 参数 mode: 请求模式，决定获取数据的方式：
+    ///   - `.waitForCallback`：等待外部调用回调；
+    ///   - `.returnCache`：返回缓存数据；
+    ///   - `.networkRequest`：触发网络请求获取数据。
+    private func fetchAppleSearchAdsAttribution(mode: AppleSearchAdsAttributionRequestMode) {
+        switch mode {
+        case .waitForCallback:
+            // Wait for callback, do nothing and wait for other functions to call the block
+            print("⏳ Wait for callback mode, doing nothing")
+            break
+            
+        case .returnCache:
+            // Return cached data
+            if let attribution = cachedAttribution {
+                print("✅ Returning cached Apple Search Ads Attribution")
+                
+                // Pass cached data via the onAppleSearchAdsAttributionReceived callback
+                self.onAppleSearchAdsAttributionReceived?(attribution, nil)
+            } else {
+                print("❌ No cached data available to return")
+            }
+            
+        case .networkRequest:
+            // Trigger network request
+            print("🔄 Triggering network request to fetch Apple Search Ads Attribution")
+            UserProperties.appleSearchAdsAttribution { [weak self] (attribution, error) in
+                if let error = error {
+                    print("❌ Error: \(error.localizedDescription)")
+                } else {
+                    print("🍎🍎🍎 Apple Search Ads Attribution: \(String(describing: attribution))")
+                }
+                
+                // Store attribution data to avoid repeating the request
+                self?.cachedAttribution = attribution
+                
+                // Trigger the onAppleSearchAdsAttributionReceived callback
+                self?.onAppleSearchAdsAttributionReceived?(attribution, error)
+            }
         }
     }
 }

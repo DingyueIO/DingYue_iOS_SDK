@@ -14,14 +14,15 @@ class ViewController: UIViewController {
  
     
     private let tableView = UITableView()
-       private let buttonTitles = ["SubscriptionBtn", "ConsumptionBtn", "LuaScriptBtn", "guidePageBtn", "CustomerProperties","GetSegmentInfo"]
+       private let buttonTitles = ["SubscriptionBtn", "ConsumptionBtn", "LuaScriptBtn", "guidePageBtn", "CustomerProperties","GetSegmentInfo","GetAppleSearchAdsInfo"]
        private let buttonActions: [Selector] = [
            #selector(goPurchaseSubscriptionAction),
            #selector(goPurchaseConsumptionAction),
            #selector(luaTestAction),
            #selector(gotoWebGuide),
            #selector(setCustomerProperties),
-           #selector(getSegmentInfo)
+           #selector(getSegmentInfo),
+           #selector(getAppleSearchAdsInfo)
        ]
        
        override func viewDidLoad() {
@@ -64,7 +65,7 @@ class ViewController: UIViewController {
             if error == nil {
                //购买成功
                 print("订阅购买成功")
-                print(" 订阅购买的产品：\(purchasedProduct)\n 订阅返回结果:\(purchasedResult)")
+                print(" 订阅购买的产品：\(String(describing: purchasedProduct))\n 订阅返回结果:\(String(describing: purchasedResult))")
                 DispatchQueue.main.async {
                     self.showAlert(title: "成功", message: "订阅购买成功")
                     
@@ -146,11 +147,11 @@ class ViewController: UIViewController {
         ]
         DYMobileSDK.setCustomPropertiesWith(properties as NSDictionary) { result, error in
             if (error != nil) {
-                print("❌setCustomProperties:\(error?.localizedDescription)")
-                self.showAlert(title:"失败", message: "❌setCustomProperties:\(error?.localizedDescription)")
+                print("❌setCustomProperties:\(String(describing: error?.localizedDescription))")
+                self.showAlert(title:"失败", message: "❌setCustomProperties:\(String(describing: error?.localizedDescription))")
             }else {
-                print("✅setCustomProperties:\(result?.status)\n uuid: \(FCUUID.uuidForDevice())")
-                self.showAlert(title:"成功", message: "✅setCustomProperties:\(result?.status)\n uuid: \(FCUUID.uuidForDevice())")
+                print("✅setCustomProperties:\(String(describing: result?.status))\n uuid: \(String(describing: FCUUID.uuidForDevice()))")
+                self.showAlert(title:"成功", message: "✅setCustomProperties:\(String(describing: result?.status))\n uuid: \(String(describing: FCUUID.uuidForDevice()))")
 
             }
         }
@@ -158,13 +159,34 @@ class ViewController: UIViewController {
     @objc func getSegmentInfo() {
         DYMobileSDK.getSegmentInfo { result, error in
             if (error != nil) {
-                self.showAlert(title:"失败", message: "❌getSegmentInfo:\(error?.localizedDescription)")
+                self.showAlert(title:"失败", message: "❌getSegmentInfo:\(String(describing: error?.localizedDescription))")
             }else {
                 let segmentListString:String =  result?.segmentList.joined(separator: ",") ?? "[]"
                 self.showAlert(title: "成功", message: "✅Segments: \(segmentListString)")
-                print("\( result?.segmentList)")
+                print("\( String(describing: result?.segmentList))")
             }
         }
+    }
+    
+    @objc func getAppleSearchAdsInfo() {
+        
+
+        
+        DYMobileSDK.retrieveAppleSearchAdsAttribution(mode: .returnCache) { attribution, error  in
+            if (error != nil) {
+                self.showAlert(title:"失败", message: "❌getAppleSearchAdsInfo:\(String(describing: error?.localizedDescription))")
+            }else {
+                let attributionString = self.dictionaryToArrayString(dictionary: attribution ?? [:])
+                
+                self.showAlert(title: "成功", message: "✅Ads:\n\(attributionString)")
+                print("\(attributionString)")
+            }
+        }
+        
+    }
+    func dictionaryToArrayString(dictionary: [String: Any]) -> String {
+        let array = dictionary.map { "\($0.key): \($0.value)" }
+        return array.joined(separator: ",\n ")
     }
 }
 
@@ -203,17 +225,20 @@ extension UIViewController:DYMPayWallActionDelegate {
 // MARK: Custom method
 extension ViewController {
     private func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "确定", style: .default, handler: nil))
-        // 获取当前 window 的顶层 ViewController
-         if let topController = UIApplication.shared.windows.first?.rootViewController {
-             var currentController = topController
-             while let presentedController = currentController.presentedViewController {
-                 currentController = presentedController
-             }
-             // 在最上层的控制器上展示弹窗
-             currentController.present(alertController, animated: true, completion: nil)
-         }
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "确定", style: .default, handler: nil))
+            
+            // 获取当前 window 的顶层 ViewController
+            if let topController = UIApplication.shared.windows.first?.rootViewController {
+                var currentController = topController
+                while let presentedController = currentController.presentedViewController {
+                    currentController = presentedController
+                }
+                // 在最上层的控制器上展示弹窗
+                currentController.present(alertController, animated: true, completion: nil)
+            }
+        }
     }
 }
 // MARK: - UITableViewDataSource
