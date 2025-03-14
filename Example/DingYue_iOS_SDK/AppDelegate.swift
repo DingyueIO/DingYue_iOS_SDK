@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          如果后台下发了plistInfo，则appid 和apikey 将使用后台下发的
          如果再需要手动设置basepath的话，需要将该属性设置为flase
         */
-        DYMobileSDK.enableAutoDomain = true
+        DYMobileSDK.enableAutoDomain = false
         
         
         
