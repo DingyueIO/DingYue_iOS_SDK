@@ -11,25 +11,28 @@ import NVActivityIndicatorView
 @objc public class DYMConfiguration:NSObject {
     // 单例实例
     @objc public static let shared = DYMConfiguration()
-
-     // 引导页配置
-     @objc public var guidePageConfig: GuidePageConfig
- 
-
-     // 私有初始化以确保单例
-     @objc private override init() {
-         // 设置默认配置值
-         self.guidePageConfig = GuidePageConfig(
-             isVip: false,
-             isVisible: true,
-             indicatorType: 1,
-             indicatorColor: .red,
-             indicatorSize: CGSize(width: 64, height: 34),
-             bottomSpacing: 80
-         )
-     }
+    
+    // 引导页配置
+    @objc public var guidePageConfig: GuidePageConfig
+    // 网络请求配置
+    @objc public var networkRequestConfig: NetworkRequestConfig
+    
+    
+    // 私有初始化以确保单例
+    @objc private override init() {
+        // 设置默认配置值
+        self.guidePageConfig = GuidePageConfig(
+            isVip: false,
+            isVisible: true,
+            indicatorType: 1,
+            indicatorColor: .red,
+            indicatorSize: CGSize(width: 64, height: 34),
+            bottomSpacing: 80
+        )
+        self.networkRequestConfig = NetworkRequestConfig(maxRetryCount: 15, retryInterval: 1)
+    }
 }
-
+// MARK: web引导页配置
 @objc public class GuidePageConfig: NSObject {
     @objc public var isVisible: Bool
     @objc public var indicatorType: Int
@@ -46,7 +49,7 @@ import NVActivityIndicatorView
         self.indicatorSize = indicatorSize
         self.bottomSpacing = bottomSpacing
     }
-     public static func type(from intValue: Int) -> NVActivityIndicatorType {
+    public static func type(from intValue: Int) -> NVActivityIndicatorType {
         switch intValue {
         case 0: return .blank
         case 1: return .ballPulse
@@ -87,5 +90,13 @@ import NVActivityIndicatorView
     }
 }
 
-
-
+// MARK: - 网络请求配置
+@objc public class NetworkRequestConfig: NSObject {
+    @objc public var maxRetryCount: Int  // 最大重试次数
+    @objc public var retryInterval: TimeInterval  // 请求间隔时间（秒）
+    
+    @objc public init(maxRetryCount: Int, retryInterval: TimeInterval) {
+        self.maxRetryCount = maxRetryCount
+        self.retryInterval = retryInterval
+    }
+}

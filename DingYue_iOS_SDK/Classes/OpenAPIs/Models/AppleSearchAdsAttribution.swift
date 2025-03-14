@@ -131,3 +131,8 @@ public struct AppleSearchAdsAttribution: Codable, JSONEncodable, Hashable {
     }
 }
 
+@objc public enum AppleSearchAdsAttributionRequestMode: Int {
+    case waitForCallback = 0  // Wait for callback
+    case returnCache          // Return cached data
+    case networkRequest      // Trigger network request
+}

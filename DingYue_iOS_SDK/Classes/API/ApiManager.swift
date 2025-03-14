@@ -25,8 +25,7 @@ class ApiManager {
     var guidePageIdentifier = ""
     var guidePageName = ""
     var guideCustomize = false
-    var retryCount = 0
-    var maxRetries = 15
+    var retryCount = 1
 
     @objc func startSession(){
         SessionsAPI.reportSession(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: SessionsAPI.XPLATFORM_reportSession.ios, X_VERSION: UserProperties.sdkVersion, uniqueUserObject: UniqueUserObject(), apiResponseQueue: OpenAPIClientAPI.apiResponseQueue) { data, error in
@@ -34,10 +33,9 @@ class ApiManager {
                 DYMLogManager.logError(error!)
                
                 //引导页暂定重新请求15次
-                if self.retryCount < self.maxRetries {
+                if self.retryCount < DYMConfiguration.shared.networkRequestConfig.maxRetryCount {
                     self.retryCount += 1
-                    let time: TimeInterval = 1.0
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + time) {
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + DYMConfiguration.shared.networkRequestConfig.retryInterval) {
                         self.startSession()
                     }
                 }else {

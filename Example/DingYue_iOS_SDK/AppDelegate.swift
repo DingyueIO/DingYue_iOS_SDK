@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          如果后台下发了plistInfo，则appid 和apikey 将使用后台下发的
          如果再需要手动设置basepath的话，需要将该属性设置为flase
         */
-        DYMobileSDK.enableAutoDomain = false
+        DYMobileSDK.enableAutoDomain = true
         
         
         
@@ -56,6 +56,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.showWebGuideVC()
 //        self.setLocalGuidePaths()
         DYMobileSDK.defaultConversionValueEnabled = true //use default cv rule
+        DYMConfiguration.shared.networkRequestConfig.maxRetryCount = 5
+        DYMConfiguration.shared.networkRequestConfig.retryInterval = 2
+
         DYMobileSDK.activate { results, error in
             if error == nil {
                 if let res = results {
@@ -87,6 +90,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
 
         }
+        
+        DYMobileSDK.retrieveAppleSearchAdsAttribution { attribution, error in
+            print("🍌🍌🍌\(attribution)")
+        }
+
+        
         //lua 脚本相关
         TestLuaOperation.sharedInstance().initLua()
         return true
