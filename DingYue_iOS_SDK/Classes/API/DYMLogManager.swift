@@ -40,6 +40,13 @@ class DYMLogManager: NSObject {
 
         print("\(prefix) - INFO.\n\(message)")
     }
+    // 只在 Debug 模式下打印的日志
+      class func debugLog(_ message: String) {
+          // 在调试模式下显示日志，在发布模式下不显示
+          #if DEBUG
+          print("\(prefix) - DEBUG: \(message)")
+          #endif
+      }
 
     private class func isAllowedToLog(_ level: DYMLogLevel) -> Bool {
         return logLevel.rawValue >= level.rawValue
@@ -57,4 +64,5 @@ class DYMLogManager: NSObject {
     private class var dateTime: String {
         return formatter.string(from: Date())
     }
+    
 }
