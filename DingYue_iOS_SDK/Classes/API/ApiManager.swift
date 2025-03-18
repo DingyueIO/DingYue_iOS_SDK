@@ -378,6 +378,7 @@ class ApiManager {
     func downloadWebTemplate(url: URL, completion:@escaping (SimpleStatusResult?,Error?) -> Void) {
         let turl = url
         URLSession.shared.downloadTask(with: turl) { url, response, error in
+            completion(nil, error)
             if response != nil {
                 if (response as! HTTPURLResponse).statusCode == 200 {
                     if let zipFileUrl = url, let targetUnzipUrl = UserProperties.pallwallPath {
@@ -407,11 +408,9 @@ class ApiManager {
                     } else {
                         DYMDefaultsManager.shared.isLoadingStatus = true
                     }
-                    completion(SimpleStatusResult(status: .ok), nil)
                 }else {
                     DYMLogManager.logError(error as Any)
                     DYMDefaultsManager.shared.isLoadingStatus = true
-                    completion(nil, error)
                 }
             } else {
                 DYMDefaultsManager.shared.isLoadingStatus = true
@@ -491,6 +490,7 @@ extension ApiManager {
     func downloadGuideWebTemplate(url: URL, completion:@escaping (SimpleStatusResult?,Error?) -> Void) {
         let turl = url
         URLSession.shared.downloadTask(with: turl) { url, response, error in
+            completion(nil, error)
             if response != nil {
                 if (response as! HTTPURLResponse).statusCode == 200 {
 
@@ -513,11 +513,9 @@ extension ApiManager {
                     } else {
                         DYMDefaultsManager.shared.guideLoadingStatus = true
                     }
-                    completion(SimpleStatusResult(status: .ok), nil)
                 }else {
                     DYMLogManager.logError(error as Any)
                     DYMDefaultsManager.shared.guideLoadingStatus = true
-                    completion(nil,error)
                 }
             } else {
                 DYMDefaultsManager.shared.guideLoadingStatus = true
