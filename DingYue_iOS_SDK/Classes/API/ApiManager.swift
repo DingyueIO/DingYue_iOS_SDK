@@ -279,6 +279,10 @@ class ApiManager {
                         results["configurations"] = config
                     }
                     
+                    if let subscribedAppID = data?.subscribedAppID {
+                        results["subscribedAppID"] = subscribedAppID
+                    }
+                    
                     //tj``:埋点-Result 拼接result对象完成
                     let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
                                                          "result":results,
