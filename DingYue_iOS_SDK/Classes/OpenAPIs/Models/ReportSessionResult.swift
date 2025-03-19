@@ -29,9 +29,9 @@ public struct ReportSessionResult: Codable, JSONEncodable, Hashable {
     public var globalSwitchItems: [GlobalSwitch]?
     public var domainName: String?
     public var plistInfo: DYMPlistInfo?
+    public var subscribedAppID: String?
 
-
-    public init(status: Status, errmsg: String? = nil, paywall: Paywall? = nil, paywallId: String? = nil, guidePage:DYMGuideObject? = nil,guidePageId:String? = nil, switchItems: [SwitchItem]? = nil, subscribedProducts: [SubscribedObject]? = nil, globalSwitchItems: [GlobalSwitch]? = nil, domainName: String? = nil, plistInfo: DYMPlistInfo? = nil) {
+    public init(status: Status, errmsg: String? = nil, paywall: Paywall? = nil, paywallId: String? = nil, guidePage:DYMGuideObject? = nil,guidePageId:String? = nil, switchItems: [SwitchItem]? = nil, subscribedProducts: [SubscribedObject]? = nil, globalSwitchItems: [GlobalSwitch]? = nil, domainName: String? = nil, plistInfo: DYMPlistInfo? = nil, subscribedAppID: String? = nil) {
         self.status = status
         self.errmsg = errmsg
         self.paywall = paywall
@@ -43,6 +43,7 @@ public struct ReportSessionResult: Codable, JSONEncodable, Hashable {
         self.globalSwitchItems = globalSwitchItems
         self.domainName = domainName
         self.plistInfo = plistInfo
+        self.subscribedAppID = subscribedAppID
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -57,6 +58,7 @@ public struct ReportSessionResult: Codable, JSONEncodable, Hashable {
         case globalSwitchItems
         case domainName
         case plistInfo
+        case subscribedAppID
     }
 
     // Encodable protocol methods
@@ -74,6 +76,7 @@ public struct ReportSessionResult: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(globalSwitchItems, forKey: .globalSwitchItems)
         try container.encodeIfPresent(domainName, forKey: .domainName)
         try container.encodeIfPresent(plistInfo, forKey: .plistInfo)
+        try container.encodeIfPresent(subscribedAppID, forKey: .subscribedAppID)
     }
 }
 
