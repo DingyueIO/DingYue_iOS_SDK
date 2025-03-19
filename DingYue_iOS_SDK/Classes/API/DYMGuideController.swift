@@ -64,7 +64,7 @@ public class DYMGuideController: UIViewController {
         config.userContentController.add(self, name: "guide_privacy")
         config.userContentController.add(self, name: "guide_purchase")
         config.userContentController.add(self, name: "guide_continue")
-        
+        config.userContentController.add(self, name: "guide_review")
         // tj``:允许内联媒体播放
         config.allowsInlineMediaPlayback = true
         // tj``:媒体播放不需要用户操作
@@ -367,6 +367,28 @@ extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
                 delegate.clickGudieContinueButton?(baseViewController: self, currentIndex: currentIndex, nextIndex: nextIndex, swiperSize: self.guidePageSwiperSize ?? 0)
               }
             
+        }else if message.name == "guide_review" {
+            if #available(iOS 14.0, *) {
+                if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                    SKStoreReviewController.requestReview(in: scene)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        self.webView.evaluateJavaScript("guide_continue()") { (response, error) in
+                            if let error = error {
+                                print("Error calling guide_continue(): \(error)")
+                            }
+                        }
+                    }
+                }
+            } else {
+                SKStoreReviewController.requestReview()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    self.webView.evaluateJavaScript("guide_continue()") { (response, error) in
+                        if let error = error {
+                            print("Error calling guide_continue(): \(error)")
+                        }
+                    }
+                }
+            }
         }
     }
 
