@@ -52,7 +52,10 @@ public class DYMPayWallController: UIViewController {
         config.userContentController.add(self, name: "vip_privacy")
         config.userContentController.add(self, name: "vip_purchase")
         config.userContentController.add(self, name: "vip_choose")
+        config.userContentController.add(self, name: "log")
         config.userContentController.add(self, name: "xxx")
+        config.userContentController.add(self, name: "vip_finder")
+        
         // tj``:允许内联媒体播放
         config.allowsInlineMediaPlayback = true
         // tj``:媒体播放不需要用户操作
@@ -312,6 +315,12 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
             }
             
             self.delegate?.clickPurchaseButton?(baseViewController: self)
+        }else if message.name == "log" {
+            
+            print("DingYueSDK H5 Page log: \(message.body)")
+        }else if message.name == "vip_finder" { //自定义事件部分
+            let IWNotificationDingYuePayPageVipFinder = NSNotification.Name(rawValue: "IWNotificationDingYuePayPageVipFinder")
+            NotificationCenter.default.post(name: IWNotificationDingYuePayPageVipFinder, object: nil, userInfo: ["body":message.body])
         }
     }
 
