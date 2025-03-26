@@ -64,6 +64,8 @@ public class DYMGuideController: UIViewController {
         config.userContentController.add(self, name: "guide_privacy")
         config.userContentController.add(self, name: "guide_purchase")
         config.userContentController.add(self, name: "guide_continue")
+        config.allowsInlineMediaPlayback = true
+        config.mediaTypesRequiringUserActionForPlayback = []
         let webView = WKWebView(frame: UIScreen.main.bounds, configuration: config)
         webView.scrollView.showsHorizontalScrollIndicator = false
         webView.scrollView.showsVerticalScrollIndicator = false
