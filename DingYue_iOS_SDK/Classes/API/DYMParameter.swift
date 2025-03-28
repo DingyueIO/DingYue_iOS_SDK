@@ -6,6 +6,9 @@
 //
 
 import UIKit
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
 public typealias DYMParams = [String:Any]
 
@@ -57,4 +60,11 @@ struct DYMURLParamEncoder: DYMParamEncoder {
         return destination
     }
 
+}
+
+public struct DYMParamsWrapper: Codable, Hashable {
+    public var data: [String: AnyCodable]?
+    public init(params: [String: Any]?) {
+        self.data = params?.mapValues { AnyCodable($0) }
+    }
 }

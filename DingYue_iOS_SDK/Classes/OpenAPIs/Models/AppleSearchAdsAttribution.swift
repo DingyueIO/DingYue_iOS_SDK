@@ -62,7 +62,10 @@ public struct AppleSearchAdsAttribution: Codable, JSONEncodable, Hashable {
     /// Specifies the type of claim, differentiating whether the download was driven by an ad view or ad click.
     public var iadClaimType: String?
     
-    public init(iadAttribution: String? = nil, iadOrgName: String? = nil, iadOrgId: String? = nil, iadCampaignId: String? = nil, iadCampaignName: String? = nil, iadClickDate: String? = nil, iadPurchaseDate: String? = nil, iadConversationDate: String? = nil, iadConversationType: IadConversationType? = nil, iadAdgroupName: String? = nil, iadAdgroupId: String? = nil, iadCountryOrRegion: String? = nil, iadKeyword: String? = nil, iadKeywordId: String? = nil, iadKeywordMatchtype: IadKeywordMatchtype? = nil, iadCreativesetId: String? = nil, iadCreativesetName: String? = nil, iadAdId:String? = nil, iadClaimType:String? = nil) {
+    /// Provides the time of the ad impression, only available when the claimType is “impression”.
+    public var iadImpressionDate: String?
+    
+    public init(iadAttribution: String? = nil, iadOrgName: String? = nil, iadOrgId: String? = nil, iadCampaignId: String? = nil, iadCampaignName: String? = nil, iadClickDate: String? = nil, iadPurchaseDate: String? = nil, iadConversationDate: String? = nil, iadConversationType: IadConversationType? = nil, iadAdgroupName: String? = nil, iadAdgroupId: String? = nil, iadCountryOrRegion: String? = nil, iadKeyword: String? = nil, iadKeywordId: String? = nil, iadKeywordMatchtype: IadKeywordMatchtype? = nil, iadCreativesetId: String? = nil, iadCreativesetName: String? = nil, iadAdId:String? = nil, iadClaimType:String? = nil, iadImpressionDate: String? = nil) {
         self.iadAttribution = iadAttribution
         self.iadOrgName = iadOrgName
         self.iadOrgId = iadOrgId
@@ -82,6 +85,7 @@ public struct AppleSearchAdsAttribution: Codable, JSONEncodable, Hashable {
         self.iadCreativesetName = iadCreativesetName
         self.iadAdId = iadAdId
         self.iadClaimType = iadClaimType
+        self.iadImpressionDate = iadImpressionDate
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -104,6 +108,7 @@ public struct AppleSearchAdsAttribution: Codable, JSONEncodable, Hashable {
         case iadCreativesetName = "iad-creativeset-name"
         case iadAdId = "iad-Ad-id"
         case iadClaimType = "iad-claim-type"
+        case iadImpressionDate = "iad-impression-date"
     }
 
     // Encodable protocol methods
@@ -128,6 +133,7 @@ public struct AppleSearchAdsAttribution: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(iadCreativesetName, forKey: .iadCreativesetName)
         try container.encodeIfPresent(iadAdId, forKey: .iadAdId)
         try container.encodeIfPresent(iadClaimType, forKey: .iadClaimType)
+        try container.encodeIfPresent(iadImpressionDate, forKey: .iadImpressionDate)
     }
 }
 
@@ -136,3 +142,4 @@ public struct AppleSearchAdsAttribution: Codable, JSONEncodable, Hashable {
     case returnCache          // Return cached data
     case networkRequest      // Trigger network request
 }
+

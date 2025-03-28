@@ -50,7 +50,7 @@ public class DYMGuideController: UIViewController {
         view.type =  GuidePageConfig.type(from: DYMConfiguration.shared.guidePageConfig.indicatorType)
         view.color = DYMConfiguration.shared.guidePageConfig.indicatorColor
         view.startAnimating()
-        view.translatesAutoresizingMaskIntoConstraints = false 
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     private lazy var webView: WKWebView = {
@@ -211,6 +211,20 @@ extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
     }
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        let videoPlayJS = """
+              var videos = document.querySelectorAll('video');
+              videos.forEach(function(video) {
+                  video.play();
+              });
+              """
+        webView.evaluateJavaScript(videoPlayJS) { (result, error) in
+            if let error = error {
+                print("Error executing JavaScript: \(error)")
+            } else {
+                print("All videos should now play.")
+            }
+        }
+        
         //系统语言
         let languageCode = NSLocale.preferredLanguages[0]
         //内购项信息
@@ -228,7 +242,7 @@ extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
                     tempProudcts.append(item.subscription!)
                 }
                 cachedProducts = tempProudcts
-            }            
+            }
         }
         var productsArray = [Dictionary<String,Any>]()
         for item in cachedProducts {
@@ -266,11 +280,11 @@ extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
         webView.evaluateJavaScript("iostojs('\(base64Str!)')") { (response, error) in
         }
         
-
-        if let launchView = launchScreenView {
-            fadeView(launchView, hide: true)
+        DispatchQueue.main.async {
+            if let launchView = self.launchScreenView {
+                self.fadeView(launchView, hide: true)
+            }
         }
-
     }
     
     func fadeView(_ view: UIView, hide: Bool, duration: TimeInterval = 0.6) {
@@ -430,3 +444,4 @@ extension DYMGuideController {
     }
 
 }
+

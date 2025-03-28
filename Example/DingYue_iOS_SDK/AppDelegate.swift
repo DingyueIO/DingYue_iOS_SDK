@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         /*
          enableAutoDomain 动态切换域名，默认为关闭
-         在下次启动的时候，会切换成从后台下发的域名（单独切换域名，只适合不通域名下，相同帐号的情况，如果是不通帐号的话，需要下发plistInfo）
+         在下次启动的时候，会切换成从后台下发的域名（单独切换域名，只适合不通域名下，相同帐号的情况；如果是不通帐号的话，需要下发plistInfo）
          如果后台下发了plistInfo，则appid 和apikey 将使用后台下发的
          如果再需要手动设置basepath的话，需要将该属性设置为flase
         */
@@ -54,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          */
      
         self.showWebGuideVC()
-//        self.setLocalGuidePaths()
+
         DYMobileSDK.defaultConversionValueEnabled = true //use default cv rule
         DYMConfiguration.shared.networkRequestConfig.maxRetryCount = 5
         DYMConfiguration.shared.networkRequestConfig.retryInterval = 2
@@ -75,7 +75,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         // 原生 rootvc相关逻辑
                         self.setRootVC()
                     }else {
+                        
                       // 如果配置 则 自动加载 引导页 或者进入主页
+                        // self.setLocalGuidePaths() 在此可以配置本地web引导页
                         if UserDefaults.standard.bool(forKey: HasDisplayedGuide) {
                             self.window?.backgroundColor = .white
                             self.window?.rootViewController =  UINavigationController(rootViewController: ViewController())
@@ -262,3 +264,5 @@ extension AppDelegate {
        return timestampInMilliseconds
    }
 }
+
+
