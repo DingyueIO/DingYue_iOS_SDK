@@ -171,6 +171,19 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
     }
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        let videoPlayJS = """
+              var videos = document.querySelectorAll('video');
+              videos.forEach(function(video) {
+                  video.play();
+              });
+              """
+        webView.evaluateJavaScript(videoPlayJS) { (result, error) in
+            if let error = error {
+                print("Error executing JavaScript: \(error)")
+            } else {
+                print("All videos should now play.")
+            }
+        }
         //系统语言
         let languageCode = NSLocale.preferredLanguages[0]
         //内购项信息
@@ -178,7 +191,7 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
         if let products = DYMDefaultsManager.shared.cachedProducts, !products.isEmpty{
             cachedProducts = products
         }
-
+        
         var productsArray = [Dictionary<String,Any>]()
         for item in cachedProducts {
             var array:Dictionary<String, Any> = [
@@ -205,7 +218,7 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
         if let extra = extras {
             dic["extra"] = extra
         }
-
+        
         let jsonString = getJSONStringFromDictionary(dictionary: dic as NSDictionary)
         let data = jsonString.data(using: .utf8)
         let base64Str:String? = data?.base64EncodedString() as? String
