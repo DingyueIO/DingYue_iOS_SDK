@@ -14,13 +14,16 @@ import AnyCodable
 public struct AppleSearchAdsAttributionReportObjectAttribution: Codable, JSONEncodable, Hashable {
 
     public var version31: AppleSearchAdsAttribution
+    public var rawData: DYMParamsWrapper
 
-    public init(version31: AppleSearchAdsAttribution) {
+    public init(version31: AppleSearchAdsAttribution,rawData: DYMParamsWrapper) {
         self.version31 = version31
+        self.rawData = rawData
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case version31 = "Version3.1"
+        case rawData = "rawData"
     }
 
     // Encodable protocol methods
@@ -28,6 +31,7 @@ public struct AppleSearchAdsAttributionReportObjectAttribution: Codable, JSONEnc
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(version31, forKey: .version31)
+        try container.encode(rawData.data, forKey: .rawData)
     }
 }
 

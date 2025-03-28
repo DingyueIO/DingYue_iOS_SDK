@@ -122,7 +122,7 @@ class ApiManager {
                                     DYMDefaultsManager.shared.guideLoadingStatus = true
                                 }
                             }
-                        }                                                                        
+                        }
                     }else {
                         DYMDefaultsManager.shared.guideLoadingStatus = true
                         DYMDefaultsManager.shared.cachedGuides = nil
@@ -143,7 +143,7 @@ class ApiManager {
 
                     if DYMDefaultsManager.shared.isUseNativePaywall {
                         results["nativePaywallId"] = self.paywallIdentifier
-                    }                
+                    }
 
                     if let globalSwitchItems = DYMDefaultsManager.shared.cachedGlobalSwitch {
                         if globalSwitchItems.count > 0 {
@@ -202,7 +202,8 @@ class ApiManager {
             return
         }
         let searchAtt = AppleSearchAdsAttribution(attribution: attribution)
-        let appleReportObjAtt = AppleSearchAdsAttributionReportObjectAttribution(version31:searchAtt)
+        let appleSearchAdsRawData = DYMParamsWrapper(params: attribution)
+        let appleReportObjAtt = AppleSearchAdsAttributionReportObjectAttribution(version31:searchAtt,rawData: appleSearchAdsRawData)
         let appleReportObj = AppleSearchAdsAttributionReportObject(attribution: appleReportObjAtt)
         AttributionAPI.reportSearchAdsAttr(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: AttributionAPI.XPLATFORM_reportSearchAdsAttr.ios, X_VERSION: UserProperties.sdkVersion, appleSearchAdsAttributionReportObject: appleReportObj, apiResponseQueue: OpenAPIClientAPI.apiResponseQueue) { data, error in
             completion(data,error)
@@ -392,3 +393,5 @@ extension ApiManager {
     }
     
 }
+
+

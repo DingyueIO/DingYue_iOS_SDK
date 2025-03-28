@@ -119,6 +119,7 @@ extension AppleSearchAdsAttribution {
             self.iadAdId = version31["iad-Ad-id"] as? String
             self.iadClaimType = version31["iad-claim-type"] as? String
             
+            self.iadImpressionDate = version31["iad-impression-date"] as? String
         } else {
             
             if let attribute = attribution["attribution"] as? Bool{
@@ -156,7 +157,9 @@ extension AppleSearchAdsAttribution {
             if let iadClaimType = attribution["claimType"] {
                 self.iadClaimType = "\(iadClaimType)"
             }
-            
+            if let iadImpressionDate = attribution["impressionDate"] {
+                self.iadImpressionDate = "\(iadImpressionDate)"
+            }
         }
     }
 }
@@ -169,3 +172,4 @@ extension NSError {
     var isNotConnection: Bool { noInternetNetworkErrors.contains(code) }
     
 }
+
