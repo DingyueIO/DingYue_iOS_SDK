@@ -308,7 +308,8 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
                         }
                     }
                 }
-                self.buyWithProductId(productId, productPrice: productPrice)
+                let h5_callback = dic?["h5_callback"] as? String
+                self.buyWithProductId(productId, productPrice: productPrice, h5_callback:h5_callback)
             } else {
                 self.completion?(nil,nil,.noProductIds)
                 self.eventManager.track(event: "PURCHASE_FAIL_DETAIL", extra: "no productId from h5")
@@ -324,7 +325,7 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
         }
     }
 
-    func buyWithProductId(_ productId:String, productPrice:String? = nil) {
+    func buyWithProductId(_ productId:String, productPrice:String? = nil, h5_callback:String?) {
         ProgressView.show(rootViewConroller: self)
         UserProperties.userSubscriptionPurchasedSourcesType = .DYPaywall//以更新用户购买来源属性
         DYMobileSDK.purchase(productId: productId, productPrice: productPrice) { receipt, purchaseResult, error in
@@ -332,8 +333,16 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
             self.completion?(receipt,purchaseResult,error)
             if error == nil {
                 self.trackWithPayWallInfo(eventName: "PURCHASE_SUCCESS")
-
-                self.dismiss(animated: true, completion: nil)
+                
+                if let h5_callback = h5_callback {
+                    self.webView.evaluateJavaScript(h5_callback) { (response, error) in
+                        if let error = error {
+                            print("回传支付结果到JS时出错: \(error)")
+                        }
+                    }
+                }else{
+                    self.dismiss(animated: true, completion: nil)
+                }
             } else {
                 self.trackWithPayWallInfo(eventName: "PURCHASE_FAIL")
                 self.eventManager.track(event: "PURCHASE_FAIL_DETAIL", extra: error?.debugDescription)
