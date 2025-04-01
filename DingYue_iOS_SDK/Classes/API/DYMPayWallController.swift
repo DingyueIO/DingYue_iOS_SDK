@@ -308,8 +308,7 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
                         }
                     }
                 }
-                let h5_callback = dic?["h5_callback"] as? String
-                self.buyWithProductId(productId, productPrice: productPrice, h5_callback:h5_callback)
+                self.buyWithProductId(productId, productPrice: productPrice)
             } else {
                 self.completion?(nil,nil,.noProductIds)
                 self.eventManager.track(event: "PURCHASE_FAIL_DETAIL", extra: "no productId from h5")
@@ -325,7 +324,7 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
         }
     }
 
-    func buyWithProductId(_ productId:String, productPrice:String? = nil, h5_callback:String?) {
+    func buyWithProductId(_ productId:String, productPrice:String? = nil) {
         ProgressView.show(rootViewConroller: self)
         UserProperties.userSubscriptionPurchasedSourcesType = .DYPaywall//以更新用户购买来源属性
         DYMobileSDK.purchase(productId: productId, productPrice: productPrice) { receipt, purchaseResult, error in
@@ -334,15 +333,7 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
             if error == nil {
                 self.trackWithPayWallInfo(eventName: "PURCHASE_SUCCESS")
                 
-                if let h5_callback = h5_callback {
-                    self.webView.evaluateJavaScript(h5_callback) { (response, error) in
-                        if let error = error {
-                            print("回传支付结果到JS时出错: \(error)")
-                        }
-                    }
-                }else{
-                    self.dismiss(animated: true, completion: nil)
-                }
+                self.dismiss(animated: true, completion: nil)
             } else {
                 self.trackWithPayWallInfo(eventName: "PURCHASE_FAIL")
                 self.eventManager.track(event: "PURCHASE_FAIL_DETAIL", extra: error?.debugDescription)
