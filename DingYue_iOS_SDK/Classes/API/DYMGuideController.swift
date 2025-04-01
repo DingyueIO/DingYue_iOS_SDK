@@ -314,7 +314,18 @@ extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
                 self.completion?(receipt,purchaseResult,error)
                 if error == nil {
                     self.trackWithPayWallInfo(eventName: "GUIDE_RESTORE_PURCHASE_SUCCESS")
-                    self.dismiss(animated: true, completion: nil)
+                    
+                    let h5_callback = (message.body as? Dictionary<String,Any>)?["h5_callback"] as? String
+                    if let h5_callback = h5_callback {
+                        let jsCode = "window.\(h5_callback)(\(true))"
+                        self.webView.evaluateJavaScript(jsCode) { (response, error) in
+                            if let error = error {
+                                print("回传支付结果到JS时出错: \(error)")
+                            }
+                        }
+                    }else{
+                        self.dismiss(animated: true, completion: nil)
+                    }
                 } else {
                     self.trackWithPayWallInfo(eventName: "GUIDE_RESTORE_PURCHASE_FAIL")
                 }
