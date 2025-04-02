@@ -95,23 +95,23 @@ public typealias Parameters = [String: Any]
     static var appID: String = ""
     static var idfa: String? {
         // Get and return IDFA
-        if DYMobileSDK.idfaCollectionDisabled == false, #available(iOS 9.0, macOS 10.14, *) {
-            if #available(iOS 14, *) {
-                if ATTrackingManager.trackingAuthorizationStatus == .authorized {
-                    return ASIdentifierManager.shared().advertisingIdentifier.uuidString
-                } else {
-                    return nil
-                }
-            } else {
-                if ASIdentifierManager.shared().isAdvertisingTrackingEnabled {
-                    return ASIdentifierManager.shared().advertisingIdentifier.uuidString
-                }else{
-                    return nil
-                }
-            }
-        } else {
+//        if DYMobileSDK.idfaCollectionDisabled == false, #available(iOS 9.0, macOS 10.14, *) {
+//            if #available(iOS 14, *) {
+//                if ATTrackingManager.trackingAuthorizationStatus == .authorized {
+//                    return ASIdentifierManager.shared().advertisingIdentifier.uuidString
+//                } else {
+//                    return nil
+//                }
+//            } else {
+//                if ASIdentifierManager.shared().isAdvertisingTrackingEnabled {
+//                    return ASIdentifierManager.shared().advertisingIdentifier.uuidString
+//                }else{
+//                    return nil
+//                }
+//            }
+//        } else {
             return nil
-        }
+//        }
     }
     static var idfv: String?  {
         guard let identifierForVendor = UIDevice.current.identifierForVendor?.uuidString else {
