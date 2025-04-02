@@ -158,16 +158,22 @@ public class DYMGuideController: UIViewController {
                 let url = URL(fileURLWithPath: nativeGuideFullPath)
                 webView.loadFileURL(url, allowingReadAccessTo: URL(fileURLWithPath: basePath))
             } else {
-                /*
                 let sdkBundle = Bundle(for: DYMobileSDK.self)
-                guard let resourceBundleURL = sdkBundle.url(forResource: "Guide", withExtension: "bundle")else { fatalError("Guide.bundle not found, do not display SDK default GuidePage!") }
-                guard let resourceBundle = Bundle(url: resourceBundleURL)else { fatalError("Cannot access Guide.bundle,do not display SDK default GuidePage!") }
-                let path = resourceBundle.path(forResource: "index", ofType: "html")
-                let htmlUrl = URL(fileURLWithPath: path!)
-                webView.loadFileURL(htmlUrl, allowingReadAccessTo: htmlUrl)
-                */
-                self.trackWithPayWallInfo(eventName: "NO_LOCAL_WEB_GUIDE_CLOSE")
-                self.delegate?.clickGuideCloseButton?(baseViewController: self,closeType: "NO_LOCAL_WEB_GUIDE_CLOSE")
+                guard let resourceBundleURL = sdkBundle.url(forResource: "DingYue_iOS_SDK", withExtension: "bundle") else { 
+                    fatalError("DingYue_iOS_SDK.bundle not found, do not display SDK default GuidePage!") 
+                }
+                guard let resourceBundle = Bundle(url: resourceBundleURL) else { 
+                    fatalError("Cannot access DingYue_iOS_SDK.bundle, do not display SDK default GuidePage!") 
+                }
+                guard let path = resourceBundle.path(forResource: "guide_index", ofType: "html", inDirectory: "Guide") else {
+                    fatalError("guide_index.html not found in Guide directory, do not display SDK default GuidePage!")
+                }
+                let htmlUrl = URL(fileURLWithPath: path)
+                let baseUrl = htmlUrl.deletingLastPathComponent()
+                webView.loadFileURL(htmlUrl, allowingReadAccessTo: baseUrl)
+                
+//                self.trackWithPayWallInfo(eventName: "NO_LOCAL_WEB_GUIDE_CLOSE")
+//                self.delegate?.clickGuideCloseButton?(baseViewController: self,closeType: "NO_LOCAL_WEB_GUIDE_CLOSE")
             }
         } else {
             if DYMDefaultsManager.shared.cachedGuides != nil && DYMDefaultsManager.shared.cachedGuidePageIdentifier != nil {
@@ -180,16 +186,16 @@ public class DYMGuideController: UIViewController {
                     let url = URL(fileURLWithPath: defaultGuidePath)
                     webView.loadFileURL(url, allowingReadAccessTo: url)
                 } else {
-                    /*
+                    
                     let sdkBundle = Bundle(for: DYMobileSDK.self)
-                    guard let resourceBundleURL = sdkBundle.url(forResource: "Guide", withExtension: "bundle")else { fatalError("Guide.bundle not found, do not display SDK default GuidePage!") }
-                    guard let resourceBundle = Bundle(url: resourceBundleURL)else { fatalError("Cannot access Guide.bundle,do not display SDK default GuidePage!") }
-                    let path = resourceBundle.path(forResource: "index", ofType: "html")
+                    guard let resourceBundleURL = sdkBundle.url(forResource: "DingYue_iOS_SDK", withExtension: "bundle")else { fatalError("DingYue_iOS_SDK.bundle not found, do not display SDK default paywall!") }
+                    guard let resourceBundle = Bundle(url: resourceBundleURL)else { fatalError("Cannot access DingYue_iOS_SDK.bundle,do not display SDK default paywall!") }
+                    let path = resourceBundle.path(forResource: "guide_index", ofType: "html")
                     let htmlUrl = URL(fileURLWithPath: path!)
                     webView.loadFileURL(htmlUrl, allowingReadAccessTo: htmlUrl)
-                    */
-                    self.trackWithPayWallInfo(eventName: "NO_LOCAL_WEB_GUIDE_CLOSE")
-                    self.delegate?.clickGuideCloseButton?(baseViewController: self,closeType: "NO_LOCAL_WEB_GUIDE_CLOSE")
+                    
+//                    self.trackWithPayWallInfo(eventName: "NO_LOCAL_WEB_GUIDE_CLOSE")
+//                    self.delegate?.clickGuideCloseButton?(baseViewController: self,closeType: "NO_LOCAL_WEB_GUIDE_CLOSE")
                 }
             }
         }
