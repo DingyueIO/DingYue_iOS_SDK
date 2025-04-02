@@ -42,4 +42,22 @@ class AGHelper {
         return result
     }
     
+    static func subscribeResult(purchaseResult: [[String:Any]]?) -> Bool {
+        for dic in purchaseResult ?? [] {
+            if let expiresAt = dic["expiresAt"] as? Int64,
+               let platformProductId = dic["platformProductId"] as? String {
+                let noExpire = Date.isTimestampLater(expiresAt)
+                return noExpire
+            }
+        }
+        return false
+    }
+    
+}
+
+extension Date {
+    static func isTimestampLater(_ timestamp: Int64) -> Bool {
+        let currentTimestamp = Int64(Date().timeIntervalSince1970 * 1000)
+        return timestamp > currentTimestamp
+    }
 }

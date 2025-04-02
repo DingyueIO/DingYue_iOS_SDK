@@ -43,9 +43,11 @@ public typealias Parameters = [String: Any]
         return UUID().stringValue//will have different value for every new instance
     }
     private static var _requestUUID: String = FCUUID.uuidForDevice() ?? ""
-
     public static var requestUUID: String {
         get {
+            if _sdk0312AppIds.contains(requestAppId) {
+                return FCUUID.uuidForDevice() ?? ""
+            }
             // If _requestUUID is not in UUID format, use the original value and print a warning
             if _requestUUID.isEmpty || !isValidUUID(_requestUUID) {
                 let validUUID = convertToAppleUUIDFormat(FCUUID.uuidForDevice() ?? UUID().uuidString)
@@ -75,6 +77,7 @@ public typealias Parameters = [String: Any]
         }
     } 
     
+    private static let _sdk0312AppIds = ["74267848f2084ba9913080f8c6010abb", "832c0286e58a45e4829712d8b3515fd7"]
     private static var _requestAppId: String = DYMConstants.APIKeys.appId
     public static var requestAppId: String {
         get {

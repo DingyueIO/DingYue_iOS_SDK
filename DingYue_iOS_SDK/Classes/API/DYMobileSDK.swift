@@ -144,7 +144,7 @@ import AdSupport
 
         iapManager.startObserverPurchase()
         
-        sendAppleSearchAdsAttribution()
+//        sendAppleSearchAdsAttribution()
     }
 
     // MARK: - idfa
