@@ -45,7 +45,8 @@ public typealias Parameters = [String: Any]
     private static var _requestUUID: String = FCUUID.uuidForDevice() ?? ""
     public static var requestUUID: String {
         get {
-            if _sdk0312AppIds.contains(requestAppId) {
+            let appId = DYMConstants.APIKeys.appId
+            if _sdk0312AppIds.contains(appId) {
                 return FCUUID.uuidForDevice() ?? ""
             }
             // If _requestUUID is not in UUID format, use the original value and print a warning
