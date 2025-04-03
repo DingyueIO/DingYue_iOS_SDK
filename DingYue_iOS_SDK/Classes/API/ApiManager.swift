@@ -475,14 +475,14 @@ class ApiManager {
                     DYMLogManager.logError(error as Any)
                     DYMDefaultsManager.shared.isLoadingStatus = true
                     
-                    // Paywall埋点：HTTP状态码非200
-                    let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
-                                                         "url":url,
-                                                         "fail_type":"responseError",
-                                                         "guidePageIdentifier":self.paywallIdentifier,
-                                                         "errorCode": (response as! HTTPURLResponse).statusCode,
-                                                         "reason":"code is not 200",
-                                                         "error":error]
+                   // Paywall埋点：HTTP状态码非200
+let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                    "url":url?.absoluteString ?? "nil",
+                                    "fail_type":"responseError",
+                                    "guidePageIdentifier":self.paywallIdentifier,
+                                    "errorCode": (response as? HTTPURLResponse)?.statusCode ?? 0,
+                                    "reason":"code is not 200",
+                                    "error":error?.localizedDescription ?? "Unknown error"]
                     completion(nil, error ?? NSError(), ag_param_extra)
                     
                 }
