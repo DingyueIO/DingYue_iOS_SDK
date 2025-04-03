@@ -372,23 +372,23 @@ import AdSupport
         //IDFA
         if #available(iOS 14, *) {
             let state = ATTrackingManager.trackingAuthorizationStatus
-            if state == .notDetermined {
-                self.reportAppleSearchAdsAttribution()
-                NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidBecomeActive, object: nil, queue: .main) { notification in
-                    ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
-                        self.reportAppleSearchAdsAttribution()
-                        
-                        if status == .authorized {
-                            Self.reportIdfa(idfa: ASIdentifierManager.shared().advertisingIdentifier.uuidString)
-                        }
-                    })
-                }
-            } else {
+//            if state == .notDetermined {
+//                self.reportAppleSearchAdsAttribution()
+//                NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidBecomeActive, object: nil, queue: .main) { notification in
+//                    ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
+//                        self.reportAppleSearchAdsAttribution()
+//                        
+//                        if status == .authorized {
+//                            Self.reportIdfa(idfa: ASIdentifierManager.shared().advertisingIdentifier.uuidString)
+//                        }
+//                    })
+//                }
+//            } else {
                 reportAppleSearchAdsAttribution()
                 if state == .authorized {
                     Self.reportIdfa(idfa: ASIdentifierManager.shared().advertisingIdentifier.uuidString)
                 }
-            }
+//            }
         } else {
             reportAppleSearchAdsAttribution()
             if ASIdentifierManager.shared().isAdvertisingTrackingEnabled {
