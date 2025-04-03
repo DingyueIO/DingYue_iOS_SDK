@@ -140,6 +140,7 @@ class ApiManager {
                                             var para = para
                                             para["costTime"] = (ag_endTime - ag_startTime)
                                             para["size"] = paywall.customize
+                                            para["url"] = paywall.downloadUrl
                                             if result {
                                                 //tj``:埋点-Guide 下载zip文件成功
                                                 DYMobileSDK.track(event: "SDK.Paywall.DownloadFinish", extra: AGHelper.ag_convertDicToJSONStr(dictionary:para))
@@ -223,6 +224,7 @@ class ApiManager {
                                         var para = para
                                         para["costTime"] = (ag_endTime - ag_startTime)
                                         para["size"] = guide.customize
+                                        para["url"] = guide.downloadUrl
                                         if result {
                                             //tj``:埋点-Guide 下载zip文件成功
                                             DYMobileSDK.track(event: "SDK.Guide.DownloadFinish", extra: AGHelper.ag_convertDicToJSONStr(dictionary:para))
@@ -316,7 +318,7 @@ class ApiManager {
     }
     
     private var paywall_retryCount = 0
-    private var paywall_maxRetries = 5
+    private var paywall_maxRetries = 3
     private func downloadPaywallZip(_ url:URL, dCompletion:@escaping (Bool, [String:Any])->Void) {
         self.downloadWebTemplate(url: url, completion: {[weak self] res, error, para in
             guard let sself = self else {return}
@@ -476,13 +478,13 @@ class ApiManager {
                     DYMDefaultsManager.shared.isLoadingStatus = true
                     
                    // Paywall埋点：HTTP状态码非200
-let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
-                                    "url":url?.absoluteString ?? "nil",
+                    let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
                                     "fail_type":"responseError",
-                                    "guidePageIdentifier":self.paywallIdentifier,
+                                    "paywallIdentifier":self.paywallIdentifier,
                                     "errorCode": (response as? HTTPURLResponse)?.statusCode ?? 0,
                                     "reason":"code is not 200",
-                                    "error":error?.localizedDescription ?? "Unknown error"]
+                                    "error":error?.localizedDescription ?? "unknown error"
+                                    ]
                     completion(nil, error ?? NSError(), ag_param_extra)
                     
                 }
@@ -491,11 +493,10 @@ let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1
                 
                 // Paywall埋点： 网络请求失败，无响应
                 let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
-                                                     "url":url,
                                                      "fail_type":"noResponse",
                                                      "guidePageIdentifier":self.paywallIdentifier,
                                                      "reason":"server error, no response",
-                                                     "error":error]
+                                                     "error":error?.localizedDescription ?? "unknown error"]
                 completion(nil, error ?? NSError(), ag_param_extra)
                 
             }
@@ -607,26 +608,30 @@ extension ApiManager {
                     DYMLogManager.logError(error as Any)
                     DYMDefaultsManager.shared.guideLoadingStatus = true
                     
+                    
                     // Guide埋点：HTTP状态码非200
                     let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
-                                                         "url":url,
                                                          "fail_type":"responseError",
                                                          "guidePageIdentifier":self.guidePageIdentifier,
                                                          "errorCode": (response as! HTTPURLResponse).statusCode,
                                                          "reason":"code is not 200",
-                                                         "error":error]
+                                                         "error":error?.localizedDescription ?? "unkonw error"]
                     completion(nil, error ?? NSError(), ag_param_extra)
                 }
             } else {
                 DYMDefaultsManager.shared.guideLoadingStatus = true
-                
+                let responseCode = if(response == nil){
+                    -1
+                }else{
+                    (response as! HTTPURLResponse).statusCode
+                }
                 // Guide埋点： 网络请求失败，无响应
                 let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
-                                                     "url":url,
-                                                     "fail_type":"noResponse",
+                                                     "fail_type":"responseError",
                                                      "guidePageIdentifier":self.guidePageIdentifier,
-                                                     "reason":"server error, no response",
-                                                     "error":error]
+                                                     "errorCode": responseCode,
+                                                     "reason":"code is not 200",
+                                                     "error":error?.localizedDescription ?? "unkonw error"]
                 completion(nil, error ?? NSError(), ag_param_extra)
                 
             }
