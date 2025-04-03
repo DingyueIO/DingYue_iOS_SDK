@@ -44,6 +44,7 @@ public class DYMGuideController: UIViewController {
     var extras:[String:Any]?
     var guidePageSwiperSize:Int?
 
+    private var startLoadTime:Int64 = 0
     
     lazy var customIndicatiorV:NVActivityIndicatorView =  {
        let view = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 64, height: 34))
@@ -154,6 +155,7 @@ public class DYMGuideController: UIViewController {
     public func loadWebView() {
 
         var urlStr = ""
+        startLoadTime = Int64(Date().timeIntervalSince1970 * 1000)
         if DYMDefaultsManager.shared.isUseNativeGuide {
             if let nativeGuideFullPath = DYMDefaultsManager.shared.nativeGuidePath, let basePath = DYMDefaultsManager.shared.nativeGuideBasePath {
                 let url = URL(fileURLWithPath: nativeGuideFullPath)
@@ -226,6 +228,13 @@ extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
     }
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        
+        let endLoadTime = Int64(Date().timeIntervalSince1970 * 1000)
+        let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                             "url":webView.url,
+                                             "costTime":(endLoadTime - startLoadTime)]
+        DYMobileSDK.track(event: "SDK.Guide.LoadFinish", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+        
         //系统语言
         let languageCode = NSLocale.preferredLanguages[0]
         //内购项信息

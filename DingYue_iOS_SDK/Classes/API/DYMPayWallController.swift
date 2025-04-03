@@ -31,6 +31,8 @@ public class DYMPayWallController: UIViewController {
     var currentPaywallId:String?
     var extras:[String:Any]?
 
+    private var startLoadTime:Int64 = 0
+    
     lazy var activity:UIActivityIndicatorView = {
         let activity = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         activity.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
@@ -123,6 +125,7 @@ public class DYMPayWallController: UIViewController {
     public func loadWebView() {
 
         var urlStr = ""
+        startLoadTime = Int64(Date().timeIntervalSince1970 * 1000)
         if DYMDefaultsManager.shared.isUseNativePaywall {
             if let nativePaywallFullPath = DYMDefaultsManager.shared.nativePaywallPath, let basePath = DYMDefaultsManager.shared.nativePaywallBasePath {
                 let url = URL(fileURLWithPath: nativePaywallFullPath)
@@ -190,6 +193,13 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
     }
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        
+        let endLoadTime = Int64(Date().timeIntervalSince1970 * 1000)
+        let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                             "url":webView.url,
+                                             "costTime":(endLoadTime - startLoadTime)]
+        DYMobileSDK.track(event: "SDK.Paywall.LoadFinish", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+        
         //系统语言
         let languageCode = NSLocale.preferredLanguages[0]
         //内购项信息
@@ -241,7 +251,7 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
                                              "url":webView.url,
                                              "fail_type":"didFailProvisional",
                                              "error":error.localizedDescription]
-        DYMobileSDK.track(event: "SDK.PayWall.LoadFailed", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+        DYMobileSDK.track(event: "SDK.Paywall.LoadFailed", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
     }
     
     /* - 页面内容已经开始加载之后发生的错误
@@ -254,7 +264,7 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
                                              "url":webView.url,
                                              "fail_type":"didFailNavigation",
                                              "error":error.localizedDescription]
-        DYMobileSDK.track(event: "SDK.PayWall.LoadFailed", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+        DYMobileSDK.track(event: "SDK.Paywall.LoadFailed", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
     }
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
