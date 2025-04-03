@@ -17,7 +17,7 @@ DESC
   # Source files and resources
   s.source_files     = 'DingYue_iOS_SDK/Classes/**/*.{h,m,swift}'
   s.vendored_frameworks = 'DingYue_iOS_SDK/Libs/Lua/DingYueLua.xcframework'
-  s.resource_bundle = { 'DingYue_iOS_SDK' => 'DingYue_iOS_SDK/Assets/Resources/Purchase/*' }
+  s.resource_bundle = { 'DingYue_iOS_SDK' => ['DingYue_iOS_SDK/Assets/Resources/Purchase/*', 'DingYue_iOS_SDK/Assets/Resources/Guide/*'] }
 
   # Swift version and framework dependencies
   s.swift_version    = '4.0'
