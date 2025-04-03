@@ -153,10 +153,12 @@ public class DYMGuideController: UIViewController {
     
     public func loadWebView() {
 
+        var urlStr = ""
         if DYMDefaultsManager.shared.isUseNativeGuide {
             if let nativeGuideFullPath = DYMDefaultsManager.shared.nativeGuidePath, let basePath = DYMDefaultsManager.shared.nativeGuideBasePath {
                 let url = URL(fileURLWithPath: nativeGuideFullPath)
                 webView.loadFileURL(url, allowingReadAccessTo: URL(fileURLWithPath: basePath))
+                urlStr = nativeGuideFullPath
             } else {
                 /*
                 let sdkBundle = Bundle(for: DYMobileSDK.self)
@@ -168,6 +170,7 @@ public class DYMGuideController: UIViewController {
                 */
                 self.trackWithPayWallInfo(eventName: "NO_LOCAL_WEB_GUIDE_CLOSE")
                 self.delegate?.clickGuideCloseButton?(baseViewController: self,closeType: "NO_LOCAL_WEB_GUIDE_CLOSE")
+//                urlStr = path!
             }
         } else {
             if DYMDefaultsManager.shared.cachedGuides != nil && DYMDefaultsManager.shared.cachedGuidePageIdentifier != nil {
@@ -175,10 +178,12 @@ public class DYMGuideController: UIViewController {
                 let fullPath = basePath + "/index.html"
                 let url = URL(fileURLWithPath: fullPath)
                 webView.loadFileURL(url, allowingReadAccessTo: URL(fileURLWithPath: basePath))
+                urlStr = fullPath
             } else {
                 if let defaultGuidePath = DYMDefaultsManager.shared.defaultGuidePath {
                     let url = URL(fileURLWithPath: defaultGuidePath)
                     webView.loadFileURL(url, allowingReadAccessTo: url)
+                    urlStr = defaultGuidePath
                 } else {
                     /*
                     let sdkBundle = Bundle(for: DYMobileSDK.self)
@@ -190,9 +195,15 @@ public class DYMGuideController: UIViewController {
                     */
                     self.trackWithPayWallInfo(eventName: "NO_LOCAL_WEB_GUIDE_CLOSE")
                     self.delegate?.clickGuideCloseButton?(baseViewController: self,closeType: "NO_LOCAL_WEB_GUIDE_CLOSE")
+//                    urlStr = path!
                 }
             }
         }
+        
+        //tj``:埋点-Guide 加载url
+        let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                             "url":urlStr]
+        DYMobileSDK.track(event: "SDK.Guide.LoadURL", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
     }
     ///刷新页面
     public func refreshView() {
@@ -275,6 +286,31 @@ extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
             fadeView(launchView, hide: true)
         }
 
+    }
+    
+    /* - 页面内容开始加载之前发生的错误
+      - 请求阶段或响应阶段出现问题时。
+     例如，网络连接问题、服务器不可达、URL格式错误
+    */
+    public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: any Error) {
+        let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                             "url":webView.url,
+                                             "fail_type":"didFailProvisional",
+                                             "error":error.localizedDescription]
+        DYMobileSDK.track(event: "SDK.Guide.LoadFailed", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+    }
+    
+    /* - 页面内容已经开始加载之后发生的错误
+       - 页面内容已经开始加载之后出现问题
+       - 例如，页面加载过程中出现的错误，如解析错误、资源加载失败等
+    */
+    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: any Error) {
+        
+        let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                             "url":webView.url,
+                                             "fail_type":"didFailNavigation",
+                                             "error":error.localizedDescription]
+        DYMobileSDK.track(event: "SDK.Guide.LoadFailed", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
     }
     
     func fadeView(_ view: UIView, hide: Bool, duration: TimeInterval = 0.6) {

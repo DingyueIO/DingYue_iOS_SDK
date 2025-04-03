@@ -232,6 +232,31 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
         }
     }
     
+    /* - 页面内容开始加载之前发生的错误
+      - 请求阶段或响应阶段出现问题时。
+     例如，网络连接问题、服务器不可达、URL格式错误
+    */
+    public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: any Error) {
+        let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                             "url":webView.url,
+                                             "fail_type":"didFailProvisional",
+                                             "error":error.localizedDescription]
+        DYMobileSDK.track(event: "SDK.PayWall.LoadFailed", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+    }
+    
+    /* - 页面内容已经开始加载之后发生的错误
+       - 页面内容已经开始加载之后出现问题
+       - 例如，页面加载过程中出现的错误，如解析错误、资源加载失败等
+    */
+    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: any Error) {
+        
+        let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                             "url":webView.url,
+                                             "fail_type":"didFailNavigation",
+                                             "error":error.localizedDescription]
+        DYMobileSDK.track(event: "SDK.PayWall.LoadFailed", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+    }
+    
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         
         //tj``:埋点-Paywall 加载用户交互

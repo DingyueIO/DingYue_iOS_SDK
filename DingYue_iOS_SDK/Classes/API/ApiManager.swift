@@ -135,23 +135,17 @@ class ApiManager {
                                                    "url":paywall.downloadUrl]
                                         DYMobileSDK.track(event: "SDK.Paywall.DownloadStart", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
                                         
-                                        self.downloadWebTemplate(url: URL(string: paywall.downloadUrl)!) { res, err in
+                                        self.downloadWebTemplate(url: URL(string: paywall.downloadUrl)!) { res, err, para in
                                             let ag_endTime = Int64(Date().timeIntervalSince1970 * 1000)
-                                            
-                                            if err == nil {
-                                                //tj``:埋点-Paywall 下载zip文件成功
-                                                let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
-                                                                                     "url":paywall.downloadUrl,
-                                                                                     "costTime": (ag_endTime - ag_startTime),
-                                                                                     "size":paywall.customize]
-                                                DYMobileSDK.track(event: "SDK.Paywall.DownloadFinish", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+                                            var para = para
+                                            para["costTime"] = (ag_endTime - ag_startTime)
+                                            para["size"] = paywall.customize
+                                            if error == nil {
+                                                //tj``:埋点-Guide 下载zip文件成功
+                                                DYMobileSDK.track(event: "SDK.Paywall.DownloadFinish", extra: AGHelper.ag_convertDicToJSONStr(dictionary:para))
                                             }else{
-                                                //tj``:埋点-Paywall 下载zip文件失败
-                                                let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
-                                                                                     "url":paywall.downloadUrl,
-                                                                                     "costTime": (ag_endTime - ag_startTime),
-                                                                                     "size":paywall.customize]
-                                                DYMobileSDK.track(event: "SDK.Paywall.DownloadFailed", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+                                                //tj``:埋点-Guide 下载zip文件失败
+                                                DYMobileSDK.track(event: "SDK.Paywall.DownloadFailed", extra: AGHelper.ag_convertDicToJSONStr(dictionary:para))
                                             }
                                         }
                                     } else {
@@ -224,25 +218,19 @@ class ApiManager {
                                                                          "url":URL(string: guide.downloadUrl)!]
                                     DYMobileSDK.track(event: "SDK.Guide.DownloadStart", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
                                     
-                                    self.downloadGuideWebTemplate(url: URL(string: guide.downloadUrl)!) { res, error in
+                                    self.downloadGuideWebTemplate(url: URL(string: guide.downloadUrl)!, completion: { res, error, para in
                                         let ag_endTime = Int64(Date().timeIntervalSince1970 * 1000)
-                                        
+                                        var para = para
+                                        para["costTime"] = (ag_endTime - ag_startTime)
+                                        para["size"] = guide.customize
                                         if error == nil {
                                             //tj``:埋点-Guide 下载zip文件成功
-                                            let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
-                                                                                 "url":guide.downloadUrl,
-                                                                                 "costTime": (ag_endTime - ag_startTime),
-                                                                                 "size":guide.customize]
-                                            DYMobileSDK.track(event: "SDK.Guide.DownloadFinish", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+                                            DYMobileSDK.track(event: "SDK.Guide.DownloadFinish", extra: AGHelper.ag_convertDicToJSONStr(dictionary:para))
                                         }else{
                                             //tj``:埋点-Guide 下载zip文件失败
-                                            let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
-                                                                                 "url":guide.downloadUrl,
-                                                                                 "costTime": (ag_endTime - ag_startTime),
-                                                                                 "size":guide.customize]
-                                            DYMobileSDK.track(event: "SDK.Guide.DownloadFailed", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+                                            DYMobileSDK.track(event: "SDK.Guide.DownloadFailed", extra: AGHelper.ag_convertDicToJSONStr(dictionary:para))
                                         }
-                                    }
+                                    })
                                 }else {
                                     DYMDefaultsManager.shared.guideLoadingStatus = true
                                 }
@@ -379,12 +367,19 @@ class ApiManager {
     
 
     //MARK: 下载内购页zip
-    func downloadWebTemplate(url: URL, completion:@escaping (SimpleStatusResult?,Error?) -> Void) {
+    func downloadWebTemplate(url: URL, completion:@escaping (SimpleStatusResult?,Error?,[String:Any]) -> Void) {
         let turl = url
         URLSession.shared.downloadTask(with: turl) { url, response, error in
-            completion(nil, error)
             if response != nil {
                 if (response as! HTTPURLResponse).statusCode == 200 {
+                    
+                    // Paywall埋点：HTTP状态码200
+                    let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                                         "url":url,
+                                                         "guidePageIdentifier":self.paywallIdentifier,
+                                                         "code": 200]
+                    completion(nil, nil, ag_param_extra)
+                    
                     if let zipFileUrl = url, let targetUnzipUrl = UserProperties.pallwallPath {
                         let success = SSZipArchive.unzipFile(atPath: zipFileUrl.path, toDestination: targetUnzipUrl)
                         if success {
@@ -415,9 +410,30 @@ class ApiManager {
                 }else {
                     DYMLogManager.logError(error as Any)
                     DYMDefaultsManager.shared.isLoadingStatus = true
+                    
+                    // Paywall埋点：HTTP状态码非200
+                    let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                                         "url":url,
+                                                         "fail_type":"responseError",
+                                                         "guidePageIdentifier":self.paywallIdentifier,
+                                                         "errorCode": (response as! HTTPURLResponse).statusCode,
+                                                         "reason":"code is not 200",
+                                                         "error":error]
+                    completion(nil, error ?? NSError(), ag_param_extra)
+                    
                 }
             } else {
                 DYMDefaultsManager.shared.isLoadingStatus = true
+                
+                // Paywall埋点： 网络请求失败，无响应
+                let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                                     "url":url,
+                                                     "fail_type":"noResponse",
+                                                     "guidePageIdentifier":self.paywallIdentifier,
+                                                     "reason":"server error, no response",
+                                                     "error":error]
+                completion(nil, error ?? NSError(), ag_param_extra)
+                
             }
         }.resume()
     }
@@ -491,13 +507,19 @@ class ApiManager {
 //MARK: 引导页相关
 extension ApiManager {
     //MARK: 下载引导页
-    func downloadGuideWebTemplate(url: URL, completion:@escaping (SimpleStatusResult?,Error?) -> Void) {
+    func downloadGuideWebTemplate(url: URL, completion:@escaping (SimpleStatusResult?,Error?,[String:Any]) -> Void) {
         let turl = url
         URLSession.shared.downloadTask(with: turl) { url, response, error in
-            completion(nil, error)
             if response != nil {
                 if (response as! HTTPURLResponse).statusCode == 200 {
 
+                    // 埋点：HTTP状态码200
+                    let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                                         "url":url,
+                                                         "guidePageIdentifier":self.guidePageIdentifier,
+                                                         "code": 200]
+                    completion(nil, nil, ag_param_extra)
+                    
                     if let zipFileUrl = url, let targetUnzipUrl = UserProperties.guidePath {
                         let success = SSZipArchive.unzipFile(atPath: zipFileUrl.path, toDestination: targetUnzipUrl)
                         if success {
@@ -520,9 +542,29 @@ extension ApiManager {
                 }else {
                     DYMLogManager.logError(error as Any)
                     DYMDefaultsManager.shared.guideLoadingStatus = true
+                    
+                    // Guide埋点：HTTP状态码非200
+                    let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                                         "url":url,
+                                                         "fail_type":"responseError",
+                                                         "guidePageIdentifier":self.guidePageIdentifier,
+                                                         "errorCode": (response as! HTTPURLResponse).statusCode,
+                                                         "reason":"code is not 200",
+                                                         "error":error]
+                    completion(nil, error ?? NSError(), ag_param_extra)
                 }
             } else {
                 DYMDefaultsManager.shared.guideLoadingStatus = true
+                
+                // Guide埋点： 网络请求失败，无响应
+                let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                                     "url":url,
+                                                     "fail_type":"noResponse",
+                                                     "guidePageIdentifier":self.guidePageIdentifier,
+                                                     "reason":"server error, no response",
+                                                     "error":error]
+                completion(nil, error ?? NSError(), ag_param_extra)
+                
             }
         }.resume()
     }
