@@ -316,7 +316,7 @@ class ApiManager {
     }
     
     private var paywall_retryCount = 0
-    private var paywall_maxRetries = 15
+    private var paywall_maxRetries = 5
     private func downloadPaywallZip(_ url:URL, dCompletion:@escaping (Bool, [String:Any])->Void) {
         self.downloadWebTemplate(url: url, completion: {[weak self] res, error, para in
             guard let sself = self else {return}
@@ -348,7 +348,7 @@ class ApiManager {
     }
     
     private var guide_retryCount = 0
-    private var guide_maxRetries = 15
+    private var guide_maxRetries = 5
     private func downloadGuideZip(_ url:URL, dCompletion:@escaping (Bool, [String:Any])->Void) {
         self.downloadGuideWebTemplate(url: url, completion: {[weak self] res, error, para in
             guard let sself = self else {return}
