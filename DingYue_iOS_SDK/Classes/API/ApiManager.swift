@@ -494,7 +494,7 @@ class ApiManager {
                 // Paywall埋点： 网络请求失败，无响应
                 let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
                                                      "fail_type":"noResponse",
-                                                     "guidePageIdentifier":self.paywallIdentifier,
+                                                     "paywallIdentifier":self.paywallIdentifier,
                                                      "reason":"server error, no response",
                                                      "error":error?.localizedDescription ?? "unknown error"]
                 completion(nil, error ?? NSError(), ag_param_extra)
@@ -620,16 +620,10 @@ extension ApiManager {
                 }
             } else {
                 DYMDefaultsManager.shared.guideLoadingStatus = true
-                let responseCode = if(response == nil){
-                    -1
-                }else{
-                    (response as! HTTPURLResponse).statusCode
-                }
                 // Guide埋点： 网络请求失败，无响应
                 let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
                                                      "fail_type":"responseError",
                                                      "guidePageIdentifier":self.guidePageIdentifier,
-                                                     "errorCode": responseCode,
                                                      "reason":"code is not 200",
                                                      "error":error?.localizedDescription ?? "unkonw error"]
                 completion(nil, error ?? NSError(), ag_param_extra)
