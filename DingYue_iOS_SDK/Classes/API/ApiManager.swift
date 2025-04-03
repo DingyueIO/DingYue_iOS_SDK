@@ -622,9 +622,9 @@ extension ApiManager {
                 DYMDefaultsManager.shared.guideLoadingStatus = true
                 // Guide埋点： 网络请求失败，无响应
                 let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
-                                                     "fail_type":"responseError",
+                                                     "fail_type":"noResponse",
                                                      "guidePageIdentifier":self.guidePageIdentifier,
-                                                     "reason":"code is not 200",
+                                                     "reason":"server error, no response",
                                                      "error":error?.localizedDescription ?? "unkonw error"]
                 completion(nil, error ?? NSError(), ag_param_extra)
                 
