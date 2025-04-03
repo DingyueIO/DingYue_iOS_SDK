@@ -135,12 +135,12 @@ class ApiManager {
                                                    "url":paywall.downloadUrl]
                                         DYMobileSDK.track(event: "SDK.Paywall.DownloadStart", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
                                         
-                                        self.downloadWebTemplate(url: URL(string: paywall.downloadUrl)!) { res, err, para in
+                                        self.downloadPaywallZip(URL(string: paywall.downloadUrl)!) { result, para in
                                             let ag_endTime = Int64(Date().timeIntervalSince1970 * 1000)
                                             var para = para
                                             para["costTime"] = (ag_endTime - ag_startTime)
                                             para["size"] = paywall.customize
-                                            if error == nil {
+                                            if result {
                                                 //tj``:埋点-Guide 下载zip文件成功
                                                 DYMobileSDK.track(event: "SDK.Paywall.DownloadFinish", extra: AGHelper.ag_convertDicToJSONStr(dictionary:para))
                                             }else{
@@ -218,19 +218,19 @@ class ApiManager {
                                                                          "url":URL(string: guide.downloadUrl)!]
                                     DYMobileSDK.track(event: "SDK.Guide.DownloadStart", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
                                     
-                                    self.downloadGuideWebTemplate(url: URL(string: guide.downloadUrl)!, completion: { res, error, para in
+                                    self.downloadGuideZip(URL(string: guide.downloadUrl)!) { result, para in
                                         let ag_endTime = Int64(Date().timeIntervalSince1970 * 1000)
                                         var para = para
                                         para["costTime"] = (ag_endTime - ag_startTime)
                                         para["size"] = guide.customize
-                                        if error == nil {
+                                        if result {
                                             //tj``:埋点-Guide 下载zip文件成功
                                             DYMobileSDK.track(event: "SDK.Guide.DownloadFinish", extra: AGHelper.ag_convertDicToJSONStr(dictionary:para))
                                         }else{
                                             //tj``:埋点-Guide 下载zip文件失败
                                             DYMobileSDK.track(event: "SDK.Guide.DownloadFailed", extra: AGHelper.ag_convertDicToJSONStr(dictionary:para))
                                         }
-                                    })
+                                    }
                                 }else {
                                     DYMDefaultsManager.shared.guideLoadingStatus = true
                                 }
@@ -313,6 +313,70 @@ class ApiManager {
                 }
             }
         }
+    }
+    
+    private var paywall_retryCount = 0
+    private var paywall_maxRetries = 15
+    private func downloadPaywallZip(_ url:URL, dCompletion:@escaping (Bool, [String:Any])->Void) {
+        self.downloadWebTemplate(url: url, completion: {[weak self] res, error, para in
+            guard let sself = self else {return}
+            
+            if error == nil {
+                dCompletion(true, para)
+            }else{
+                
+                if sself.paywall_retryCount < sself.paywall_maxRetries {
+                    sself.paywall_retryCount += 1
+                    let time: TimeInterval = 1.0
+                    
+                    //tj``:Guide埋点-downloadGuideZip 重试开始前
+                    let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                                         "retryTimes":sself.paywall_retryCount,
+                                                         "lastError":error.debugDescription]
+                    DYMobileSDK.track(event: "SDK.Paywall.DownloadRetry", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+                    
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + time) {
+                        sself.downloadPaywallZip(url, dCompletion: dCompletion)
+                    }
+                    
+                }else {
+                    dCompletion(false, para)
+                }
+                
+            }
+        })
+    }
+    
+    private var guide_retryCount = 0
+    private var guide_maxRetries = 15
+    private func downloadGuideZip(_ url:URL, dCompletion:@escaping (Bool, [String:Any])->Void) {
+        self.downloadGuideWebTemplate(url: url, completion: {[weak self] res, error, para in
+            guard let sself = self else {return}
+            
+            if error == nil {
+                dCompletion(true, para)
+            }else{
+                
+                if sself.guide_retryCount < sself.guide_maxRetries {
+                    sself.guide_retryCount += 1
+                    let time: TimeInterval = 1.0
+                    
+                    //tj``:Guide埋点-downloadGuideZip 重试开始前
+                    let ag_param_extra:[String : Any] = ["timestamp":Int64(Date().timeIntervalSince1970 * 1000),
+                                                         "retryTimes":sself.guide_retryCount,
+                                                         "lastError":error.debugDescription]
+                    DYMobileSDK.track(event: "SDK.Guide.DownloadRetry", extra: AGHelper.ag_convertDicToJSONStr(dictionary:ag_param_extra))
+                    
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + time) {
+                        sself.downloadGuideZip(url, dCompletion: dCompletion)
+                    }
+                    
+                }else {
+                    dCompletion(false, para)
+                }
+                
+            }
+        })
     }
 
     func reportIdfa(idfa:String,completion:@escaping ((SimpleStatusResult?,Error?)->())) {
