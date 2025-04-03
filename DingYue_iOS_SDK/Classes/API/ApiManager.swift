@@ -106,7 +106,9 @@ class ApiManager {
                                 DYMDefaultsManager.shared.cachedGuideName = guide.name
                                 self.guideCustomize = guide.customize
                                 DYMDefaultsManager.shared.isUseNativeGuide = true
-                                DYMDefaultsManager.shared.guideLoadingStatus = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    DYMDefaultsManager.shared.guideLoadingStatus = true
+                                }
                             }
                         }else {
                             DYMDefaultsManager.shared.isUseNativeGuide = false
@@ -119,12 +121,16 @@ class ApiManager {
                                     self.downloadGuideWebTemplate(url: URL(string: guide.downloadUrl)!) { res, error in
                                     }
                                 }else {
-                                    DYMDefaultsManager.shared.guideLoadingStatus = true
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                        DYMDefaultsManager.shared.guideLoadingStatus = true
+                                    }
                                 }
                             }
                         }
                     }else {
-                        DYMDefaultsManager.shared.guideLoadingStatus = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            DYMDefaultsManager.shared.guideLoadingStatus = true
+                        }
                         DYMDefaultsManager.shared.cachedGuides = nil
                     }
                     
