@@ -188,16 +188,16 @@ public class DYMGuideController: UIViewController {
                     urlStr = defaultGuidePath
                 } else {
                     
-                    let sdkBundle = Bundle(for: DYMobileSDK.self)
-                    guard let resourceBundleURL = sdkBundle.url(forResource: "DingYue_iOS_SDK", withExtension: "bundle")else { fatalError("DingYue_iOS_SDK.bundle not found, do not display SDK default paywall!") }
-                    guard let resourceBundle = Bundle(url: resourceBundleURL)else { fatalError("Cannot access DingYue_iOS_SDK.bundle,do not display SDK default paywall!") }
-                    let path = resourceBundle.path(forResource: "guide_index", ofType: "html")
-                    let htmlUrl = URL(fileURLWithPath: path!)
-                    webView.loadFileURL(htmlUrl, allowingReadAccessTo: htmlUrl)
-                    urlStr = path!
+//                    let sdkBundle = Bundle(for: DYMobileSDK.self)
+//                    guard let resourceBundleURL = sdkBundle.url(forResource: "DingYue_iOS_SDK", withExtension: "bundle")else { fatalError("DingYue_iOS_SDK.bundle not found, do not display SDK default paywall!") }
+//                    guard let resourceBundle = Bundle(url: resourceBundleURL)else { fatalError("Cannot access DingYue_iOS_SDK.bundle,do not display SDK default paywall!") }
+//                    let path = resourceBundle.path(forResource: "guide_index", ofType: "html")
+//                    let htmlUrl = URL(fileURLWithPath: path!)
+//                    webView.loadFileURL(htmlUrl, allowingReadAccessTo: htmlUrl)
+//                    urlStr = path!
                     
-//                    self.trackWithPayWallInfo(eventName: "NO_LOCAL_WEB_GUIDE_CLOSE")
-//                    self.delegate?.clickGuideCloseButton?(baseViewController: self,closeType: "NO_LOCAL_WEB_GUIDE_CLOSE")
+                    self.trackWithPayWallInfo(eventName: "NO_LOCAL_WEB_GUIDE_CLOSE")
+                    self.delegate?.clickGuideCloseButton?(baseViewController: self,closeType: "NO_LOCAL_WEB_GUIDE_CLOSE")
                 }
             }
         }
