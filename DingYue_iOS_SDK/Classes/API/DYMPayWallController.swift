@@ -19,6 +19,7 @@ import ContactsUI
     @objc optional func clickCloseButton(baseViewController:UIViewController)//关闭按钮事件
     @objc optional func clickPurchaseButton(baseViewController:UIViewController)//购买
     @objc optional func clickRestoreButton(baseViewController:UIViewController)//恢复
+    @objc optional func clickPermissionButton(baseViewController:UIViewController)//申请权限按钮
 }
 
 public class DYMPayWallController: UIViewController {
@@ -294,6 +295,11 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
 
                 case "join_circle":
                     NotificationCenter.default.post(name: Notification.Name("JoinCircle"), object: nil)
+                    
+                case "permission":
+                    //TODO
+                    debugPrint("request permission")
+                    self.delegate?.clickPermissionButton?(baseViewController: self)
                 default:
                     print("未知的消息类型: \(type)")
                 }
@@ -313,7 +319,19 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
                 self.completion?(receipt,purchaseResult,error)
                 if error == nil {
                     self.trackWithPayWallInfo(eventName: "RESTORE_PURCHASE_SUCCESS")
-                    self.dismiss(animated: true, completion: nil)
+                   let restoreResult = AGHelper.subscribeResult(purchaseResult: purchaseResult)
+                    if restoreResult {
+                        if let h5_callback = (message.body as? Dictionary<String,Any>)?["h5_callback"] as? String {
+                            let jsCode = "window.\(h5_callback)(\(true))"
+                            self.webView.evaluateJavaScript(jsCode) { (response, error) in
+                                if let error = error {
+                                    print("回传支付结果到JS时出错: \(error)")
+                                }
+                            }
+                        }else{
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                    }
                 } else {
                     self.trackWithPayWallInfo(eventName: "RESTORE_PURCHASE_FAIL")
                 }
@@ -343,7 +361,8 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
                         }
                     }
                 }
-                self.buyWithProductId(productId, productPrice: productPrice)
+                let h5_callback = dic?["h5_callback"] as? String
+                self.buyWithProductId(productId, productPrice: productPrice, h5_callback:h5_callback)
             } else {
                 self.completion?(nil,nil,.noProductIds)
                 self.eventManager.track(event: "PURCHASE_FAIL_DETAIL", extra: "no productId from h5")
@@ -359,7 +378,7 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
         }
     }
 
-    func buyWithProductId(_ productId:String, productPrice:String? = nil) {
+    func buyWithProductId(_ productId:String, productPrice:String? = nil, h5_callback:String?) {
         ProgressView.show(rootViewConroller: self)
         UserProperties.userSubscriptionPurchasedSourcesType = .DYPaywall//以更新用户购买来源属性
         DYMobileSDK.purchase(productId: productId, productPrice: productPrice) { receipt, purchaseResult, error in
@@ -367,12 +386,22 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
             self.completion?(receipt,purchaseResult,error)
             if error == nil {
                 self.trackWithPayWallInfo(eventName: "PURCHASE_SUCCESS")
-                
-                self.dismiss(animated: true, completion: nil)
+                let restoreResult = AGHelper.subscribeResult(purchaseResult: purchaseResult)
+                if let h5_callback = h5_callback {
+                    let jsCode = "window.\(h5_callback)(\(true))"
+                    self.webView.evaluateJavaScript(jsCode) { (response, error) in
+                        if let error = error {
+                            print("回传支付结果到JS时出错: \(error)")
+                        }
+                    }
+                }else{
+                    self.dismiss(animated: true, completion: nil)
+                }
             } else {
                 self.trackWithPayWallInfo(eventName: "PURCHASE_FAIL")
                 self.eventManager.track(event: "PURCHASE_FAIL_DETAIL", extra: error?.debugDescription)
             }
+            
         }
     }
 
