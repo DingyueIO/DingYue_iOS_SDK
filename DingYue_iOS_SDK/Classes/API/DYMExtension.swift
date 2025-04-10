@@ -164,6 +164,20 @@ extension AppleSearchAdsAttribution {
     }
 }
 
+
+extension AppleSearchAdsAttribution {
+    func toNSDictionary() -> NSDictionary {
+        let encoder = JSONEncoder()
+        guard let data = try? encoder.encode(self),
+              let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+            return NSDictionary() // 如果转换失败，返回空字典
+        }
+        
+        // 确保 json 是非可选的字典类型
+        return NSDictionary(dictionary: json ?? [:])
+    }
+}
+
 private let noInternetNetworkErrors = [NSURLErrorNotConnectedToInternet, NSURLErrorNetworkConnectionLost,
                                        NSURLErrorDNSLookupFailed, NSURLErrorResourceUnavailable,
                                        NSURLErrorCannotFindHost, NSURLErrorCannotConnectToHost]

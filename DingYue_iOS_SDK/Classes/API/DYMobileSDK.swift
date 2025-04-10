@@ -178,8 +178,10 @@ import AdSupport
     private func reportAppleSearchAdsAttribution() {
         UserProperties.appleSearchAdsAttribution { (attribution, error) in
             Self.reportSearchAds(attribution: attribution)
-            self.onAppleSearchAdsAttributionReceived?(attribution,error)
-            self.cachedAttribution = attribution
+            let searchAttDict = AppleSearchAdsAttribution(attribution: attribution).toNSDictionary()
+            let searchASAParams = ["ASA":searchAttDict]
+            self.onAppleSearchAdsAttributionReceived?(searchASAParams,error)
+            self.cachedAttribution = searchASAParams
         }
     }
 #endif
@@ -648,11 +650,13 @@ extension DYMobileSDK {
                     print("🍎🍎🍎 Apple Search Ads Attribution: \(String(describing: attribution))")
                 }
                 
-                // Store attribution data to avoid repeating the request
-                self?.cachedAttribution = attribution
-                
+                let searchAttDict = AppleSearchAdsAttribution(attribution: attribution).toNSDictionary()
+                let searchASAParams = ["ASA":searchAttDict]
                 // Trigger the onAppleSearchAdsAttributionReceived callback
-                self?.onAppleSearchAdsAttributionReceived?(attribution, error)
+                self?.onAppleSearchAdsAttributionReceived?(searchASAParams,error)
+                // Store attribution data to avoid repeating the request
+                self?.cachedAttribution = searchASAParams
+                
             }
         }
     }

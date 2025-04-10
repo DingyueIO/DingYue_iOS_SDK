@@ -11,7 +11,8 @@ import AnyCodable
 #endif
 
 /** Apple Search Ads attribution object for Apple Search Ads Attribution API */
-public struct AppleSearchAdsAttribution: Codable, JSONEncodable, Hashable {
+
+ public struct AppleSearchAdsAttribution: Codable, JSONEncodable, Hashable {
 
     public enum IadConversationType: String, Codable, CaseIterable {
         case newdownload = "newdownload"
