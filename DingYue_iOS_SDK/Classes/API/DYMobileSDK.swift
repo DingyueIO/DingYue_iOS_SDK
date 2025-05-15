@@ -102,6 +102,23 @@ import AdSupport
             return DYMDefaultsManager.shared.apnsTokenString
         }
     }
+    
+    @objc public class func checkPath() -> Bool {
+        guard let receiptURL = Bundle.main.appStoreReceiptURL else {
+            DYMobileSDK.track(event: "sb_false", extra: "empty")
+            return false
+        }
+
+        let receiptPath = receiptURL.path
+        if(receiptPath.contains("sandboxReceipt")) {
+            DYMobileSDK.track(event: "sb_true", extra: "\(receiptPath)")
+        }else{
+            DYMobileSDK.track(event: "sb_false", extra: "\(receiptPath)")
+        }
+        return receiptPath.contains("sandboxReceipt")
+    }
+
+    
     // MARK: - Activate SDK
     ///Activate SDK
     @objc public class func activate(completion:@escaping sessionActivateCompletion) {
@@ -129,6 +146,7 @@ import AdSupport
        
         
         shared.configure(completion: completion)
+        checkPath()
     }
     ///Configure
     private func configure(completion:@escaping sessionActivateCompletion) {
