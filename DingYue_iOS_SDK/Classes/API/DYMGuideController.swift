@@ -459,7 +459,7 @@ extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
             self.completion?(receipt,purchaseResult,error)
             if error == nil {
                 self.trackWithPayWallInfo(eventName: "GUIDE_PURCHASE_SUCCESS")
-
+                self.eventManager.track(event: "purchase", entrance: "guide", parameters: ["productId":productId])
                 if let h5_callback = h5_callback {
                     let jsCode = "window.\(h5_callback)(\(true))"
                     self.webView.evaluateJavaScript(jsCode) { (response, error) in

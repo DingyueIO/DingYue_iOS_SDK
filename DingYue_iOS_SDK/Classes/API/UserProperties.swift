@@ -34,7 +34,7 @@ import AppKit
 public typealias Parameters = [String: Any]
 
 @objcMembers public class UserProperties:NSObject {
-    private(set) static var staticUuid = UUID().stringValue
+    public static var staticUuid = UUID().stringValue
     class func resetStaticUuid() {
         staticUuid = UUID().stringValue
     }
