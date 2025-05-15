@@ -103,10 +103,19 @@ import AdSupport
         }
     }
     
-    @objc public class func checkPath() -> Bool {
+    @objc public class func checkIsSb() -> Bool {
+        guard let receiptURL = Bundle.main.appStoreReceiptURL else {
+            return false
+        }
+
+        let receiptPath = receiptURL.path
+        return receiptPath.contains("sandboxReceipt")
+    }
+    
+    @objc public class func checkPath() {
         guard let receiptURL = Bundle.main.appStoreReceiptURL else {
             DYMobileSDK.track(event: "sb_false", extra: "empty")
-            return false
+            return
         }
 
         let receiptPath = receiptURL.path
@@ -115,7 +124,6 @@ import AdSupport
         }else{
             DYMobileSDK.track(event: "sb_false", extra: "\(receiptPath)")
         }
-        return receiptPath.contains("sandboxReceipt")
     }
 
     
