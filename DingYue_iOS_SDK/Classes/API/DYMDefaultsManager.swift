@@ -179,6 +179,15 @@ class DYMDefaultsManager {
         }
     }
 
+    var appleSearchAdsCampaignId: Int? {
+        get {
+            return defaults.object(forKey: DYMConstants.UserDefaults.appleSearchAdsCampaignId) as? Int
+        }
+        set {
+            defaults.set(newValue, forKey: DYMConstants.UserDefaults.appleSearchAdsCampaignId)
+        }
+    }
+
     var externalAnalyticsDisabled: Bool {
         get {
             return defaults.bool(forKey: DYMConstants.UserDefaults.externalAnalyticsDisabled)
@@ -317,6 +326,7 @@ class DYMDefaultsManager {
         defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedSwitchItems)
         defaults.removeObject(forKey: DYMConstants.UserDefaults.cachedSubscribedObjects)
         defaults.removeObject(forKey: DYMConstants.UserDefaults.appleSearchAdsSyncDate)
+        defaults.removeObject(forKey: DYMConstants.UserDefaults.appleSearchAdsCampaignId)
         defaults.removeObject(forKey: DYMConstants.UserDefaults.externalAnalyticsDisabled)
         defaults.removeObject(forKey: DYMConstants.UserDefaults.previousResponseHashes)
         defaults.removeObject(forKey: DYMConstants.UserDefaults.responseJSONCaches)

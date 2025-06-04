@@ -103,30 +103,6 @@ import AdSupport
         }
     }
     
-    @objc public class func checkIsSb() -> Bool {
-        guard let receiptURL = Bundle.main.appStoreReceiptURL else {
-            return false
-        }
-
-        let receiptPath = receiptURL.path
-        return receiptPath.contains("sandboxReceipt")
-    }
-    
-    @objc public class func checkPath() {
-        guard let receiptURL = Bundle.main.appStoreReceiptURL else {
-            DYMobileSDK.track(event: "sb_false", extra: "empty")
-            return
-        }
-
-        let receiptPath = receiptURL.path
-        if(receiptPath.contains("sandboxReceipt")) {
-            DYMobileSDK.track(event: "sb_true", extra: "\(receiptPath)")
-        }else{
-            DYMobileSDK.track(event: "sb_false", extra: "\(receiptPath)")
-        }
-    }
-
-    
     // MARK: - Activate SDK
     ///Activate SDK
     @objc public class func activate(completion:@escaping sessionActivateCompletion) {
@@ -154,7 +130,6 @@ import AdSupport
        
         
         shared.configure(completion: completion)
-        checkPath()
     }
     ///Configure
     private func configure(completion:@escaping sessionActivateCompletion) {
@@ -166,6 +141,7 @@ import AdSupport
     ///Initial requests
     private func performInitialRequests(completion:@escaping sessionActivateCompletion) {
         apiManager.completion = completion
+       
         apiManager.startSession()
 
         iapManager.startObserverPurchase()
@@ -198,7 +174,13 @@ import AdSupport
     private func reportAppleSearchAdsAttribution() {
         UserProperties.appleSearchAdsAttribution { (attribution, error) in
             print(attribution)
+            if error != nil {
+                DYMobileSDK.track(event: "SDK.ASA.FAILURE", extra: "get attribution error")
+            }else{
+                DYMobileSDK.track(event: "SDK.ASA.SUCCESS", extra: "get attribution success")
+            }
             Self.reportSearchAds(attribution: attribution)
+            
         }
     }
 #endif

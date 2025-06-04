@@ -143,11 +143,7 @@ public typealias Parameters = [String: Any]
     }
 
     static var area: String? {
-        if(DYMobileSDK.checkIsSb()){
-           return "AS0"
-        }else{
-           return NSLocale.current.regionCode
-        }
+        return NSLocale.current.regionCode
     }
 
     static var language: String? {
@@ -251,6 +247,23 @@ public typealias Parameters = [String: Any]
         return token
     }
 
+    // 用于存储 Apple Search Ads 的 campaignId
+    private static var _appleSearchAdsCampaignId: Int? {
+        get {
+            return DYMDefaultsManager.shared.appleSearchAdsCampaignId
+        }
+        set {
+            DYMDefaultsManager.shared.appleSearchAdsCampaignId = newValue
+        }
+    }
+    public static var appleSearchAdsCampaignId: Int? {
+        get {
+            return _appleSearchAdsCampaignId
+        }
+        set {
+            _appleSearchAdsCampaignId = newValue
+        }
+    }
 
     #if os(iOS)
     class func appleSearchAdsAttribution(completion: @escaping (Parameters, Error?) -> Void) {
@@ -292,6 +305,12 @@ public typealias Parameters = [String: Any]
                         let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? Parameters
                         if result != nil {
                             DYMEventManager.shared.track(event: "ASA_SUCCESS", extra: "status code: 200")
+                            
+                            // 提取并保存 campaignId
+                            if let attribution = result as? [String: Any],
+                               let campaignId = attribution["campaignId"] as? Int {
+                                _appleSearchAdsCampaignId = campaignId
+                            }
                         }
                         completion(result ?? ["":""], nil)
                     } catch {

@@ -48,6 +48,7 @@ class DYMConstants: NSObject {
         static let cachedGlobalSwitch        = "DYMSDK_Cached_GlobalSwitch"
         static let cachedSubscribedObjects   = "DYMSDK_Cached_SubscribedObjects"
         static let appleSearchAdsSyncDate    = "DYMSDK_Apple_Search_Ads_Sync_Date"
+        static let appleSearchAdsCampaignId  = "DYMSDK_Apple_Search_Ads_Campaign_Id"
         static let externalAnalyticsDisabled = "DYMSDK_External_Analytics_Disabled"
         static let previousResponseHashes    = "DYMSDK_Previous_Response_Hashes"
         static let responseJSONCaches        = "DYMSDK_Response_JSON_Caches"
