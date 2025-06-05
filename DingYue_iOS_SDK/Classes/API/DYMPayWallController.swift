@@ -39,17 +39,19 @@ public class DYMPayWallController: UIViewController {
         activity.startAnimating()
         return activity
     }()
+    private let scriptMessageHandlerNames = [
+        "vip_close",
+        "vip_restore",
+        "vip_terms",
+        "vip_privacy",
+        "vip_purchase",
+        "vip_choose"
+    ]
     private lazy var webCustomConfiguration: WKWebViewConfiguration = {
         let preference = WKPreferences()
         let config = WKWebViewConfiguration()
         config.preferences = preference
         config.userContentController = WKUserContentController()
-        config.userContentController.add(self, name: "vip_close")
-        config.userContentController.add(self, name: "vip_restore")
-        config.userContentController.add(self, name: "vip_terms")
-        config.userContentController.add(self, name: "vip_privacy")
-        config.userContentController.add(self, name: "vip_purchase")
-        config.userContentController.add(self, name: "vip_choose")
         config.allowsInlineMediaPlayback = true
         config.mediaTypesRequiringUserActionForPlayback = []
         return config
@@ -99,11 +101,14 @@ public class DYMPayWallController: UIViewController {
         }
     }
 
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.registerScriptMessageHandlers()
+    }
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.currentPaywallId = DYMDefaultsManager.shared.cachedPaywallPageIdentifier
         self.trackWithPayWallInfo(eventName: "ENTER_PAYWALL")
-
         self.delegate?.payWallDidAppear?(baseViewController: self)
     }
 
@@ -111,7 +116,7 @@ public class DYMPayWallController: UIViewController {
         super.viewDidDisappear(animated)
         self.trackWithPayWallInfo(eventName: "EXIT_PAYWALL")
         stopLoadingTimer()
-        removeCustomScriptHandler()
+        removeScriptMessageHandlers()
         self.delegate?.payWallDidDisappear?(baseViewController: self)
     }
     
@@ -156,17 +161,20 @@ public class DYMPayWallController: UIViewController {
     public func refreshView() {
         webView.reload()
     }
-    func removeCustomScriptHandler() {
-        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "vip_close")
-        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "vip_restore")
-        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "vip_terms")
-        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "vip_privacy")
-        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "vip_purchase")
-        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "vip_choose")
+    private func registerScriptMessageHandlers() {
+        removeScriptMessageHandlers() //先移除旧的脚本消息处理器
+        for name in scriptMessageHandlerNames {
+            self.webCustomConfiguration.userContentController.add(self, name: name)
+        }
+    }
+
+    private func removeScriptMessageHandlers() {
+        for name in scriptMessageHandlerNames {
+            self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: name)
+        }
     }
     deinit {
-        removeCustomScriptHandler()
-        stopLoadingTimer()
+        DYMLogManager.debugLog("DYMPayWallController deinit")
     }
 }
 
