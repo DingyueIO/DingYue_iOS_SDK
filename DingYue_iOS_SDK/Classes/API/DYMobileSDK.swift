@@ -522,7 +522,6 @@ extension DYMobileSDK {
     // MARK: - Load native guide
     @objc public class func loadNativeGuidePage(paywallFullPath: String,basePath:String) {
         DYMLogManager.logMessage("Calling now: \(#function)")
-        DYMDefaultsManager.shared.isUseNativeGuide = true
         DYMDefaultsManager.shared.guideLoadingStatus = true
         DYMDefaultsManager.shared.nativeGuideBasePath = basePath
         DYMDefaultsManager.shared.nativeGuidePath = paywallFullPath
@@ -626,28 +625,28 @@ extension DYMobileSDK {
         switch mode {
         case .waitForCallback:
             // Wait for callback, do nothing and wait for other functions to call the block
-            print("⏳ Wait for callback mode, doing nothing")
+            DYMLogManager.debugLog("⏳ Wait for callback mode, doing nothing")
             break
             
         case .returnCache:
             // Return cached data
             if let attribution = cachedAttribution {
-                print("✅ Returning cached Apple Search Ads Attribution")
-                
+                DYMLogManager.debugLog("✅ Returning cached Apple Search Ads Attribution")
                 // Pass cached data via the onAppleSearchAdsAttributionReceived callback
                 self.onAppleSearchAdsAttributionReceived?(attribution, nil)
             } else {
-                print("❌ No cached data available to return")
+                DYMLogManager.debugLog("❌ No cached data available to return")
             }
             
         case .networkRequest:
             // Trigger network request
-            print("🔄 Triggering network request to fetch Apple Search Ads Attribution")
+            DYMLogManager.debugLog(("🔄 Triggering network request to fetch Apple Search Ads Attribution"))
+
             UserProperties.appleSearchAdsAttribution { [weak self] (attribution, error) in
                 if let error = error {
-                    print("❌ Error: \(error.localizedDescription)")
+                    DYMLogManager.debugLog(("❌ Error: \(error.localizedDescription)"))
                 } else {
-                    print("🍎🍎🍎 Apple Search Ads Attribution: \(String(describing: attribution))")
+                    DYMLogManager.debugLog(("✅Apple Search Ads Attribution: \(String(describing: attribution))"))
                 }
                 
                 let searchAttDict = AppleSearchAdsAttribution(attribution: attribution).toNSDictionary()

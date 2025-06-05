@@ -64,11 +64,10 @@ class ViewController: UIViewController {
         DYMobileSDK.showVisualPaywall(products: [defaultProuct1,defaultProuct2], rootController: self, extras: extra) { receipt, purchasedResult,purchasedProduct, error in
             if error == nil {
                //购买成功
-                print("订阅购买成功")
+                print("返回结果：")
                 print(" 订阅购买的产品：\(String(describing: purchasedProduct))\n 订阅返回结果:\(String(describing: purchasedResult))")
                 DispatchQueue.main.async {
                     self.showAlert(title: "成功", message: "订阅购买成功")
-                    
                 }
             } else {
                 self.showAlert(title: "失败", message: error?.localizedDescription ?? "订阅购买失败，请重试。")

@@ -12,7 +12,6 @@ import StoreKit
 @objc public protocol DYMPayWallActionDelegate: NSObjectProtocol {
     @objc optional func payWallDidAppear(baseViewController:UIViewController)//内购页显示
     @objc optional func payWallDidDisappear(baseViewController:UIViewController)//内购页消失
-
     @objc optional func clickTermsAction(baseViewController:UIViewController)//使用协议
     @objc optional func clickPrivacyAction(baseViewController:UIViewController)//隐私政策
     @objc optional func clickCloseButton(baseViewController:UIViewController)//关闭按钮事件
@@ -30,6 +29,7 @@ public class DYMPayWallController: UIViewController {
     var currentPaywallId:String?
     var extras:[String:Any]?
 
+    
     lazy var activity:UIActivityIndicatorView = {
         let activity = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         activity.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
@@ -39,8 +39,7 @@ public class DYMPayWallController: UIViewController {
         activity.startAnimating()
         return activity
     }()
-    
-    private lazy var webView: WKWebView = {
+    private lazy var webCustomConfiguration: WKWebViewConfiguration = {
         let preference = WKPreferences()
         let config = WKWebViewConfiguration()
         config.preferences = preference
@@ -53,7 +52,10 @@ public class DYMPayWallController: UIViewController {
         config.userContentController.add(self, name: "vip_choose")
         config.allowsInlineMediaPlayback = true
         config.mediaTypesRequiringUserActionForPlayback = []
-        let webView = WKWebView(frame: UIScreen.main.bounds, configuration: config)
+        return config
+    }()
+    private lazy var webView: WKWebView = {
+        let webView = WKWebView(frame: UIScreen.main.bounds, configuration: self.webCustomConfiguration)
         webView.scrollView.showsHorizontalScrollIndicator = false
         webView.scrollView.showsVerticalScrollIndicator = false
         webView.navigationDelegate = self
@@ -61,7 +63,7 @@ public class DYMPayWallController: UIViewController {
         if #available(iOS 11.0, *) { webView.scrollView.contentInsetAdjustmentBehavior = .never }
         return webView
     }()
-    
+  
     private lazy var eventManager: DYMEventManager = {
         return DYMEventManager.shared
     }()
@@ -109,6 +111,7 @@ public class DYMPayWallController: UIViewController {
         super.viewDidDisappear(animated)
         self.trackWithPayWallInfo(eventName: "EXIT_PAYWALL")
         stopLoadingTimer()
+        removeCustomScriptHandler()
         self.delegate?.payWallDidDisappear?(baseViewController: self)
     }
     
@@ -152,6 +155,18 @@ public class DYMPayWallController: UIViewController {
     ///刷新页面
     public func refreshView() {
         webView.reload()
+    }
+    func removeCustomScriptHandler() {
+        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "vip_close")
+        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "vip_restore")
+        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "vip_terms")
+        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "vip_privacy")
+        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "vip_purchase")
+        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "vip_choose")
+    }
+    deinit {
+        removeCustomScriptHandler()
+        stopLoadingTimer()
     }
 }
 
@@ -236,8 +251,9 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
         }else if message.name == "vip_restore" {
 
             ProgressView.show(rootViewConroller: self)
-            DYMobileSDK.restorePurchase { receipt, purchaseResult,purchasedProduct ,error in
+            DYMobileSDK.restorePurchase {[weak self] receipt, purchaseResult,purchasedProduct ,error in
                 ProgressView.stop()
+                guard let self = self else { return }
                 self.completion?(receipt,purchaseResult,purchasedProduct,error)
                 if error == nil {
                     self.trackWithPayWallInfo(eventName: "RESTORE_PURCHASE_SUCCESS")
@@ -284,8 +300,9 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
     func buyWithProductId(_ productId:String, productPrice:String? = nil) {
         ProgressView.show(rootViewConroller: self)
         UserProperties.userSubscriptionPurchasedSourcesType = .DYPaywall//以更新用户购买来源属性
-        DYMobileSDK.purchase(productId: productId, productPrice: productPrice) { receipt, purchaseResult,purchasedProduct, error in
+        DYMobileSDK.purchase(productId: productId, productPrice: productPrice) { [weak self] receipt, purchaseResult,purchasedProduct, error in
             ProgressView.stop()
+            guard let self = self else { return }
             self.completion?(receipt,purchaseResult,purchasedProduct,error)
             if error == nil {
                 self.trackWithPayWallInfo(eventName: "PURCHASE_SUCCESS")
@@ -319,4 +336,6 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
         let JSONString = NSString(data:data as Data,encoding: String.Encoding.utf8.rawValue)
         return JSONString! as String
     }
+
 }
+ 
