@@ -126,7 +126,6 @@ class DYMIAPManager: NSObject {
             }
             return
         }
-        print("开始购买")
         finishTransactionInSKPaymentQueue()
         guard let skproduct = product else {
             DispatchQueue.main.async {
@@ -152,7 +151,6 @@ class DYMIAPManager: NSObject {
                                   payment:payment,
                                   completion:completion))
         SKPaymentQueue.default().add(payment)
-        print("创建支付队列")
     }
 
     public func finishTransactionInSKPaymentQueue() {
@@ -163,7 +161,6 @@ class DYMIAPManager: NSObject {
                 SKPaymentQueue.default().finishTransaction(transaction)
             }
         }
-        print("结束当前队列里的购买")
     }
 
     private func callBackPurchaseCompletion(for template: PurchaseTemplate?,_ result:Result< DYMPurchaseDetail,DYMError>,_ firstReceiptVerifyMobileResponse:[String:Any]? = nil) {
@@ -253,7 +250,6 @@ class DYMIAPManager: NSObject {
 extension DYMIAPManager: SKPaymentTransactionObserver {
     
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        print("支付队列更新状态")
         transactions.forEach { transaction in
             print("Transaction State: \(transaction.transactionState.rawValue)----\(transaction.payment.productIdentifier)")
             switch transaction.transactionState {
@@ -266,7 +262,6 @@ extension DYMIAPManager: SKPaymentTransactionObserver {
     }
     ///订单失败或订单被取消时调用
     func failed(_ transaction: SKPaymentTransaction) {
-        print("支付队列订单购买失败")
         SKPaymentQueue.default().finishTransaction(transaction)
         
         let temple = purchaseTemplate(for: transaction)
@@ -306,7 +301,6 @@ extension DYMIAPManager: SKPaymentTransactionObserver {
             callBackPurchaseCompletion(for: template, .failure(.noProducts))
             return
         }
-        print("正常内购后，进行内购验证")
         DYMobileSDK.validateReceiptFirst(receipt, for: product.skproduct) { firstReceiptVerifyMobileResponse, error in
             let detail = DYMPurchaseDetail(productId: transaction.payment.productIdentifier,
                                            quantity: transaction.payment.quantity,
@@ -348,9 +342,7 @@ extension DYMIAPManager: SKPaymentTransactionObserver {
         restorePurchaseTimes += 1
         SKPaymentQueue.default().finishTransaction(transaction)
         if isRestoringManually {
-            print("🍎🍎🍎 这是手动点击restore")
         }else {
-            print("🍊🍊🍊 这是手动点击订阅") 
         }
     }
     
@@ -368,7 +360,6 @@ extension DYMIAPManager: SKPaymentTransactionObserver {
             callBackRestoreCompletion(.failure(.noReceipt))
             return
         }
-        print("恢复购买，准备验证订单！")
         DYMobileSDK.validateReceiptRecover(receipt) { recoverResponse, error in
             if error != nil {
                 self.callBackRestoreCompletion(.failure(DYMError(error!)))
@@ -381,7 +372,6 @@ extension DYMIAPManager: SKPaymentTransactionObserver {
     ///从购买历史中恢复遇到错误
     func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
         //回调失败内容
-        print("恢复购买，遇到错误！")
         callBackRestoreCompletion(.failure(DYMError(error)))
     }
 }
