@@ -53,17 +53,19 @@ public class DYMGuideController: UIViewController {
         return view
     }()
  
+    private let scriptMessageHandlerNames = [
+        "guide_close",
+        "guide_restore",
+        "guide_terms",
+        "guide_privacy",
+        "guide_purchase",
+        "guide_continue"
+    ]    
     private lazy var webCustomConfiguration: WKWebViewConfiguration = {
         let preference = WKPreferences()
         let config = WKWebViewConfiguration()
         config.preferences = preference
         config.userContentController = WKUserContentController()
-        config.userContentController.add(self, name: "guide_close")
-        config.userContentController.add(self, name: "guide_restore")
-        config.userContentController.add(self, name: "guide_terms")
-        config.userContentController.add(self, name: "guide_privacy")
-        config.userContentController.add(self, name: "guide_purchase")
-        config.userContentController.add(self, name: "guide_continue")
         config.allowsInlineMediaPlayback = true
         config.mediaTypesRequiringUserActionForPlayback = []
         return config
@@ -135,7 +137,10 @@ public class DYMGuideController: UIViewController {
             loadingTimer = nil
         }
     }
-
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.registerScriptMessageHandlers()
+    }
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.currentGuidePageId = DYMDefaultsManager.shared.cachedGuidePageIdentifier
@@ -147,7 +152,7 @@ public class DYMGuideController: UIViewController {
         super.viewDidDisappear(animated)
         self.trackWithPayWallInfo(eventName: "EXIT_GUIDE")
         stopLoadingTimer()
-        removeCustomScriptHandler()
+        removeScriptMessageHandlers()
         self.delegate?.guideDidDisappear?(baseViewController: self)
     }
     
@@ -199,17 +204,23 @@ public class DYMGuideController: UIViewController {
         webView.reload()
     }
     
-    func removeCustomScriptHandler() {
-        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "guide_close")
-        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "guide_restore")
-        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "guide_terms")
-        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "guide_privacy")
-        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "guide_purchase")
-        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "guide_choose")
+
+    
+    private func registerScriptMessageHandlers() {
+        removeScriptMessageHandlers() //先移除旧的脚本消息处理器
+        for name in scriptMessageHandlerNames {
+            self.webCustomConfiguration.userContentController.add(self, name: name)
+        }
     }
+
+    private func removeScriptMessageHandlers() {
+        for name in scriptMessageHandlerNames {
+            self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: name)
+        }
+    }
+    
     deinit {
-        removeCustomScriptHandler()
-        stopLoadingTimer()
+        DYMLogManager.debugLog("DYMGuideController deinit")
     }
 }
 extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
