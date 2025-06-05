@@ -304,7 +304,14 @@ class DYMDefaultsManager {
         if let recoverResponse = recoverReceiptResponse {
             response["status"] = recoverResponse.status
             response["errmsg"] = recoverResponse.errmsg
-            response["subscribledObject"] = self.subscribedObjects(subscribedObjectArray:recoverResponse.receipts)
+            let subsArray = self.subscribedObjects(subscribedObjectArray:recoverResponse.receipts)
+            var restoreArray:[[String:Any]] = []
+            subsArray.forEach { item in
+                var restoreItem = item
+                restoreItem["isRestore"] = true
+                restoreArray.append(restoreItem)
+            }
+            response["subscribledObject"] = restoreArray
         }
         return response
     }

@@ -12,7 +12,6 @@ import NVActivityIndicatorView
 @objc public protocol DYMGuideActionDelegate: NSObjectProtocol {
     @objc optional func guideDidAppear(baseViewController:UIViewController)//引导页显示
     @objc optional func guideDidDisappear(baseViewController:UIViewController)//引导页消失
-
     @objc optional func clickGuideTermsAction(baseViewController:UIViewController)//使用协议
     @objc optional func clickGuidePrivacyAction(baseViewController:UIViewController)//隐私政策
     @objc optional func clickGuideCloseButton(baseViewController:UIViewController,closeType:String)//关闭按钮事件
@@ -53,7 +52,8 @@ public class DYMGuideController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    private lazy var webView: WKWebView = {
+ 
+    private lazy var webCustomConfiguration: WKWebViewConfiguration = {
         let preference = WKPreferences()
         let config = WKWebViewConfiguration()
         config.preferences = preference
@@ -66,7 +66,10 @@ public class DYMGuideController: UIViewController {
         config.userContentController.add(self, name: "guide_continue")
         config.allowsInlineMediaPlayback = true
         config.mediaTypesRequiringUserActionForPlayback = []
-        let webView = WKWebView(frame: UIScreen.main.bounds, configuration: config)
+        return config
+    }()
+    private lazy var webView: WKWebView = {
+        let webView = WKWebView(frame: UIScreen.main.bounds, configuration: self.webCustomConfiguration)
         webView.scrollView.showsHorizontalScrollIndicator = false
         webView.scrollView.showsVerticalScrollIndicator = false
         webView.navigationDelegate = self
@@ -74,6 +77,7 @@ public class DYMGuideController: UIViewController {
         if #available(iOS 11.0, *) { webView.scrollView.contentInsetAdjustmentBehavior = .never }
         return webView
     }()
+    
     
     private lazy var eventManager: DYMEventManager = {
         return DYMEventManager.shared
@@ -136,7 +140,6 @@ public class DYMGuideController: UIViewController {
         super.viewDidAppear(animated)
         self.currentGuidePageId = DYMDefaultsManager.shared.cachedGuidePageIdentifier
         self.trackWithPayWallInfo(eventName: "ENTER_GUIDE")
-
         self.delegate?.guideDidAppear?(baseViewController: self)
     }
 
@@ -144,6 +147,7 @@ public class DYMGuideController: UIViewController {
         super.viewDidDisappear(animated)
         self.trackWithPayWallInfo(eventName: "EXIT_GUIDE")
         stopLoadingTimer()
+        removeCustomScriptHandler()
         self.delegate?.guideDidDisappear?(baseViewController: self)
     }
     
@@ -193,6 +197,19 @@ public class DYMGuideController: UIViewController {
     ///刷新页面
     public func refreshView() {
         webView.reload()
+    }
+    
+    func removeCustomScriptHandler() {
+        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "guide_close")
+        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "guide_restore")
+        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "guide_terms")
+        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "guide_privacy")
+        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "guide_purchase")
+        self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: "guide_choose")
+    }
+    deinit {
+        removeCustomScriptHandler()
+        stopLoadingTimer()
     }
 }
 extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
@@ -306,8 +323,6 @@ extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
     }
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        
-//        print("🔥🔥🔥---\(message.name)")
         if message.name == "guide_close" {
             self.trackWithPayWallInfo(eventName: "GUIDE_CLOSE")
             self.dismiss(animated: true, completion: nil)

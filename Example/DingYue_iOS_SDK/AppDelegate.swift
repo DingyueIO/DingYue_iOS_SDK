@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         */
         DYMobileSDK.enableAutoDomain = false
         
-        
+
         
         /*
           手动指定basePath后台地址。
@@ -94,7 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         DYMobileSDK.retrieveAppleSearchAdsAttribution { attribution, error in
-            print("🍌🍌🍌\(attribution)")
+            print("\(attribution)")
         }
 
         

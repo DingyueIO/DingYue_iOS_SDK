@@ -36,13 +36,12 @@ class DYMIAPManager: NSObject {
     private var restoreCompletion: RestoreCompletion?
     private var restorePurchaseTimes: Int = 0
     public var productQuantity: Int = 1
-    
+    private var isRestoringManually: Bool = false
     static let shared = DYMIAPManager()
     override private init() { super.init() }
     
     func startObserverPurchase() {
         startObserving()
-        
         NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationWillTerminate, object: nil, queue: .main) { notification in
             self.stopObserving()
         }
@@ -99,6 +98,7 @@ class DYMIAPManager: NSObject {
     
     // MARK: - Purchase
     public func buy(productId: String, completion:PurchaseCompletion? = nil) {
+        isRestoringManually = false
         guard canMakePayments else {
             DispatchQueue.main.async {
                 completion?(.failure(.unablePayment),nil)
@@ -119,12 +119,14 @@ class DYMIAPManager: NSObject {
     }
     
     public func buy(product:SKProduct?, completion:PurchaseCompletion? = nil) {
+        isRestoringManually = false
         guard canMakePayments else {
             DispatchQueue.main.async {
                 completion?(.failure(.unablePayment),nil)
             }
             return
         }
+        print("开始购买")
         finishTransactionInSKPaymentQueue()
         guard let skproduct = product else {
             DispatchQueue.main.async {
@@ -150,17 +152,18 @@ class DYMIAPManager: NSObject {
                                   payment:payment,
                                   completion:completion))
         SKPaymentQueue.default().add(payment)
+        print("创建支付队列")
     }
 
     public func finishTransactionInSKPaymentQueue() {
         let transactions = SKPaymentQueue.default().transactions
-        if transactions.count >= 1 {
-            for transaction in transactions {
-                if transaction.transactionState == SKPaymentTransactionState.purchased || transaction.transactionState == SKPaymentTransactionState.restored || transaction.transactionState == SKPaymentTransactionState.failed{
-                    SKPaymentQueue.default().finishTransaction(transaction)
-                }
+        guard !transactions.isEmpty else { return }
+        for transaction in transactions {
+            if transaction.transactionState == SKPaymentTransactionState.purchased || transaction.transactionState == SKPaymentTransactionState.restored || transaction.transactionState == SKPaymentTransactionState.failed{
+                SKPaymentQueue.default().finishTransaction(transaction)
             }
         }
+        print("结束当前队列里的购买")
     }
 
     private func callBackPurchaseCompletion(for template: PurchaseTemplate?,_ result:Result< DYMPurchaseDetail,DYMError>,_ firstReceiptVerifyMobileResponse:[String:Any]? = nil) {
@@ -184,6 +187,7 @@ class DYMIAPManager: NSObject {
     // MARK: - Restore
     ///恢复购买
     func restrePurchase(completion:RestoreCompletion? = nil) {
+        isRestoringManually = true
         restoreCompletion = completion
         restorePurchaseTimes = 0
         SKPaymentQueue.default().restoreCompletedTransactions()
@@ -249,7 +253,9 @@ class DYMIAPManager: NSObject {
 extension DYMIAPManager: SKPaymentTransactionObserver {
     
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        print("支付队列更新状态")
         transactions.forEach { transaction in
+            print("Transaction State: \(transaction.transactionState.rawValue)----\(transaction.payment.productIdentifier)")
             switch transaction.transactionState {
             case .failed: failed(transaction)
             case .purchased: purchased(transaction)
@@ -260,7 +266,7 @@ extension DYMIAPManager: SKPaymentTransactionObserver {
     }
     ///订单失败或订单被取消时调用
     func failed(_ transaction: SKPaymentTransaction) {
-        
+        print("支付队列订单购买失败")
         SKPaymentQueue.default().finishTransaction(transaction)
         
         let temple = purchaseTemplate(for: transaction)
@@ -291,7 +297,6 @@ extension DYMIAPManager: SKPaymentTransactionObserver {
         
         let template = purchaseTemplate(for: transaction)
 
-
         guard let receipt = lastReceipt else {
             callBackPurchaseCompletion(for: template, .failure(.noReceipt))
             return
@@ -301,7 +306,7 @@ extension DYMIAPManager: SKPaymentTransactionObserver {
             callBackPurchaseCompletion(for: template, .failure(.noProducts))
             return
         }
-
+        print("正常内购后，进行内购验证")
         DYMobileSDK.validateReceiptFirst(receipt, for: product.skproduct) { firstReceiptVerifyMobileResponse, error in
             let detail = DYMPurchaseDetail(productId: transaction.payment.productIdentifier,
                                            quantity: transaction.payment.quantity,
@@ -342,6 +347,11 @@ extension DYMIAPManager: SKPaymentTransactionObserver {
     func restored(_ transaction: SKPaymentTransaction) {
         restorePurchaseTimes += 1
         SKPaymentQueue.default().finishTransaction(transaction)
+        if isRestoringManually {
+            print("🍎🍎🍎 这是手动点击restore")
+        }else {
+            print("🍊🍊🍊 这是手动点击订阅") 
+        }
     }
     
     ///从购买历史中恢复
@@ -358,17 +368,20 @@ extension DYMIAPManager: SKPaymentTransactionObserver {
             callBackRestoreCompletion(.failure(.noReceipt))
             return
         }
+        print("恢复购买，准备验证订单！")
         DYMobileSDK.validateReceiptRecover(receipt) { recoverResponse, error in
             if error != nil {
                 self.callBackRestoreCompletion(.failure(DYMError(error!)))
             }else {
                 self.callBackRestoreCompletion(.success(receipt),recoverResponse)
             }
+            self.finishTransactionInSKPaymentQueue()
         }
     }
     ///从购买历史中恢复遇到错误
     func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
         //回调失败内容
+        print("恢复购买，遇到错误！")
         callBackRestoreCompletion(.failure(DYMError(error)))
     }
 }
