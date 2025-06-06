@@ -1,0 +1,8 @@
+${PODS_ROOT}/Target Support Files/Pods-Demo/Pods-Demo-frameworks.sh
+${BUILT_PRODUCTS_DIR}/AnyCodable-FlightSchool/AnyCodable.framework
+${BUILT_PRODUCTS_DIR}/DingYue_iOS_SDK/DingYue_iOS_SDK.framework
+${BUILT_PRODUCTS_DIR}/FCUUID/FCUUID.framework
+${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework
+${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework
+${BUILT_PRODUCTS_DIR}/UICKeyChainStore/UICKeyChainStore.framework
+${PODS_XCFRAMEWORKS_BUILD_DIR}/DingYue_iOS_SDK/DingYueLua.framework/DingYueLua

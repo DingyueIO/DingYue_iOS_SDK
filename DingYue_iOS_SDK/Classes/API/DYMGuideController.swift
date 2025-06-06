@@ -369,7 +369,7 @@ extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
             self.dismiss(animated: true, completion: nil)
             var type = ""
             if let useInfo = message.body as? [String:Any] {
-                type = useInfo["type"] as! String
+                type = useInfo["type"] as? String ?? ""
             }
             self.delegate?.clickGuideCloseButton?(baseViewController: self,closeType: type)
         }else if message.name == "guide_restore" {

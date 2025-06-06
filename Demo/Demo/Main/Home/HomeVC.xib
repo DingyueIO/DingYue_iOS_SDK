@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeVC" customModule="Demo" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iCm-Fg-N2e">
+                    <rect key="frame" x="141" y="361" width="111" height="130"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4QF-tV-kb7">
+                            <rect key="frame" x="0.0" y="0.0" width="111" height="35"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="显示引导页"/>
+                            <connections>
+                                <action selector="showGuidePage:" destination="-1" eventType="touchUpInside" id="foV-Ov-s4e"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jx0-yt-0lb">
+                            <rect key="frame" x="0.0" y="95" width="111" height="35"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="显示订阅页"/>
+                            <connections>
+                                <action selector="showPayPage:" destination="-1" eventType="touchUpInside" id="erU-ik-H0j"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="jx0-yt-0lb" secondAttribute="trailing" id="L9h-v3-HFc"/>
+                        <constraint firstItem="4QF-tV-kb7" firstAttribute="top" secondItem="iCm-Fg-N2e" secondAttribute="top" id="OhN-OB-Yct"/>
+                        <constraint firstItem="4QF-tV-kb7" firstAttribute="leading" secondItem="iCm-Fg-N2e" secondAttribute="leading" id="Z0C-Hk-ge1"/>
+                        <constraint firstAttribute="bottom" secondItem="jx0-yt-0lb" secondAttribute="bottom" id="auJ-vo-s4I"/>
+                        <constraint firstItem="jx0-yt-0lb" firstAttribute="top" secondItem="4QF-tV-kb7" secondAttribute="bottom" constant="60" id="c1S-va-mZ3"/>
+                        <constraint firstItem="jx0-yt-0lb" firstAttribute="leading" secondItem="iCm-Fg-N2e" secondAttribute="leading" id="gNF-X7-29r"/>
+                        <constraint firstAttribute="trailing" secondItem="4QF-tV-kb7" secondAttribute="trailing" id="o0S-eI-zUt"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="这是首页" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="isf-Hz-QUA">
+                    <rect key="frame" x="162" y="69" width="69.333333333333314" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="iCm-Fg-N2e" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="HI1-zM-SjL"/>
+                <constraint firstItem="isf-Hz-QUA" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="PC2-m3-f2J"/>
+                <constraint firstItem="isf-Hz-QUA" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="Qyo-au-sR4"/>
+                <constraint firstItem="iCm-Fg-N2e" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="XgZ-MN-6IK"/>
+            </constraints>
+            <point key="canvasLocation" x="131" y="-11"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
