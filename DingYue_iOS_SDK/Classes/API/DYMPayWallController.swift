@@ -54,6 +54,8 @@ public class DYMPayWallController: UIViewController {
         config.userContentController = WKUserContentController()
         config.allowsInlineMediaPlayback = true
         config.mediaTypesRequiringUserActionForPlayback = []
+        config.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
+        config.setValue(true, forKey: "allowUniversalAccessFromFileURLs")
         return config
     }()
     private lazy var webView: WKWebView = {
