@@ -24,7 +24,7 @@ public class DYMPayWallController: UIViewController {
     var tempCachedProducts:[Dictionary<String,Any>] = []
     var paywalls:[SKProduct] = []
     var completion:DYMPurchaseCompletion?
-    weak var delegate: DYMPayWallActionDelegate?
+    public weak var delegate: DYMPayWallActionDelegate?
     var loadingTimer:Timer?
     var currentPaywallId:String?
     var extras:[String:Any]?

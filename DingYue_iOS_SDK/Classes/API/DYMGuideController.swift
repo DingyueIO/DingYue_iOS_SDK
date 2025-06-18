@@ -37,7 +37,7 @@ public class DYMGuideController: UIViewController {
     var tempCachedProducts:[Dictionary<String,Any>] = []
     var paywalls:[SKProduct] = []
     var completion:DYMPurchaseCompletion?
-    weak var delegate: DYMGuideActionDelegate?
+    public weak var delegate: DYMGuideActionDelegate?
     var loadingTimer:Timer?
     var currentGuidePageId:String?
     var extras:[String:Any]?
