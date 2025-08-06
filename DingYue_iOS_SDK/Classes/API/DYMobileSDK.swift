@@ -132,8 +132,6 @@ import AdSupport
             DYMConstants.APIKeys.appId = appId
             DYMConstants.APIKeys.secretKey = apiKey
         }
-       
-        
         shared.configure(completion: completion)
     }
     ///Configure
