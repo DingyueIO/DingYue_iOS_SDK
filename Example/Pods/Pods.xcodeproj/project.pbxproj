@@ -167,6 +167,8 @@
 		CEE0E9D01F95BE45E879CABAFD25B8D9 /* UICKeyChainStore-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 88CD43EE618FBF264319C22EF8FCD39F /* UICKeyChainStore-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CF37DA0D2E409C8F002DCEFF /* DYMDeviceInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF37DA0C2E409C8F002DCEFF /* DYMDeviceInfoManager.swift */; };
 		CFC0D72D67804B14DC716FC9D0FCB3D4 /* SegmentInfoResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3BE605B6387B658F28622AD5BE3949 /* SegmentInfoResult.swift */; };
+		CFC3D3072E433DF600F601A2 /* DYMIAPFacadeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC3D3062E433DF600F601A2 /* DYMIAPFacadeManager.swift */; };
+		CFC3D3092E433E0D00F601A2 /* DYMIAPManagerV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC3D3082E433E0D00F601A2 /* DYMIAPManagerV2.swift */; };
 		D280DB07698D504B326C987A1AFCCDCF /* mz_strm_os_posix.c in Sources */ = {isa = PBXBuildFile; fileRef = 418CA6DDBBAEEDDED5C2B70B5366C8C3 /* mz_strm_os_posix.c */; };
 		D29E2AEBD720C767AF14005C0BD15F14 /* DYMPayWallController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBBF72551039434FB3DDA2A1A539054 /* DYMPayWallController.swift */; };
 		D2A768A04C78D26177854C7F9AD8EBFD /* DYMProgressManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE1C481A776848EB6EF2C752B4BB375 /* DYMProgressManager.swift */; };
@@ -488,6 +490,8 @@
 		C8AD2AFF82D04C9CAC10CC843875408B /* ReceiptVerifyMobileResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReceiptVerifyMobileResponse.swift; sourceTree = "<group>"; };
 		CF0F1391E7EB16453F6F3FB8ECB1881B /* mz_os.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = mz_os.c; path = SSZipArchive/minizip/mz_os.c; sourceTree = "<group>"; };
 		CF37DA0C2E409C8F002DCEFF /* DYMDeviceInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DYMDeviceInfoManager.swift; sourceTree = "<group>"; };
+		CFC3D3062E433DF600F601A2 /* DYMIAPFacadeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DYMIAPFacadeManager.swift; sourceTree = "<group>"; };
+		CFC3D3082E433E0D00F601A2 /* DYMIAPManagerV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DYMIAPManagerV2.swift; sourceTree = "<group>"; };
 		D01A7DAA3805B01D892A82AAF2EE965A /* NVActivityIndicatorAnimationBallScaleMultiple.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallScaleMultiple.swift; path = Sources/Base/Animations/NVActivityIndicatorAnimationBallScaleMultiple.swift; sourceTree = "<group>"; };
 		D13264E5D7498D799304858A18786383 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D1E1D6B8F7277B4FC778F9154CE16B3B /* locale.js */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.javascript; name = locale.js; path = DingYue_iOS_SDK/Assets/Resources/Purchase/locale.js; sourceTree = "<group>"; };
@@ -901,6 +905,8 @@
 				1D03EFF454B8E987780AEEF28508DBA6 /* DYMExtension.swift */,
 				C3511ABA42C18828A49A9E67FE45DD4D /* DYMGuideController.swift */,
 				92D592885FFBAFE513FFCFA5B1DD8F1F /* DYMIAPManager.swift */,
+				CFC3D3062E433DF600F601A2 /* DYMIAPFacadeManager.swift */,
+				CFC3D3082E433E0D00F601A2 /* DYMIAPManagerV2.swift */,
 				B7B3E99527790445494FBC2C5DE93161 /* DYMJson.swift */,
 				0DB02536BFA0567A69A26C21C2DCBC9D /* DYMLogManager.swift */,
 				C0325AF363EF6D9E070221897CDB58E8 /* DYMLuaScriptManager.swift */,
@@ -1611,6 +1617,7 @@
 				8BED18D89BFEF30BF8BFA64F10CC8E41 /* DYLuaExtension.m in Sources */,
 				8F924CF6337991A3BDA0354E93751537 /* DYMAppDelegateSwizzler.swift in Sources */,
 				EF4BCEA97CB921ED8849E60A394C5A8F /* DYMConfiguration.swift in Sources */,
+				CFC3D3072E433DF600F601A2 /* DYMIAPFacadeManager.swift in Sources */,
 				862C5ED30F0D905D97CB25ECB3FC6F96 /* DYMConstants.swift in Sources */,
 				48A176C1386B664E81332901FA4384A2 /* DYMDefaultsManager.swift in Sources */,
 				7FEF0353D351B70C8DEC2965BB9CB760 /* DYMError.swift in Sources */,
@@ -1633,6 +1640,7 @@
 				F0AB8900E2775E999959B48BE0369FE8 /* EditOneOf.swift in Sources */,
 				1C08FB64989C87507A9854FC0C1D2177 /* EditStringUnit.swift in Sources */,
 				87A6CE9DB7F7A166FF949746B23624F6 /* Event.swift in Sources */,
+				CFC3D3092E433E0D00F601A2 /* DYMIAPManagerV2.swift in Sources */,
 				9E409DFEF900BBCF0E5E258F78D48423 /* EventReportObject.swift in Sources */,
 				66B895DD46C8306795146339965840C9 /* Extensions.swift in Sources */,
 				9D42313C8AC1BBB7C64D6688C6B25321 /* FirstReceiptVerifyMobileResponse.swift in Sources */,
