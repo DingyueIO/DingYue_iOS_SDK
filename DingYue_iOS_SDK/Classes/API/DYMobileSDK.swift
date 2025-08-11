@@ -25,6 +25,13 @@ import AdSupport
     @objc public static var defaultConversionValueEnabled: Bool = false
     ///是否使用通知(默认启用)
     @objc public static var enableRemoteNotifications: Bool = true
+    /// 是否使用 StoreKit 2（默认使用 StoreKit 1）
+    @objc public static var shouldUseStoreKit2: Bool = false {
+        didSet {
+            // 通知 DYMIAPFacadeManager 更新 StoreKit 版本配置
+            DYMIAPFacadeManager.shared.updateStoreKitVersion(shouldUseStoreKit2)
+        }
+    }
     /// 是否启用自动获取并使用缓存中的域名（默认关闭）。
     /// 注意：
     /// - 启用后，`basePath` 会自动从缓存中加载域名（如果缓存中存在有效的域名）。
@@ -76,8 +83,8 @@ import AdSupport
         return ApiManager()
     }()
     ///应用内支付
-    private lazy var iapManager:DYMIAPManager = {
-        return DYMIAPManager.shared
+    private lazy var iapManager:DYMIAPFacadeManager = {
+        return DYMIAPFacadeManager.shared
     }()
     ///推送地址
     @objc public static var apnsToken: Data? {
