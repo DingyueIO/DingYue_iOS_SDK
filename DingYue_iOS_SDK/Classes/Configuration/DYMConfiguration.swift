@@ -16,6 +16,8 @@ import NVActivityIndicatorView
     @objc public var guidePageConfig: GuidePageConfig
     // 网络请求配置
     @objc public var networkRequestConfig: NetworkRequestConfig
+    // 支付页面配置
+    @objc public var paywallConfig: DYMPaywallConfig
     
     
     // 私有初始化以确保单例
@@ -30,6 +32,11 @@ import NVActivityIndicatorView
             bottomSpacing: 80
         )
         self.networkRequestConfig = NetworkRequestConfig(maxRetryCount: 15, retryInterval: 1)
+        self.paywallConfig = DYMPaywallConfig(
+            presentationStyle: .bottomSheetFullScreen,
+            enableSwipeToDismiss: true,
+            enableSwipeToDismissFromEdge: true
+        )
     }
 }
 // MARK: web引导页配置
@@ -98,5 +105,27 @@ import NVActivityIndicatorView
     @objc public init(maxRetryCount: Int, retryInterval: TimeInterval) {
         self.maxRetryCount = maxRetryCount
         self.retryInterval = retryInterval
+    }
+}
+
+// MARK: - 支付页面配置
+@objc public class DYMPaywallConfig: NSObject {
+    @objc public enum PresentationStyle: Int {
+        case bottomSheet = 0    // 从底部弹出（默认，非全屏）
+        case bottomSheetFullScreen = 1  // 从底部弹出（全屏）
+                        case push = 2           // 类似导航栏 push
+                case modal = 3          // 模态居中
+                case circleSpread = 4   // 圆形扩散动画
+                        
+    }
+    
+    @objc public var presentationStyle: PresentationStyle
+    @objc public var enableSwipeToDismiss: Bool
+    @objc public var enableSwipeToDismissFromEdge: Bool
+    
+    @objc public init(presentationStyle: PresentationStyle, enableSwipeToDismiss: Bool, enableSwipeToDismissFromEdge: Bool) {
+        self.presentationStyle = presentationStyle
+        self.enableSwipeToDismiss = enableSwipeToDismiss
+        self.enableSwipeToDismissFromEdge = enableSwipeToDismissFromEdge
     }
 }

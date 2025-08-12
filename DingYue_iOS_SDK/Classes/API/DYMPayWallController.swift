@@ -19,7 +19,7 @@ import StoreKit
     @objc optional func clickRestoreButton(baseViewController:UIViewController)//恢复
 }
 
-public class DYMPayWallController: UIViewController {
+public class DYMPayWallController: UIViewController, UIGestureRecognizerDelegate {
     var custemedProducts:[Subscription] = []
     var tempCachedProducts:[Dictionary<String,Any>] = []
     var paywalls:[SKProduct] = []
@@ -28,6 +28,11 @@ public class DYMPayWallController: UIViewController {
     var loadingTimer:Timer?
     var currentPaywallId:String?
     var extras:[String:Any]?
+    
+    // MARK: - 手势识别器
+    private var panGestureRecognizer: UIPanGestureRecognizer?
+    private var edgePanGestureRecognizer: UIScreenEdgePanGestureRecognizer?
+    private var initialTouchPoint: CGPoint = .zero
 
     
     lazy var activity:UIActivityIndicatorView = {
@@ -78,6 +83,10 @@ public class DYMPayWallController: UIViewController {
         self.view.backgroundColor = .white
         view.addSubview(webView)
         view.addSubview(activity)
+        
+        // 设置展示样式和手势
+        setupPresentationStyle()
+        setupGestureRecognizers()
 
         if DYMDefaultsManager.shared.isLoadingStatus == true {
             activity.isHidden = true
@@ -100,6 +109,46 @@ public class DYMPayWallController: UIViewController {
         if loadingTimer != nil {
             loadingTimer?.invalidate()
             loadingTimer = nil
+        }
+    }
+    
+    // MARK: - 展示样式和手势设置
+    private func setupPresentationStyle() {
+        let presentationStyle = DYMConfiguration.shared.paywallConfig.presentationStyle
+        DYMLogManager.logMessage("DYMPayWallController: 设置展示样式 - \(presentationStyle)")
+        
+        switch presentationStyle {
+        case .bottomSheet:
+            modalPresentationStyle = .pageSheet
+            if #available(iOS 15.0, *) {
+                sheetPresentationController?.detents = [.large()]
+                sheetPresentationController?.prefersGrabberVisible = true
+            }
+            DYMLogManager.logMessage("DYMPayWallController: 设置为 pageSheet")
+        case .modal:
+            modalPresentationStyle = .formSheet
+            DYMLogManager.logMessage("DYMPayWallController: 设置为 formSheet")
+        case .bottomSheetFullScreen, .push, .circleSpread:
+            // 这些样式使用自定义转场动画，modalPresentationStyle 在 DYMobileSDK 中设置
+            DYMLogManager.logMessage("DYMPayWallController: 使用自定义转场动画，不设置 modalPresentationStyle")
+            break
+        }
+    }
+    
+    private func setupGestureRecognizers() {
+        // 下滑手势关闭
+        if DYMConfiguration.shared.paywallConfig.enableSwipeToDismiss {
+            panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
+            panGestureRecognizer?.delegate = self
+            view.addGestureRecognizer(panGestureRecognizer!)
+        }
+        
+        // 侧滑手势关闭
+        if DYMConfiguration.shared.paywallConfig.enableSwipeToDismissFromEdge {
+            edgePanGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(handleEdgePanGesture))
+            edgePanGestureRecognizer?.edges = .left
+            edgePanGestureRecognizer?.delegate = self
+            view.addGestureRecognizer(edgePanGestureRecognizer!)
         }
     }
 
@@ -177,6 +226,101 @@ public class DYMPayWallController: UIViewController {
     }
     deinit {
         DYMLogManager.debugLog("DYMPayWallController deinit")
+    }
+    
+    // MARK: - 手势处理方法
+    @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: view)
+        let velocity = gesture.velocity(in: view)
+        
+        switch gesture.state {
+        case .began:
+            initialTouchPoint = gesture.location(in: view)
+            
+        case .changed:
+            // 只允许向下滑动
+            if translation.y > 0 {
+                let progress = min(translation.y / view.bounds.height, 1.0)
+                view.transform = CGAffineTransform(translationX: 0, y: translation.y * 0.3)
+                view.alpha = 1.0 - progress * 0.3
+            }
+            
+        case .ended, .cancelled:
+            let shouldDismiss = translation.y > view.bounds.height * 0.3 || velocity.y > 500
+            
+            if shouldDismiss {
+                // 执行关闭动画
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.view.transform = CGAffineTransform(translationX: 0, y: self.view.bounds.height)
+                    self.view.alpha = 0
+                }) { _ in
+                    self.dismiss(animated: false)
+                }
+            } else {
+                // 恢复原位置
+                UIView.animate(withDuration: 0.3) {
+                    self.view.transform = .identity
+                    self.view.alpha = 1.0
+                }
+            }
+            
+        default:
+            break
+        }
+    }
+    
+    @objc private func handleEdgePanGesture(_ gesture: UIScreenEdgePanGestureRecognizer) {
+        let translation = gesture.translation(in: view)
+        let velocity = gesture.velocity(in: view)
+        
+        switch gesture.state {
+        case .began:
+            initialTouchPoint = gesture.location(in: view)
+            
+        case .changed:
+            // 只允许向右滑动
+            if translation.x > 0 {
+                let progress = min(translation.x / view.bounds.width, 1.0)
+                view.transform = CGAffineTransform(translationX: translation.x * 0.3, y: 0)
+                view.alpha = 1.0 - progress * 0.3
+            }
+            
+        case .ended, .cancelled:
+            let shouldDismiss = translation.x > view.bounds.width * 0.3 || velocity.x > 500
+            
+            if shouldDismiss {
+                // 执行关闭动画
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.view.transform = CGAffineTransform(translationX: self.view.bounds.width, y: 0)
+                    self.view.alpha = 0
+                }) { _ in
+                    self.dismiss(animated: false)
+                }
+            } else {
+                // 恢复原位置
+                UIView.animate(withDuration: 0.3) {
+                    self.view.transform = .identity
+                    self.view.alpha = 1.0
+                }
+            }
+            
+        default:
+            break
+        }
+    }
+    
+    // MARK: - UIGestureRecognizerDelegate
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        // 允许手势同时识别，避免与 WebView 滚动冲突
+        return true
+    }
+    
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        // 确保我们的手势优先级更高
+        if gestureRecognizer == panGestureRecognizer || gestureRecognizer == edgePanGestureRecognizer {
+            return false
+        }
+        return true
     }
 }
 

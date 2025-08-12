@@ -28,6 +28,9 @@ class ViewController: UIViewController {
        override func viewDidLoad() {
            super.viewDidLoad()
            setupTableView()
+           DYMConfiguration.shared.paywallConfig.presentationStyle = .circleSpread
+           DYMConfiguration.shared.paywallConfig.enableSwipeToDismiss = true
+           DYMConfiguration.shared.paywallConfig.enableSwipeToDismissFromEdge = true
        }
        
        private func setupTableView() {
