@@ -25,6 +25,13 @@ import AdSupport
     @objc public static var defaultConversionValueEnabled: Bool = false
     ///是否使用通知(默认启用)
     @objc public static var enableRemoteNotifications: Bool = true
+    /// 是否使用 StoreKit 2（默认使用 StoreKit 1）
+    @objc public static var shouldUseStoreKit2: Bool = false {
+        didSet {
+            // 通知 DYMIAPFacadeManager 更新 StoreKit 版本配置
+            DYMIAPFacadeManager.shared.updateStoreKitVersion(shouldUseStoreKit2)
+        }
+    }
     /// 是否启用自动获取并使用缓存中的域名（默认关闭）。
     /// 注意：
     /// - 启用后，`basePath` 会自动从缓存中加载域名（如果缓存中存在有效的域名）。
@@ -76,8 +83,8 @@ import AdSupport
         return ApiManager()
     }()
     ///应用内支付
-    private lazy var iapManager:DYMIAPManager = {
-        return DYMIAPManager.shared
+    private lazy var iapManager:DYMIAPFacadeManager = {
+        return DYMIAPFacadeManager.shared
     }()
     ///推送地址
     @objc public static var apnsToken: Data? {
@@ -132,8 +139,6 @@ import AdSupport
             DYMConstants.APIKeys.appId = appId
             DYMConstants.APIKeys.secretKey = apiKey
         }
-       
-        
         shared.configure(completion: completion)
     }
     ///Configure
@@ -264,16 +269,37 @@ import AdSupport
     ///展示支付页面
     @objc public class func showVisualPaywall(products:[Subscription]? = nil,rootController: UIViewController, extras:[String:Any]? = nil, completion:@escaping DYMPurchaseCompletion){
         let controller = getVisualPaywall(for: products, extras: extras, completion: completion)
-        rootController.present(controller, animated: true)
+        
+        // 根据配置决定展示方式
+        let presentationStyle = DYMConfiguration.shared.paywallConfig.presentationStyle
+        DYMLogManager.logMessage("DYMobileSDK: 展示样式 - \(presentationStyle)")
+        
+        switch presentationStyle {
+        case .push, .bottomSheetFullScreen, .circleSpread:
+            // 使用自定义转场动画
+            controller.modalPresentationStyle = .custom
+            let transitionDelegate = DYMPaywallTransitionManager.shared.getTransitionDelegate(for: presentationStyle)
+            controller.transitioningDelegate = transitionDelegate
+            DYMLogManager.logMessage("DYMobileSDK: 使用自定义转场动画 - \(transitionDelegate != nil ? "成功" : "失败")")
+            rootController.present(controller, animated: true)
+
+        default:
+            // 使用默认的 present 方式
+            DYMLogManager.logMessage("DYMobileSDK: 使用系统默认转场")
+            rootController.present(controller, animated: true)
+        }
+        
         controller.delegate = (rootController as? DYMPayWallActionDelegate)
     }
 
     public class func getVisualPaywall(for products:[Subscription]? = nil, extras:[String:Any]? = nil, completion: @escaping DYMRestoreCompletion) -> DYMPayWallController {
+        DYMLogManager.logMessage("DYMobileSDK: 创建 DYMPayWallController")
         let paywallViewController = DYMPayWallController()
         paywallViewController.custemedProducts = products ?? []
         paywallViewController.extras = extras
         paywallViewController.completion = completion
-        paywallViewController.modalPresentationStyle = .fullScreen
+        DYMLogManager.logMessage("DYMobileSDK: DYMPayWallController 创建完成")
+        // modalPresentationStyle 现在在 DYMPayWallController 的 setupPresentationStyle 中设置
         return paywallViewController
     }
     #endif

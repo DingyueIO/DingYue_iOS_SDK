@@ -8,7 +8,7 @@
 import UIKit
 import StoreKit
 
-public class DYMError: NSError {
+public class DYMError: NSError, @unchecked Sendable {
 
     private let DYMDomain = "com.dingyuemobilesdk.error"
     @objc public var dymCode: DYMErrorCode = .none

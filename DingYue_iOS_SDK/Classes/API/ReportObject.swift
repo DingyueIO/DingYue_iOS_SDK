@@ -24,6 +24,7 @@ extension UniqueUserObject{
         self.attribution = attribution
         self.area = UserProperties.area
         self.language = UserProperties.language
+        self.deviceInfo = DYMDeviceInfoManager.getDeviceInfoAsAnyCodableDict()
         self.extraData = UserProperties.extraData
     }
 }

@@ -241,7 +241,7 @@ class DYMIAPManager: NSObject {
         if #available(iOS 14.0, *) {
             SKPaymentQueue.default().presentCodeRedemptionSheet()
         } else {
-            LoggerManager.logError("Presenting code redemption sheet is available only for iOS 14 and higher.")
+            DYMLogManager.logError("Presenting code redemption sheet is available only for iOS 14 and higher.")
         }
         #endif
     }
