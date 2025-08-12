@@ -272,23 +272,31 @@ import AdSupport
         
         // 根据配置决定展示方式
         let presentationStyle = DYMConfiguration.shared.paywallConfig.presentationStyle
-        DYMLogManager.logMessage("DYMobileSDK: 展示样式 - \(presentationStyle)")
         
+        // 设置 modalPresentationStyle
         switch presentationStyle {
-        case .push, .bottomSheetFullScreen, .circleSpread:
-            // 使用自定义转场动画
-            controller.modalPresentationStyle = .custom
-            let transitionDelegate = DYMPaywallTransitionManager.shared.getTransitionDelegate(for: presentationStyle)
-            controller.transitioningDelegate = transitionDelegate
-            DYMLogManager.logMessage("DYMobileSDK: 使用自定义转场动画 - \(transitionDelegate != nil ? "成功" : "失败")")
-            rootController.present(controller, animated: true)
-
-        default:
-            // 使用默认的 present 方式
-            DYMLogManager.logMessage("DYMobileSDK: 使用系统默认转场")
-            rootController.present(controller, animated: true)
+        case .bottomSheet:
+            controller.modalPresentationStyle = .pageSheet
+        case .bottomSheetFullScreen:
+            controller.modalPresentationStyle = .fullScreen
+        case .push:
+            controller.modalPresentationStyle = .fullScreen
+        case .modal:
+            controller.modalPresentationStyle = .formSheet
+        case .circleSpread:
+            controller.modalPresentationStyle = .fullScreen
         }
         
+        // 设置自定义转场动画
+        switch presentationStyle {
+        case .push, .bottomSheetFullScreen, .circleSpread:
+            let transitionDelegate = DYMPaywallTransitionManager.shared.getTransitionDelegate(for: presentationStyle)
+            controller.transitioningDelegate = transitionDelegate
+        default:
+            break
+        }
+        
+        rootController.present(controller, animated: true)
         controller.delegate = (rootController as? DYMPayWallActionDelegate)
     }
 
