@@ -15,7 +15,7 @@ public enum DYMLogLevel: Int {
 }
 
 class DYMLogManager: NSObject {
-    static var logLevel: DYMLogLevel = .all
+    static var logLevel: DYMLogLevel = .none
 
     class func logError(_ error: Any) {
         guard isAllowedToLog(.errors) else {
