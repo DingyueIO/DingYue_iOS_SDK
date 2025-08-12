@@ -169,6 +169,7 @@
 		CFC0D72D67804B14DC716FC9D0FCB3D4 /* SegmentInfoResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3BE605B6387B658F28622AD5BE3949 /* SegmentInfoResult.swift */; };
 		CFC3D3072E433DF600F601A2 /* DYMIAPFacadeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC3D3062E433DF600F601A2 /* DYMIAPFacadeManager.swift */; };
 		CFC3D3092E433E0D00F601A2 /* DYMIAPManagerV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC3D3082E433E0D00F601A2 /* DYMIAPManagerV2.swift */; };
+		CFC3D68E2E49E00C00F601A2 /* DYMPaywallTransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC3D68D2E49E00C00F601A2 /* DYMPaywallTransitionManager.swift */; };
 		D280DB07698D504B326C987A1AFCCDCF /* mz_strm_os_posix.c in Sources */ = {isa = PBXBuildFile; fileRef = 418CA6DDBBAEEDDED5C2B70B5366C8C3 /* mz_strm_os_posix.c */; };
 		D29E2AEBD720C767AF14005C0BD15F14 /* DYMPayWallController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBBF72551039434FB3DDA2A1A539054 /* DYMPayWallController.swift */; };
 		D2A768A04C78D26177854C7F9AD8EBFD /* DYMProgressManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE1C481A776848EB6EF2C752B4BB375 /* DYMProgressManager.swift */; };
@@ -492,6 +493,7 @@
 		CF37DA0C2E409C8F002DCEFF /* DYMDeviceInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DYMDeviceInfoManager.swift; sourceTree = "<group>"; };
 		CFC3D3062E433DF600F601A2 /* DYMIAPFacadeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DYMIAPFacadeManager.swift; sourceTree = "<group>"; };
 		CFC3D3082E433E0D00F601A2 /* DYMIAPManagerV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DYMIAPManagerV2.swift; sourceTree = "<group>"; };
+		CFC3D68D2E49E00C00F601A2 /* DYMPaywallTransitionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DYMPaywallTransitionManager.swift; sourceTree = "<group>"; };
 		D01A7DAA3805B01D892A82AAF2EE965A /* NVActivityIndicatorAnimationBallScaleMultiple.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NVActivityIndicatorAnimationBallScaleMultiple.swift; path = Sources/Base/Animations/NVActivityIndicatorAnimationBallScaleMultiple.swift; sourceTree = "<group>"; };
 		D13264E5D7498D799304858A18786383 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D1E1D6B8F7277B4FC778F9154CE16B3B /* locale.js */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.javascript; name = locale.js; path = DingYue_iOS_SDK/Assets/Resources/Purchase/locale.js; sourceTree = "<group>"; };
@@ -781,6 +783,7 @@
 			isa = PBXGroup;
 			children = (
 				EFB55C10E695C14A63AE28CF199D19E9 /* DYMConfiguration.swift */,
+				CFC3D68D2E49E00C00F601A2 /* DYMPaywallTransitionManager.swift */,
 			);
 			name = Configuration;
 			path = DingYue_iOS_SDK/Classes/Configuration;
@@ -1612,6 +1615,7 @@
 				4E936921D90EAB0CD62C8DF989CE54E5 /* AttributionAPI.swift in Sources */,
 				1BCAAC678C8B403CA7E30B6F2D37192D /* CodableHelper.swift in Sources */,
 				24FFA9BC58DC6AFF313D540AF84600AF /* Configuration.swift in Sources */,
+				CFC3D68E2E49E00C00F601A2 /* DYMPaywallTransitionManager.swift in Sources */,
 				615984611AE81E11F04CE215ADC6B702 /* ConversionRequest.swift in Sources */,
 				FBA9199E29DAF1BBFFA59418CFE90446 /* DingYue_iOS_SDK-dummy.m in Sources */,
 				8BED18D89BFEF30BF8BFA64F10CC8E41 /* DYLuaExtension.m in Sources */,

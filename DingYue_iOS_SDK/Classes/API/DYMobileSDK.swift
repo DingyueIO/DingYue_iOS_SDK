@@ -269,16 +269,37 @@ import AdSupport
     ///展示支付页面
     @objc public class func showVisualPaywall(products:[Subscription]? = nil,rootController: UIViewController, extras:[String:Any]? = nil, completion:@escaping DYMPurchaseCompletion){
         let controller = getVisualPaywall(for: products, extras: extras, completion: completion)
-        rootController.present(controller, animated: true)
+        
+        // 根据配置决定展示方式
+        let presentationStyle = DYMConfiguration.shared.paywallConfig.presentationStyle
+        DYMLogManager.logMessage("DYMobileSDK: 展示样式 - \(presentationStyle)")
+        
+        switch presentationStyle {
+        case .push, .bottomSheetFullScreen, .circleSpread:
+            // 使用自定义转场动画
+            controller.modalPresentationStyle = .custom
+            let transitionDelegate = DYMPaywallTransitionManager.shared.getTransitionDelegate(for: presentationStyle)
+            controller.transitioningDelegate = transitionDelegate
+            DYMLogManager.logMessage("DYMobileSDK: 使用自定义转场动画 - \(transitionDelegate != nil ? "成功" : "失败")")
+            rootController.present(controller, animated: true)
+
+        default:
+            // 使用默认的 present 方式
+            DYMLogManager.logMessage("DYMobileSDK: 使用系统默认转场")
+            rootController.present(controller, animated: true)
+        }
+        
         controller.delegate = (rootController as? DYMPayWallActionDelegate)
     }
 
     public class func getVisualPaywall(for products:[Subscription]? = nil, extras:[String:Any]? = nil, completion: @escaping DYMRestoreCompletion) -> DYMPayWallController {
+        DYMLogManager.logMessage("DYMobileSDK: 创建 DYMPayWallController")
         let paywallViewController = DYMPayWallController()
         paywallViewController.custemedProducts = products ?? []
         paywallViewController.extras = extras
         paywallViewController.completion = completion
-        paywallViewController.modalPresentationStyle = .fullScreen
+        DYMLogManager.logMessage("DYMobileSDK: DYMPayWallController 创建完成")
+        // modalPresentationStyle 现在在 DYMPayWallController 的 setupPresentationStyle 中设置
         return paywallViewController
     }
     #endif
