@@ -115,23 +115,14 @@ public class DYMPayWallController: UIViewController, UIGestureRecognizerDelegate
     // MARK: - 展示样式和手势设置
     private func setupPresentationStyle() {
         let presentationStyle = DYMConfiguration.shared.paywallConfig.presentationStyle
-        DYMLogManager.logMessage("DYMPayWallController: 设置展示样式 - \(presentationStyle)")
         
-        switch presentationStyle {
-        case .bottomSheet:
-            modalPresentationStyle = .pageSheet
+        // modalPresentationStyle 现在在 DYMobileSDK.showVisualPaywall 中统一设置
+        // 这里只处理 iOS 15+ 的 sheetPresentationController 配置
+        if presentationStyle == .bottomSheet {
             if #available(iOS 15.0, *) {
                 sheetPresentationController?.detents = [.large()]
                 sheetPresentationController?.prefersGrabberVisible = true
             }
-            DYMLogManager.logMessage("DYMPayWallController: 设置为 pageSheet")
-        case .modal:
-            modalPresentationStyle = .formSheet
-            DYMLogManager.logMessage("DYMPayWallController: 设置为 formSheet")
-        case .bottomSheetFullScreen, .push, .circleSpread:
-            // 这些样式使用自定义转场动画，modalPresentationStyle 在 DYMobileSDK 中设置
-            DYMLogManager.logMessage("DYMPayWallController: 使用自定义转场动画，不设置 modalPresentationStyle")
-            break
         }
     }
     

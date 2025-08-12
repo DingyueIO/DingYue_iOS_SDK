@@ -111,12 +111,12 @@ import NVActivityIndicatorView
 // MARK: - 支付页面配置
 @objc public class DYMPaywallConfig: NSObject {
     @objc public enum PresentationStyle: Int {
-        case bottomSheet = 0    // 从底部弹出（默认，非全屏）
-        case bottomSheetFullScreen = 1  // 从底部弹出（全屏）
-                        case push = 2           // 类似导航栏 push
-                case modal = 3          // 模态居中
-                case circleSpread = 4   // 圆形扩散动画
-                        
+        case bottomSheet = 0    // 从底部弹出（非全屏）
+        case bottomSheetFullScreen = 1  // 从底部弹出（全屏，默认）
+        case push = 2           // 类似导航栏 push
+        case modal = 3          // 模态居中
+        case circleSpread = 4   // 圆形扩散动画
+        
     }
     
     @objc public var presentationStyle: PresentationStyle

@@ -19,21 +19,14 @@ import UIKit
     
     // MARK: - 获取转场代理
     @objc public func getTransitionDelegate(for style: DYMPaywallConfig.PresentationStyle) -> UIViewControllerTransitioningDelegate? {
-        DYMLogManager.logMessage("DYMPaywallTransitionManager: 请求转场代理 - \(style)")
-        
         switch style {
         case .push:
-            DYMLogManager.logMessage("DYMPaywallTransitionManager: 返回 Push 转场代理")
             return DYMPushTransitionDelegate.shared
         case .bottomSheetFullScreen:
-            DYMLogManager.logMessage("DYMPaywallTransitionManager: 返回全屏底部弹出转场代理")
             return DYMBottomSheetFullScreenTransitionDelegate.shared
         case .circleSpread:
-            DYMLogManager.logMessage("DYMPaywallTransitionManager: 返回圆形扩散转场代理")
             return DYMCircleSpreadTransitionDelegate.shared
-
         case .bottomSheet, .modal:
-            DYMLogManager.logMessage("DYMPaywallTransitionManager: 使用系统默认转场")
             return nil // 使用系统默认转场
         }
     }
@@ -48,7 +41,6 @@ class DYMPushTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate
     }
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        DYMLogManager.logMessage("DYMPushTransitionDelegate: 创建出现动画")
         return DYMPushPresentAnimator()
     }
     
@@ -64,10 +56,7 @@ class DYMPushPresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        DYMLogManager.logMessage("DYMPushPresentAnimator: 开始执行出现动画")
-        
         guard let toView = transitionContext.view(forKey: .to) else { 
-            DYMLogManager.logMessage("DYMPushPresentAnimator: 错误 - 无法获取目标视图")
             return 
         }
         
@@ -83,13 +72,10 @@ class DYMPushPresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         // 设置初始位置（从右侧进入）
         toView.frame = CGRect(x: containerView.bounds.width, y: 0, width: containerView.bounds.width, height: containerView.bounds.height)
         
-        DYMLogManager.logMessage("DYMPushPresentAnimator: 执行动画 - 从右侧滑入")
-        
         // 执行动画
         UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveEaseInOut, animations: {
             toView.frame = containerView.bounds
         }) { _ in
-            DYMLogManager.logMessage("DYMPushPresentAnimator: 动画完成")
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
     }
@@ -104,13 +90,10 @@ class DYMPushDismissAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard let fromView = transitionContext.view(forKey: .from) else { return }
         
-        DYMLogManager.logMessage("DYMPushDismissAnimator: 开始执行消失动画")
-        
         // 执行动画（向右侧退出）
         UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveEaseInOut, animations: {
             fromView.frame = CGRect(x: fromView.bounds.width, y: 0, width: fromView.bounds.width, height: fromView.bounds.height)
         }) { _ in
-            DYMLogManager.logMessage("DYMPushDismissAnimator: 消失动画完成")
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
     }
@@ -172,13 +155,10 @@ class DYMBottomSheetFullScreenDismissAnimator: NSObject, UIViewControllerAnimate
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard let fromView = transitionContext.view(forKey: .from) else { return }
         
-        DYMLogManager.logMessage("DYMBottomSheetFullScreenDismissAnimator: 开始执行消失动画")
-        
         // 执行动画（向底部退出）
         UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveEaseIn, animations: {
             fromView.frame = CGRect(x: 0, y: fromView.bounds.height, width: fromView.bounds.width, height: fromView.bounds.height)
         }) { _ in
-            DYMLogManager.logMessage("DYMBottomSheetFullScreenDismissAnimator: 消失动画完成")
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
     }
@@ -193,7 +173,6 @@ class DYMCircleSpreadTransitionDelegate: NSObject, UIViewControllerTransitioning
     }
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        DYMLogManager.logMessage("DYMCircleSpreadTransitionDelegate: 创建出现动画控制器")
         return DYMCircleSpreadPresentAnimator()
     }
     
@@ -218,8 +197,6 @@ class DYMCircleSpreadPresentAnimator: NSObject, UIViewControllerAnimatedTransiti
         
         // 添加视图到容器
         containerView.addSubview(toView)
-        
-        DYMLogManager.logMessage("DYMCircleSpreadPresentAnimator: 开始圆形扩散动画")
         
         // 计算扩散的起始点（屏幕中心）
         let startPoint = CGPoint(x: containerView.bounds.width / 2, y: containerView.bounds.height / 2)
@@ -272,8 +249,6 @@ class DYMCircleSpreadDismissAnimator: NSObject, UIViewControllerAnimatedTransiti
         
         let containerView = transitionContext.containerView
         
-        DYMLogManager.logMessage("DYMCircleSpreadDismissAnimator: 开始圆形收缩动画")
-        
         // 计算收缩的结束点（屏幕中心）
         let endPoint = CGPoint(x: containerView.bounds.width / 2, y: containerView.bounds.height / 2)
         
@@ -296,7 +271,21 @@ class DYMCircleSpreadDismissAnimator: NSObject, UIViewControllerAnimatedTransiti
         fromView.layer.mask = maskLayer
         
         // 创建路径动画
+        let pathAnimation = CABasicAnimation(keyPath: "path")
+        pathAnimation.fromValue = startPath.cgPath
+        pathAnimation.toValue = endPath.cgPath
+        pathAnimation.duration = transitionDuration(using: transitionContext)
+        pathAnimation.timingFunction = CAMediaTimingFunction(name: "easeInEaseOut")
+        pathAnimation.fillMode = "forwards"
+        pathAnimation.isRemovedOnCompletion = false
+        pathAnimation.delegate = self
         
+        // 保存 transitionContext 和 maskLayer 用于动画完成回调
+        pathAnimation.setValue(transitionContext, forKey: "transitionContext")
+        pathAnimation.setValue(maskLayer, forKey: "maskLayer")
+        
+        // 添加动画到遮罩层
+        maskLayer.add(pathAnimation, forKey: "path")
     }
 }
 
@@ -305,8 +294,6 @@ extension DYMCircleSpreadPresentAnimator: CAAnimationDelegate {
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         if let transitionContext = anim.value(forKey: "transitionContext") as? UIViewControllerContextTransitioning,
            let maskLayer = anim.value(forKey: "maskLayer") as? CAShapeLayer {
-            DYMLogManager.logMessage("DYMCircleSpreadPresentAnimator: 圆形扩散动画完成")
-            
             // 立即移除遮罩层，确保动画完成后视图正常显示
             maskLayer.removeFromSuperlayer()
             if let toView = transitionContext.view(forKey: .to) {
@@ -325,8 +312,6 @@ extension DYMCircleSpreadDismissAnimator: CAAnimationDelegate {
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         if let transitionContext = anim.value(forKey: "transitionContext") as? UIViewControllerContextTransitioning,
            let maskLayer = anim.value(forKey: "maskLayer") as? CAShapeLayer {
-            DYMLogManager.logMessage("DYMCircleSpreadDismissAnimator: 圆形收缩动画完成")
-            
             // 立即移除遮罩层，避免闪烁
             maskLayer.removeFromSuperlayer()
             if let fromView = transitionContext.view(forKey: .from) {
