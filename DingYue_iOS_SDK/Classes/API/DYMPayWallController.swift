@@ -159,6 +159,8 @@ public class DYMPayWallController: UIViewController, UIGestureRecognizerDelegate
         self.trackWithPayWallInfo(eventName: "EXIT_PAYWALL")
         stopLoadingTimer()
         removeScriptMessageHandlers()
+        // 清理转场代理，避免内存泄漏
+        self.transitioningDelegate = nil
         self.delegate?.payWallDidDisappear?(baseViewController: self)
     }
     
@@ -245,7 +247,9 @@ public class DYMPayWallController: UIViewController, UIGestureRecognizerDelegate
                     self.view.transform = CGAffineTransform(translationX: 0, y: self.view.bounds.height)
                     self.view.alpha = 0
                 }) { _ in
-                    self.dismiss(animated: false)
+                    // 使用和关闭按钮一样的方法
+                    self.dismiss(animated: true, completion: nil)
+                    self.delegate?.clickCloseButton?(baseViewController: self)
                 }
             } else {
                 // 恢复原位置
@@ -285,7 +289,9 @@ public class DYMPayWallController: UIViewController, UIGestureRecognizerDelegate
                     self.view.transform = CGAffineTransform(translationX: self.view.bounds.width, y: 0)
                     self.view.alpha = 0
                 }) { _ in
-                    self.dismiss(animated: false)
+                    // 使用和关闭按钮一样的方法
+                    self.dismiss(animated: true, completion: nil)
+                    self.delegate?.clickCloseButton?(baseViewController: self)
                 }
             } else {
                 // 恢复原位置
