@@ -14,23 +14,24 @@ class ViewController: UIViewController {
  
     
     private let tableView = UITableView()
-       private let buttonTitles = ["SubscriptionBtn", "ConsumptionBtn", "LuaScriptBtn", "guidePageBtn", "CustomerProperties","GetSegmentInfo","GetAppleSearchAdsInfo"]
-       private let buttonActions: [Selector] = [
-           #selector(goPurchaseSubscriptionAction),
-           #selector(goPurchaseConsumptionAction),
-           #selector(luaTestAction),
-           #selector(gotoWebGuide),
-           #selector(setCustomerProperties),
-           #selector(getSegmentInfo),
-           #selector(getAppleSearchAdsInfo)
-       ]
+           private let buttonTitles = ["SubscriptionBtn", "ConsumptionBtn", "LuaScriptBtn", "guidePageBtn", "CustomerProperties","GetSegmentInfo","GetAppleSearchAdsInfo", "PaywallConfig"]
+    private let buttonActions: [Selector] = [
+        #selector(goPurchaseSubscriptionAction),
+        #selector(goPurchaseConsumptionAction),
+        #selector(luaTestAction),
+        #selector(gotoWebGuide),
+        #selector(setCustomerProperties),
+        #selector(getSegmentInfo),
+        #selector(getAppleSearchAdsInfo),
+        #selector(showPaywallConfigAction)
+    ]
        
        override func viewDidLoad() {
            super.viewDidLoad()
            setupTableView()
-           DYMConfiguration.shared.paywallConfig.presentationStyle = .circleSpread
-           DYMConfiguration.shared.paywallConfig.enableSwipeToDismiss = true
-           DYMConfiguration.shared.paywallConfig.enableSwipeToDismissFromEdge = true
+//           DYMConfiguration.shared.paywallConfig.presentationStyle = .circleSpread
+//           DYMConfiguration.shared.paywallConfig.enableSwipeToDismiss = true
+//           DYMConfiguration.shared.paywallConfig.enableSwipeToDismissFromEdge = true
        }
        
        private func setupTableView() {
@@ -185,6 +186,48 @@ class ViewController: UIViewController {
             }
         }
         
+    }
+    
+    @objc func showPaywallConfigAction() {
+        let alertController = UIAlertController(title: "支付页面配置", message: "选择展示样式和手势设置", preferredStyle: .actionSheet)
+        
+        // 展示样式选择
+        let styles = [
+            ("底部弹出", DYMPaywallConfig.PresentationStyle.bottomSheet),
+            ("全屏底部弹出", DYMPaywallConfig.PresentationStyle.bottomSheetFullScreen),
+            ("Push样式", DYMPaywallConfig.PresentationStyle.push),
+            ("模态居中", DYMPaywallConfig.PresentationStyle.modal),
+            ("圆形扩散", DYMPaywallConfig.PresentationStyle.circleSpread)
+        ]
+        
+        for (title, style) in styles {
+            alertController.addAction(UIAlertAction(title: title, style: .default) { _ in
+                DYMConfiguration.shared.paywallConfig.presentationStyle = style
+                self.goPurchaseSubscriptionAction()
+            })
+        }
+        
+        // 手势设置
+        alertController.addAction(UIAlertAction(title: "下滑手势: \(DYMConfiguration.shared.paywallConfig.enableSwipeToDismiss ? "开启" : "关闭")", style: .default) { _ in
+            DYMConfiguration.shared.paywallConfig.enableSwipeToDismiss.toggle()
+            self.showPaywallConfigAction()
+        })
+        
+        alertController.addAction(UIAlertAction(title: "边缘滑动手势: \(DYMConfiguration.shared.paywallConfig.enableSwipeToDismissFromEdge ? "开启" : "关闭")", style: .default) { _ in
+            DYMConfiguration.shared.paywallConfig.enableSwipeToDismissFromEdge.toggle()
+            self.showPaywallConfigAction()
+        })
+        
+        alertController.addAction(UIAlertAction(title: "取消", style: .cancel))
+        
+        // 适配 iPad
+        if let popover = alertController.popoverPresentationController {
+            popover.sourceView = self.view
+            popover.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popover.permittedArrowDirections = []
+        }
+        
+        present(alertController, animated: true)
     }
     func dictionaryToArrayString(dictionary: [String: Any]) -> String {
         let array = dictionary.map { "\($0.key): \($0.value)" }
