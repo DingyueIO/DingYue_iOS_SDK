@@ -296,8 +296,8 @@ import AdSupport
             break
         }
         
-        rootController.present(controller, animated: true)
         controller.delegate = (rootController as? DYMPayWallActionDelegate)
+        rootController.present(controller, animated: true)
     }
 
     public class func getVisualPaywall(for products:[Subscription]? = nil, extras:[String:Any]? = nil, completion: @escaping DYMRestoreCompletion) -> DYMPayWallController {
