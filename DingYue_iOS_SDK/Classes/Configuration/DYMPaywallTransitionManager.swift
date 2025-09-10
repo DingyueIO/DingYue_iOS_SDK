@@ -47,6 +47,15 @@ class DYMPushTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return DYMPushDismissAnimator()
     }
+    
+    // 确保这些方法返回 nil，避免交互式转场冲突
+    func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return nil
+    }
+    
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return nil
+    }
 }
 
 // MARK: - Push 出现动画
@@ -56,18 +65,16 @@ class DYMPushPresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        guard let toView = transitionContext.view(forKey: .to) else { 
+        guard let toView = transitionContext.view(forKey: .to),
+              let fromView = transitionContext.view(forKey: .from) else { 
             return 
         }
         
         let containerView = transitionContext.containerView
+        containerView.backgroundColor = .clear
         
         // 确保背景视图保持可见
-        if let fromView = transitionContext.view(forKey: .from) {
-            containerView.insertSubview(toView, aboveSubview: fromView)
-        } else {
-            containerView.addSubview(toView)
-        }
+        containerView.insertSubview(toView, aboveSubview: fromView)
         
         // 设置初始位置（从右侧进入）
         toView.frame = CGRect(x: containerView.bounds.width, y: 0, width: containerView.bounds.width, height: containerView.bounds.height)
@@ -88,7 +95,12 @@ class DYMPushDismissAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        guard let fromView = transitionContext.view(forKey: .from) else { return }
+        guard let fromView = transitionContext.view(forKey: .from),
+              let toView = transitionContext.view(forKey: .to) else { return }
+        
+        let containerView = transitionContext.containerView
+        containerView.insertSubview(toView, belowSubview: fromView)
+        containerView.backgroundColor = .clear
         
         // 执行动画（向右侧退出）
         UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveEaseInOut, animations: {
@@ -114,6 +126,15 @@ class DYMBottomSheetFullScreenTransitionDelegate: NSObject, UIViewControllerTran
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return DYMBottomSheetFullScreenDismissAnimator()
     }
+    
+    // 确保这些方法返回 nil，避免交互式转场冲突
+    func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return nil
+    }
+    
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return nil
+    }
 }
 
 // MARK: - 全屏底部弹出出现动画
@@ -123,16 +144,15 @@ class DYMBottomSheetFullScreenPresentAnimator: NSObject, UIViewControllerAnimate
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        guard let toView = transitionContext.view(forKey: .to) else { return }
+        guard let toView = transitionContext.view(forKey: .to),
+              let fromView = transitionContext.view(forKey: .from) else {
+            return
+        }
         
         let containerView = transitionContext.containerView
-        
+        containerView.backgroundColor = .clear
         // 确保背景视图保持可见
-        if let fromView = transitionContext.view(forKey: .from) {
-            containerView.insertSubview(toView, aboveSubview: fromView)
-        } else {
-            containerView.addSubview(toView)
-        }
+        containerView.insertSubview(toView, aboveSubview: fromView)
         
         // 设置初始位置（从底部进入）
         toView.frame = CGRect(x: 0, y: containerView.bounds.height, width: containerView.bounds.width, height: containerView.bounds.height)
@@ -151,13 +171,22 @@ class DYMBottomSheetFullScreenDismissAnimator: NSObject, UIViewControllerAnimate
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.3
     }
-    
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        guard let fromView = transitionContext.view(forKey: .from) else { return }
+        guard let fromView = transitionContext.view(forKey: .from),
+              let toView = transitionContext.view(forKey: .to) else {
+            return
+        }
+        let containerView = transitionContext.containerView
+        containerView.insertSubview(toView, belowSubview: fromView)
+        containerView.backgroundColor = .clear
         
-        // 执行动画（向底部退出）
-        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveEaseIn, animations: {
-            fromView.frame = CGRect(x: 0, y: fromView.bounds.height, width: fromView.bounds.width, height: fromView.bounds.height)
+        UIView.animate(withDuration: transitionDuration(using: transitionContext),
+                       delay: 0,
+                       options: .curveEaseIn,
+                       animations: {
+            fromView.frame = CGRect(x: 0, y: fromView.bounds.height,
+                                    width: fromView.bounds.width,
+                                    height: fromView.bounds.height)
         }) { _ in
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
@@ -177,7 +206,17 @@ class DYMCircleSpreadTransitionDelegate: NSObject, UIViewControllerTransitioning
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        // 移除状态检查，避免动画被跳过
         return DYMCircleSpreadDismissAnimator()
+    }
+    
+    // 确保这些方法返回 nil，避免交互式转场冲突
+    func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return nil
+    }
+    
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return nil
     }
 }
 
@@ -188,15 +227,17 @@ class DYMCircleSpreadPresentAnimator: NSObject, UIViewControllerAnimatedTransiti
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        guard let toView = transitionContext.view(forKey: .to) else { return }
+        guard let toView = transitionContext.view(forKey: .to),
+              let fromView = transitionContext.view(forKey: .from) else { return }
         
         let containerView = transitionContext.containerView
+        containerView.backgroundColor = .clear
         
         // 设置视图的基本位置
         toView.frame = containerView.bounds
         
-        // 添加视图到容器
-        containerView.addSubview(toView)
+        // 添加视图到容器，确保背景视图在下方
+        containerView.insertSubview(toView, aboveSubview: fromView)
         
         // 计算扩散的起始点（屏幕中心）
         let startPoint = CGPoint(x: containerView.bounds.width / 2, y: containerView.bounds.height / 2)
@@ -245,9 +286,23 @@ class DYMCircleSpreadDismissAnimator: NSObject, UIViewControllerAnimatedTransiti
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        guard let fromView = transitionContext.view(forKey: .from) else { return }
+        guard let fromView = transitionContext.view(forKey: .from),
+              let toView = transitionContext.view(forKey: .to) else { 
+            print("No fromView or toView found in dismiss animator")
+            transitionContext.completeTransition(false)
+            return 
+        }
+        
+        // 添加状态检查
+        if fromView.isHidden {
+            print("FromView is hidden, completing transition immediately")
+            transitionContext.completeTransition(true)
+            return
+        }
         
         let containerView = transitionContext.containerView
+        containerView.insertSubview(toView, belowSubview: fromView)
+        containerView.backgroundColor = .clear
         
         // 计算收缩的结束点（屏幕中心）
         let endPoint = CGPoint(x: containerView.bounds.width / 2, y: containerView.bounds.height / 2)

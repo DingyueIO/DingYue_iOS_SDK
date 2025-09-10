@@ -83,7 +83,6 @@ public class DYMPayWallController: UIViewController, UIGestureRecognizerDelegate
         self.view.backgroundColor = .white
         view.addSubview(webView)
         view.addSubview(activity)
-        
         // 设置展示样式和手势
         setupPresentationStyle()
         setupGestureRecognizers()
@@ -234,7 +233,6 @@ public class DYMPayWallController: UIViewController, UIGestureRecognizerDelegate
     deinit {
         DYMLogManager.debugLog("DYMPayWallController deinit")
     }
-    
     // MARK: - 手势处理方法
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: view)
@@ -279,48 +277,52 @@ public class DYMPayWallController: UIViewController, UIGestureRecognizerDelegate
         }
     }
     
-    @objc private func handleEdgePanGesture(_ gesture: UIScreenEdgePanGestureRecognizer) {
-        let translation = gesture.translation(in: view)
-        let velocity = gesture.velocity(in: view)
-        
-        switch gesture.state {
-        case .began:
-            initialTouchPoint = gesture.location(in: view)
-            
-        case .changed:
-            // 只允许向右滑动
-            if translation.x > 0 {
-                let progress = min(translation.x / view.bounds.width, 1.0)
-                view.transform = CGAffineTransform(translationX: translation.x * 0.3, y: 0)
-                view.alpha = 1.0 - progress * 0.3
-            }
-            
-        case .ended, .cancelled:
-            let shouldDismiss = translation.x > view.bounds.width * 0.3 || velocity.x > 500
-            
-            if shouldDismiss {
-                // 执行关闭动画
-                UIView.animate(withDuration: 0.3, animations: {
-                    self.view.transform = CGAffineTransform(translationX: self.view.bounds.width, y: 0)
-                    self.view.alpha = 0
-                }) { _ in
-                    // 使用和关闭按钮一样的方法
-                    self.dismiss(animated: true) {
-                        self.delegate?.clickCloseButton?(baseViewController: self)
-                    }
-                }
-            } else {
-                // 恢复原位置
-                UIView.animate(withDuration: 0.3) {
-                    self.view.transform = .identity
-                    self.view.alpha = 1.0
-                }
-            }
-            
-        default:
-            break
-        }
-    }
+    
+     @objc private func handleEdgePanGesture(_ gesture: UIScreenEdgePanGestureRecognizer) {
+         let translation = gesture.translation(in: view)
+         let velocity = gesture.velocity(in: view)
+         
+         switch gesture.state {
+         case .began:
+             initialTouchPoint = gesture.location(in: view)
+             
+         case .changed:
+             // 只允许向右滑动
+             if translation.x > 0 {
+                 let progress = min(translation.x / view.bounds.width, 1.0)
+                 view.transform = CGAffineTransform(translationX: translation.x * 0.3, y: 0)
+                 view.alpha = 1.0 - progress * 0.3
+             }
+             
+         case .ended, .cancelled:
+             let shouldDismiss = translation.x > view.bounds.width * 0.3 || velocity.x > 500
+             
+             if shouldDismiss {
+                 // 执行关闭动画
+                 UIView.animate(withDuration: 0.3, animations: {
+                     self.view.transform = CGAffineTransform(translationX: self.view.bounds.width, y: 0)
+                     self.view.alpha = 0
+                 }) { _ in
+                     // 使用和关闭按钮一样的方法
+                     self.dismiss(animated: true) {
+                         self.delegate?.clickCloseButton?(baseViewController: self)
+                     }
+                 }
+              
+             } else {
+                 // 恢复原位置
+                 UIView.animate(withDuration: 0.3) {
+                     self.view.transform = .identity
+                     self.view.alpha = 1.0
+                 }
+             }
+             
+         default:
+             break
+         }
+     }
+
+  
     
     // MARK: - UIGestureRecognizerDelegate
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -410,11 +412,10 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == "vip_close" {
+            self.trackWithPayWallInfo(eventName: "EXIT_PURCHASE")
             self.dismiss(animated: true) {
-                self.trackWithPayWallInfo(eventName: "EXIT_PURCHASE")
                 self.delegate?.clickCloseButton?(baseViewController: self)
             }
-           
         }else if message.name == "vip_restore" {
 
             ProgressView.show(rootViewConroller: self)
