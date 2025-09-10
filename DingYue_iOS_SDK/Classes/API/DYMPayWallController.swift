@@ -161,6 +161,8 @@ public class DYMPayWallController: UIViewController, UIGestureRecognizerDelegate
         removeScriptMessageHandlers()
         // 清理转场代理，避免内存泄漏
         self.transitioningDelegate = nil
+        // 清理手势识别器，避免内存泄漏
+        cleanupGestureRecognizers()
         self.delegate?.payWallDidDisappear?(baseViewController: self)
     }
     
@@ -217,6 +219,18 @@ public class DYMPayWallController: UIViewController, UIGestureRecognizerDelegate
             self.webCustomConfiguration.userContentController.removeScriptMessageHandler(forName: name)
         }
     }
+    
+    private func cleanupGestureRecognizers() {
+        if let panGesture = panGestureRecognizer {
+            view.removeGestureRecognizer(panGesture)
+            panGestureRecognizer = nil
+        }
+        
+        if let edgePanGesture = edgePanGestureRecognizer {
+            view.removeGestureRecognizer(edgePanGesture)
+            edgePanGestureRecognizer = nil
+        }
+    }
     deinit {
         DYMLogManager.debugLog("DYMPayWallController deinit")
     }
@@ -248,8 +262,9 @@ public class DYMPayWallController: UIViewController, UIGestureRecognizerDelegate
                     self.view.alpha = 0
                 }) { _ in
                     // 使用和关闭按钮一样的方法
-                    self.dismiss(animated: true, completion: nil)
-                    self.delegate?.clickCloseButton?(baseViewController: self)
+                    self.dismiss(animated: true) {
+                        self.delegate?.clickCloseButton?(baseViewController: self)
+                    }
                 }
             } else {
                 // 恢复原位置
@@ -290,8 +305,9 @@ public class DYMPayWallController: UIViewController, UIGestureRecognizerDelegate
                     self.view.alpha = 0
                 }) { _ in
                     // 使用和关闭按钮一样的方法
-                    self.dismiss(animated: true, completion: nil)
-                    self.delegate?.clickCloseButton?(baseViewController: self)
+                    self.dismiss(animated: true) {
+                        self.delegate?.clickCloseButton?(baseViewController: self)
+                    }
                 }
             } else {
                 // 恢复原位置
@@ -394,11 +410,11 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == "vip_close" {
-            self.trackWithPayWallInfo(eventName: "EXIT_PURCHASE")
-
-            self.dismiss(animated: true, completion: nil)
-
-            self.delegate?.clickCloseButton?(baseViewController: self)
+            self.dismiss(animated: true) {
+                self.trackWithPayWallInfo(eventName: "EXIT_PURCHASE")
+                self.delegate?.clickCloseButton?(baseViewController: self)
+            }
+           
         }else if message.name == "vip_restore" {
 
             ProgressView.show(rootViewConroller: self)
