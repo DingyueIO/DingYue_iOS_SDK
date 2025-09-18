@@ -34,10 +34,12 @@ import AdSupport
     }
     /// 是否启用自动获取并使用缓存中的域名（默认关闭）。
     /// 注意：
-    /// - 启用后，`basePath` 会自动从缓存中加载域名（如果缓存中存在有效的域名）。
-    /// - 启用后，手动设置 `basePath` 将被忽略，并使用缓存的域名作为 `OpenAPIClientAPI.basePath`。，如果有缓存的plistInfo，对应的appId和apiKey也会从缓存中加载
+    /// - 启用后，SDK 会优先使用缓存中的域名（如果缓存中存在有效的域名）。
+    /// - 如果缓存中没有有效域名，会回退到手动设置的 `basePath`。
+    /// - 启用后，SDK 会根据服务器响应动态切换到其他可用域名。
     /// - 禁用时，`basePath` 可手动设置为自定义路径，并会同步更新 `OpenAPIClientAPI.basePath`。
-    /// - 自动模式（启用 `enableAutoDomain`）与手动模式（禁用 `enableAutoDomain` 并设置 `basePath`）互斥。
+    /// - 建议先设置 `basePath` 作为默认域名，再根据需求决定是否启用 `enableAutoDomain`。
+    /// - 如果有缓存的 plistInfo，对应的 appId 和 apiKey 也会从缓存中加载。
     @objc public static var enableAutoDomain: Bool = false {
         didSet {
             updateBasePath()
