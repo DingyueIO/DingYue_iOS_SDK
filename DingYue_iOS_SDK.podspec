@@ -20,7 +20,7 @@ DESC
   s.resource_bundle = { 'DingYue_iOS_SDK' => 'DingYue_iOS_SDK/Assets/Resources/Purchase/*' }
 
   # Swift version and framework dependencies
-  s.swift_version    = '4.0'
+  s.swift_version    = '5.0'
 
   s.dependency 'FCUUID', '~> 1.3.1'
   s.dependency 'AnyCodable-FlightSchool', '~> 0.6.7'
