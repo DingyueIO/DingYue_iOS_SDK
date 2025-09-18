@@ -20,7 +20,7 @@ class ProgressView:NSObject {
     }()
 
     lazy var activity:UIActivityIndicatorView = {
-        let activity = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        let activity = UIActivityIndicatorView(style: .large)
         activity.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
         activity.backgroundColor = .clear
         return activity

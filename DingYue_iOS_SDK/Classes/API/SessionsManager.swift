@@ -22,7 +22,7 @@ class SessionsManager {
     init() {
         #if canImport(UIKit)
         ///应用进入后台
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidEnterBackground, object: nil, queue: .main) { [weak self] (_) in
+        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { [weak self] (_) in
             self?.trackLiveEventInBackground()
         }
         #endif
@@ -63,19 +63,19 @@ class SessionsManager {
     ///应用进入后台统计
     private func trackLiveEventInBackground() {
         #if canImport(UIKit)
-        var eventBackgroundTaskID: UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
+        var eventBackgroundTaskID: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
         eventBackgroundTaskID = UIApplication.shared.beginBackgroundTask (withName: "AdaptyTrackLiveBackgroundTask") {
             // End the task if time expires.
             UIApplication.shared.endBackgroundTask(eventBackgroundTaskID)
-            eventBackgroundTaskID = UIBackgroundTaskInvalid
+            eventBackgroundTaskID = UIBackgroundTaskIdentifier.invalid
         }
 
-        assert(eventBackgroundTaskID != UIBackgroundTaskInvalid)
+        assert(eventBackgroundTaskID != UIBackgroundTaskIdentifier.invalid)
 
         DispatchQueue.global().async {
             self.trackLiveEvent(){ _ in
                 UIApplication.shared.endBackgroundTask(eventBackgroundTaskID)
-                eventBackgroundTaskID = UIBackgroundTaskInvalid
+                eventBackgroundTaskID = UIBackgroundTaskIdentifier.invalid
             }
         }
         #endif
