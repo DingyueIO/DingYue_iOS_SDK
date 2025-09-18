@@ -413,7 +413,7 @@ import AdSupport
             let state = ATTrackingManager.trackingAuthorizationStatus
             if state == .notDetermined {
                 self.reportAppleSearchAdsAttribution()
-                NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidBecomeActive, object: nil, queue: .main) { notification in
+                NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: .main) { notification in
                     ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
                         self.reportAppleSearchAdsAttribution()
                         

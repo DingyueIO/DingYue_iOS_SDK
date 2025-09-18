@@ -265,8 +265,8 @@ class DYMCircleSpreadPresentAnimator: NSObject, UIViewControllerAnimatedTransiti
         pathAnimation.fromValue = startPath.cgPath
         pathAnimation.toValue = endPath.cgPath
         pathAnimation.duration = transitionDuration(using: transitionContext)
-        pathAnimation.timingFunction = CAMediaTimingFunction(name: "easeInEaseOut")
-        pathAnimation.fillMode = "forwards"
+        pathAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        pathAnimation.fillMode = .forwards
         pathAnimation.isRemovedOnCompletion = false
         pathAnimation.delegate = self
         
@@ -330,8 +330,8 @@ class DYMCircleSpreadDismissAnimator: NSObject, UIViewControllerAnimatedTransiti
         pathAnimation.fromValue = startPath.cgPath
         pathAnimation.toValue = endPath.cgPath
         pathAnimation.duration = transitionDuration(using: transitionContext)
-        pathAnimation.timingFunction = CAMediaTimingFunction(name: "easeInEaseOut")
-        pathAnimation.fillMode = "forwards"
+        pathAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        pathAnimation.fillMode = .forwards
         pathAnimation.isRemovedOnCompletion = false
         pathAnimation.delegate = self
         

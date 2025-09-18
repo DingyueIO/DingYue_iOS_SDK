@@ -1,6 +1,6 @@
 {
   "name": "DingYue_iOS_SDK",
-  "version": "0.3.13",
+  "version": "0.3.16",
   "summary": "DingYue_iOS_SDK: manage your purchase process and collect data to analyze data conveniently.",
   "description": "DingYue_iOS_SDK: This SDK helps manage the purchase process and provides tools to collect and analyze data.",
   "homepage": "https://github.com/DingYueIO/DingYue_iOS_SDK",
@@ -13,17 +13,17 @@
   },
   "source": {
     "git": "https://github.com/DingYueIO/DingYue_iOS_SDK.git",
-    "tag": "0.3.13"
+    "tag": "0.3.16"
   },
   "platforms": {
-    "ios": "12.0"
+    "ios": "13.0"
   },
   "source_files": "DingYue_iOS_SDK/Classes/**/*.{h,m,swift}",
   "vendored_frameworks": "DingYue_iOS_SDK/Libs/Lua/DingYueLua.xcframework",
   "resource_bundles": {
     "DingYue_iOS_SDK": "DingYue_iOS_SDK/Assets/Resources/Purchase/*"
   },
-  "swift_versions": "4.0",
+  "swift_versions": "5.0",
   "dependencies": {
     "FCUUID": [
       "~> 1.3.1"
@@ -58,5 +58,5 @@
       "AdServices"
     ]
   },
-  "swift_version": "4.0"
+  "swift_version": "5.0"
 }

@@ -36,9 +36,8 @@ public class DYMPayWallController: UIViewController, UIGestureRecognizerDelegate
 
     
     lazy var activity:UIActivityIndicatorView = {
-        let activity = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        let activity = UIActivityIndicatorView(style: .large)
         activity.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
-        activity.center = self.view.center
         activity.backgroundColor = .white
         activity.color = .gray
         activity.startAnimating()
@@ -255,20 +254,20 @@ public class DYMPayWallController: UIViewController, UIGestureRecognizerDelegate
             
             if shouldDismiss {
                 // 执行关闭动画
-                UIView.animate(withDuration: 0.3, animations: {
-                    self.view.transform = CGAffineTransform(translationX: 0, y: self.view.bounds.height)
-                    self.view.alpha = 0
-                }) { _ in
+                UIView.animate(withDuration: 0.3, animations: { [weak self] in
+                    self?.view.transform = CGAffineTransform(translationX: 0, y: self?.view.bounds.height ?? 0)
+                    self?.view.alpha = 0
+                }) { [weak self] _ in
                     // 使用和关闭按钮一样的方法
-                    self.dismiss(animated: true) {
-                        self.delegate?.clickCloseButton?(baseViewController: self)
+                    self?.dismiss(animated: true) {
+                        self?.delegate?.clickCloseButton?(baseViewController: self!)
                     }
                 }
             } else {
                 // 恢复原位置
-                UIView.animate(withDuration: 0.3) {
-                    self.view.transform = .identity
-                    self.view.alpha = 1.0
+                UIView.animate(withDuration: 0.3) { [weak self] in
+                    self?.view.transform = .identity
+                    self?.view.alpha = 1.0
                 }
             }
             
@@ -298,23 +297,23 @@ public class DYMPayWallController: UIViewController, UIGestureRecognizerDelegate
              let shouldDismiss = translation.x > view.bounds.width * 0.3 || velocity.x > 500
              
              if shouldDismiss {
-                 // 执行关闭动画
-                 UIView.animate(withDuration: 0.3, animations: {
-                     self.view.transform = CGAffineTransform(translationX: self.view.bounds.width, y: 0)
-                     self.view.alpha = 0
-                 }) { _ in
-                     // 使用和关闭按钮一样的方法
-                     self.dismiss(animated: true) {
-                         self.delegate?.clickCloseButton?(baseViewController: self)
-                     }
-                 }
+                // 执行关闭动画
+                UIView.animate(withDuration: 0.3, animations: { [weak self] in
+                    self?.view.transform = CGAffineTransform(translationX: self?.view.bounds.width ?? 0, y: 0)
+                    self?.view.alpha = 0
+                }) { [weak self] _ in
+                    // 使用和关闭按钮一样的方法
+                    self?.dismiss(animated: true) {
+                        self?.delegate?.clickCloseButton?(baseViewController: self!)
+                    }
+                }
               
              } else {
-                 // 恢复原位置
-                 UIView.animate(withDuration: 0.3) {
-                     self.view.transform = .identity
-                     self.view.alpha = 1.0
-                 }
+                // 恢复原位置
+                UIView.animate(withDuration: 0.3) { [weak self] in
+                    self?.view.transform = .identity
+                    self?.view.alpha = 1.0
+                }
              }
              
          default:
@@ -361,7 +360,7 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
                   video.play();
               });
               """
-        webView.evaluateJavaScript(videoPlayJS) { (result, error) in
+        webView.evaluateJavaScript(videoPlayJS) { [weak self] (result, error) in
             if let error = error {
                 print("Error executing JavaScript: \(error)")
             } else {
@@ -406,7 +405,7 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
         let jsonString = getJSONStringFromDictionary(dictionary: dic as NSDictionary)
         let data = jsonString.data(using: .utf8)
         let base64Str:String? = data?.base64EncodedString() as? String
-        webView.evaluateJavaScript("iostojs('\(base64Str!)')") { (response, error) in
+        webView.evaluateJavaScript("iostojs('\(base64Str!)')") { [weak self] (response, error) in
         }
     }
     

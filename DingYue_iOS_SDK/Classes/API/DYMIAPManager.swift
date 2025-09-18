@@ -42,7 +42,7 @@ class DYMIAPManager: NSObject {
     
     func startObserverPurchase() {
         startObserving()
-        NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationWillTerminate, object: nil, queue: .main) { notification in
+        NotificationCenter.default.addObserver(forName: UIApplication.willTerminateNotification, object: nil, queue: .main) { notification in
             self.stopObserving()
         }
     }

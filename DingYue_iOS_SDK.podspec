@@ -12,7 +12,7 @@ DESC
   s.author           = { 'DingYueIO' => 'support@dingyue.io' }
   s.source           = { :git => 'https://github.com/DingYueIO/DingYue_iOS_SDK.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '12.0'
+  s.ios.deployment_target = '13.0'
 
   # Source files and resources
   s.source_files     = 'DingYue_iOS_SDK/Classes/**/*.{h,m,swift}'
