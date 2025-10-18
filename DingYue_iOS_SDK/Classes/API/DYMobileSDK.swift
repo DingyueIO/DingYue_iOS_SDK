@@ -71,6 +71,10 @@ import AdSupport
             }
         }
     }
+    @objc public static var isUseLocalWebGuide: Bool {
+        return DYMDefaultsManager.shared.isUseNativeGuide
+    }
+
 
     ///场景控制器
     private lazy var sessionsManager: SessionsManager = {
