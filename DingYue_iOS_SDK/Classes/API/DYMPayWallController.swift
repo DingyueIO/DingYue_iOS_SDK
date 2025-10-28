@@ -37,10 +37,10 @@ public class DYMPayWallController: UIViewController, UIGestureRecognizerDelegate
     
     lazy var activity:UIActivityIndicatorView = {
         let activity = UIActivityIndicatorView(style: .large)
-        activity.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
         activity.backgroundColor = .white
         activity.color = .gray
         activity.startAnimating()
+        activity.translatesAutoresizingMaskIntoConstraints = false
         return activity
     }()
     private let scriptMessageHandlerNames = [
@@ -82,6 +82,7 @@ public class DYMPayWallController: UIViewController, UIGestureRecognizerDelegate
         self.view.backgroundColor = .white
         view.addSubview(webView)
         view.addSubview(activity)
+        setUpUI()
         // 设置展示样式和手势
         setupPresentationStyle()
         setupGestureRecognizers()
@@ -93,6 +94,13 @@ public class DYMPayWallController: UIViewController, UIGestureRecognizerDelegate
             activity.isHidden = false
             loadingTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(changeLoadingStatus), userInfo: nil, repeats: true)
         }
+    }
+    func setUpUI() {
+        // 设置 activity 居中约束
+        NSLayoutConstraint.activate([
+            activity.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activity.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
 
     @objc func changeLoadingStatus() {
