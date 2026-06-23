@@ -267,11 +267,18 @@ extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
             self.guidePageSwiperSize = guideModel.swiperSize
             let subscriptions = guideModel.subscriptions
             if subscriptions.count > 0 {
-                var tempProudcts:[Subscription] = []
-                for item in subscriptions {
-                    tempProudcts.append(item.subscription!)
+                let tempProudcts: [Subscription] = subscriptions.compactMap { item in
+                    guard let subscription = item.subscription else {
+                        DYMLogManager.logError("Missing subscription in guide payload.")
+                        return nil
+                    }
+                    return subscription
                 }
-                cachedProducts = tempProudcts
+                if !tempProudcts.isEmpty {
+                    cachedProducts = tempProudcts
+                } else if cachedProducts.isEmpty {
+                    purchaseSwitch = false
+                }
             }
         }
         var productsArray = [Dictionary<String,Any>]()
@@ -411,7 +418,7 @@ extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
 
     func buyWithProductId(_ productId:String, productPrice:String? = nil) {
         ProgressView.show(rootViewConroller: self)
-        UserProperties.userSubscriptionPurchasedSourcesType = .DYPaywall//以更新用户购买来源属性
+        UserProperties.userSubscriptionPurchasedSourcesType = .DYGuidePage//以更新用户购买来源属性
         DYMobileSDK.purchase(productId: productId, productPrice: productPrice) { receipt, purchaseResult,purchasedProduct, error in
             ProgressView.stop()
             self.completion?(receipt,purchaseResult,purchasedProduct,error)
@@ -473,4 +480,3 @@ extension DYMGuideController {
     }
 
 }
-

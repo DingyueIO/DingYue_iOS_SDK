@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi, user-scalable=no" />
+    <title>Clean</title>
+    <!-- Vue.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8.4.7/swiper-bundle.min.css">
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8.4.7/swiper-bundle.min.js"></script>
+    <!-- Lottie CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie.min.js"></script>
+    <script src='./locale.js' type="text/javascript"></script>
+</head>
+<style>
+    * {
+        -webkit-touch-callout: none;
+        /*系统默认菜单被禁用*/
+        -webkit-user-select: none;
+        /*webkit浏览器*/
+        -khtml-user-select: none;
+        /*早期浏览器*/
+        -moz-user-select: none;
+        /*火狐*/
+        -ms-user-select: none;
+        /*IE10*/
+        user-select: none;
+    }
+
+    [v-cloak] {
+        display: none;
+    }
+
+    input,
+    textarea {
+        -webkit-user-select: auto;
+        /*webkit浏览器*/
+        outline: none;
+    }
+
+    div,
+    span,
+    a {
+        letter-spacing: 0.5px;
+        font-family: PingFang SC, PingFang SC !important;
+    }
+
+
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    #app {
+        width: 100%;
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100vh;
+          background: linear-gradient(180deg, #D9E8FF 0%, #F2F6FF 25%, #FFFFFF 50%);
+    }
+
+    #app.hidden {
+        opacity: 0;
+    }
+
+    .content {
+        width: 100%;
+        box-sizing: border-box;
+        padding-bottom: 12px;
+    }
+
+
+    .swiper-ratings {
+        width: 100%;
+        overflow: hidden;
+    }
+
+
+    .swiper {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        position: relative;
+    }
+
+
+    .swiper-pagination .swiper-pagination-bullet {
+        border-radius: 6px;
+        width: 16px;
+        height: 6px;
+        background: #749CFE;
+    }
+
+    .swiper-pagination .swiper-pagination-bullet-active {
+        background: #007AFF;
+    }
+
+    /* .swiper-pagination .swiper-pagination-bullet-active::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 100%;
+        border-radius: 2px;
+        background: #145EEE;
+        animation: fillProgress 5s ease-out forwards;
+    } */
+
+    @keyframes fillProgress {
+        0% {
+            width: 0%;
+        }
+
+        100% {
+            width: 100%;
+        }
+    }
+
+
+
+    .swiper-pagination .swiper-horizontal>.swiper-pagination-bullets,
+    .swiper-pagination .swiper-pagination-bullets.swiper-pagination-horizontal,
+    .swiper-pagination .swiper-pagination-custom,
+    .swiper-pagination .swiper-pagination-fraction {
+        bottom: 0;
+    }
+
+    .swiper .title {
+        width: calc(100% - 36px);
+        font-weight: 600;
+        font-size: 26px;
+        color: #000000;
+        margin: 0 auto 12px;
+        box-sizing: border-box;
+        text-align: center;
+        line-height: 34px;
+        height: 68px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        min-width: 375px;
+    }
+
+    .swiper .title span {
+        margin-right: 8px;
+        color: #007AFF;
+    }
+
+    .swiper .detail {
+        font-family: PingFang SC, PingFang SC;
+        line-height: 22px;
+        height: 44px;
+        width: calc(100% - 32px);
+        margin: 0 auto;
+        font-weight: 400;
+        font-size: 15px;
+        color: #000000;
+        text-align: center;
+    }
+
+
+    .swiper .swiper-out {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+        height: 100%;
+        padding-top: 68px;
+    }
+
+
+    .swiper .swiper-out .img {
+        width: 100%;
+        max-width: 480px;
+        z-index: -1;
+    }
+
+    .swiper .swiper-out .area {
+        width: 100%;
+        height: 122px;
+    }
+
+
+    .close {
+        position: fixed;
+        padding: 12px;
+        top: 36px;
+        left: 4px;
+        width: 20px;
+        height: 20px;
+        z-index: 200;
+    }
+
+    .restore {
+        position: fixed;
+        padding: 12px;
+        top: 36px;
+        right: 4px;
+        z-index: 10;
+        font-size: 14px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.6);
+        line-height: 24px;
+    }
+
+
+
+    .swiper .bg {
+        width: calc(100% - 80px);
+        padding: 19px 0 29px;
+        background: linear-gradient(180deg, #60A5FF 0%, #C2E3FF 100%);
+        border-radius: 12px;
+        margin: 0 auto 24px;
+    }
+
+    .swiper .bg>.bg-title {
+        font-weight: 500;
+        font-size: 15px;
+        color: #30477B;
+        line-height: 20px;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .swiper .bg>.bg-detail {
+        font-family: Inter, Inter;
+        font-weight: bold;
+        font-size: 30px;
+        color: #3D4375;
+        line-height: 32px;
+        text-align: center;
+    }
+
+
+
+    .img {
+        width: 126px;
+        margin-bottom: 16px;
+    }
+
+
+    .product {
+        padding: 0 24px;
+        margin-bottom: 12px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .product>div {
+        padding: 0 16px;
+        font-size: 16px;
+        font-family: PingFangSC, PingFang SC;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.5);
+        line-height: 22px;
+    }
+
+    .product>div.active {
+        font-size: 16px;
+        font-family: PingFangSC, PingFang SC;
+        font-weight: 500;
+        color: #FFFFFF;
+        line-height: 22px;
+        height: 66px;
+        display: flex;
+        align-items: flex-end;
+    }
+
+    .last {
+        padding: 0 4px 30px;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        gap: 28px;
+    }
+
+    .last>a {
+        font-size: 12px;
+        font-family: PingFang SC-Regular, PingFang SC;
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.5);
+        line-height: 16px;
+    }
+
+    .purchaseText {
+        text-align: center;
+        position: absolute;
+        font-family: PingFang SC, PingFang SC;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 22px;
+        color: rgba(255, 255, 255, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 0 12px 8px 12px;
+        box-sizing: border-box;
+        left: 0;
+        right: 0;
+        margin: auto;
+        bottom: 28px;
+    }
+
+
+
+    .button {
+        width: calc(100% - 88px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 15px;
+        box-sizing: border-box;
+        background: linear-gradient(90deg, #2B9CFF 0%, #0C69FD 100%);
+        font-weight: bold;
+        color: #FFFFFF;
+        border-radius: 8px;
+        margin: 0 auto 20px;
+        position: relative;
+        font-size: 17px;
+        line-height: 20px;
+        text-align: center;
+        border-radius: 24px;
+    }
+
+    .button>.shadow {
+        position: absolute;
+        width: calc(100% - 64px);
+        left: 32px;
+        top: 4px;
+        z-index: -1;
+    }
+
+    .freeTrial {
+        width: calc(100% - 48px);
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+        padding: 14px 16px;
+        border: 2px solid #6895FF;
+        border-radius: 8px;
+        margin: 0 auto 8px;
+        font-size: 14px;
+        font-family: PingFangSC, PingFang SC;
+        font-weight: 600;
+        color: #FFFFFF;
+        line-height: 20px;
+    }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 44px;
+        /* 设置宽度为44px */
+        height: 22px;
+        /* 设置高度为22px */
+    }
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 22px;
+        /* 设置为高度的一半，使其圆角 */
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        /* 滑块高度略小于开关高度 */
+        width: 18px;
+        /* 滑块宽度与高度保持一致 */
+        left: 2px;
+        /* 边框留有空隙 */
+        bottom: 2px;
+        /* 边框留有空隙 */
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+    }
+
+    input:checked+.slider {
+        background-color: #34C759;
+    }
+
+    input:focus+.slider {
+        box-shadow: 0 0 1px #34C759;
+    }
+
+    input:checked+.slider:before {
+        transform: translateX(22px);
+        /* 根据开关宽度调整滑块移动距离 */
+    }
+
+    .buttonText {
+        font-weight: 400;
+        font-size: 13px;
+        color: #6D7E86;
+        text-align: center;
+        margin-bottom: 8px;
+        line-height: 16px;
+    }
+
+
+
+    #lottie {
+        height: 540px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .swiper-out-small>#lottie {
+        width: 90vw;
+        height: auto;
+
+    }
+     .swiper-out.swiper-out-small{
+        padding-top: 48px;
+     }
+
+    .last-animation {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .freeUp {
+        background: #007AFF;
+        border-radius: 6px;
+        font-family: PingFang SC, PingFang SC;
+        font-weight: 600;
+        font-size: 25px;
+        color: #FFFFFF;
+        text-align: center;
+        margin-bottom: 8px;
+        display: inline-block;
+        padding: 2px 19px;
+        min-width: 132px;
+        line-height: 34px;
+        box-sizing: border-box;
+        letter-spacing: 1px;
+    }
+
+    .now {
+        font-weight: bold;
+        font-size: 29px;
+        color: #000000;
+        text-align: center;
+    }
+
+    .pngs {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 32px;
+        gap: 56px;
+    }
+
+
+    .pngs img {
+        width: calc(50vw - 96px);
+        min-width: 90px;
+        max-width: 110px;
+        min-height: 90px;
+    }
+
+    .radio {
+        width: 38px;
+        height: 38px;
+        box-sizing: border-box;
+        background: #E81526;
+        border-radius: 14px;
+        font-weight: 400;
+        font-size: 18px;
+        border-radius: 50%;
+        color: #FFFFFF;
+        line-height: 38px;
+        text-align: center;
+        position: absolute;
+        right: -16px;
+        top: -16px;
+    }
+
+    .pngs>div {
+        position: relative;
+        width: calc(50vw - 96px);
+        min-width: 90px;
+        max-width: 110px;
+    }
+
+    .pngs>div.left {
+        text-align: right;
+    }
+
+    .pngs>div.right {
+        text-align: left;
+    }
+
+    .progress {
+        width: calc(100vw - 56px);
+        height: 31px;
+        background-color: #F1F2FF;
+        border-radius: 18px;
+        margin: 0 auto 12px;
+        overflow: hidden;
+    }
+
+    .progress>div {
+        height: 100%;
+        width: 18%;
+        background: #FF3502;
+        border-radius: 14px;
+    }
+
+
+    @keyframes progressAnimation {
+        0% {
+            /* width: calc(100% - 56px);
+            height: 35px; */
+            scale: 1;
+        }
+
+        25% {
+            /* width: calc(100% - 16px);
+            height: 35px; */
+            scale: 1.1;
+        }
+
+        75% {
+            /* width: calc(100% - 56px);
+            height: 31px; */
+            scale: 1;
+
+        }
+
+        100% {
+            /* width: calc(100% - 56px);
+            height: 31px; */
+            scale: 1;
+
+        }
+    }
+
+
+    @keyframes widthAnimation {
+        0% {
+            width: 90%;
+        }
+
+        25% {
+            width: 90%;
+        }
+
+        75% {
+            width: 18%;
+        }
+
+        100% {
+            width: 18%;
+            /* 保持 12% 的宽度 */
+        }
+    }
+
+
+    @keyframes colorAnimation {
+
+        0%,
+        25% {
+            background: #FF3502;
+            /* Red for width 60-90% */
+        }
+
+        50% {
+            background: #FF8C03;
+            /* Yellow for width 30-70% */
+        }
+
+        75%,
+        100% {
+            background: #1CC11B;
+            /* Green for width 18-30% */
+        }
+    }
+
+    .text {
+        font-weight: 500;
+        font-size: 20px;
+        color: #3F426F;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+    }
+
+    .text .number {
+        width: 36px;
+        color: #1CC11B;
+        margin-right: 4px;
+    }
+
+    .text .used {
+        color: #EB390F;
+        margin-left: 4px;
+    }
+</style>
+
+<body>
+    <div v-if="show" v-cloak id="app" :class="seted?'':'hidden'"
+        :style="language=='ar'||language=='he'?'direction: rtl':''">
+        <img @click="close('closeButton')" v-if="currentSlide==3&&switchStatus" class="close" src="./img/close.png"
+            alt="">
+        <div class="content" :style="isSmall?'height:calc(100% - 88px);':'height:calc(100% - 120px)'">
+            {{error}}
+            <div class="swiper">
+                <div :style="{height:`calc(100% - ${isSmall?'106px':'122px'} - ${paddingBottom}px)`,top:`${paddingTop}px`}"
+                    id="lottie" ref="lottieContainer"></div>
+                <div class="swiper-wrapper">
+                    <div :style="{paddingBottom:paddingBottom+'px'}" v-for="(it,ind) of mySwipers" :key="ind"
+                        class="swiper-slide swiper-out" :class="isSmall?'swiper-out-small':''">
+                        <div v-if="ind<3"></div>
+                        <div v-if="ind==3"
+                            :style="{height:`calc(100% - ${isSmall?'106px':'122px'} - ${paddingBottom}px)`,scale: isSmall?0.92:1}"
+                            class="last-animation">
+                            <div style="margin-bottom: 24px;">
+                                <div class="freeUp">{{page_data.s3Title}}</div>
+                                <div class="now">{{page_data.s3Detail}}</div>
+                            </div>
+                            <div class="pngs">
+                                <div class="left">
+                                    <img src="./img/s4_1.png" alt="Photo" />
+                                    <div
+                                        style="font-weight: 500;font-size: 16px;color: #000000;text-align: center;margin-top: 2px;">
+                                        {{page_data.photos}}
+                                    </div>
+                                    <div class="radio">{{currentPicNumber}}</div>
+                                </div>
+                                <div class="right">
+                                    <img src="./img/s4_2.png" alt="Cloud" />
+                                    <div
+                                        style="font-weight: 500;font-size: 16px;color: #000000;text-align: center;margin-top: 2px;">
+                                        {{page_data.icloud}}
+                                    </div>
+                                    <div class="radio">{{currentCloudNumber}}</div>
+                                </div>
+                            </div>
+                            <div style="width: 100%">
+                                <div style="height: 35px;display: flex;align-items: center;">
+                                    <div class="progress"
+                                        :style="animationLast?'animation: progressAnimation 4s infinite ease-in-out':''">
+                                        <div
+                                            :style="animationLast?'animation: widthAnimation 4s infinite linear, colorAnimation 4s infinite ease-in-out;':''">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text"
+                                    v-html="page_data.used.replace('${currentNumber}',currentNumber).replace('${currentColor}',currentColor)">
+                                    <!-- <div class='number'>{{currentNumber}}</div> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div :style="isSmall?'height:106px':''" class="area" style="position: relative;z-index: 100;">
+                            <div :style="isSmall?{fontSize:'22px',lineHeight: '28px',height: '56px'}:{fontSize:'27px'}"
+                                v-html="it.title" class="title">
+                            </div>
+                            <div :style="isSmall?{fontSize:'13px',lineHeight: '18px',height: '36px'}:{fontSize:'16px'}"
+                                class="detail">
+                                {{it.detail.replace("${price}",products[0].price).replace("${duration}",`${products[0].period=='WEEK'?page_data.week:page_data.year}`)
+                                }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div v-if="!switchStatus||currentSlide!=3" class="swiper-pagination"></div>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="button" @click="requestPayment" :style="isSmall?'margin-bottom:14px':''">
+                {{page_data.continue }}
+            </div>
+            <div class="last" v-if="switchStatus && currentSlide == page_data.swipers.length - 1"
+                :style="isSmall?'padding:0 4px 12px':'padding: 0 12px 48px;'">
+                <a href="javascript:;" @click="terms">{{page_data.terms}}</a>
+                <a href="javascript:;" @click="restore">{{page_data.restore}}</a>
+                <a href="javascript:;" @click="privacy">{{page_data.privacy}}</a>
+            </div>
+        </div>
+    </div>
+    <div v-else></div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                error: "",
+                show: false,
+                currentIndex: 0,
+                startTime: null,
+                pageHeight: window.innerHeight,
+                switchStatus: true,
+                subscriptions: "",
+                language: 'en',
+                page_data: {},
+                products: [],
+                productIds: [],
+                periods: [
+                    "WEEK",
+                    "MONTH",
+                    "QUARTER",
+                    "YEAR",
+                    "ONE_TIME_PURCHASE"
+                ],
+                currentSlide: -1,
+                seted: false,
+                selected: 0,
+                mySwiper: null,
+                mySwiper2: null,
+                timer: null,
+                priceCode: {
+                    "USD": "$",
+                    "AED": "AED",
+                    "EGP": "E£,",
+                    "EUR": "€",
+                    "AUD": "$",
+                    "PKR": "Rs,",
+                    "BRL": "R$",
+                    "BGN": "BGN",
+                    "PEN": "PEN",
+                    "PLN": "zł",
+                    "DKK": "kr",
+                    "RUB": "₽,",
+                    "PHP": "₱,",
+                    "COP": "$,",
+                    "KZT": "₸,",
+                    "KRW": "₩,",
+                    "CAD": "$",
+                    "CZK": "Kč,",
+                    "QAR": "QAR",
+                    "HRK": "kn",
+                    "RON": "lei",
+                    "MYR": "RM",
+                    "MXN": "$,",
+                    "ZAR": "R,",
+                    "NGN": "₦,",
+                    "NOK": "kr",
+                    "JPY": "¥,",
+                    "SEK": "kr",
+                    "CHF": "CHF",
+                    "SAR": "SAR",
+                    "TWD": "NT$,",
+                    "THB": "฿,",
+                    "TZS": "TZS,",
+                    "TRY": "₺,",
+                    "HKD": "$",
+                    "SGD": "$",
+                    "NZD": "$",
+                    "HUF": "Ft,",
+                    "ILS": "₪",
+                    "INR": "₹,",
+                    "IDR": "Rp,,",
+                    "GBP": "£",
+                    "VND": "₫,,",
+                    "CLP": "$,",
+                    "CNY": "¥"
+                },
+                animation: null,
+                paddingTop: 0,
+                animationLast: false,
+                sequence: [
+                    { from: 92, to: 12 },
+                    { from: 341, to: 8 },
+                    { from: 172, to: 16 }
+                ],
+                animationItems: [
+                    { target: 'currentNumber', from: 92, to: 12 },
+                    { target: 'currentPicNumber', from: 341, to: 8 },
+                    { target: 'currentCloudNumber', from: 172, to: 16 }
+                ],
+                currentNumber: 92,
+                currentPicNumber: 341,
+                currentCloudNumber: 172,
+                startTime: 0,
+                animationFrameId: null,
+                times: [1000, 2000, 1000], // Duration for each phase in ms
+            },
+            mounted() {
+                window.iostojs = this.iostojs;
+                this.currentSlide = -1;
+                this.getInfo();
+                this.banTouch();
+                this.$nextTick(() => {
+                    setTimeout(() => {
+                        this.initSwiper();
+                    }, 200);
+                });
+            },
+            computed: {
+                mySwipers() {
+                    if (this.page_data.swipers && this.page_data.swipers.length == 0 || !this.page_data.swipers) {
+                        return []
+                    } else {
+                        return this.switchStatus ? this.page_data.swipers : this.page_data.swipers.filter((item, index) => {
+                            return index != 3
+                        })
+                    }
+
+                },
+                isSmall() {
+                    return this.pageHeight < 750 ? true : false
+                },
+                isMiddle() {
+                    return this.pageHeight >= 750 && this.pageHeight < 828 ? true : false
+                },
+                paddingBottom() {
+                    return this.pageHeight < 750 ? 48 : 72
+                },
+                currentColor() {
+                    if (this.currentNumber > 70) {
+                        return "#FF3502"
+                    } else if (this.currentNumber > 35) {
+                        return "#FF8C03"
+                    } else {
+                        return "#1CC11B"
+                    }
+                },
+            },
+            watch: {
+                currentSlide(newIndex) {
+                    if (newIndex < 3) {
+                        this.$nextTick(() => {
+                            this.reloadLottie()
+                        });
+                    } else {
+                        if (this.animation) {
+                            this.animation.destroy();
+                            this.animation = null;
+                        }
+                        this.startAnimation();
+                    }
+
+                }
+            },
+            methods: {
+                startAnimation() {
+                    this.startTime = Date.now();
+                    this.animationLast = true
+                    this.loopAnimation();
+                },
+                loopAnimation() {
+                    const totalTime = this.times.reduce((a, b) => a + b, 0)
+                    const tick = () => {
+                        const now = Date.now()
+                        const elapsed = now - this.startTime
+
+                        this.animationItems.forEach(item => {
+                            let from = item.from
+                            let to = item.to
+                            let value
+
+                            if (elapsed < this.times[0]) {
+                                // 阶段1：保持 from
+                                value = from
+                            } else if (elapsed < this.times[0] + this.times[1]) {
+                                // 阶段2：动画 from → to
+                                const animElapsed = elapsed - this.times[0]
+                                const progress = Math.min(animElapsed / this.times[1], 1)
+                                value = from + (to - from) * progress
+                            } else if (elapsed < totalTime) {
+                                // 阶段3：保持 to
+                                value = to
+                            } else {
+                                this.startTime = now
+                                value = from
+                            }
+
+                            // 更新变量
+                            this[item.target] = Math.round(value)
+                        })
+
+                        this.animationFrameId = requestAnimationFrame(tick)
+                    }
+
+                    this.animationFrameId = requestAnimationFrame(tick)
+
+
+                },
+
+                play() {
+                    this.animation?.play()
+                },
+                pause() {
+                    this.animation?.pause()
+                },
+                reloadLottie() {
+                    if (this.animation) {
+                        this.animation.destroy();
+                        this.animation = null;
+                    }
+                    const container = this.$refs.lottieContainer;
+                    if (!container) {
+                        return;
+                    }
+                    this.animation = lottie.loadAnimation({
+                        container,
+                        renderer: 'svg',
+                        loop: false,
+                        autoplay: true,
+                        path: `./img/${Number(this.currentSlide) + 1}.json`,
+                    });
+                },
+                initSwiper() {
+                    this.seted = true;
+                    this.mySwiper = new Swiper('.swiper', {
+                        autoplay: false,
+                        loop: false,
+                        allowSlidePrev: false,
+                        pagination: {
+                            el: '.swiper-pagination',
+                            clickable: true,
+                        },
+                        on: {
+                            slideChange: () => {
+                                setTimeout(() => {
+                                    this.currentSlide = this.mySwiper.activeIndex;
+                                }, 200);
+                            },
+                            init: () => {
+                                if (this.switchStatus) {
+                                    // 移除最后一个分页点
+                                    const bullets = document.querySelectorAll('.swiper-pagination .swiper-pagination-bullet')
+                                    if (bullets.length > 1) {
+                                        bullets[bullets.length - 1].remove()
+                                    }
+                                }
+
+                            }
+                        }
+                    })
+                    this.currentSlide = this.getQueryParam('current') || 0;
+                    this.goToSlide(this.currentSlide)
+                },
+                async getInfo() {
+                    this.language = this.getQueryParam('language') || this.language;
+                    this.currentSlide = this.getQueryParam('current') || 0;
+                    this.switchStatus = this.getQueryParam('purchaseSwitch') == "true" ? true : false;
+                    this.page_data = locales[this.getCode(this.language)] ? locales[this.getCode(this.language)] :
+                        locales.en;
+                    this.page_data.purchaseText = this.page_data.purchaseText
+                    this.getShow();
+                },
+                getQueryParam(param) {
+                    const queryString = window.location.search.substring(1);
+                    const queries = queryString.split("&");
+
+                    for (let query of queries) {
+                        const [key, value] = query.split("=");
+                        if (decodeURIComponent(key) === param) {
+                            return decodeURIComponent(value || "");
+                        }
+                    }
+                    // If the parameter is not found, return null or any default value you prefer
+                    return null;
+                },
+                goToSlide(index) {
+                    this.mySwiper.slideTo(index, 600, false);
+                },
+
+                getCode(language) {
+                    let targetLanguage = ''
+                    languageCodes.forEach((item) => {
+                        let language_index = language.indexOf(item)
+                        if (language_index != '-1') {
+                            targetLanguage = item
+                        }
+                    })
+                    if (targetLanguage) {
+                        return targetLanguage
+                    } else {
+                        return 'en'
+                    }
+                },
+                banTouch() {
+                    var lastTouchEnd = 0;
+                    document.documentElement.addEventListener('touchend', function (event) {
+                        var now = Date.now();
+                        if (now - lastTouchEnd <= 300) {
+                            event.preventDefault();
+                        }
+                        lastTouchEnd = now;
+                    }, false);
+                },
+                decode(str) {
+                    return decodeURIComponent(atob(str).split('').map(function (c) {
+                        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                    }).join(''));
+                },
+                // ios调用js入口
+                iostojs(action) {
+                    this.seted = true
+                    let json = JSON.parse(this.decode(action));
+                    this.language = this.getCode(json.system_language);
+                    this.switchStatus = json.isVIP ? false : json.purchaseSwitch;
+                    this.subscriptions = json.products;
+                    this.page_data = locales[this.language] ? locales[this.getCode(this.language)] :
+                        locales.en;
+                    this.page_data.purchaseText = this.page_data.purchaseText
+                    this.getShow()
+                    return (
+                        'ok'
+                    )
+                },
+                getShow() {
+                    if (this.subscriptions) {
+                        let productsAll = [];
+                        this.productIds = [];
+                        this.subscriptions.forEach(it => {
+                            var ind = this.periods.findIndex(e => {
+                                return it.period == e || it.type == e
+                            })
+                            if (ind !== -1) {
+                                productsAll.push({
+                                    ...it,
+                                    ...this.page_data.products[ind],
+                                    price: '$' + it.price,
+                                    weekPrice: "$" + (it.price / 52).toFixed(2)
+                                })
+                                this.productIds.push(it.platformProductId)
+                            }
+                        })
+                        this.products = [...productsAll];
+                    } else {
+                        this.products = [{
+                            ...this.page_data.products[3],
+                            period: "YEAR",
+                            weekPrice: "$" + (39.99 / 52).toFixed(2),
+                            price: "$39.99"
+                        }]
+                        this.productIds = [
+                            "testYear"
+                        ]
+                    }
+                    this.show = true
+                    this.currentSlide = this.getQueryParam('current') || 0;
+                },
+                restore() {
+                    // jstoios
+                    window.webkit.messageHandlers.guide_restore.postMessage({
+                        type: "restore_web"
+                    });
+                },
+                choose(index) {
+                    this.selected = index;
+                    let msg = this.products[index]
+                    window.webkit.messageHandlers.guide_choose.postMessage({
+                        type: msg.type,
+                        productId: msg.platformProductId,
+                        period: msg.period || ""
+                    });
+                },
+                close(e) {
+                    window.webkit.messageHandlers.guide_close.postMessage({
+                        type: e || "closeButton"
+                    });
+                },
+                requestPayment() {
+                    if (this.currentSlide == this.mySwipers.length - 1) {
+                        if (this.switchStatus && this.currentSlide == 3) {
+                            var productId = this.productIds[this.selected];
+                            // jstoios
+                            window.webkit.messageHandlers.guide_purchase.postMessage({
+                                type: "purchase_web",
+                                productId: productId
+                            });
+                        } else {
+                            this.close("continueButton")
+                        }
+                    } else {
+                        setTimeout(() => {
+                            this.goToSlide(this.currentSlide + 1)
+                            window.webkit.messageHandlers.guide_continue.postMessage({
+                                currentIndex: this.currentSlide,
+                                nextIndex: this.currentSlide + 1
+                            });
+                        }, 100);
+
+                    }
+                },
+                // 点击服务协议文字
+                terms() {
+                    window.webkit.messageHandlers.guide_terms.postMessage({
+                        type: "terms_web"
+                    });
+                },
+                // 点击隐私政策文字
+                privacy() {
+                    window.webkit.messageHandlers.guide_privacy.postMessage({
+                        type: "privacy_web"
+                    });
+                },
+            }
+        })
+    </script>
+</body>
+
+</html>
