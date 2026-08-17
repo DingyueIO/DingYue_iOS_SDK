@@ -114,7 +114,7 @@ import AnyCodable
         case iadAdId = "iad-Ad-id"
         case iadClaimType = "iad-claim-type"
         case iadImpressionDate = "iad-impression-date"
-        case iadSupplyPlacement = "iad-supplyPlacement"
+        case iadSupplyPlacement = "iad-supply-placement"
     }
 
     // Encodable protocol methods

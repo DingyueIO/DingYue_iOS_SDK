@@ -120,7 +120,7 @@ extension AppleSearchAdsAttribution {
             self.iadClaimType = version31["iad-claim-type"] as? String
             
             self.iadImpressionDate = version31["iad-impression-date"] as? String
-            self.iadSupplyPlacement = version31["iad-supplyPlacement"] as? String
+            self.iadSupplyPlacement = version31["iad-supply-placement"] as? String
         } else {
             
             if let attribute = attribution["attribution"] as? Bool{
