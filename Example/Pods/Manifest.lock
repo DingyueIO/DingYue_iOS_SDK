@@ -1,6 +1,6 @@
 PODS:
   - AnyCodable-FlightSchool (0.6.7)
-  - DingYue_iOS_SDK (0.3.17):
+  - DingYue_iOS_SDK (0.3.18):
     - AnyCodable-FlightSchool (~> 0.6.7)
     - FCUUID (~> 1.3.1)
     - NVActivityIndicatorView (~> 5.2.0)
@@ -30,7 +30,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AnyCodable-FlightSchool: 261cbe76757802b17d471b9059b21e6fa5edf57b
-  DingYue_iOS_SDK: e5e9cbbae167e8e93a205003740d14e427cf8ef1
+  DingYue_iOS_SDK: 0c8ac4e5e4a12479be628dbffdc5a807ccf34498
   FCUUID: bb054fc90cd7cd99320f9f6ff8e130fe607fba05
   NVActivityIndicatorView: fe52a6a68664c2df8991d7d9e3d86d8d19453c53
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
