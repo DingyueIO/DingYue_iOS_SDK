@@ -65,8 +65,11 @@ import AnyCodable
     
     /// Provides the time of the ad impression, only available when the claimType is “impression”.
     public var iadImpressionDate: String?
+
+    /// The App Store placement where the attributed Apple Ads campaign appeared.
+    public var iadSupplyPlacement: String?
     
-    public init(iadAttribution: String? = nil, iadOrgName: String? = nil, iadOrgId: String? = nil, iadCampaignId: String? = nil, iadCampaignName: String? = nil, iadClickDate: String? = nil, iadPurchaseDate: String? = nil, iadConversationDate: String? = nil, iadConversationType: IadConversationType? = nil, iadAdgroupName: String? = nil, iadAdgroupId: String? = nil, iadCountryOrRegion: String? = nil, iadKeyword: String? = nil, iadKeywordId: String? = nil, iadKeywordMatchtype: IadKeywordMatchtype? = nil, iadCreativesetId: String? = nil, iadCreativesetName: String? = nil, iadAdId:String? = nil, iadClaimType:String? = nil, iadImpressionDate: String? = nil) {
+    public init(iadAttribution: String? = nil, iadOrgName: String? = nil, iadOrgId: String? = nil, iadCampaignId: String? = nil, iadCampaignName: String? = nil, iadClickDate: String? = nil, iadPurchaseDate: String? = nil, iadConversationDate: String? = nil, iadConversationType: IadConversationType? = nil, iadAdgroupName: String? = nil, iadAdgroupId: String? = nil, iadCountryOrRegion: String? = nil, iadKeyword: String? = nil, iadKeywordId: String? = nil, iadKeywordMatchtype: IadKeywordMatchtype? = nil, iadCreativesetId: String? = nil, iadCreativesetName: String? = nil, iadAdId:String? = nil, iadClaimType:String? = nil, iadImpressionDate: String? = nil, iadSupplyPlacement: String? = nil) {
         self.iadAttribution = iadAttribution
         self.iadOrgName = iadOrgName
         self.iadOrgId = iadOrgId
@@ -87,6 +90,7 @@ import AnyCodable
         self.iadAdId = iadAdId
         self.iadClaimType = iadClaimType
         self.iadImpressionDate = iadImpressionDate
+        self.iadSupplyPlacement = iadSupplyPlacement
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -110,6 +114,7 @@ import AnyCodable
         case iadAdId = "iad-Ad-id"
         case iadClaimType = "iad-claim-type"
         case iadImpressionDate = "iad-impression-date"
+        case iadSupplyPlacement = "iad-supplyPlacement"
     }
 
     // Encodable protocol methods
@@ -135,6 +140,7 @@ import AnyCodable
         try container.encodeIfPresent(iadAdId, forKey: .iadAdId)
         try container.encodeIfPresent(iadClaimType, forKey: .iadClaimType)
         try container.encodeIfPresent(iadImpressionDate, forKey: .iadImpressionDate)
+        try container.encodeIfPresent(iadSupplyPlacement, forKey: .iadSupplyPlacement)
     }
 }
 
@@ -143,4 +149,3 @@ import AnyCodable
     case returnCache          // Return cached data
     case networkRequest      // Trigger network request
 }
-
