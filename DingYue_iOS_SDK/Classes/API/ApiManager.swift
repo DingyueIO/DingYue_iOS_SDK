@@ -48,8 +48,9 @@ class ApiManager {
                     var configurations:[[String:Any]]?
                     if let paywall = data?.paywall {
                         DYMDefaultsManager.shared.cachedPaywalls = [paywall]
-                        if paywall.downloadUrl != "" {
-                            if paywall.downloadUrl == "local" {//使用项目中带的内购页
+                        let paywallDownloadUrl = paywall.downloadUrl.trimmingCharacters(in: .whitespacesAndNewlines)
+                        if !paywallDownloadUrl.isEmpty {
+                            if paywallDownloadUrl == "local" {//使用项目中带的内购页
                                 if let nativePaywallId = data?.paywallId {
                                     let version = paywall.version
                                     self.paywallIdentifier = nativePaywallId
@@ -69,20 +70,28 @@ class ApiManager {
                                     self.paywallName = paywall.name
                                     self.paywallCustomize = paywall.customize
                                     if self.paywallIdentifier != DYMDefaultsManager.shared.cachedPaywallPageIdentifier {
-                                        self.downloadWebTemplate(url: URL(string: paywall.downloadUrl)!) { res, err in
+                                        if let downloadUrl = URL(string: paywallDownloadUrl), downloadUrl.scheme != nil {
+                                            self.downloadWebTemplate(url: downloadUrl) { res, err in
+                                            }
+                                        } else {
+                                            DYMLogManager.logError("Invalid paywall downloadUrl: \(paywall.downloadUrl)")
+                                            DYMDefaultsManager.shared.isLoadingStatus = true
                                         }
                                     } else {
                                         DYMDefaultsManager.shared.isLoadingStatus = true
                                     }
                                 }
                             }
-
+                        } else {
+                            DYMDefaultsManager.shared.isLoadingStatus = true
                         }
                         //内购项信息
-                        var subsArray:[Subscription] = []
-                        for subscription in paywall.subscriptions {
-                            let sub = subscription.subscription!
-                            subsArray.append(sub)
+                        let subsArray: [Subscription] = paywall.subscriptions.compactMap { subscription in
+                            guard let sub = subscription.subscription else {
+                                DYMLogManager.logError("Missing subscription in paywall payload.")
+                                return nil
+                            }
+                            return sub
                         }
                         DYMDefaultsManager.shared.cachedProducts = subsArray
                         
@@ -98,7 +107,8 @@ class ApiManager {
                     
                     if let guide = data?.guidePage {
                         DYMDefaultsManager.shared.cachedGuides = [guide]
-                        if guide.downloadUrl ==  "local" {
+                        let guideDownloadUrl = guide.downloadUrl.trimmingCharacters(in: .whitespacesAndNewlines)
+                        if guideDownloadUrl ==  "local" {
                             if let nativeGuidePageId = data?.guidePageId {
                                 let guideVersion = guide.version
                                 self.guidePageIdentifier = nativeGuidePageId
@@ -118,7 +128,14 @@ class ApiManager {
                                 self.guidePageName = guide.name
                                 self.guideCustomize = guide.customize
                                 if self.guidePageIdentifier != DYMDefaultsManager.shared.cachedGuidePageIdentifier {
-                                    self.downloadGuideWebTemplate(url: URL(string: guide.downloadUrl)!) { res, error in
+                                    if let downloadUrl = URL(string: guideDownloadUrl), downloadUrl.scheme != nil {
+                                        self.downloadGuideWebTemplate(url: downloadUrl) { res, error in
+                                        }
+                                    } else {
+                                        DYMLogManager.logError("Invalid guide downloadUrl: \(guide.downloadUrl)")
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                            DYMDefaultsManager.shared.guideLoadingStatus = true
+                                        }
                                     }
                                 }else {
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -245,8 +262,8 @@ class ApiManager {
     func downloadWebTemplate(url: URL, completion:@escaping (SimpleStatusResult?,Error?) -> Void) {
         let turl = url
         URLSession.shared.downloadTask(with: turl) { url, response, error in
-            if response != nil {
-                if (response as! HTTPURLResponse).statusCode == 200 {
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 200 {
                     if let zipFileUrl = url, let targetUnzipUrl = UserProperties.pallwallPath {
                         let success = SSZipArchive.unzipFile(atPath: zipFileUrl.path, toDestination: targetUnzipUrl)
                         if success {
@@ -279,6 +296,9 @@ class ApiManager {
                     DYMDefaultsManager.shared.isLoadingStatus = true
                 }
             } else {
+                if let response = response {
+                    DYMLogManager.logError("Invalid paywall template response: \(response)")
+                }
                 DYMDefaultsManager.shared.isLoadingStatus = true
             }
         }.resume()
@@ -287,24 +307,34 @@ class ApiManager {
 
     func verifySubscriptionFirst(receipt: String,for product: SKProduct?,completion:@escaping FirstReceiptCompletion) {
         guard let product = product else {
+            completion(nil,DYMError.missingParam("product"))
             return
         }
         let platformProductId = product.productIdentifier
         let price = product.price.stringValue
-        let currency = (product.priceLocale.currencyCode)!
-        let countryCode = (product.priceLocale.regionCode)!
+        guard let currency = product.priceLocale.currencyCode, let countryCode = product.priceLocale.regionCode else {
+            completion(nil,DYMError.missingParam("currencyCode, regionCode"))
+            return
+        }
         let receiptObj = FirstReceiptVerifyPostObject(appleReceipt: receipt, platformProductId: platformProductId, price: price, currencyCode: currency,countryCode: countryCode)
         ReceiptAPI.verifyFirstReceipt(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: ReceiptAPI.XPLATFORM_verifyFirstReceipt.ios, X_VERSION: UserProperties.sdkVersion, firstReceiptVerifyPostObject: receiptObj, completion: completion)
     }
 
     func verifySubscriptionFirstWith(receipt: String,for product: Dictionary<String, String>?,completion:@escaping FirstReceiptCompletion) {
         guard let product = product else {
+            completion(nil,DYMError.missingParam("product"))
             return
         }
-        let platformProductId = product["productId"]!
-        let price = product["price"]!
-        let currency = product["currencyCode"]!
-        let countryCode = product["regionCode"]!
+        let requiredKeys = ["productId", "price", "currencyCode", "regionCode"]
+        let missingKeys = requiredKeys.filter { product[$0] == nil }
+        guard missingKeys.isEmpty,
+              let platformProductId = product["productId"],
+              let price = product["price"],
+              let currency = product["currencyCode"],
+              let countryCode = product["regionCode"] else {
+            completion(nil,DYMError.missingParam(missingKeys.joined(separator: ", ")))
+            return
+        }
 
         let receiptObj = FirstReceiptVerifyPostObject(appleReceipt: receipt, platformProductId: platformProductId, price: price, currencyCode: currency,countryCode: countryCode)
         ReceiptAPI.verifyFirstReceipt(X_USER_ID: UserProperties.requestUUID, userAgent: UserProperties.userAgent, X_APP_ID: DYMConstants.APIKeys.appId, X_PLATFORM: ReceiptAPI.XPLATFORM_verifyFirstReceipt.ios, X_VERSION: UserProperties.sdkVersion, firstReceiptVerifyPostObject: receiptObj, completion: completion)
@@ -328,8 +358,11 @@ class ApiManager {
     }
     
     func updateUserProperties() {
-        var source = DYMUserSubscriptionPurchasedSourceType.DYAPICall.rawString//默认是api调用
-        if let type = UserProperties.userSubscriptionPurchasedSourcesType, type == .DYPaywall {
+        let type = UserProperties.userSubscriptionPurchasedSourcesType ?? .DYAPICall
+        var source = type.rawString
+
+        switch type {
+        case .DYPaywall:
             source = DYMUserSubscriptionPurchasedSourceType.DYPaywall.rawString
             if let paywallname = DYMDefaultsManager.shared.cachedPaywallName {
                 source.append(":\(paywallname)")
@@ -337,8 +370,16 @@ class ApiManager {
             if let paywallId = DYMDefaultsManager.shared.cachedPaywallPageIdentifier {
                 source.append("/\(paywallId)")
             }
-        } else {
-            source = DYMUserSubscriptionPurchasedSourceType.DYAPICall.rawString
+        case .DYGuidePage:
+            source = DYMUserSubscriptionPurchasedSourceType.DYGuidePage.rawString
+            if let guideName = DYMDefaultsManager.shared.cachedGuideName {
+                source.append(":\(guideName)")
+            }
+            if let guideId = DYMDefaultsManager.shared.cachedGuidePageIdentifier {
+                source.append("/\(guideId)")
+            }
+        case .DYAPICall:
+            break
         }
         
         let editStringUnit = EditStringUnit(key: UserProperties.userSubscriptionPurchasedSources, value: source, type: .string)
@@ -356,8 +397,8 @@ extension ApiManager {
     func downloadGuideWebTemplate(url: URL, completion:@escaping (SimpleStatusResult?,Error?) -> Void) {
         let turl = url
         URLSession.shared.downloadTask(with: turl) { url, response, error in
-            if response != nil {
-                if (response as! HTTPURLResponse).statusCode == 200 {
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 200 {
 
                     if let zipFileUrl = url, let targetUnzipUrl = UserProperties.guidePath {
                         let success = SSZipArchive.unzipFile(atPath: zipFileUrl.path, toDestination: targetUnzipUrl)
@@ -383,6 +424,9 @@ extension ApiManager {
                     DYMDefaultsManager.shared.guideLoadingStatus = true
                 }
             } else {
+                if let response = response {
+                    DYMLogManager.logError("Invalid guide template response: \(response)")
+                }
                 DYMDefaultsManager.shared.guideLoadingStatus = true
             }
         }.resume()
@@ -399,5 +443,3 @@ extension ApiManager {
     }
     
 }
-
-

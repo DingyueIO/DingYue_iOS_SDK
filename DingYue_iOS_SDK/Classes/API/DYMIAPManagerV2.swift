@@ -89,8 +89,9 @@ class DYMIAPManagerV2: NSObject, @unchecked Sendable {
                     // 多次购买来实现数量
                     DYMLogManager.logMessage("DYMIAPManagerV2: Performing \(productQuantity) purchases for quantity")
                     var lastResult: Product.PurchaseResult?
+                    let purchaseOptions = appAccountTokenPurchaseOptions()
                     for i in 0..<productQuantity {
-                        lastResult = try await product.purchase()
+                        lastResult = try await product.purchase(options: purchaseOptions)
                         DYMLogManager.logMessage("DYMIAPManagerV2: Purchase \(i + 1)/\(productQuantity) completed")
                     }
                     DYMLogManager.logMessage("DYMIAPManagerV2: All \(productQuantity) purchases completed successfully")
@@ -98,7 +99,7 @@ class DYMIAPManagerV2: NSObject, @unchecked Sendable {
                 } else {
                     // 单次购买
                     DYMLogManager.logMessage("DYMIAPManagerV2: Performing single purchase")
-                    let result = try await product.purchase()
+                    let result = try await product.purchase(options: appAccountTokenPurchaseOptions())
                     DYMLogManager.logMessage("DYMIAPManagerV2: Purchase completed successfully")
                     completion(result, product, nil)
                 }
@@ -119,7 +120,7 @@ class DYMIAPManagerV2: NSObject, @unchecked Sendable {
         DYMLogManager.logMessage("DYMIAPManagerV2: Starting purchase for product: \(product.id)")
         Task {
             do {
-                let result = try await product.purchase()
+                let result = try await product.purchase(options: appAccountTokenPurchaseOptions())
                 DYMLogManager.logMessage("DYMIAPManagerV2: Purchase completed successfully for product: \(product.id)")
                 completion(result, product, nil)
             } catch {
@@ -219,6 +220,36 @@ class DYMIAPManagerV2: NSObject, @unchecked Sendable {
 @available(iOS 15.0, macOS 12.0, watchOS 8.0, tvOS 15.0, *)
 private extension DYMIAPManagerV2 {
     
+    /// StoreKit 2 requires a UUID appAccountToken. Skip the token when it cannot be normalized.
+    func appAccountTokenPurchaseOptions() -> Set<Product.PurchaseOption> {
+        guard let uuid = storeKitAppAccountUUID(from: UserProperties.requestUUID) else {
+            DYMLogManager.logError("DYMIAPManagerV2: Invalid requestUUID for appAccountToken. Purchasing without appAccountToken.")
+            return []
+        }
+
+        return [.appAccountToken(uuid)]
+    }
+
+    func storeKitAppAccountUUID(from uuidString: String) -> UUID? {
+        if let uuid = UUID(uuidString: uuidString) {
+            return uuid
+        }
+
+        let compactUUID = uuidString.replacingOccurrences(of: "-", with: "")
+        guard compactUUID.count == 32, compactUUID.allSatisfy({ $0.isHexDigit }) else {
+            return nil
+        }
+
+        let startIndex = compactUUID.startIndex
+        let part1 = compactUUID.prefix(8)
+        let part2 = compactUUID[compactUUID.index(startIndex, offsetBy: 8)..<compactUUID.index(startIndex, offsetBy: 12)]
+        let part3 = compactUUID[compactUUID.index(startIndex, offsetBy: 12)..<compactUUID.index(startIndex, offsetBy: 16)]
+        let part4 = compactUUID[compactUUID.index(startIndex, offsetBy: 16)..<compactUUID.index(startIndex, offsetBy: 20)]
+        let part5 = compactUUID.suffix(12)
+
+        return UUID(uuidString: "\(part1)-\(part2)-\(part3)-\(part4)-\(part5)")
+    }
+    
     /// 验证交易
     /// - Parameter result: 验证结果
     /// - Returns: 验证后的交易
@@ -275,6 +306,3 @@ private extension DYMIAPManagerV2 {
     }
 }
     
-
-
-
