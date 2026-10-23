@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,6 +20,8 @@
 		A7BB29B90280A161B80BFBF1 /* Pods_DingYue_iOS_SDK_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5CE5ABB1080C2355F000625 /* Pods_DingYue_iOS_SDK_Example.framework */; };
 		CF4007132C60C69600BCC8A5 /* TestLuaOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4007122C60C69600BCC8A5 /* TestLuaOperation.m */; };
 		CF40072F2C60D0A100BCC8A5 /* test.lua in Resources */ = {isa = PBXBuildFile; fileRef = CF40072E2C60D0A100BCC8A5 /* test.lua */; };
+		CFAA73462FEA694C003653A3 /* DemoGuide.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CFAA73452FEA694C003653A3 /* DemoGuide.bundle */; };
+		D12700000000000000000001 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12700000000000000000002 /* SceneDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		CF4007112C60C69600BCC8A5 /* TestLuaOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestLuaOperation.h; sourceTree = "<group>"; };
 		CF4007122C60C69600BCC8A5 /* TestLuaOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestLuaOperation.m; sourceTree = "<group>"; };
 		CF40072E2C60D0A100BCC8A5 /* test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.lua; sourceTree = "<group>"; };
+		CFAA73452FEA694C003653A3 /* DemoGuide.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DemoGuide.bundle; sourceTree = "<group>"; };
+		D12700000000000000000002 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D3F4F9F0EBFADEE30EFAD52A /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		E5CE5ABB1080C2355F000625 /* Pods_DingYue_iOS_SDK_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DingYue_iOS_SDK_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECB559DA4357813486739A80 /* Pods_DingYue_iOS_SDK_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DingYue_iOS_SDK_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,6 +113,8 @@
 			children = (
 				CF4007102C60C66200BCC8A5 /* LuaTest */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
+				D12700000000000000000002 /* SceneDelegate.swift */,
+				CFAA73452FEA694C003653A3 /* DemoGuide.bundle */,
 				47FF2D6F2876F21300437080 /* LBWebViewController.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
@@ -284,6 +290,7 @@
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				CF40072F2C60D0A100BCC8A5 /* test.lua in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+				CFAA73462FEA694C003653A3 /* DemoGuide.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,15 +326,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
 		A16DDB41CAB272570F56BBB2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -355,25 +353,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-DingYue_iOS_SDK_Example/Pods-DingYue_iOS_SDK_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AnyCodable-FlightSchool/AnyCodable.framework",
-				"${BUILT_PRODUCTS_DIR}/DingYue_iOS_SDK/DingYue_iOS_SDK.framework",
-				"${BUILT_PRODUCTS_DIR}/FCUUID/FCUUID.framework",
-				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
-				"${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework",
-				"${BUILT_PRODUCTS_DIR}/UICKeyChainStore/UICKeyChainStore.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/DingYue_iOS_SDK/DingYueLua.framework/DingYueLua",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DingYue_iOS_SDK_Example/Pods-DingYue_iOS_SDK_Example-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnyCodable.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DingYue_iOS_SDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FCUUID.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSZipArchive.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICKeyChainStore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DingYueLua.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DingYue_iOS_SDK_Example/Pods-DingYue_iOS_SDK_Example-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -391,6 +376,7 @@
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				47FF2D702876F21300437080 /* LBWebViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				D12700000000000000000001 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,7 +463,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -523,7 +509,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -543,7 +529,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6758SSTNXL;
 				INFOPLIST_FILE = DingYue_iOS_SDK/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -572,7 +558,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6758SSTNXL;
 				INFOPLIST_FILE = DingYue_iOS_SDK/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -604,7 +590,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -628,7 +614,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

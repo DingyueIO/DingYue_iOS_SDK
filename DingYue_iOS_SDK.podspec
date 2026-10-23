@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'DingYue_iOS_SDK'
-  s.version          = '0.3.16'
+  s.version          = '0.4.0'
   s.summary          = 'DingYue_iOS_SDK: manage your purchase process and collect data to analyze data conveniently.'
 
   s.description      = <<-DESC
@@ -12,7 +12,7 @@ DESC
   s.author           = { 'DingYueIO' => 'support@dingyue.io' }
   s.source           = { :git => 'https://github.com/DingYueIO/DingYue_iOS_SDK.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '13.0'
+  s.ios.deployment_target = '15.0'
 
   # Source files and resources
   s.source_files     = 'DingYue_iOS_SDK/Classes/**/*.{h,m,swift}'

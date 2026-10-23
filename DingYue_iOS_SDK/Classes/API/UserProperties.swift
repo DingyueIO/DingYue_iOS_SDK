@@ -343,6 +343,6 @@ extension UserProperties {
         let part5 = uuidString.suffix(12)
         
         // Concatenate parts into standard UUID format
-        return part1 + "-" + part2 + "-" + part3 + "-" + part4 + "-" + part5
+        return "\(part1)-\(part2)-\(part3)-\(part4)-\(part5)"
     }
 }

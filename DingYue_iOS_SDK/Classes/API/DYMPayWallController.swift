@@ -25,6 +25,7 @@ public class DYMPayWallController: UIViewController, UIGestureRecognizerDelegate
     var paywalls:[SKProduct] = []
     var completion:DYMPurchaseCompletion?
     public weak var delegate: DYMPayWallActionDelegate?
+    private var pendingProductIdentifier: String?
     var loadingTimer:Timer?
     var currentPaywallId:String?
     var extras:[String:Any]?
@@ -78,6 +79,8 @@ public class DYMPayWallController: UIViewController, UIGestureRecognizerDelegate
 
     public override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(transactionPending(_:)), name: DYMTransactionDelivery.pendingNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(verifiedDeliveryAvailable), name: DYMTransactionDelivery.availableNotification, object: nil)
         // Do any additional setup after loading the view.
         self.view.backgroundColor = .white
         view.addSubview(webView)
@@ -472,7 +475,23 @@ extension DYMPayWallController: WKNavigationDelegate, WKScriptMessageHandler {
         }
     }
 
+    @objc private func verifiedDeliveryAvailable() {
+        guard let productID = pendingProductIdentifier,
+              DYMTransactionDelivery.pendingDeliveries().contains(where: { $0["productIdentifier"] as? String == productID }) else { return }
+        // Orphaned/late verified delivery must release the SDK spinner without
+        // claiming a current page purchase or automatically reopening navigation.
+        ProgressView.stop()
+    }
+
+    @objc private func transactionPending(_ notification: Notification) {
+        guard let productID = notification.userInfo?["productIdentifier"] as? String,
+              productID == pendingProductIdentifier else { return }
+        ProgressView.stop()
+        // Pending is nonterminal: keep this SDK page open and do not emit failure/cancel.
+    }
+
     func buyWithProductId(_ productId:String, productPrice:String? = nil) {
+        pendingProductIdentifier = productId
         ProgressView.show(rootViewConroller: self)
         UserProperties.userSubscriptionPurchasedSourcesType = .DYPaywall//以更新用户购买来源属性
         DYMobileSDK.purchase(productId: productId, productPrice: productPrice) { [weak self] receipt, purchaseResult,purchasedProduct, error in
