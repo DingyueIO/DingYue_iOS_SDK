@@ -73,7 +73,8 @@ public class DYMGuideController: UIViewController {
         return config
     }()
     private lazy var webView: WKWebView = {
-        let webView = WKWebView(frame: UIScreen.main.bounds, configuration: self.webCustomConfiguration)
+        let webView = WKWebView(frame: .zero, configuration: self.webCustomConfiguration)
+        webView.translatesAutoresizingMaskIntoConstraints = false
         webView.scrollView.showsHorizontalScrollIndicator = false
         webView.scrollView.showsVerticalScrollIndicator = false
         webView.navigationDelegate = self
@@ -103,6 +104,13 @@ public class DYMGuideController: UIViewController {
         // Do any additional setup after loading the view.
         self.view.backgroundColor = .white
         view.addSubview(webView)
+        // 跟随当前容器尺寸变化，支持折叠、展开和旋转。
+        NSLayoutConstraint.activate([
+            webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            webView.topAnchor.constraint(equalTo: view.topAnchor),
+            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
         // 使用 launchScreenView
         if let launchView = launchScreenView {
             self.view.addSubview(launchView)
