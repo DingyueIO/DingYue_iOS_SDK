@@ -73,7 +73,8 @@ public class DYMGuideController: UIViewController {
         return config
     }()
     private lazy var webView: WKWebView = {
-        let webView = WKWebView(frame: UIScreen.main.bounds, configuration: self.webCustomConfiguration)
+        let webView = WKWebView(frame: .zero, configuration: self.webCustomConfiguration)
+        webView.translatesAutoresizingMaskIntoConstraints = false
         webView.scrollView.showsHorizontalScrollIndicator = false
         webView.scrollView.showsVerticalScrollIndicator = false
         webView.navigationDelegate = self
@@ -103,6 +104,13 @@ public class DYMGuideController: UIViewController {
         // Do any additional setup after loading the view.
         self.view.backgroundColor = .white
         view.addSubview(webView)
+        // 跟随当前容器尺寸变化，支持折叠、展开和旋转。
+        NSLayoutConstraint.activate([
+            webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            webView.topAnchor.constraint(equalTo: view.topAnchor),
+            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
         // 使用 launchScreenView
         if let launchView = launchScreenView {
             self.view.addSubview(launchView)
@@ -267,11 +275,18 @@ extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
             self.guidePageSwiperSize = guideModel.swiperSize
             let subscriptions = guideModel.subscriptions
             if subscriptions.count > 0 {
-                var tempProudcts:[Subscription] = []
-                for item in subscriptions {
-                    tempProudcts.append(item.subscription!)
+                let tempProudcts: [Subscription] = subscriptions.compactMap { item in
+                    guard let subscription = item.subscription else {
+                        DYMLogManager.logError("Missing subscription in guide payload.")
+                        return nil
+                    }
+                    return subscription
                 }
-                cachedProducts = tempProudcts
+                if !tempProudcts.isEmpty {
+                    cachedProducts = tempProudcts
+                } else if cachedProducts.isEmpty {
+                    purchaseSwitch = false
+                }
             }
         }
         var productsArray = [Dictionary<String,Any>]()
@@ -411,7 +426,7 @@ extension DYMGuideController: WKNavigationDelegate, WKScriptMessageHandler {
 
     func buyWithProductId(_ productId:String, productPrice:String? = nil) {
         ProgressView.show(rootViewConroller: self)
-        UserProperties.userSubscriptionPurchasedSourcesType = .DYPaywall//以更新用户购买来源属性
+        UserProperties.userSubscriptionPurchasedSourcesType = .DYGuidePage//以更新用户购买来源属性
         DYMobileSDK.purchase(productId: productId, productPrice: productPrice) { receipt, purchaseResult,purchasedProduct, error in
             ProgressView.stop()
             self.completion?(receipt,purchaseResult,purchasedProduct,error)
@@ -473,4 +488,3 @@ extension DYMGuideController {
     }
 
 }
-

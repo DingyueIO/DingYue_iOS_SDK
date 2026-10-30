@@ -127,12 +127,15 @@ import AdSupport
         //读取DingYue.plist信息
         let path = Bundle.main.path(forResource: DYMConstants.AppInfoName.plistName, ofType: DYMConstants.AppInfoName.plistType)
         guard let plistPath = path else {
+            completeActivationFailure(DYMError.missingParam("\(DYMConstants.AppInfoName.plistName).\(DYMConstants.AppInfoName.plistType)"), completion: completion)
             return
         }
         guard let appInfoDictionary = NSMutableDictionary(contentsOfFile: plistPath) else {
+            completeActivationFailure(DYMError.invalidProperty("\(DYMConstants.AppInfoName.plistName).\(DYMConstants.AppInfoName.plistType)", plistPath), completion: completion)
             return
         }
         guard let appId = appInfoDictionary.value(forKey: DYMConstants.AppInfoName.appId) as? String, let apiKey = appInfoDictionary.value(forKey: DYMConstants.AppInfoName.apiKey) as? String else{
+            completeActivationFailure(DYMError.missingParam("\(DYMConstants.AppInfoName.appId), \(DYMConstants.AppInfoName.apiKey)"), completion: completion)
             return
         }
         
@@ -142,10 +145,20 @@ import AdSupport
             DYMConstants.APIKeys.appId = cachedAppId
             DYMConstants.APIKeys.secretKey = cachedApiKey
         } else {
+            guard !appId.isEmpty, !apiKey.isEmpty else {
+                completeActivationFailure(DYMError.missingParam("\(DYMConstants.AppInfoName.appId), \(DYMConstants.AppInfoName.apiKey)"), completion: completion)
+                return
+            }
             DYMConstants.APIKeys.appId = appId
             DYMConstants.APIKeys.secretKey = apiKey
         }
         shared.configure(completion: completion)
+    }
+    private class func completeActivationFailure(_ error: DYMError, completion:@escaping sessionActivateCompletion) {
+        DYMDefaultsManager.shared.guideLoadingStatus = true
+        DYMDefaultsManager.shared.isLoadingStatus = true
+        DYMLogManager.logError(error)
+        completion(nil,error)
     }
     ///Configure
     private func configure(completion:@escaping sessionActivateCompletion) {
@@ -250,6 +263,8 @@ import AdSupport
                     "salesRegion":purchase.product.priceLocale.regionCode ?? ""
                 ]
                     if let subs = receiptVerifyMobileResponse {
+                        //更新用户属性 --- 以甄别购买来源是通过内购页还是直接调用API
+                        shared.apiManager.updateUserProperties()
                         completion(purchase.receipt,subs["subscribledObject"] as? [[String : Any]],purchasedProduct,nil)
                     } else {
                         completion(purchase.receipt,nil,purchasedProduct,nil)

@@ -20,8 +20,8 @@ import SSZipArchive
                 print("dylua ---下载完成, 文件路径: \(url)")
             }
             
-            if response != nil {
-                if (response as! HTTPURLResponse).statusCode == 200 {
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 200 {
 
                     if let zipFileUrl = url, let targetUnzipUrl = UserProperties.luaScriptDirectoryPath {
                         let success = SSZipArchive.unzipFile(atPath: zipFileUrl.path, toDestination: targetUnzipUrl)
@@ -44,7 +44,11 @@ import SSZipArchive
                     print("dylua --- 下载脚本Zip失败 --- status code != 200")
                 }
             } else {
-                print("dylua --- 下载脚本Zip失败 --- response == nil")
+                if let response = response {
+                    print("dylua --- 下载脚本Zip失败 --- response is not HTTPURLResponse: \(response)")
+                } else {
+                    print("dylua --- 下载脚本Zip失败 --- response == nil")
+                }
             }
         }.resume()
     }
